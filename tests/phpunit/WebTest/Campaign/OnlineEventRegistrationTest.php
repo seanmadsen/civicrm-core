@@ -71,10 +71,10 @@ class WebTest_Campaign_OnlineEventRegistrationTest extends CiviSeleniumTestCase 
     $this->waitForElementPresent('link=Remove');
 
     // Enable CiviCampaign module if necessary
-    $this->enableComponents(array('CiviCampaign'));
+    $this->enableComponents(['CiviCampaign']);
 
     // add the required permission
-    $permissions = array('edit-2-administer-civicampaign', 'edit-1-register-for-events');
+    $permissions = ['edit-2-administer-civicampaign', 'edit-1-register-for-events'];
     $this->changePermissions($permissions);
 
     // Log in as normal user
@@ -92,7 +92,7 @@ class WebTest_Campaign_OnlineEventRegistrationTest extends CiviSeleniumTestCase 
     $this->type("description", "This is a test campaign");
 
     // include groups for the campaign
-    $this->multiselect2("includeGroups", array("$groupName", "Advisory Board"));
+    $this->multiselect2("includeGroups", ["$groupName", "Advisory Board"]);
 
     // fill the end date for campaign
     $this->webtestFillDate("end_date", "+1 year");
@@ -137,10 +137,10 @@ class WebTest_Campaign_OnlineEventRegistrationTest extends CiviSeleniumTestCase 
     $multipleRegistrations = TRUE;
     $this->_testAddOnlineRegistration($registerIntro, $multipleRegistrations);
 
-    $eventInfoStrings = array($eventTitle, $eventDescription, $streetAddress);
+    $eventInfoStrings = [$eventTitle, $eventDescription, $streetAddress];
     $this->_testVerifyEventInfo($eventTitle, $eventInfoStrings);
 
-    $registerStrings = array("Member - $ 250.00", "Non-member - $ 325.00", $registerIntro);
+    $registerStrings = ["Member - $ 250.00", "Non-member - $ 325.00", $registerIntro];
     $registerUrl = $this->_testVerifyRegisterPage($registerStrings);
 
     $numberRegistrations = 3;
@@ -345,11 +345,11 @@ class WebTest_Campaign_OnlineEventRegistrationTest extends CiviSeleniumTestCase 
 
     $this->waitForPageToLoad($this->getTimeoutMsec());
     $this->waitForElementPresent("_qf_Confirm_next-bottom");
-    $confirmStrings = array("Event Fee(s)", "Billing Name and Address", "Credit Card Information");
+    $confirmStrings = ["Event Fee(s)", "Billing Name and Address", "Credit Card Information"];
     $this->assertStringsPresent($confirmStrings);
     $this->click("_qf_Confirm_next-bottom");
     $this->waitForPageToLoad($this->getTimeoutMsec());
-    $thankStrings = array("Thank You for Registering", "Event Total", "Transaction Date");
+    $thankStrings = ["Thank You for Registering", "Event Total", "Transaction Date"];
     $this->assertStringsPresent($thankStrings);
 
     $this->webtestLogin();

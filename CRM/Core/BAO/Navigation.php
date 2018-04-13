@@ -175,7 +175,7 @@ SELECT id, label, parent_id, weight, is_active, name
 FROM civicrm_navigation WHERE domain_id = $domainID {$whereClause} ORDER BY parent_id, weight ASC";
       $result = CRM_Core_DAO::executeQuery($query);
 
-      $pidGroups = array();
+      $pidGroups = [];
       while ($result->fetch()) {
         $pidGroups[$result->parent_id][$result->label] = $result->id;
       }
@@ -184,7 +184,7 @@ FROM civicrm_navigation WHERE domain_id = $domainID {$whereClause} ORDER BY pare
         $pidGroups[''][$label] = self::_getNavigationValue($val, $pidGroups);
       }
 
-      $navigations = array();
+      $navigations = [];
       self::_getNavigationLabel($pidGroups[''], $navigations);
 
       CRM_Core_BAO_Cache::setItem($navigations, 'navigation', $cacheKeyString);
@@ -208,7 +208,7 @@ FROM civicrm_navigation WHERE domain_id = $domainID {$whereClause} ORDER BY pare
       if ($label == 'navigation_id') {
         continue;
       }
-      $translatedLabel = $i18n->crm_translate($label, array('context' => 'menu'));
+      $translatedLabel = $i18n->crm_translate($label, ['context' => 'menu']);
       $navigations[is_array($val) ? $val['navigation_id'] : $val] = "{$separator}{$translatedLabel}";
       if (is_array($val)) {
         self::_getNavigationLabel($val, $navigations, $separator . '&nbsp;&nbsp;&nbsp;&nbsp;');
@@ -228,7 +228,7 @@ FROM civicrm_navigation WHERE domain_id = $domainID {$whereClause} ORDER BY pare
    */
   public static function _getNavigationValue($val, &$pidGroups) {
     if (array_key_exists($val, $pidGroups)) {
-      $list = array('navigation_id' => $val);
+      $list = ['navigation_id' => $val];
       foreach ($pidGroups[$val] as $label => $id) {
         $list[$label] = self::_getNavigationValue($id, $pidGroups);
       }
@@ -248,7 +248,7 @@ FROM civicrm_navigation WHERE domain_id = $domainID {$whereClause} ORDER BY pare
    */
   public static function buildNavigationTree() {
     $domainID = CRM_Core_Config::domainID();
-    $navigationTree = array();
+    $navigationTree = [];
 
     $navigationMenu = new self();
     $navigationMenu->domain_id = $domainID;
@@ -256,8 +256,8 @@ FROM civicrm_navigation WHERE domain_id = $domainID {$whereClause} ORDER BY pare
     $navigationMenu->find();
 
     while ($navigationMenu->fetch()) {
-      $navigationTree[$navigationMenu->id] = array(
-        'attributes' => array(
+      $navigationTree[$navigationMenu->id] = [
+        'attributes' => [
           'label' => $navigationMenu->label,
           'name' => $navigationMenu->name,
           'url' => $navigationMenu->url,
@@ -268,8 +268,8 @@ FROM civicrm_navigation WHERE domain_id = $domainID {$whereClause} ORDER BY pare
           'parentID' => $navigationMenu->parent_id,
           'navID' => $navigationMenu->id,
           'active' => $navigationMenu->is_active,
-        ),
-      );
+        ],
+      ];
     }
 
     return self::buildTree($navigationTree);
@@ -284,7 +284,7 @@ FROM civicrm_navigation WHERE domain_id = $domainID {$whereClause} ORDER BY pare
    * @return array
    */
   private static function buildTree($elements, $parentId = NULL) {
-    $branch = array();
+    $branch = [];
 
     foreach ($elements as $id => $element) {
       if ($element['attributes']['parentID'] == $parentId) {
@@ -313,7 +313,7 @@ FROM civicrm_navigation WHERE domain_id = $domainID {$whereClause} ORDER BY pare
     self::fixNavigationMenu($navigations);
 
     //skip children menu item if user don't have access to parent menu item
-    $skipMenuItems = array();
+    $skipMenuItems = [];
     foreach ($navigations as $key => $value) {
       // Home is a special case
       if ($value['attributes']['name'] != 'Home') {
@@ -323,7 +323,7 @@ FROM civicrm_navigation WHERE domain_id = $domainID {$whereClause} ORDER BY pare
           if (isset($value['attributes']['separator']) && $value['attributes']['separator'] == 2) {
             $navigationString .= '<li class="menu-separator"></li>';
           }
-          $removeCharacters = array('/', '!', '&', '*', ' ', '(', ')', '.');
+          $removeCharacters = ['/', '!', '&', '*', ' ', '(', ')', '.'];
           $navigationString .= '<li class="menumain crm-' . str_replace($removeCharacters, '_', $value['attributes']['label']) . '">' . $name;
         }
       }
@@ -366,7 +366,7 @@ FROM civicrm_navigation WHERE domain_id = $domainID {$whereClause} ORDER BY pare
           if (isset($val['attributes']['separator']) && $val['attributes']['separator'] == 2) {
             $navigationString .= '<li class="menu-separator"></li>';
           }
-          $removeCharacters = array('/', '!', '&', '*', ' ', '(', ')', '.');
+          $removeCharacters = ['/', '!', '&', '*', ' ', '(', ')', '.'];
           $navigationString .= '<li class="crm-' . str_replace($removeCharacters, '_', $val['attributes']['label']) . '">' . $name;
           self::recurseNavigation($val, $navigationString, $skipMenuItems);
         }
@@ -442,7 +442,7 @@ FROM civicrm_navigation WHERE domain_id = $domainID {$whereClause} ORDER BY pare
     // want to use ts() as it would throw the ts-extractor off
     $i18n = CRM_Core_I18n::singleton();
 
-    $name = $i18n->crm_translate($value['attributes']['label'], array('context' => 'menu'));
+    $name = $i18n->crm_translate($value['attributes']['label'], ['context' => 'menu']);
     $url = CRM_Utils_Array::value('url', $value['attributes']);
     $permission = CRM_Utils_Array::value('permission', $value['attributes']);
     $operator = CRM_Utils_Array::value('operator', $value['attributes']);
@@ -565,8 +565,8 @@ FROM civicrm_navigation WHERE domain_id = $domainID {$whereClause} ORDER BY pare
       $logoutURL = CRM_Utils_System::url('civicrm/logout', 'reset=1');
 
       // get home menu from db
-      $homeParams = array('name' => 'Home');
-      $homeNav = array();
+      $homeParams = ['name' => 'Home'];
+      $homeNav = [];
       $homeIcon = '<span class="crm-logo-sm" ></span>';
       self::retrieve($homeParams, $homeNav);
       if ($homeNav) {
@@ -694,7 +694,7 @@ FROM civicrm_navigation WHERE domain_id = $domainID {$whereClause} ORDER BY pare
 
     $incrementOtherNodes = TRUE;
     $sql = "SELECT weight from civicrm_navigation WHERE {$parentClause} ORDER BY weight LIMIT %1, 1";
-    $params = array(1 => array($position, 'Positive'));
+    $params = [1 => [$position, 'Positive']];
     $newWeight = CRM_Core_DAO::singleValueQuery($sql, $params);
 
     // this means node is moved to last position, so you need to get the weight of last element + 1
@@ -703,7 +703,7 @@ FROM civicrm_navigation WHERE domain_id = $domainID {$whereClause} ORDER BY pare
       if ($position) {
         $lastPosition = $position - 1;
         $sql = "SELECT weight from civicrm_navigation WHERE {$parentClause} ORDER BY weight LIMIT %1, 1";
-        $params = array(1 => array($lastPosition, 'Positive'));
+        $params = [1 => [$lastPosition, 'Positive']];
         $newWeight = CRM_Core_DAO::singleValueQuery($sql, $params);
 
         // since last node increment + 1
@@ -778,7 +778,7 @@ FROM civicrm_navigation WHERE domain_id = $domainID {$whereClause} ORDER BY pare
    * @param int $domain_id
    */
   public static function rebuildReportsNavigation($domain_id) {
-    $component_to_nav_name = array(
+    $component_to_nav_name = [
       'CiviContact' => 'Contact Reports',
       'CiviContribute' => 'Contribution Reports',
       'CiviMember' => 'Membership Reports',
@@ -787,7 +787,7 @@ FROM civicrm_navigation WHERE domain_id = $domainID {$whereClause} ORDER BY pare
       'CiviGrant' => 'Grant Reports',
       'CiviMail' => 'Mailing Reports',
       'CiviCampaign' => 'Campaign Reports',
-    );
+    ];
 
     // Create or update the top level Reports link.
     $reports_nav = self::createOrUpdateTopLevelReportsNavItem($domain_id);
@@ -814,10 +814,10 @@ FROM civicrm_navigation WHERE domain_id = $domainID {$whereClause} ORDER BY pare
         $report_nav = self::createOrUpdateReportNavItem($report['title'], $report['url'], 'reset=1', $component_nav->id, $report['permission'], $domain_id, FALSE, TRUE);
         // Update the report instance to include the navigation id.
         $query = "UPDATE civicrm_report_instance SET navigation_id = %1 WHERE id = %2";
-        $params = array(
-          1 => array($report_nav->id, 'Integer'),
-          2 => array($report_id, 'Integer'),
-        );
+        $params = [
+          1 => [$report_nav->id, 'Integer'],
+          2 => [$report_id, 'Integer'],
+        ];
         CRM_Core_DAO::executeQuery($query, $params);
       }
     }
@@ -903,19 +903,19 @@ FROM civicrm_navigation WHERE domain_id = $domainID {$whereClause} ORDER BY pare
         civicrm_report_instance.domain_id = %1
       ORDER BY civicrm_option_value.weight";
 
-    $dao = CRM_Core_DAO::executeQuery($sql, array(
-      1 => array($domain_id, 'Integer'),
-    ));
-    $rows = array();
+    $dao = CRM_Core_DAO::executeQuery($sql, [
+      1 => [$domain_id, 'Integer'],
+    ]);
+    $rows = [];
     while ($dao->fetch()) {
       $component_name = is_null($dao->name) ? 'CiviContact' : $dao->name;
       $component_id = is_null($dao->component_id) ? 99 : $dao->component_id;
       $rows[$component_id]['name'] = $component_name;
-      $rows[$component_id]['reports'][$dao->id] = array(
+      $rows[$component_id]['reports'][$dao->id] = [
         'title' => $dao->title,
         'url' => "civicrm/report/instance/{$dao->id}",
         'permission' => $dao->permission,
-      );
+      ];
     }
     return $rows;
   }
@@ -970,17 +970,17 @@ FROM civicrm_navigation WHERE domain_id = $domainID {$whereClause} ORDER BY pare
     if ($url !== NULL) {
       $url = "{$url}?{$url_params}";
     }
-    $params = array(
+    $params = [
       'name' => $name,
       'label' => ts($name),
       'url' => $url,
       'parent_id' => $parent_id,
       'is_active' => TRUE,
-      'permission' => array(
+      'permission' => [
         $permission,
-      ),
+      ],
       'domain_id' => $domain_id,
-    );
+    ];
     if ($id) {
       $params['id'] = $id;
     }

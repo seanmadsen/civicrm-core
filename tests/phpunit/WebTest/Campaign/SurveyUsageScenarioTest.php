@@ -70,10 +70,10 @@ class WebTest_Campaign_SurveyUsageScenarioTest extends CiviSeleniumTestCase {
     $this->waitForElementPresent('link=Remove');
 
     // Enable CiviCampaign module if necessary
-    $this->enableComponents(array('CiviCampaign'));
+    $this->enableComponents(['CiviCampaign']);
 
     // add the required permission
-    $this->changePermissions(array('edit-2-administer-civicampaign'));
+    $this->changePermissions(['edit-2-administer-civicampaign']);
 
     // Log in as normal user
     $this->webtestLogin();
@@ -302,7 +302,7 @@ class WebTest_Campaign_SurveyUsageScenarioTest extends CiviSeleniumTestCase {
     $this->webtestLogin('admin');
 
     // Enable CiviCampaign module if necessary
-    $this->enableComponents(array('CiviCampaign'));
+    $this->enableComponents(['CiviCampaign']);
 
     // add the required permission
     $this->changePermissions('edit-2-administer-civicampaign');

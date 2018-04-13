@@ -40,22 +40,22 @@
 class CRM_Admin_Form_Preferences_Campaign extends CRM_Admin_Form_Preferences {
   public function preProcess() {
     CRM_Utils_System::setTitle(ts('CiviCampaign Component Settings'));
-    $this->_varNames = array(
-      CRM_Core_BAO_Setting::CAMPAIGN_PREFERENCES_NAME => array(
-        'tag_unconfirmed' => array(
+    $this->_varNames = [
+      CRM_Core_BAO_Setting::CAMPAIGN_PREFERENCES_NAME => [
+        'tag_unconfirmed' => [
           'html_type' => 'text',
           'title' => ts('Tag for Unconfirmed Petition Signers'),
           'weight' => 1,
           'description' => ts('If set, new contacts that are created when signing a petition are assigned a tag of this name.'),
-        ),
-        'petition_contacts' => array(
+        ],
+        'petition_contacts' => [
           'html_type' => 'text',
           'title' => ts('Petition Signers Group'),
           'weight' => 2,
           'description' => ts('All contacts that have signed a CiviCampaign petition will be added to this group. The group will be created if it does not exist (it is required for email verification).'),
-        ),
-      ),
-    );
+        ],
+      ],
+    ];
 
     parent::preProcess();
   }

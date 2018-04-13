@@ -160,7 +160,7 @@ class WebTest_Contribute_OfflineContributionTest extends CiviSeleniumTestCase {
     $this->click("xpath=//div[@class='view-content']//table[@class='selector row-highlight']//tbody/tr[1]/td[8]/span/a[text()='View']");
     $this->waitForElementPresent("_qf_ContributionView_cancel-bottom");
 
-    $expected = array(
+    $expected = [
       'Financial Type' => 'Donation',
       'Total Amount' => '100.00',
       'Contribution Status' => 'Completed',
@@ -168,7 +168,7 @@ class WebTest_Contribute_OfflineContributionTest extends CiviSeleniumTestCase {
       'Check Number' => 'check #1041',
       'Non-deductible Amount' => '10.00',
       'Received Into' => $financialAccount,
-    );
+    ];
 
     $this->waitForElementPresent("xpath=//*[@id='ContributionView']/div[2]");
     foreach ($expected as $value) {
@@ -176,11 +176,11 @@ class WebTest_Contribute_OfflineContributionTest extends CiviSeleniumTestCase {
     }
 
     // verify if soft credit was created successfully
-    $expected = array(
+    $expected = [
       'Soft Credit To 1' => "{$softCreditFname} {$softCreditLname}",
       'Soft Credit To 2' => "{$softCreditSecondFname} {$softCreditSecondLname}",
       'Amount (Soft Credit Type)' => '100.00 (In Honor of)',
-    );
+    ];
 
     foreach ($expected as $value) {
       $this->assertElementContainsText("css=table.crm-soft-credit-listing", $value);
@@ -194,13 +194,13 @@ class WebTest_Contribute_OfflineContributionTest extends CiviSeleniumTestCase {
     $this->waitForElementPresent("link=Record Contribution (Check, Cash, EFT ...)");
 
     // verify soft credit details
-    $expected = array(
+    $expected = [
       3 => 'Solicited',
       4 => 'Donation',
       2 => '50.00',
       6 => 'Completed',
       1 => "{$firstName} {$lastName}",
-    );
+    ];
     foreach ($expected as $value => $label) {
       $this->assertElementContainsText("xpath=//div[@class='view-content']//table[@class='selector row-highlight']//tbody/tr[2]/td[$value]", $label);
     }
@@ -228,91 +228,91 @@ class WebTest_Contribute_OfflineContributionTest extends CiviSeleniumTestCase {
     $this->webtestAddContact($firstName, $lastName);
 
     //scenario 1 : is_deductible = 0 and non deductible amount is entered
-    $scenario1 = array(
+    $scenario1 = [
       'financial_type' => 'Campaign Contribution',
       'total_amount' => 111,
       'non_deductible_amount' => 15,
       'sort_name' => "$lastName, $firstName",
-    );
+    ];
     $this->_doOfflineContribution($scenario1, $firstName, $lastName, $processorName);
 
-    $checkScenario1 = array(
+    $checkScenario1 = [
       'From' => "{$firstName} {$lastName}",
       'Financial Type' => 'Campaign Contribution',
       'Total Amount' => 111,
       'Non-deductible Amount' => 15,
       'sort_name' => "$lastName, $firstName",
-    );
+    ];
     $this->_verifyAmounts($checkScenario1);
 
     //scenario 2 : is_deductible = TRUE and premium is set and premium is greater than total amount
-    $scenario2 = array(
+    $scenario2 = [
       'financial_type' => 'Donation',
       'total_amount' => 10,
       'premium' => "{$premiumName} ( SKU )",
       'sort_name' => "$lastName, $firstName",
-    );
+    ];
     $this->_doOfflineContribution($scenario2, $firstName, $lastName, $processorName);
 
-    $checkScenario2 = array(
+    $checkScenario2 = [
       'From' => "{$firstName} {$lastName}",
       'Financial Type' => 'Donation',
       'Total Amount' => 10,
       'Non-deductible Amount' => 10,
       'sort_name' => "$lastName, $firstName",
-    );
+    ];
     $this->_verifyAmounts($checkScenario2);
 
     //scenario 3 : is_deductible = TRUE and premium is set and premium is less than total amount
-    $scenario3 = array(
+    $scenario3 = [
       'financial_type' => 'Donation',
       'total_amount' => 123,
       'premium' => "{$premiumName} ( SKU )",
       'sort_name' => "$lastName, $firstName",
-    );
+    ];
     $this->_doOfflineContribution($scenario3, $firstName, $lastName, $processorName);
 
-    $checkScenario3 = array(
+    $checkScenario3 = [
       'From' => "{$firstName} {$lastName}",
       'Financial Type' => 'Donation',
       'Total Amount' => 123,
       'Non-deductible Amount' => 12,
       'sort_name' => "$lastName, $firstName",
-    );
+    ];
     $this->_verifyAmounts($checkScenario3);
 
     //scenario 4 : is_deductible = TRUE and premium is not set
-    $scenario4 = array(
+    $scenario4 = [
       'financial_type' => 'Donation',
       'total_amount' => 123,
       'sort_name' => "$lastName, $firstName",
-    );
+    ];
     $this->_doOfflineContribution($scenario4, $firstName, $lastName, $processorName);
 
-    $checkScenario4 = array(
+    $checkScenario4 = [
       'From' => "{$firstName} {$lastName}",
       'Financial Type' => 'Donation',
       'Total Amount' => 123,
       'Non-deductible Amount' => '0.00',
       'sort_name' => "$lastName, $firstName",
-    );
+    ];
     $this->_verifyAmounts($checkScenario4);
 
     //scenario 5 : is_deductible = FALSE, non_deductible_amount = the total amount
-    $scenario5 = array(
+    $scenario5 = [
       'financial_type' => 'Campaign Contribution',
       'total_amount' => 555,
       'sort_name' => "$lastName, $firstName",
-    );
+    ];
     $this->_doOfflineContribution($scenario5, $firstName, $lastName, $processorName);
 
-    $checkScenario5 = array(
+    $checkScenario5 = [
       'From' => "{$firstName} {$lastName}",
       'Financial Type' => 'Campaign Contribution',
       'Total Amount' => 555,
       'Non-deductible Amount' => 555,
       'sort_name' => "$lastName, $firstName",
-    );
+    ];
     $this->_verifyAmounts($checkScenario5);
   }
 
@@ -431,18 +431,18 @@ class WebTest_Contribute_OfflineContributionTest extends CiviSeleniumTestCase {
 
     $this->waitForElementPresent("xpath=//div[@class='view-content']//table[@class='selector row-highlight']//tbody/tr[1]/td[8]/span/a[text()='View']");
     $this->clickLink("xpath=//div[@class='view-content']//table[@class='selector row-highlight']//tbody/tr[1]/td[8]/span/a[text()='View']", "_qf_ContributionView_cancel-bottom", FALSE);
-    $expected = array(
+    $expected = [
       'Financial Type' => 'Donation',
       'Total Amount' => '0.00',
       'Contribution Status' => 'Completed',
       'Payment Method' => 'Credit Card',
-    );
+    ];
     $this->webtestVerifyTabularData($expected);
   }
 
   public function testDefaultCurrancy() {
     $this->webtestLogin();
-    $this->enableCurrency(array('GBP', 'EUR'));
+    $this->enableCurrency(['GBP', 'EUR']);
 
     //Create a contact.
     $firstName = 'John' . substr(sha1(rand()), 0, 7);

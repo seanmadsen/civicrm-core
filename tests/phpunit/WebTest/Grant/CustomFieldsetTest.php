@@ -43,7 +43,7 @@ class WebTest_Grant_CustomFieldsetTest extends CiviSeleniumTestCase {
     $this->enableComponents("CiviGrant");
 
     // let's give full CiviGrant permissions to demo user (registered user).
-    $permission = array('edit-2-access-civigrant', 'edit-2-edit-grants', 'edit-2-delete-in-civigrant');
+    $permission = ['edit-2-access-civigrant', 'edit-2-edit-grants', 'edit-2-delete-in-civigrant'];
     $this->changePermissions($permission);
 
     // Log in as normal user
@@ -97,12 +97,12 @@ class WebTest_Grant_CustomFieldsetTest extends CiviSeleniumTestCase {
     $this->waitForElementPresent('_qf_GrantView_cancel-bottom');
 
     // verify tabular data for grant view
-    $this->webtestVerifyTabularData(array(
+    $this->webtestVerifyTabularData([
         'Name' => $contact['display_name'],
         'Grant Status' => 'Approved',
         'Grant Type' => $grantType,
         $grantField => '$ 99.99',
-      )
+      ]
     );
   }
 
@@ -112,13 +112,13 @@ class WebTest_Grant_CustomFieldsetTest extends CiviSeleniumTestCase {
     // Enable CiviGrant module if necessary
     $this->enableComponents("CiviGrant");
 
-    $triggerElement = array('name' => 'grant_type_id', 'type' => 'select');
-    $customSets = array(
-      array('entity' => 'Grant', 'subEntity' => 'Emergency', 'triggerElement' => $triggerElement),
-      array('entity' => 'Grant', 'subEntity' => 'Family Support', 'triggerElement' => $triggerElement),
-    );
+    $triggerElement = ['name' => 'grant_type_id', 'type' => 'select'];
+    $customSets = [
+      ['entity' => 'Grant', 'subEntity' => 'Emergency', 'triggerElement' => $triggerElement],
+      ['entity' => 'Grant', 'subEntity' => 'Family Support', 'triggerElement' => $triggerElement],
+    ];
 
-    $pageUrl = array('url' => 'grant/add', 'args' => 'reset=1&action=add&context=standalone');
+    $pageUrl = ['url' => 'grant/add', 'args' => 'reset=1&action=add&context=standalone'];
     $this->customFieldSetLoadOnTheFlyCheck($customSets, $pageUrl);
   }
 

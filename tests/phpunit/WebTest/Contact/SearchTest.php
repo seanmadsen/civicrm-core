@@ -158,7 +158,7 @@ class WebTest_Contact_SearchTest extends CiviSeleniumTestCase {
    * @param $self
    */
   public static function addTag($tagName = 'New Tag', $self) {
-    $self->openCiviPage('admin/tag', array('reset' => 1, 'action' => 'add'), '_qf_Tag_next');
+    $self->openCiviPage('admin/tag', ['reset' => 1, 'action' => 'add'], '_qf_Tag_next');
 
     // fill tag name
     $self->type("name", $tagName);

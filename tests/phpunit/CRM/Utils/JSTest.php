@@ -34,32 +34,32 @@ class CRM_Utils_JSTest extends CiviUnitTestCase {
    * @return array
    */
   public function translateExamples() {
-    $cases = array();
-    $cases[] = array(
+    $cases = [];
+    $cases[] = [
       '',
-      array(),
-    );
-    $cases[] = array(// missing ts
+      [],
+    ];
+    $cases[] = [// missing ts
       'alert("Hello world")',
-      array(),
-    );
-    $cases[] = array(// basic function call
+      [],
+    ];
+    $cases[] = [// basic function call
       'alert(ts("Hello world"));',
-      array('Hello world'),
-    );
-    $cases[] = array(// with arg
+      ['Hello world'],
+    ];
+    $cases[] = [// with arg
       'alert(ts("Hello world", {1: "whiz"}));',
-      array('Hello world'),
-    );
-    $cases[] = array(// not really ts()
+      ['Hello world'],
+    ];
+    $cases[] = [// not really ts()
       'alert(clients("Hello world"));',
-      array(),
-    );
-    $cases[] = array(// not really ts()
+      [],
+    ];
+    $cases[] = [// not really ts()
       'alert(clients("Hello world", {1: "whiz"}));',
-      array(),
-    );
-    $cases[] = array(// with arg
+      [],
+    ];
+    $cases[] = [// with arg
       "\n" .
       "public function whits() {\n" .
       "  for (a in b) {\n" .
@@ -68,32 +68,32 @@ class CRM_Utils_JSTest extends CiviUnitTestCase {
       "    });\n" .
       "  }\n" .
       "}\n",
-      array('Hello'),
-    );
-    $cases[] = array(// duplicate
+      ['Hello'],
+    ];
+    $cases[] = [// duplicate
       'alert(ts("Hello world") + "-" + ts("Hello world"));',
-      array('Hello world'),
-    );
-    $cases[] = array(// two strings, addition
+      ['Hello world'],
+    ];
+    $cases[] = [// two strings, addition
       'alert(ts("Hello world") + "-" + ts("How do you do?"));',
-      array('Hello world', 'How do you do?'),
-    );
-    $cases[] = array(// two strings, separate calls
+      ['Hello world', 'How do you do?'],
+    ];
+    $cases[] = [// two strings, separate calls
       'alert(ts("Hello world");\nalert(ts("How do you do?"));',
-      array('Hello world', 'How do you do?'),
-    );
-    $cases[] = array(
+      ['Hello world', 'How do you do?'],
+    ];
+    $cases[] = [
       'alert(ts(\'Single quoted\'));',
-      array('Single quoted'),
-    );
-    $cases[] = array(// unclear string
+      ['Single quoted'],
+    ];
+    $cases[] = [// unclear string
       'alert(ts(message));',
-      array(),
-    );
-    $cases[] = array(// ts() within a string
+      [],
+    ];
+    $cases[] = [// ts() within a string
       'alert(ts("Does the ts(\'example\') notation work?"));',
-      array('Does the ts(\'example\') notation work?'),
-    );
+      ['Does the ts(\'example\') notation work?'],
+    ];
     return $cases;
   }
 
@@ -124,18 +124,18 @@ class CRM_Utils_JSTest extends CiviUnitTestCase {
     $abc = "(function (angular, $, _) {\na();\n\nb();\n\nc();\n})(angular,CRM.$, CRM._);";
     $cb = "(function( angular, $,_) {\nc();\n\nb();\n})(angular,CRM.$,CRM._);";
 
-    $cases = array();
-    $cases[] = array(array($a), "$a");
-    $cases[] = array(array($b), "$b");
-    $cases[] = array(array($c), "$c");
-    $cases[] = array(array($d), "$d");
-    $cases[] = array(array($m), "$m");
-    $cases[] = array(array($a, $b), "$ab");
-    $cases[] = array(array($a, $m, $b), "$a$m$b");
-    $cases[] = array(array($a, $d), "$a$d");
-    $cases[] = array(array($a, $d, $b), "$a$d$b");
-    $cases[] = array(array($a, $b, $c), "$abc");
-    $cases[] = array(array($a, $b, $d, $c, $b), "$ab$d$cb");
+    $cases = [];
+    $cases[] = [[$a], "$a"];
+    $cases[] = [[$b], "$b"];
+    $cases[] = [[$c], "$c"];
+    $cases[] = [[$d], "$d"];
+    $cases[] = [[$m], "$m"];
+    $cases[] = [[$a, $b], "$ab"];
+    $cases[] = [[$a, $m, $b], "$a$m$b"];
+    $cases[] = [[$a, $d], "$a$d"];
+    $cases[] = [[$a, $d, $b], "$a$d$b"];
+    $cases[] = [[$a, $b, $c], "$abc"];
+    $cases[] = [[$a, $b, $d, $c, $b], "$ab$d$cb"];
     return $cases;
   }
 
@@ -147,34 +147,34 @@ class CRM_Utils_JSTest extends CiviUnitTestCase {
   public function testDedupeClosure($scripts, $expectedOutput) {
     $actualOutput = CRM_Utils_JS::dedupeClosures(
       $scripts,
-      array('angular', '$', '_'),
-      array('angular', 'CRM.$', 'CRM._')
+      ['angular', '$', '_'],
+      ['angular', 'CRM.$', 'CRM._']
     );
     $this->assertEquals($expectedOutput, implode("", $actualOutput));
   }
 
   public function stripCommentsExamples() {
-    $cases = array();
-    $cases[] = array(
+    $cases = [];
+    $cases[] = [
       "a();\n//# sourceMappingURL=../foo/bar/baz.js\nb();",
       "a();\n\nb();",
-    );
-    $cases[] = array(
+    ];
+    $cases[] = [
       "// foo\na();",
       "\na();",
-    );
-    $cases[] = array(
+    ];
+    $cases[] = [
       "b();\n  // foo",
       "b();\n",
-    );
-    $cases[] = array(
+    ];
+    $cases[] = [
       "/// foo\na();\n\t \t//bar\nb();\n// whiz",
       "\na();\n\nb();\n",
-    );
-    $cases[] = array(
+    ];
+    $cases[] = [
       "alert('//# sourceMappingURL=../foo/bar/baz.js');\n//zoop\na();",
       "alert('//# sourceMappingURL=../foo/bar/baz.js');\n\na();",
-    );
+    ];
     return $cases;
   }
 

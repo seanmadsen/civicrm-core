@@ -70,7 +70,7 @@ class CRM_Campaign_Form_Search extends CRM_Core_Form_Search {
    */
   public function preProcess() {
     $this->_done = FALSE;
-    $this->_defaults = array();
+    $this->_defaults = [];
 
     //set the button name.
     $this->_searchButtonName = $this->getButtonName('refresh');
@@ -87,11 +87,11 @@ class CRM_Campaign_Form_Search extends CRM_Core_Form_Search {
     //operation for state machine.
     $this->_operation = CRM_Utils_Request::retrieve('op', 'String', $this, FALSE, 'reserve');
     //validate operation.
-    if (!in_array($this->_operation, array(
+    if (!in_array($this->_operation, [
       'reserve',
       'release',
       'interview',
-    ))
+    ])
     ) {
       $this->_operation = 'reserve';
       $this->set('op', $this->_operation);
@@ -168,11 +168,11 @@ class CRM_Campaign_Form_Search extends CRM_Core_Form_Search {
     //append breadcrumb to survey dashboard.
     if (CRM_Campaign_BAO_Campaign::accessCampaign()) {
       $url = CRM_Utils_System::url('civicrm/campaign', 'reset=1&subPage=survey');
-      CRM_Utils_System::appendBreadCrumb(array(array('title' => ts('Survey(s)'), 'url' => $url)));
+      CRM_Utils_System::appendBreadCrumb([['title' => ts('Survey(s)'), 'url' => $url]]);
     }
 
     //set the form title.
-    CRM_Utils_System::setTitle(ts('Find Respondents To %1', array(1 => ucfirst($this->_operation))));
+    CRM_Utils_System::setTitle(ts('Find Respondents To %1', [1 => ucfirst($this->_operation)]));
   }
 
   /**
@@ -208,14 +208,14 @@ class CRM_Campaign_Form_Search extends CRM_Core_Form_Search {
       $allTasks = CRM_Campaign_Task::permissionedTaskTitles(CRM_Core_Permission::getPermission());
 
       //hack to serve right page to state machine.
-      $taskMapping = array(
+      $taskMapping = [
         'interview' => CRM_Campaign_Task::INTERVIEW,
         'reserve' => CRM_Campaign_Task::RESERVE,
         'release' => CRM_Campaign_Task::RELEASE,
-      );
+      ];
 
       $currentTaskValue = CRM_Utils_Array::value($this->_operation, $taskMapping);
-      $taskValue = array($currentTaskValue => $allTasks[$currentTaskValue]);
+      $taskValue = [$currentTaskValue => $allTasks[$currentTaskValue]];
       if ($this->_operation == 'interview' && !empty($this->_formValues['campaign_survey_id'])) {
         $activityTypes = CRM_Core_PseudoConstant::activityType(FALSE, TRUE, FALSE, 'label', TRUE);
 
@@ -223,11 +223,11 @@ class CRM_Campaign_Form_Search extends CRM_Core_Form_Search {
           $this->_formValues['campaign_survey_id'],
           'activity_type_id'
         );
-        $taskValue = array(
+        $taskValue = [
           $currentTaskValue => ts('Record %1 Responses',
-            array(1 => $activityTypes[$surveyTypeId])
+            [1 => $activityTypes[$surveyTypeId]]
           ),
-        );
+        ];
       }
 
       $this->addTaskMenu($taskValue);
@@ -329,7 +329,7 @@ class CRM_Campaign_Form_Search extends CRM_Core_Form_Search {
     }
 
     //format multi-select group and contact types.
-    foreach (array('group', 'contact_type') as $param) {
+    foreach (['group', 'contact_type'] as $param) {
       if ($this->_force) {
         continue;
       }
@@ -344,10 +344,10 @@ class CRM_Campaign_Form_Search extends CRM_Core_Form_Search {
 
     //apply filter of survey contact type for search.
     $contactType = CRM_Campaign_BAO_Survey::getSurveyContactType(CRM_Utils_Array::value('campaign_survey_id', $this->_formValues));
-    if ($contactType && in_array($this->_operation, array(
+    if ($contactType && in_array($this->_operation, [
         'reserve',
         'interview',
-      ))
+      ])
     ) {
       $this->_formValues['contact_type'][$contactType] = 1;
     }
@@ -441,12 +441,12 @@ class CRM_Campaign_Form_Search extends CRM_Core_Form_Search {
    * @return array
    */
   public function voterClause() {
-    $params = array('campaign_search_voter_for' => $this->_operation);
+    $params = ['campaign_search_voter_for' => $this->_operation];
 
-    $clauseFields = array(
+    $clauseFields = [
       'surveyId' => 'campaign_survey_id',
       'interviewerId' => 'survey_interviewer_id',
-    );
+    ];
 
     foreach ($clauseFields as $param => $key) {
       $params[$key] = CRM_Utils_Array::value($key, $this->_formValues);

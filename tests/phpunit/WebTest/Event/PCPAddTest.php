@@ -38,12 +38,12 @@ class WebTest_Event_PCPAddTest extends CiviSeleniumTestCase {
   public function testPCPAdd() {
     $this->markTestSkipped('Skipping for now as it works fine locally.');
     //give permissions to anonymous user
-    $permission = array(
+    $permission = [
       'edit-1-profile-listings-and-forms',
       'edit-1-access-all-custom-data',
       'edit-1-register-for-events',
       'edit-1-make-online-contributions',
-    );
+    ];
     $this->changePermissions($permission);
 
     // Log in as normal user
@@ -90,7 +90,7 @@ class WebTest_Event_PCPAddTest extends CiviSeleniumTestCase {
     $contributionPageId = $this->webtestAddContributionPage($conHash,
       $conRand,
       $contributionPageTitle,
-      array($processorName => $conProcessorType),
+      [$processorName => $conProcessorType],
       $conAmountSection,
       $conPayLater,
       $conOnBehalf,
@@ -328,11 +328,11 @@ class WebTest_Event_PCPAddTest extends CiviSeleniumTestCase {
 
     $this->waitForPageToLoad($this->getTimeoutMsec());
     $this->waitForElementPresent("_qf_Confirm_next-bottom");
-    $confirmStrings = array("Event Fee(s)", "Billing Name and Address", "Credit Card Information");
+    $confirmStrings = ["Event Fee(s)", "Billing Name and Address", "Credit Card Information"];
     $this->assertStringsPresent($confirmStrings);
     $this->click("_qf_Confirm_next-bottom");
     $this->waitForPageToLoad($this->getTimeoutMsec());
-    $thankStrings = array("Thank You for Registering", "Event Total", "Transaction Date");
+    $thankStrings = ["Thank You for Registering", "Event Total", "Transaction Date"];
     $this->assertStringsPresent($thankStrings);
 
     //pcp creation via different user
@@ -502,11 +502,11 @@ class WebTest_Event_PCPAddTest extends CiviSeleniumTestCase {
     $this->clickLink("xpath=//table[@class='selector row-highlight']/tbody/tr[1]/td[8]/span/a[text()='View']", "_qf_ParticipantView_cancel-bottom", FALSE);
 
     $this->webtestVerifyTabularData(
-      array(
+      [
         'From' => "{$firstNameDonar} {$lastNameDonar}",
         'Total Amount' => $amount,
         'Contribution Status' => 'Completed',
-      )
+      ]
     );
     $softCreditor = "{$firstNameCreator} {$lastNameCreator}";
     $this->verifyText("xpath=//div[@id='PCPView']/div[2]//table[@class='crm-info-panel']/tbody/tr[2]/td[2]", preg_quote($softCreditor));
@@ -544,11 +544,11 @@ class WebTest_Event_PCPAddTest extends CiviSeleniumTestCase {
     $amount = $amount - $feeAmount;
 
     $this->webtestVerifyTabularData(
-      array(
+      [
         'From' => "{$firstName} {$lastName}",
         'Net Amount' => $amount,
         'Contribution Status' => 'Completed',
-      )
+      ]
     );
     $softCreditor = "{$pcpCreatorFirstName} {$pcpCreatorLastName}";
     $this->verifyText("xpath=//div[@id='PCPView']/div[2]//table[@class='crm-info-panel']/tbody/tr[2]/td[2]", preg_quote($softCreditor));

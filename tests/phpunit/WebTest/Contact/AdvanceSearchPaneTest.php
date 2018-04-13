@@ -57,7 +57,7 @@ class WebTest_Contact_AdvanceSearchPaneTest extends CiviSeleniumTestCase {
       $this->waitForPageToLoad(2 * $this->getTimeoutMsec());
 
       // check the opened panes.
-      $this->_checkOpenedPanes(array($pane));
+      $this->_checkOpenedPanes([$pane]);
     }
   }
 
@@ -89,7 +89,7 @@ class WebTest_Contact_AdvanceSearchPaneTest extends CiviSeleniumTestCase {
   /**
    * @param array $openedPanes
    */
-  public function _checkOpenedPanes($openedPanes = array()) {
+  public function _checkOpenedPanes($openedPanes = []) {
     if (!$this->isTextPresent('None found.')) {
       $this->click('css=div.crm-advanced_search_form-accordion div.crm-accordion-header');
     }
@@ -111,7 +111,7 @@ class WebTest_Contact_AdvanceSearchPaneTest extends CiviSeleniumTestCase {
    * @param $paneRef
    * @param array $selectFields
    */
-  public function _selectPaneFields($paneRef, $selectFields = array()) {
+  public function _selectPaneFields($paneRef, $selectFields = []) {
     $pane = $this->_advanceSearchPanes($paneRef);
 
     $this->click("css=div.crm-accordion-wrapper {$pane['headerLocator']}");
@@ -172,190 +172,190 @@ class WebTest_Contact_AdvanceSearchPaneTest extends CiviSeleniumTestCase {
     static $_advance_search_panes;
 
     if (!isset($_advance_search_panes) || empty($_advance_search_panes)) {
-      $_advance_search_panes = array(
-        'location' => array(
+      $_advance_search_panes = [
+        'location' => [
           'headerLocator' => 'div#location',
           'bodyLocator' => 'select#country',
           'title' => 'Address Fields',
-          'fields' => array(
-            'Location Type' => array(
+          'fields' => [
+            'Location Type' => [
               'type' => 'multiselect2',
               'locator' => 'location_type',
-              'values' => array(array('Home', 'Work')),
-            ),
-            'Country' => array(
+              'values' => [['Home', 'Work']],
+            ],
+            'Country' => [
               'type' => 'select',
               'locator' => 'country',
-              'values' => array('UNITED STATES'),
-            ),
-            'State' => array(
+              'values' => ['UNITED STATES'],
+            ],
+            'State' => [
               'type' => 'multiselect2',
               'locator' => 'state_province',
-              'values' => array(
-                array('Alabama', 'California', 'New Jersey', 'New York'),
-              ),
-            ),
-          ),
-        ),
-        'custom' => array(
+              'values' => [
+                ['Alabama', 'California', 'New Jersey', 'New York'],
+              ],
+            ],
+          ],
+        ],
+        'custom' => [
           'headerLocator' => 'div#custom',
           'bodyLocator' => 'div#constituent_information',
           'title' => 'Custom Data',
-          'fields' => array(
-            'Marital Status' => array(
+          'fields' => [
+            'Marital Status' => [
               'type' => 'select',
               'locator' => 'custom_2',
-              'values' => array('Single'),
-            ),
-          ),
-        ),
-        'activity' => array(
+              'values' => ['Single'],
+            ],
+          ],
+        ],
+        'activity' => [
           'headerLocator' => 'div#activity',
           'bodyLocator' => 'input#activity_subject',
           'title' => 'Activities',
-          'fields' => array(
-            'Activity Type' => array(
+          'fields' => [
+            'Activity Type' => [
               'type' => 'multiselect2',
               'locator' => 'activity_type_id',
-              'values' => array(array('Contribution', 'Email', 'Event Registration', 'Membership Signup')),
-            ),
-            'Activity Subject' => array(
+              'values' => [['Contribution', 'Email', 'Event Registration', 'Membership Signup']],
+            ],
+            'Activity Subject' => [
               'type' => 'text',
               'locator' => 'activity_subject',
-              'values' => array('Test Subject'),
-            ),
-            'Activity Status' => array(
+              'values' => ['Test Subject'],
+            ],
+            'Activity Status' => [
               'type' => 'multiselect2',
               'locator' => 'status_id',
-              'values' => array(array('Scheduled', 'Completed')),
-            ),
-          ),
-        ),
-        'relationship' => array(
+              'values' => [['Scheduled', 'Completed']],
+            ],
+          ],
+        ],
+        'relationship' => [
           'headerLocator' => 'div#relationship',
           'bodyLocator' => 'select#relation_type_id',
           'title' => 'Relationships',
-          'fields' => array(
-            'Relation Type' => array(
+          'fields' => [
+            'Relation Type' => [
               'type' => 'select',
               'locator' => 'relation_type_id',
-              'values' => array('Employee of'),
-            ),
-            'Relation Target' => array(
+              'values' => ['Employee of'],
+            ],
+            'Relation Target' => [
               'type' => 'text',
               'locator' => 'relation_target_name',
-              'values' => array('Test Contact'),
-            ),
-          ),
-        ),
-        'demographics' => array(
+              'values' => ['Test Contact'],
+            ],
+          ],
+        ],
+        'demographics' => [
           'headerLocator' => 'div#demographics',
           'bodyLocator' => 'input#birth_date_low',
           'title' => 'Demographics',
-          'fields' => array(
-            'Birth Date Range' => array(
+          'fields' => [
+            'Birth Date Range' => [
               'type' => 'select',
               'locator' => 'birth_date_relative',
-              'values' => array('Choose Date Range'),
-            ),
-            'Birth Date from' => array(
+              'values' => ['Choose Date Range'],
+            ],
+            'Birth Date from' => [
               'type' => 'date',
               'locator' => 'birth_date_low',
-              'values' => array('10 September 1980'),
-            ),
-            'Birth Date to' => array(
+              'values' => ['10 September 1980'],
+            ],
+            'Birth Date to' => [
               'type' => 'date',
               'locator' => 'birth_date_high',
-              'values' => array('10 September 2000'),
-            ),
-          ),
-        ),
-        'note' => array(
+              'values' => ['10 September 2000'],
+            ],
+          ],
+        ],
+        'note' => [
           'headerLocator' => 'div#notes',
           'bodyLocator' => 'input#note',
           'title' => 'Notes',
-          'fields' => array(
-            'note' => array(
+          'fields' => [
+            'note' => [
               'type' => 'text',
               'locator' => 'css=div#notes-search input#note',
-              'values' => array('Test Note'),
-            ),
-          ),
-        ),
-        'change_log' => array(
+              'values' => ['Test Note'],
+            ],
+          ],
+        ],
+        'change_log' => [
           'headerLocator' => 'div#changeLog',
           'bodyLocator' => 'input#changed_by',
           'title' => 'Change Log',
-          'fields' => array(
-            'Modified By' => array(
+          'fields' => [
+            'Modified By' => [
               'type' => 'text',
               'locator' => 'changed_by',
-              'values' => array('Test User'),
-            ),
-          ),
-        ),
-        'contribution' => array(
+              'values' => ['Test User'],
+            ],
+          ],
+        ],
+        'contribution' => [
           'headerLocator' => 'div#CiviContribute',
           'bodyLocator' => 'select#financial_type_id',
           'title' => 'Contributions',
-          'fields' => array(
-            'Amount from' => array(
+          'fields' => [
+            'Amount from' => [
               'type' => 'text',
               'locator' => 'contribution_amount_low',
-              'values' => array('10'),
-            ),
-            'Amount to' => array(
+              'values' => ['10'],
+            ],
+            'Amount to' => [
               'type' => 'text',
               'locator' => 'contribution_amount_high',
-              'values' => array('1000'),
-            ),
-            'Financial Type' => array(
+              'values' => ['1000'],
+            ],
+            'Financial Type' => [
               'type' => 'select',
               'locator' => 'financial_type_id',
-              'values' => array('Donation'),
-            ),
-            'Contribution Status' => array(
+              'values' => ['Donation'],
+            ],
+            'Contribution Status' => [
               'type' => 'multiselect2',
               'locator' => 'contribution_status_id',
-              'values' => array(array('Completed', 'Pending')),
-            ),
-          ),
-        ),
-        'membership' => array(
+              'values' => [['Completed', 'Pending']],
+            ],
+          ],
+        ],
+        'membership' => [
           'headerLocator' => 'div#CiviMember',
           'bodyLocator' => 'input#member_source',
           'title' => 'Memberships',
-          'fields' => array(
-            'Membership Type' => array(
+          'fields' => [
+            'Membership Type' => [
               'type' => 'select2',
               'locator' => 'membership_type_id',
-              'values' => array(array('General', 'Student')),
-            ),
-            'Membership Status' => array(
+              'values' => [['General', 'Student']],
+            ],
+            'Membership Status' => [
               'type' => 'multiselect2',
               'locator' => 'membership_status_id',
-              'values' => array(array('New', 'Current')),
-            ),
-          ),
-        ),
-        'event' => array(
+              'values' => [['New', 'Current']],
+            ],
+          ],
+        ],
+        'event' => [
           'headerLocator' => 'div#CiviEvent',
           'bodyLocator' => 'input#event_id',
           'title' => 'Events',
-          'fields' => array(
-            'Participant Status' => array(
+          'fields' => [
+            'Participant Status' => [
               'type' => 'multiselect2',
               'locator' => 'participant_status_id',
-              'values' => array(array('Registered', 'Attended')),
-            ),
-            'Participant Role' => array(
+              'values' => [['Registered', 'Attended']],
+            ],
+            'Participant Role' => [
               'type' => 'multiselect2',
               'locator' => 'participant_role_id',
-              'values' => array(array('Attendee', 'Volunteer')),
-            ),
-          ),
-        ),
-      );
+              'values' => [['Attendee', 'Volunteer']],
+            ],
+          ],
+        ],
+      ];
     }
 
     if ($paneRef) {

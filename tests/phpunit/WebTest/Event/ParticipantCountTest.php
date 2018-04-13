@@ -46,16 +46,16 @@ class WebTest_Event_ParticipantCountTest extends CiviSeleniumTestCase {
 
     // create an event
     $eventTitle = 'A Conference - ' . substr(sha1(rand()), 0, 7);
-    $paramsEvent = array(
+    $paramsEvent = [
       'title' => $eventTitle,
       'template_id' => 6,
       'event_type_id' => 4,
       'payment_processor' => $processorName,
-      'fee_level' => array(
+      'fee_level' => [
         'Member' => '250.00',
         'Non-Member' => '325.00',
-      ),
-    );
+      ],
+    ];
 
     $infoEvent = $this->_testAddEvent($paramsEvent);
 
@@ -123,57 +123,57 @@ class WebTest_Event_ParticipantCountTest extends CiviSeleniumTestCase {
     $this->_testAddSet($priceset);
 
     // create price fields
-    $fields = array(
-      'Full Conference' => array(
+    $fields = [
+      'Full Conference' => [
         'type' => 'Text',
         'amount' => '525.00',
         'count' => '2',
-      ),
-      'Meal Choice' => array(
+      ],
+      'Meal Choice' => [
         'type' => 'Select',
-        'options' => array(
-          1 => array(
+        'options' => [
+          1 => [
             'label' => 'Chicken',
             'amount' => '525.00',
             'count' => '2',
-          ),
-          2 => array(
+          ],
+          2 => [
             'label' => 'Vegetarian',
             'amount' => '200.00',
             'count' => '2',
-          ),
-        ),
-      ),
-      'Pre-conference Meetup?' => array(
+          ],
+        ],
+      ],
+      'Pre-conference Meetup?' => [
         'type' => 'Radio',
-        'options' => array(
-          1 => array(
+        'options' => [
+          1 => [
             'label' => 'Yes',
             'amount' => '50.00',
             'count' => '2',
-          ),
-          2 => array(
+          ],
+          2 => [
             'label' => 'No',
             'amount' => '0',
-          ),
-        ),
-      ),
-      'Evening Sessions' => array(
+          ],
+        ],
+      ],
+      'Evening Sessions' => [
         'type' => 'CheckBox',
-        'options' => array(
-          1 => array(
+        'options' => [
+          1 => [
             'label' => 'First Five',
             'amount' => '100.00',
             'count' => '5',
-          ),
-          2 => array(
+          ],
+          2 => [
             'label' => 'Second Four',
             'amount' => '50.00',
             'count' => '4',
-          ),
-        ),
-      ),
-    );
+          ],
+        ],
+      ],
+    ];
 
     foreach ($fields as $label => $field) {
       $this->waitForAjaxContent();
@@ -195,20 +195,20 @@ class WebTest_Event_ParticipantCountTest extends CiviSeleniumTestCase {
 
     // create event.
     $eventTitle = 'Meeting - ' . substr(sha1(rand()), 0, 7);
-    $paramsEvent = array(
+    $paramsEvent = [
       'title' => $eventTitle,
       'template_id' => 6,
       'event_type_id' => 4,
       'payment_processor' => $processorName,
       'price_set' => $priceset,
-    );
+    ];
 
     $infoEvent = $this->_testAddEvent($paramsEvent);
 
     // logout to register for event.
     $this->webtestLogout();
 
-    $priceFieldOptionCounts = $participants = array();
+    $priceFieldOptionCounts = $participants = [];
 
     // Register Participant 1
     // visit event info page
@@ -222,11 +222,11 @@ class WebTest_Event_ParticipantCountTest extends CiviSeleniumTestCase {
     $this->type("xpath=//div[@id='priceset']/div[@class='crm-section full_conference-section']//div/input[@class='four crm-form-text required']", '1');
 
     $email = 'jane_' . substr(sha1(rand()), 0, 5) . '@example.org';
-    $participants[1] = array(
+    $participants[1] = [
       'email' => $email,
       'first_name' => 'Jane_' . substr(sha1(rand()), 0, 5),
       'last_name' => 'San_' . substr(sha1(rand()), 0, 5),
-    );
+    ];
 
     $this->type('first_name', $participants[1]['first_name']);
     $this->type('last_name', $participants[1]['last_name']);
@@ -236,7 +236,7 @@ class WebTest_Event_ParticipantCountTest extends CiviSeleniumTestCase {
     $this->_testRegisterWithBillingInfo($participants[1]);
 
     // Options filled by 1st participants.
-    $priceFieldOptionCounts[1] = array(
+    $priceFieldOptionCounts[1] = [
       'Full Conference' => 1,
       'Meal Choice - Chicken' => 1,
       'Meal Choice - Vegetarian' => 0,
@@ -244,7 +244,7 @@ class WebTest_Event_ParticipantCountTest extends CiviSeleniumTestCase {
       'Pre-conference Meetup? - No' => 0,
       'Evening Sessions - First Five' => 1,
       'Evening Sessions - Second Four' => 0,
-    );
+    ];
 
     // Register Participant 1
     // visit event info page
@@ -256,11 +256,11 @@ class WebTest_Event_ParticipantCountTest extends CiviSeleniumTestCase {
     $this->type("xpath=//div[@id='priceset']/div[@class='crm-section full_conference-section']//div/input[@class='four crm-form-text required']", '2');
     $email = 'jane_' . substr(sha1(rand()), 0, 5) . '@example.org';
 
-    $participants[2] = array(
+    $participants[2] = [
       'email' => $email,
       'first_name' => 'Jane_' . substr(sha1(rand()), 0, 5),
       'last_name' => 'San_' . substr(sha1(rand()), 0, 5),
-    );
+    ];
 
     $this->type('first_name', $participants[2]['first_name']);
     $this->type('last_name', $participants[2]['last_name']);
@@ -270,7 +270,7 @@ class WebTest_Event_ParticipantCountTest extends CiviSeleniumTestCase {
     $this->_testRegisterWithBillingInfo($participants[2]);
 
     // Options filled by 2nd participants.
-    $priceFieldOptionCounts[2] = array(
+    $priceFieldOptionCounts[2] = [
       'Full Conference' => 2,
       'Meal Choice - Chicken' => 1,
       'Meal Choice - Vegetarian' => 0,
@@ -278,7 +278,7 @@ class WebTest_Event_ParticipantCountTest extends CiviSeleniumTestCase {
       'Pre-conference Meetup? - No' => 0,
       'Evening Sessions - First Five' => 1,
       'Evening Sessions - Second Four' => 0,
-    );
+    ];
 
     // login to check participant count
     $this->webtestLogin();
@@ -292,7 +292,7 @@ class WebTest_Event_ParticipantCountTest extends CiviSeleniumTestCase {
 
     // verify number of participants records and total participant count
     $this->waitForAjaxContent();
-    $this->assertStringsPresent(array('2 Results', 'Actual participant count : 24'));
+    $this->assertStringsPresent(['2 Results', 'Actual participant count : 24']);
 
     // CRM-7953, check custom search Price Set Details for Event
     // Participants
@@ -417,7 +417,7 @@ class WebTest_Event_ParticipantCountTest extends CiviSeleniumTestCase {
   /**
    * @param array $participant
    */
-  public function _testRegisterWithBillingInfo($participant = array()) {
+  public function _testRegisterWithBillingInfo($participant = []) {
     $this->waitForElementPresent("credit_card_type");
     $this->select('credit_card_type', 'value=Visa');
     $this->type('credit_card_number', '4111111111111111');
@@ -433,11 +433,11 @@ class WebTest_Event_ParticipantCountTest extends CiviSeleniumTestCase {
     $this->type('billing_postal_code-5', '94129');
 
     $this->clickLink('_qf_Register_upload-bottom', '_qf_Confirm_next-bottom', FALSE);
-    $confirmStrings = array('Event Fee(s)', 'Billing Name and Address', 'Credit Card Information');
+    $confirmStrings = ['Event Fee(s)', 'Billing Name and Address', 'Credit Card Information'];
     $this->assertStringsPresent($confirmStrings);
     $this->click('_qf_Confirm_next-bottom');
     $this->waitForPageToLoad($this->getTimeoutMsec());
-    $thankStrings = array('Thank You for Registering', 'Event Total', 'Transaction Date');
+    $thankStrings = ['Thank You for Registering', 'Event Total', 'Transaction Date'];
     $this->assertStringsPresent($thankStrings);
   }
 
@@ -453,7 +453,7 @@ class WebTest_Event_ParticipantCountTest extends CiviSeleniumTestCase {
     $this->click('_qf_Custom_refresh-bottom');
     $this->waitForPageToLoad($this->getTimeoutMsec());
 
-    $tableHeaders = array('Contact ID', 'Participant ID', 'Name');
+    $tableHeaders = ['Contact ID', 'Participant ID', 'Name'];
     $tableHeaders = array_merge($tableHeaders, array_keys(current($priceFieldOptionCounts)));
 
     $tdnum = 2;

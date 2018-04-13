@@ -37,7 +37,7 @@ class WebTest_Member_OnlineMembershipAddPricesetTest extends CiviSeleniumTestCas
 
   public function testAddPriceSet() {
     // add the required permission
-    $permissions = array('edit-1-make-online-contributions');
+    $permissions = ['edit-1-make-online-contributions'];
     $this->changePermissions($permissions);
 
     // Log in as normal user
@@ -55,10 +55,10 @@ class WebTest_Member_OnlineMembershipAddPricesetTest extends CiviSeleniumTestCas
     $sid = $this->urlArg('sid');
     $this->assertType('numeric', $sid);
 
-    $fields = array(
+    $fields = [
       "National Membership $title" => 'Radio',
       "Local Chapter $title" => 'CheckBox',
-    );
+    ];
 
     list($memTypeTitle1, $memTypeTitle2) = $this->_testAddPriceFields($fields, $validateStrings, FALSE, $title, $sid, $contributionType);
     //var_dump($validateStrings);
@@ -67,7 +67,7 @@ class WebTest_Member_OnlineMembershipAddPricesetTest extends CiviSeleniumTestCas
     $this->_testVerifyPriceSet($validateStrings, $sid);
 
     $contributionPageTitle = "Contribution Page $title";
-    $pageId = $this->webtestAddContributionPage(NULL, NULL, $contributionPageTitle, array('Test Processor' => 'Dummy'),
+    $pageId = $this->webtestAddContributionPage(NULL, NULL, $contributionPageTitle, ['Test Processor' => 'Dummy'],
       TRUE, FALSE, FALSE, FALSE, FALSE, TRUE, $sid, FALSE, 1, NULL
     );
 
@@ -76,11 +76,11 @@ class WebTest_Member_OnlineMembershipAddPricesetTest extends CiviSeleniumTestCas
     $lastName = 'Anderson_' . substr(sha1(rand()), 0, 7);
     $email = "{$firstName}.{$lastName}@example.com";
 
-    $contactParams = array(
+    $contactParams = [
       'first_name' => $firstName,
       'last_name' => $lastName,
       'email-5' => $email,
-    );
+    ];
     $this->_testSignUpOrRenewMembership($pageId, $contactParams, $memTypeTitle1, $memTypeTitle2);
 
     // Renew this membership
@@ -89,7 +89,7 @@ class WebTest_Member_OnlineMembershipAddPricesetTest extends CiviSeleniumTestCas
 
   public function testAddPriceSetWithMultipleTerms() {
     // add the required permission
-    $permissions = array('edit-1-make-online-contributions');
+    $permissions = ['edit-1-make-online-contributions'];
     $this->changePermissions($permissions);
 
     // Log in as normal user
@@ -111,33 +111,33 @@ class WebTest_Member_OnlineMembershipAddPricesetTest extends CiviSeleniumTestCas
     $sid = $this->urlArg('sid');
     $this->assertType('numeric', $sid);
 
-    $fields = array("National Membership $title", "Radio");
+    $fields = ["National Membership $title", "Radio"];
     $this->openCiviPage('admin/price/field', "reset=1&action=add&sid={$sid}");
 
     $validateStrings[] = $fields[0];
     $this->type('label', $fields[0]);
     $this->select('html_type', "value={$fields[1]}");
-    $options = array(
-      1 => array(
+    $options = [
+      1 => [
         'label' => $memTypeTitle1 . "_1",
         'membership_type_id' => $memTypeId1,
         'amount' => 50.00,
         'membership_num_terms' => 1,
-      ),
-      2 => array(
+      ],
+      2 => [
         'label' => $memTypeTitle1 . "_2",
         'membership_type_id' => $memTypeId1,
         'amount' => 90.00,
         'membership_num_terms' => 2,
-      ),
-      3 => array(
+      ],
+      3 => [
         'label' => $memTypeTitle1 . "_3",
         'membership_type_id' => $memTypeId1,
         'amount' => 120.00,
         'membership_num_terms' => 3,
-      ),
+      ],
 
-    );
+    ];
     $i = 2;
     foreach ($options as $index => $values) {
       $this->select("membership_type_id_{$index}", "value={$values['membership_type_id']}");
@@ -161,7 +161,7 @@ class WebTest_Member_OnlineMembershipAddPricesetTest extends CiviSeleniumTestCas
     $this->_testVerifyPriceSet($validateStrings, $sid);
 
     $contributionPageTitle = "Contribution Page $title";
-    $pageId = $this->webtestAddContributionPage(NULL, NULL, $contributionPageTitle, array('Test Processor' => 'Dummy'),
+    $pageId = $this->webtestAddContributionPage(NULL, NULL, $contributionPageTitle, ['Test Processor' => 'Dummy'],
       TRUE, FALSE, FALSE, FALSE, FALSE, TRUE, $sid, FALSE, 1, NULL
     );
 
@@ -170,11 +170,11 @@ class WebTest_Member_OnlineMembershipAddPricesetTest extends CiviSeleniumTestCas
     $lastName = 'Anderson_' . substr(sha1(rand()), 0, 7);
     $email = "{$firstName}.{$lastName}@example.com";
 
-    $contactParams = array(
+    $contactParams = [
       'first_name' => $firstName,
       'last_name' => $lastName,
       'email-5' => $email,
-    );
+    ];
     //membership with number of terms as 2
     $this->_testMultilpeTermsMembershipRegistration($pageId, $contactParams, $memTypeTitle1, 2);
     //membership with number of terms as 3 which will renew the above membership
@@ -244,34 +244,34 @@ class WebTest_Member_OnlineMembershipAddPricesetTest extends CiviSeleniumTestCas
 
       switch ($type) {
         case 'Radio':
-          $options = array(
-            1 => array(
+          $options = [
+            1 => [
               'label' => "$memTypeTitle1",
               'membership_type_id' => $memTypeId1,
               'amount' => 100.00,
-            ),
-            2 => array(
+            ],
+            2 => [
               'label' => "$memTypeTitle2",
               'membership_type_id' => $memTypeId2,
               'amount' => 50.00,
-            ),
-          );
+            ],
+          ];
           $this->addMultipleChoiceOptions($options, $validateStrings);
           break;
 
         case 'CheckBox':
-          $options = array(
-            1 => array(
+          $options = [
+            1 => [
               'label' => "$memTypeTitle1",
               'membership_type_id' => $memTypeId1,
               'amount' => 100.00,
-            ),
-            2 => array(
+            ],
+            2 => [
               'label' => "$memTypeTitle2",
               'membership_type_id' => $memTypeId2,
               'amount' => 50.00,
-            ),
-          );
+            ],
+          ];
           $this->addMultipleChoiceOptions($options, $validateStrings);
           break;
 
@@ -282,7 +282,7 @@ class WebTest_Member_OnlineMembershipAddPricesetTest extends CiviSeleniumTestCas
       $this->clickLink('_qf_Field_next_new-bottom', '_qf_Field_next-bottom');
       $this->waitForText('crm-notification-container', "Price Field '{$label}' has been saved.");
     }
-    return array($memTypeTitle1, $memTypeTitle2);
+    return [$memTypeTitle1, $memTypeTitle2];
   }
 
   /**
@@ -321,11 +321,11 @@ class WebTest_Member_OnlineMembershipAddPricesetTest extends CiviSeleniumTestCas
     $joinDate = date('Y-m-d', mktime(0, 0, 0, $currentMonth, date('d'), $currentYear));
     $startDate = date('Y-m-d', mktime(0, 0, 0, $currentMonth, date('d'), $currentYear));
     $endDate = date('Y-m-d', mktime(0, 0, 0, $currentMonth, $previousDay, $endYear));
-    foreach (array(
+    foreach ([
                'joinDate',
                'startDate',
                'endDate',
-             ) as $date) {
+             ] as $date) {
       $$date = CRM_Utils_Date::customFormat($$date, $this->webtestGetSetting('dateformatFull'));
     }
 
@@ -381,13 +381,13 @@ class WebTest_Member_OnlineMembershipAddPricesetTest extends CiviSeleniumTestCas
     $this->waitForElementPresent("_qf_MembershipView_cancel-bottom");
 
     //View Membership Record
-    $verifyData = array(
+    $verifyData = [
       'Membership Type' => "$memTypeTitle1",
       'Status' => 'New',
       'Member Since' => $joinDate,
       'Start date' => $startDate,
       'End date' => $endDate,
-    );
+    ];
     foreach ($verifyData as $label => $value) {
       $this->verifyText("xpath=//form[@id='MembershipView']//table/tbody/tr/td[text()='{$label}']/following-sibling::td",
         preg_quote($value)
@@ -399,13 +399,13 @@ class WebTest_Member_OnlineMembershipAddPricesetTest extends CiviSeleniumTestCas
     $this->waitForElementPresent("_qf_MembershipView_cancel-bottom");
 
     //View Membership Record
-    $verifyData = array(
+    $verifyData = [
       'Membership Type' => "$memTypeTitle2",
       'Status' => 'New',
       'Member Since' => $joinDate,
       'Start date' => $startDate,
       'End date' => $endDate,
-    );
+    ];
     foreach ($verifyData as $label => $value) {
       $this->verifyText("xpath=//form[@id='MembershipView']//table/tbody/tr/td[text()='{$label}']/following-sibling::td",
         preg_quote($value)
@@ -445,11 +445,11 @@ class WebTest_Member_OnlineMembershipAddPricesetTest extends CiviSeleniumTestCas
     $joinDate = date('Y-m-d', mktime(0, 0, 0, $currentMonth, date('d'), $currentYear));
     $startDate = date('Y-m-d', mktime(0, 0, 0, $currentMonth, date('d'), $currentYear));
     $endDate = date('Y-m-d', mktime(0, 0, 0, $currentMonth, $previousDay, $endYear));
-    foreach (array(
+    foreach ([
                'joinDate',
                'startDate',
                'endDate',
-             ) as $date) {
+             ] as $date) {
       $$date = CRM_Utils_Date::customFormat($$date, $this->webtestGetSetting('dateformatFull'));
     }
     $i = ($term == 3) ? 3 : (($term == 2) ? 2 : 1);
@@ -506,13 +506,13 @@ class WebTest_Member_OnlineMembershipAddPricesetTest extends CiviSeleniumTestCas
     $this->waitForElementPresent("_qf_MembershipView_cancel-bottom");
 
     //View Membership Record
-    $verifyData = array(
+    $verifyData = [
       'Membership Type' => "$memTypeTitle1",
       'Status' => 'New',
       'Member Since' => $joinDate,
       'Start date' => $startDate,
       'End date' => $endDate,
-    );
+    ];
     foreach ($verifyData as $label => $value) {
       $this->verifyText("xpath=//form[@id='MembershipView']//table/tbody/tr/td[text()='{$label}']/following-sibling::td",
         preg_quote($value)

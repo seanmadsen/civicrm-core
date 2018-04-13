@@ -216,9 +216,9 @@ function civicrm_config(&$config) {
   global $tplPath, $installType;
 
   // Ex: $extraSettings[] = '$civicrm_settings["domain"]["foo"] = "bar";';
-  $extraSettings = array();
+  $extraSettings = [];
 
-  $params = array(
+  $params = [
     'crmRoot' => $crmPath,
     'templateCompileDir' => $compileDir,
     'frontEnd' => 0,
@@ -226,7 +226,7 @@ function civicrm_config(&$config) {
     'dbPass' => addslashes($config['mysql']['password']),
     'dbHost' => $config['mysql']['server'],
     'dbName' => addslashes($config['mysql']['database']),
-  );
+  ];
 
   $params['baseURL'] = isset($config['base_url']) ? $config['base_url'] : civicrm_cms_base();
   if ($installType == 'drupal' && defined('VERSION')) {

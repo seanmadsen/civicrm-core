@@ -86,10 +86,10 @@ class CRM_Utils_Money {
     }
 
     if (!self::$_currencySymbols) {
-      self::$_currencySymbols = CRM_Core_PseudoConstant::get('CRM_Contribute_DAO_Contribution', 'currency', array(
+      self::$_currencySymbols = CRM_Core_PseudoConstant::get('CRM_Contribute_DAO_Contribution', 'currency', [
           'keyColumn' => 'name',
           'labelColumn' => 'symbol',
-        ));
+      ]);
     }
 
     if (!$currency) {
@@ -105,10 +105,10 @@ class CRM_Utils_Money {
       setlocale(LC_MONETARY, $lc);
     }
 
-    $rep = array(
+    $rep = [
       ',' => $config->monetaryThousandSeparator,
       '.' => $config->monetaryDecimalPoint,
-    );
+    ];
 
     // If it contains tags, means that HTML was passed and the
     // amount is already converted properly,
@@ -117,11 +117,11 @@ class CRM_Utils_Money {
       $amount = strtr($amount, $rep);
     }
 
-    $replacements = array(
+    $replacements = [
       '%a' => $amount,
       '%C' => $currency,
       '%c' => CRM_Utils_Array::value($currency, self::$_currencySymbols, $currency),
-    );
+    ];
     return strtr($format, $replacements);
   }
 

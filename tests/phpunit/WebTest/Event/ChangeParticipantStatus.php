@@ -84,7 +84,7 @@ class WebTest_Event_ChangeParticipantStatus extends CiviSeleniumTestCase {
     $this->waitForElementPresent("xpath=//div[@id='participantSearch']/table/tbody//tr/td[3]/a[text()='$sortName1']");
     $this->click("xpath=//div[@id='participantSearch']/table/tbody//tr/td[3]/a[text()='$sortName1']/../../td[11]/span/a[text()='View']");
     $this->waitForElementPresent('_qf_ParticipantView_cancel-bottom');
-    $this->webtestVerifyTabularData(array('Status' => 'Attended'));
+    $this->webtestVerifyTabularData(['Status' => 'Attended']);
 
     $this->openCiviPage("event/search", "reset=1", '_qf_Search_refresh');
     $this->type('sort_name', $firstName2);
@@ -92,7 +92,7 @@ class WebTest_Event_ChangeParticipantStatus extends CiviSeleniumTestCase {
     $this->waitForElementPresent("xpath=//div[@id='participantSearch']/table/tbody//tr/td[3]/a[text()='$sortName2']");
     $this->click("xpath=//div[@id='participantSearch']/table/tbody//tr/td[3]/a[text()='$sortName2']/../../td[11]/span/a[text()='View']");
     $this->waitForElementPresent('_qf_ParticipantView_cancel-bottom');
-    $this->webtestVerifyTabularData(array('Status' => 'Attended'));
+    $this->webtestVerifyTabularData(['Status' => 'Attended']);
   }
 
   /**
@@ -108,7 +108,7 @@ class WebTest_Event_ChangeParticipantStatus extends CiviSeleniumTestCase {
     $this->select2('event_id', "Rain-forest Cup Youth Soccer Tournament");
 
     // Select role
-    $this->multiselect2('role_id', array('Volunteer'));
+    $this->multiselect2('role_id', ['Volunteer']);
 
     // Choose Registration Date.
     // Using helper webtestFillDate function.
@@ -154,12 +154,12 @@ class WebTest_Event_ChangeParticipantStatus extends CiviSeleniumTestCase {
     $this->waitForElementPresent('_qf_ParticipantView_cancel-bottom');
 
     $this->webtestVerifyTabularData(
-      array(
+      [
         'Event' => 'Rain-forest Cup Youth Soccer Tournament',
         'Participant Role' => 'Attendee',
         'Status' => 'Registered',
         'Event Source' => 'Event StandaloneAddTest Webtest',
-      )
+      ]
     );
     $this->verifyText("xpath=//td[text()='Selections']/following-sibling::td//div", preg_quote('Event Total: $ 800.00'));
   }

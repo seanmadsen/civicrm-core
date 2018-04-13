@@ -38,11 +38,11 @@ class api_v3_CampaignTest extends CiviUnitTestCase {
 
   public function setUp() {
     $this->_apiversion = 3;
-    $this->params = array(
+    $this->params = [
       'title' => "campaign title",
       'description' => "Call people, ask for money",
       'created_date' => 'first sat of July 2008',
-    );
+    ];
     parent::setUp();
     $this->useTransaction(TRUE);
   }
@@ -53,7 +53,7 @@ class api_v3_CampaignTest extends CiviUnitTestCase {
     $result = $this->callAPIAndDocument('campaign', 'create', $this->params, __FUNCTION__, __FILE__, $description);
     $this->assertEquals(1, $result['count']);
     $this->assertNotNull($result['values'][$result['id']]['id']);
-    $this->getAndCheck(array_merge($this->params, array('created_date' => '2008-07-05 00:00:00')), $result['id'], 'campaign', TRUE);
+    $this->getAndCheck(array_merge($this->params, ['created_date' => '2008-07-05 00:00:00']), $result['id'], 'campaign', TRUE);
   }
 
   public function testGetCampaign() {
@@ -66,10 +66,10 @@ class api_v3_CampaignTest extends CiviUnitTestCase {
   public function testDeleteCampaign() {
     $this->callAPISuccess('campaign', 'create', $this->params);
     $entity = $this->callAPISuccess('campaign', 'get', ($this->params));
-    $delete = array('id' => $entity['id']);
+    $delete = ['id' => $entity['id']];
     $result = $this->callAPIAndDocument('campaign', 'delete', $delete, __FUNCTION__, __FILE__);
 
-    $checkDeleted = $this->callAPISuccess('campaign', 'get', array());
+    $checkDeleted = $this->callAPISuccess('campaign', 'get', []);
     $this->assertEquals(0, $checkDeleted['count']);
   }
 

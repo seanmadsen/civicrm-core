@@ -102,11 +102,11 @@ class WebTest_Member_ContactContextAddTest extends CiviSeleniumTestCase {
     $this->click("xpath=//div[@id='memberships']//table//tbody/tr[1]/td[9]/span/a[text()='View']");
     $this->waitForElementPresent("_qf_MembershipView_cancel-bottom");
 
-    $verifyData = array(
+    $verifyData = [
       'Membership Type' => $memTypeParams['membership_type'],
       'Status' => 'New',
       'Source' => $sourceText,
-    );
+    ];
     $this->webtestVerifyTabularData($verifyData);
 
     $this->click("_qf_MembershipView_cancel-bottom");
@@ -123,11 +123,11 @@ class WebTest_Member_ContactContextAddTest extends CiviSeleniumTestCase {
     $this->click("xpath=//div[@id='memberships']//table//tbody/tr[1]/td[9]/span/a[text()='View']");
     $this->waitForElementPresent("_qf_MembershipView_cancel-bottom");
 
-    $verifyData = array(
+    $verifyData = [
       'Membership Type' => $memTypeParams['membership_type'],
       'Status' => 'New',
       'Source' => $sourceText,
-    );
+    ];
     $this->webtestVerifyTabularData($verifyData);
     $this->clickLink("_qf_MembershipView_cancel-bottom", "xpath=//div[@id='memberships']/div/table/tbody//tr/td[1][text()='{$memTypeParams['membership_type']}']/../td[7]", FALSE);
     $this->click("xpath=//div[@id='memberships']/div/table/tbody//tr/td[1][text()='{$memTypeParams['membership_type']}']/../td[9]/span/a[2][text()='Edit']");
@@ -150,11 +150,11 @@ class WebTest_Member_ContactContextAddTest extends CiviSeleniumTestCase {
     $this->click("xpath=//div[@id='memberships']//table//tbody/tr[1]/td[9]/span/a[text()='View']");
     $this->waitForElementPresent("_qf_MembershipView_cancel-bottom");
 
-    $verifyData = array(
+    $verifyData = [
       'Status' => 'New',
       'Source' => $sourceText,
       'End date' => '',
-    );
+    ];
     $this->webtestVerifyTabularData($verifyData);
   }
 
@@ -225,11 +225,11 @@ class WebTest_Member_ContactContextAddTest extends CiviSeleniumTestCase {
     $this->click("xpath=//div[@id='memberships']//table//tbody/tr[1]/td[9]/span/a[text()='View']");
     $this->waitForElementPresent("_qf_MembershipView_cancel-bottom");
 
-    $verifyData = array(
+    $verifyData = [
       'Status' => 'New',
       'Source' => $sourceText,
       'End date' => '',
-    );
+    ];
     $this->webtestVerifyTabularData($verifyData);
     $this->click("_qf_MembershipView_cancel-bottom");
     $this->waitForElementPresent("mainTabContainer");

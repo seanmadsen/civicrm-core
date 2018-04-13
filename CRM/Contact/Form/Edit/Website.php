@@ -55,10 +55,10 @@ class CRM_Contact_Form_Edit_Website {
     $form->applyFilter('__ALL__', 'trim');
 
     //Website type select
-    $form->addField("website[$blockId][website_type_id]", array('entity' => 'website', 'class' => 'eight'));
+    $form->addField("website[$blockId][website_type_id]", ['entity' => 'website', 'class' => 'eight']);
 
     //Website box
-    $form->addField("website[$blockId][url]", array('entity' => 'website'));
+    $form->addField("website[$blockId][url]", ['entity' => 'website']);
     $form->addRule("website[$blockId][url]", ts('Enter a valid web address beginning with \'http://\' or \'https://\'.'), 'url');
 
   }

@@ -113,16 +113,16 @@ class WebTest_Member_InheritedMembershipTest extends CiviSeleniumTestCase {
     $joinDate = date('Y-m-d');
     $startDate = date('Y-m-d');
     $endDate = date('Y-m-d', mktime(0, 0, 0, date('m'), date('d') - 1, date('Y') + 1));
-    foreach (array(
+    foreach ([
                'joinDate',
                'startDate',
                'endDate',
-             ) as $date) {
+             ] as $date) {
       $$date = CRM_Utils_Date::customFormat($$date, $this->webtestGetSetting('dateformatFull'));
     }
 
     $this->webtestVerifyTabularData(
-      array(
+      [
         'Membership Type' => "Membership Type $title",
         'Status' => 'New',
         'Source' => $sourceText,
@@ -130,7 +130,7 @@ class WebTest_Member_InheritedMembershipTest extends CiviSeleniumTestCase {
         'Start date' => $startDate,
         'End date' => $endDate,
         'Max related' => "5",
-      )
+      ]
     );
 
     // Adding contact
@@ -168,14 +168,14 @@ class WebTest_Member_InheritedMembershipTest extends CiviSeleniumTestCase {
     $this->waitForElementPresent("_qf_MembershipView_cancel-bottom");
 
     $this->webtestVerifyTabularData(
-      array(
+      [
         'Membership Type' => "Membership Type $title",
         'Status' => 'New',
         'Source' => $sourceText,
         'Member Since' => $joinDate,
         'Start date' => $startDate,
         'End date' => $endDate,
-      )
+      ]
     );
     $this->click("_qf_MembershipView_cancel-bottom");
     $this->waitForElementPresent('css=div#memberships');

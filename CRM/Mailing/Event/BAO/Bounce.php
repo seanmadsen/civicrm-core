@@ -233,13 +233,13 @@ class CRM_Mailing_Event_BAO_Bounce extends CRM_Mailing_Event_DAO_Bounce {
 
     $dao->query($query);
 
-    $results = array();
+    $results = [];
 
     while ($dao->fetch()) {
       $url = CRM_Utils_System::url('civicrm/contact/view',
         "reset=1&cid={$dao->contact_id}"
       );
-      $results[] = array(
+      $results[] = [
         'name' => "<a href=\"$url\">{$dao->display_name}</a>",
         'email' => $dao->email,
         // FIXME: translate this
@@ -247,7 +247,7 @@ class CRM_Mailing_Event_BAO_Bounce extends CRM_Mailing_Event_DAO_Bounce {
         ),
         'reason' => $dao->reason,
         'date' => CRM_Utils_Date::customFormat($dao->date),
-      );
+      ];
     }
     return $results;
   }

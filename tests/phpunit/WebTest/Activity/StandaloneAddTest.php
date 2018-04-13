@@ -142,7 +142,7 @@ class WebTest_Activity_StandaloneAddTest extends CiviSeleniumTestCase {
     $this->waitForElementPresent("xpath=//div[@class='ui-dialog-buttonset']/button[3]/span[2]");
 
     $this->VerifyTabularData(
-      array(
+      [
         'Subject' => $subject,
         'Location' => $location,
         'Activity Status' => 'Scheduled',
@@ -151,15 +151,15 @@ class WebTest_Activity_StandaloneAddTest extends CiviSeleniumTestCase {
         //'Details'    => 'Really brief details information.',
         'Priority' => 'Urgent',
         //'Current Attachment(s)' => basename($filePath)
-      ),
+      ],
       "/label"
     );
 
     $this->VerifyTabularData(
-      array(
+      [
         'With Contact' => "Anderson, {$firstName1}",
         'Assigned to' => "Summerson, {$firstName2}",
-      ),
+      ],
       "/label"
     );
 
@@ -175,13 +175,13 @@ class WebTest_Activity_StandaloneAddTest extends CiviSeleniumTestCase {
 
   public function testAjaxCustomGroupLoad() {
     $this->webtestLogin();
-    $triggerElement = array('name' => 'activity_type_id', 'type' => 'select');
-    $customSets = array(
-      array('entity' => 'Activity', 'subEntity' => 'Interview', 'triggerElement' => $triggerElement),
-      array('entity' => 'Activity', 'subEntity' => 'Meeting', 'triggerElement' => $triggerElement),
-    );
+    $triggerElement = ['name' => 'activity_type_id', 'type' => 'select'];
+    $customSets = [
+      ['entity' => 'Activity', 'subEntity' => 'Interview', 'triggerElement' => $triggerElement],
+      ['entity' => 'Activity', 'subEntity' => 'Meeting', 'triggerElement' => $triggerElement],
+    ];
 
-    $pageUrl = array('url' => 'activity', 'args' => 'reset=1&action=add&context=standalone');
+    $pageUrl = ['url' => 'activity', 'args' => 'reset=1&action=add&context=standalone'];
     $this->customFieldSetLoadOnTheFlyCheck($customSets, $pageUrl);
   }
 
@@ -248,10 +248,10 @@ class WebTest_Activity_StandaloneAddTest extends CiviSeleniumTestCase {
     $this->waitForElementPresent("xpath=//div[@class='ui-dialog-buttonset']/button[3]/span[2]");
 
     $this->VerifyTabularData(
-      array(
+      [
         'Subject' => $subject,
         'Activity Status' => 'Scheduled',
-      ),
+      ],
       "/label"
     );
     $this->verifyText("xpath=//td[text()='{$customField}']/following-sibling::td", preg_quote($textField), 'In line ' . __LINE__);

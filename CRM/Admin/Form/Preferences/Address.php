@@ -40,56 +40,56 @@ class CRM_Admin_Form_Preferences_Address extends CRM_Admin_Form_Preferences {
     CRM_Utils_System::setTitle(ts('Settings - Addresses'));
 
     // Address Standardization
-    $addrProviders = array(
+    $addrProviders = [
       '' => '- select -',
-    ) + CRM_Core_SelectValues::addressProvider();
+      ] + CRM_Core_SelectValues::addressProvider();
 
-    $this->_varNames = array(
-      CRM_Core_BAO_Setting::SYSTEM_PREFERENCES_NAME => array(
-        'address_options' => array(
+    $this->_varNames = [
+      CRM_Core_BAO_Setting::SYSTEM_PREFERENCES_NAME => [
+        'address_options' => [
           'html_type' => 'checkboxes',
           'title' => ts('Address Fields'),
           'weight' => 1,
-        ),
-        'address_format' => array(
+        ],
+        'address_format' => [
           'html_type' => 'textarea',
           'title' => ts('Display Format'),
           'description' => NULL,
           'weight' => 2,
-        ),
-        'mailing_format' => array(
+        ],
+        'mailing_format' => [
           'html_type' => 'textarea',
           'title' => ts('Mailing Label Format'),
           'description' => NULL,
           'weight' => 3,
-        ),
-        'hideCountryMailingLabels' => array(
+        ],
+        'hideCountryMailingLabels' => [
           'html_type' => 'YesNo',
           'title' => ts('Hide Country in Mailing Labels when same as domain country'),
           'weight' => 4,
-        ),
-      ),
-      CRM_Core_BAO_Setting::ADDRESS_STANDARDIZATION_PREFERENCES_NAME => array(
-        'address_standardization_provider' => array(
+        ],
+      ],
+      CRM_Core_BAO_Setting::ADDRESS_STANDARDIZATION_PREFERENCES_NAME => [
+        'address_standardization_provider' => [
           'html_type' => 'select',
           'title' => ts('Provider'),
           'option_values' => $addrProviders,
           'weight' => 5,
-        ),
-        'address_standardization_userid' => array(
+        ],
+        'address_standardization_userid' => [
           'html_type' => 'text',
           'title' => ts('User ID'),
           'description' => NULL,
           'weight' => 6,
-        ),
-        'address_standardization_url' => array(
+        ],
+        'address_standardization_url' => [
           'html_type' => 'text',
           'title' => ts('Web Service URL'),
           'description' => NULL,
           'weight' => 7,
-        ),
-      ),
-    );
+        ],
+      ],
+    ];
 
     parent::preProcess();
   }
@@ -98,7 +98,7 @@ class CRM_Admin_Form_Preferences_Address extends CRM_Admin_Form_Preferences {
    * @return array
    */
   public function setDefaultValues() {
-    $defaults = array();
+    $defaults = [];
     $defaults['address_standardization_provider'] = $this->_config->address_standardization_provider;
     $defaults['address_standardization_userid'] = $this->_config->address_standardization_userid;
     $defaults['address_standardization_url'] = $this->_config->address_standardization_url;
@@ -120,7 +120,7 @@ class CRM_Admin_Form_Preferences_Address extends CRM_Admin_Form_Preferences {
   public function buildQuickForm() {
     $this->applyFilter('__ALL__', 'trim');
 
-    $this->addFormRule(array('CRM_Admin_Form_Preferences_Address', 'formRule'));
+    $this->addFormRule(['CRM_Admin_Form_Preferences_Address', 'formRule']);
 
     //get the tokens for Mailing Label field
     $tokens = CRM_Core_SelectValues::contactTokens();
@@ -177,7 +177,7 @@ class CRM_Admin_Form_Preferences_Address extends CRM_Admin_Form_Preferences {
           // print a status message to the user if county table seems small
           $countyCount = CRM_Core_DAO::singleValueQuery("SELECT count(*) FROM civicrm_county");
           if ($countyCount < 10) {
-            CRM_Core_Session::setStatus(ts('You have enabled the County option. Please ensure you populate the county table in your CiviCRM Database. You can find extensions to populate counties in the <a %1>CiviCRM Extensions Directory</a>.', array(1 => 'href="' . CRM_Utils_System::url('civicrm/admin/extensions', array('reset' => 1), TRUE, 'extensions-addnew') . '"')),
+            CRM_Core_Session::setStatus(ts('You have enabled the County option. Please ensure you populate the county table in your CiviCRM Database. You can find extensions to populate counties in the <a %1>CiviCRM Extensions Directory</a>.', [1 => 'href="' . CRM_Utils_System::url('civicrm/admin/extensions', ['reset' => 1], TRUE, 'extensions-addnew') . '"']),
               ts('Populate counties'),
               "info"
             );

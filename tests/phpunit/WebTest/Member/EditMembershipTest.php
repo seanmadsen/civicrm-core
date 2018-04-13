@@ -122,11 +122,11 @@ class WebTest_Member_EditMembershipTest extends CiviSeleniumTestCase {
     $this->click("css=li#tab_member a");
     $this->waitForElementPresent("xpath=//div[@id='memberships']//table//tbody/tr[1]/td[9]/span/a[text()='View']");
     $this->click("xpath=//div[@id='memberships']//table/tbody/tr[1]/td[9]/span/a[text()='View']");
-    $expected = array(
+    $expected = [
       'Membership Type' => $membershipTypes['membership_type'],
       'Status' => 'New',
       'Source' => 'Membership StandaloneAddTest Webtest',
-    );
+    ];
     $this->webtestVerifyTabularData($expected);
 
     // now edit and update type and status

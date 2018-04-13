@@ -60,13 +60,13 @@ class WebTest_Contact_AdvancedSearchedRelatedContactTest extends CiviSeleniumTes
     $Id = explode('-', $this->getAttribute("xpath=//div[@id='event_status_id']/div[2]/table/tbody/tr@id"));
     $eventId = $Id[1];
 
-    $params = array(
+    $params = [
       'label_a_b' => 'Owner of ' . rand(),
       'label_b_a' => 'Belongs to ' . rand(),
       'contact_type_a' => 'Individual',
       'contact_type_b' => 'Individual',
       'description' => 'The company belongs to this individual',
-    );
+    ];
 
     $this->webtestAddRelationshipType($params);
     $relType = $params['label_b_a'];
@@ -284,10 +284,10 @@ class WebTest_Contact_AdvancedSearchedRelatedContactTest extends CiviSeleniumTes
 
     $this->waitForElementPresent("xpath=//table[@class='crm-info-panel']");
     $this->webtestVerifyTabularData(
-      array(
+      [
         'Description' => $description,
         'Status' => 'Enabled',
-      )
+      ]
     );
     $this->assertElementContainsText("xpath=//table[@class='crm-info-panel']", $relType);
   }

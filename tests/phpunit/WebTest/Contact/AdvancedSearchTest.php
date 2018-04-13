@@ -72,7 +72,7 @@ class WebTest_Contact_AdvancedSearchTest extends CiviSeleniumTestCase {
     $this->waitForText('s2id_event_id', "- select event -");
     $this->select2("event_id", "Fall Fundraiser Dinner");
     $this->waitForElementPresent("receipt_text");
-    $this->multiselect2("role_id", array('Volunteer'));
+    $this->multiselect2("role_id", ['Volunteer']);
     // Select $100 fee
     $this->click("xpath=//input[@data-amount='100']");
     $this->check("record_contribution");
@@ -122,21 +122,21 @@ class WebTest_Contact_AdvancedSearchTest extends CiviSeleniumTestCase {
     $dummyName = substr(sha1(rand()), 0, 7);
 
     // search block array for adv search
-    $searchBlockValues = array(
-      'basic' => array('', 'addBasicSearchDetail'),
-      'location' => array('state_province', 'addAddressSearchDetail'),
-      'demographics' => array('civicrm_gender_Other_3', 'addDemographicSearchDetail'),
-      'notes' => array('note', ''),
-      'activity' => array('activity_type_id', 'addActivitySearchDetail'),
-      'CiviContribute' => array('contribution_currency_type', 'addContributionSearchDetail'),
-      'CiviEvent' => array('participant_fee_amount_high', 'addParticipantSearchDetail'),
-      'CiviMember' => array('member_end_date_high', 'addMemberSearchDetail'),
-      'CiviPledge' => array('pledge_frequency_interval', 'addPledgeSearchDetail'),
-      'relationship' => array(
+    $searchBlockValues = [
+      'basic' => ['', 'addBasicSearchDetail'],
+      'location' => ['state_province', 'addAddressSearchDetail'],
+      'demographics' => ['civicrm_gender_Other_3', 'addDemographicSearchDetail'],
+      'notes' => ['note', ''],
+      'activity' => ['activity_type_id', 'addActivitySearchDetail'],
+      'CiviContribute' => ['contribution_currency_type', 'addContributionSearchDetail'],
+      'CiviEvent' => ['participant_fee_amount_high', 'addParticipantSearchDetail'],
+      'CiviMember' => ['member_end_date_high', 'addMemberSearchDetail'],
+      'CiviPledge' => ['pledge_frequency_interval', 'addPledgeSearchDetail'],
+      'relationship' => [
         "xpath=//div[@id='relationship']/table/tbody/tr//td/label[text()='Relationship Status']/../label[text()='All']",
         '',
-      ),
-    );
+      ],
+    ];
 
     foreach ($searchBlockValues as $block => $blockValues) {
       switch ($block) {
@@ -179,7 +179,7 @@ class WebTest_Contact_AdvancedSearchTest extends CiviSeleniumTestCase {
     $this->webtestLogin();
     $this->openCiviPage('contact/search/advanced', 'reset=1');
     $this->clickAjaxLink("activity", 'activity_subject');
-    $this->multiselect2("activity_type_id", array('Tell a Friend'));
+    $this->multiselect2("activity_type_id", ['Tell a Friend']);
     $this->clickLink("_qf_Advanced_refresh");
     $count = explode(" ", trim($this->getText("xpath=//div[@id='search-status']/table/tbody/tr/td")));
     $count = $count[0];
@@ -243,7 +243,7 @@ class WebTest_Contact_AdvancedSearchTest extends CiviSeleniumTestCase {
     $this->clickAjaxLink("location", 'country');
     $this->select2("country", "UNITED STATES", FALSE);
     $this->waitForElementPresent('state_province');
-    $this->multiselect2("state_province", array(
+    $this->multiselect2("state_province", [
         "Ohio",
         "New York",
         "New Mexico",
@@ -251,7 +251,7 @@ class WebTest_Contact_AdvancedSearchTest extends CiviSeleniumTestCase {
         "Georgia",
         "New Jersey",
         "Texas",
-      ));
+    ]);
     $this->clickLink("_qf_Advanced_refresh", "xpath=//div[@class='crm-search-results']//table/tbody/tr[1]/td[6]");
 
     $this->clickAjaxLink("xpath=//div[@class='crm-search-results']//table/thead/tr//th/a[contains(text(),'State')]");
@@ -284,7 +284,7 @@ class WebTest_Contact_AdvancedSearchTest extends CiviSeleniumTestCase {
 
     // select preferred communication method
     // phone
-    $this->select2("preferred_communication_method", array('Phone', 'Email'), TRUE);
+    $this->select2("preferred_communication_method", ['Phone', 'Email'], TRUE);
   }
 
   /**
@@ -293,7 +293,7 @@ class WebTest_Contact_AdvancedSearchTest extends CiviSeleniumTestCase {
    */
   public function addAddressSearchDetail($firstName) {
     // select location type (home and main)
-    $this->multiselect2('location_type', array('Home', 'Main'));
+    $this->multiselect2('location_type', ['Home', 'Main']);
     // fill street address
     $this->type("street_address", "street 1 $firstName");
     // fill city
@@ -314,7 +314,7 @@ class WebTest_Contact_AdvancedSearchTest extends CiviSeleniumTestCase {
    */
   public function addActivitySearchDetail($firstName) {
     // select activity types
-    $activityTypes = array("Contribution", "Event Registration", "Membership Signup");
+    $activityTypes = ["Contribution", "Event Registration", "Membership Signup"];
     $this->multiselect2('activity_type_id', $activityTypes);
     // fill date range
     $this->select("activity_date_relative", "value=0");
@@ -322,7 +322,7 @@ class WebTest_Contact_AdvancedSearchTest extends CiviSeleniumTestCase {
     $this->webtestFillDate("activity_date_high", "+1 day");
     $this->type("activity_subject", "Student - membership source$firstName - Status: New");
     // fill activity status
-    $this->multiselect2('status_id', array('Scheduled', 'Completed'));
+    $this->multiselect2('status_id', ['Scheduled', 'Completed']);
   }
 
   /**
@@ -355,7 +355,7 @@ class WebTest_Contact_AdvancedSearchTest extends CiviSeleniumTestCase {
     $this->type("contribution_amount_low", "1");
     $this->type("contribution_amount_high", "200");
     // check for completed
-    $this->multiselect2("contribution_status_id", array('Completed'));
+    $this->multiselect2("contribution_status_id", ['Completed']);
     // enter check number
     $this->select("payment_instrument_id", "Check");
     $this->type("contribution_check_number", "chqNo$firstName");
@@ -376,9 +376,9 @@ class WebTest_Contact_AdvancedSearchTest extends CiviSeleniumTestCase {
     // fill event type
     $this->select2("event_type_id", "Fundraiser");
     // select participant status (registered)
-    $this->multiselect2('participant_status_id', array('Registered'));
+    $this->multiselect2('participant_status_id', ['Registered']);
     // select participant role (Volunteer)
-    $this->multiselect2('participant_role_id', array('Volunteer'));
+    $this->multiselect2('participant_role_id', ['Volunteer']);
     // fill participant fee level (couple)
     $this->select2("participant_fee_id", "Couple");
     // fill amount range

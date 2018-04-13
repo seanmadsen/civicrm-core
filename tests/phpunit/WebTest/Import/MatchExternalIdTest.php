@@ -93,36 +93,36 @@ class WebTest_Import_MatchExternalIdTest extends ImportCiviSeleniumTestCase {
 
     $this->_addContact($firstName2, $lastName2, $externalId2);
 
-    $headers = array(
+    $headers = [
       'external_identifier' => 'External Identifier',
       'fee_amount' => 'Fee Amount',
       'financial_type' => 'Financial Type',
       'contribution_status_id' => 'Contribution Status',
       'total_amount' => 'Total Amount',
-    );
+    ];
 
-    $rows = array(
-      array(
+    $rows = [
+      [
         'external_identifier' => $externalId1,
         'fee_amount' => '200',
         'financial_type' => 'Donation',
         'contribution_status_id' => 'Completed',
         'total_amount' => '200',
-      ),
-      array(
+      ],
+      [
         'external_identifier' => $externalId2,
         'fee_amount' => '400',
         'financial_type' => 'Donation',
         'contribution_status_id' => 'Completed',
         'total_amount' => '400',
-      ),
-    );
-    $fieldMapper = array(
+      ],
+    ];
+    $fieldMapper = [
       'mapper[0][0]' => 'external_identifier',
       'mapper[2][0]' => 'financial_type',
       'mapper[4][0]' => 'total_amount',
-    );
-    return array($headers, $rows, $fieldMapper);
+    ];
+    return [$headers, $rows, $fieldMapper];
   }
 
   /**
@@ -148,30 +148,30 @@ class WebTest_Import_MatchExternalIdTest extends ImportCiviSeleniumTestCase {
     $this->_addContact($firstName2, $lastName2, $externalId2);
     $startDate2 = date('Y-m-d', mktime(0, 0, 0, 9, 10, $year));
 
-    $headers = array(
+    $headers = [
       'external_identifier' => 'External Identifier',
       'membership_type_id' => 'Membership Type',
       'membership_start_date' => 'Membership Start Date',
-    );
-    $rows = array(
-      array(
+    ];
+    $rows = [
+      [
         'external_identifier' => $externalId1,
         'membership_type_id' => $memTypeParams['membership_type'],
         'membership_start_date' => $startDate1,
-      ),
-      array(
+      ],
+      [
         'external_identifier' => $externalId2,
         'membership_type_id' => $memTypeParams['membership_type'],
         'membership_start_date' => $startDate2,
-      ),
-    );
+      ],
+    ];
 
-    $fieldMapper = array(
+    $fieldMapper = [
       'mapper[0][0]' => 'external_identifier',
       'mapper[1][0]' => 'membership_type_id',
       'mapper[2][0]' => 'membership_start_date',
-    );
-    return array($headers, $rows, $fieldMapper);
+    ];
+    return [$headers, $rows, $fieldMapper];
   }
 
   /**
@@ -194,42 +194,42 @@ class WebTest_Import_MatchExternalIdTest extends ImportCiviSeleniumTestCase {
 
     $this->_addContact($firstName2, $lastName2, $externalId2);
 
-    $headers = array(
+    $headers = [
       'external_identifier' => 'External Identifier',
       'event_id' => 'Event Id',
       'fee_level' => 'Fee Level',
       'role' => 'Participant Role',
       'status' => 'Participant Status',
       'register_date' => 'Register date',
-    );
+    ];
 
-    $rows = array(
-      array(
+    $rows = [
+      [
         'external_identifier' => $externalId1,
         'event_id' => $eventInfo['event_id'],
         'fee_level' => 'Member',
         'role' => 1,
         'status' => 1,
         'register_date' => '2011-03-30',
-      ),
-      array(
+      ],
+      [
         'external_identifier' => $externalId2,
         'event_id' => $eventInfo['event_id'],
         'fee_level' => 'Non-Member',
         'role' => 1,
         'status' => 1,
         'register_date' => '2011-03-30',
-      ),
-    );
+      ],
+    ];
 
-    $fieldMapper = array(
+    $fieldMapper = [
       'mapper[0][0]' => 'external_identifier',
       'mapper[1][0]' => 'event_id',
       'mapper[2][0]' => 'participant_fee_level',
       'mapper[4][0]' => 'participant_status_id',
-    );
+    ];
 
-    return array($headers, $rows, $fieldMapper);
+    return [$headers, $rows, $fieldMapper];
   }
 
   /**
@@ -270,7 +270,7 @@ class WebTest_Import_MatchExternalIdTest extends ImportCiviSeleniumTestCase {
    * @return array
    *   event details of newly created event
    */
-  public function _addNewEvent($params = array()) {
+  public function _addNewEvent($params = []) {
     if (empty($params)) {
 
       // Use default payment processor
@@ -279,16 +279,16 @@ class WebTest_Import_MatchExternalIdTest extends ImportCiviSeleniumTestCase {
 
       // create an event
       $eventTitle = 'My Conference - ' . substr(sha1(rand()), 0, 7);
-      $params = array(
+      $params = [
         'title' => $eventTitle,
         'template_id' => 6,
         'event_type_id' => 4,
         'payment_processor' => $processorName,
-        'fee_level' => array(
+        'fee_level' => [
           'Member' => "250.00",
           'Non-Member' => "325.00",
-        ),
-      );
+        ],
+      ];
     }
 
     $this->openCiviPage('event/add', 'reset=1&action=add', '_qf_EventInfo_upload-bottom');

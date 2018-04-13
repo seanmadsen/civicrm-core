@@ -249,7 +249,7 @@ class WebTest_Contact_MultipleContactSubTypes extends CiviSeleniumTestCase {
     $this->click('_qf_Field_done-bottom');
     $this->waitForPageToLoad($this->getTimeoutMsec());
     $customGroupTitle = preg_replace('/\s/', '_', trim($customGroupTitle));
-    return array($customGroupTitle, $gid);
+    return [$customGroupTitle, $gid];
   }
 
 }

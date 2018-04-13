@@ -64,10 +64,10 @@ class CRM_Case_XMLProcessor_Report extends CRM_Case_XMLProcessor {
   }
 
   public function getRedactionRules() {
-    foreach (array(
+    foreach ([
                'redactionStringRules',
                'redactionRegexRules',
-             ) as $key => $rule) {
+             ] as $key => $rule) {
       $$rule = CRM_Case_PseudoConstant::redactionRule($key);
 
       if (!empty($$rule)) {
@@ -98,10 +98,10 @@ class CRM_Case_XMLProcessor_Report extends CRM_Case_XMLProcessor {
     $clientID,
     $caseID
   ) {
-    $case = $this->_redactionRegexRules = array();
+    $case = $this->_redactionRegexRules = [];
 
     if (empty($this->_redactionStringRules)) {
-      $this->_redactionStringRules = array();
+      $this->_redactionStringRules = [];
     }
 
     if ($this->_isRedact == 1) {
@@ -113,7 +113,7 @@ class CRM_Case_XMLProcessor_Report extends CRM_Case_XMLProcessor {
     // add Client to the strings to be redacted across the case session
     if (!array_key_exists($client, $this->_redactionStringRules)) {
       $this->_redactionStringRules = CRM_Utils_Array::crmArrayMerge($this->_redactionStringRules,
-        array($client => 'name_' . rand(10000, 100000))
+        [$client => 'name_' . rand(10000, 100000)]
       );
       $clientSortName = CRM_Core_DAO::getFieldValue('CRM_Contact_DAO_Contact', $clientID, 'sort_name');
       if (!array_key_exists($clientSortName, $this->_redactionStringRules)) {
@@ -157,7 +157,7 @@ class CRM_Case_XMLProcessor_Report extends CRM_Case_XMLProcessor {
     foreach ($xml->ActivitySets as $activitySetsXML) {
       foreach ($activitySetsXML->ActivitySet as $activitySetXML) {
         if ((string ) $activitySetXML->name == $activitySetName) {
-          $activityTypes = array();
+          $activityTypes = [];
           $allActivityTypes = &$this->allActivityTypes();
           foreach ($activitySetXML->ActivityTypes as $activityTypesXML) {
             foreach ($activityTypesXML as $activityTypeXML) {
@@ -225,7 +225,7 @@ AND    a.id = ac.activity_id
 AND    ac.case_id = %1
 ";
 
-    $params = array(1 => array($caseID, 'Integer'));
+    $params = [1 => [$caseID, 'Integer']];
     $dao = CRM_Core_DAO::executeQuery($query, $params);
     while ($dao->fetch()) {
       $activityTypeInfo = $map[$dao->activity_type_id];
@@ -245,7 +245,7 @@ AND    ac.case_id = %1
    * @return mixed
    */
   public function &getActivityInfo($clientID, $activityID, $anyActivity = FALSE, $redact = 0) {
-    static $activityInfos = array();
+    static $activityInfos = [];
     if ($redact) {
       $this->_isRedact = 1;
       $this->getRedactionRules();
@@ -258,7 +258,7 @@ AND    ac.case_id = %1
     }
 
     if (!array_key_exists($index, $activityInfos)) {
-      $activityInfos[$index] = array();
+      $activityInfos[$index] = [];
       $selectCaseActivity = "";
       $joinCaseActivity = "";
 
@@ -280,7 +280,7 @@ LEFT JOIN civicrm_activity_contact at ON a.id = at.activity_id AND at.record_typ
 LEFT JOIN civicrm_activity_contact aa ON a.id = aa.activity_id AND aa.record_type_id = $assigneeID
 WHERE      a.id = %1
     ";
-      $params = array(1 => array($activityID, 'Integer'));
+      $params = [1 => [$activityID, 'Integer']];
       $dao = CRM_Core_DAO::executeQuery($query, $params);
 
       if ($dao->fetch()) {
@@ -312,17 +312,17 @@ WHERE      a.id = %1
    */
   public function &getActivity($clientID, $activityDAO, &$activityTypeInfo) {
     if (empty($this->_redactionStringRules)) {
-      $this->_redactionStringRules = array();
+      $this->_redactionStringRules = [];
     }
 
-    $activity = array();
-    $activity['fields'] = array();
+    $activity = [];
+    $activity['fields'] = [];
     if ($clientID) {
       $clientID = CRM_Utils_Type::escape($clientID, 'Integer');
-      if (!in_array($activityTypeInfo['name'], array(
+      if (!in_array($activityTypeInfo['name'], [
         'Email',
         'Inbound Email',
-      ))
+      ])
       ) {
         $activity['editURL'] = CRM_Utils_System::url('civicrm/case/activity',
           "reset=1&cid={$clientID}&caseid={$activityDAO->caseID}&action=update&atype={$activityDAO->activity_type_id}&id={$activityDAO->id}"
@@ -337,7 +337,7 @@ WHERE      a.id = %1
       // suffixed with a randomly generated 4-digit number
       if (!array_key_exists($client, $this->_redactionStringRules)) {
         $this->_redactionStringRules = CRM_Utils_Array::crmArrayMerge($this->_redactionStringRules,
-          array($client => 'name_' . rand(10000, 100000))
+          [$client => 'name_' . rand(10000, 100000)]
         );
 
         $clientSortName = CRM_Core_DAO::getFieldValue('CRM_Contact_DAO_Contact', $clientID, 'sort_name');
@@ -346,11 +346,11 @@ WHERE      a.id = %1
         }
       }
 
-      $activity['fields'][] = array(
+      $activity['fields'][] = [
         'label' => 'Client',
         'value' => $this->redact($client),
         'type' => 'String',
-      );
+      ];
     }
 
     $activityContacts = CRM_Activity_BAO_ActivityContact::buildOptions('record_type_id', 'validate');
@@ -362,7 +362,7 @@ WHERE      a.id = %1
       $targetNames = CRM_Activity_BAO_ActivityContact::getNames($activityDAO->id, $targetID);
       $processTarget = FALSE;
       $label = ts('With Contact(s)');
-      if (in_array($activityTypeInfo['name'], array('Email', 'Inbound Email'))) {
+      if (in_array($activityTypeInfo['name'], ['Email', 'Inbound Email'])) {
         $processTarget = TRUE;
         $label = ts('Recipient');
       }
@@ -376,13 +376,13 @@ WHERE      a.id = %1
       }
 
       if ($processTarget) {
-        $targetRedacted = array();
+        $targetRedacted = [];
         foreach ($targetNames as $targetID => $target) {
           // add Recipient SortName as well as Display to the strings to be redacted across the case session
           // suffixed with a randomly generated 4-digit number
           if (!array_key_exists($target, $this->_redactionStringRules)) {
             $this->_redactionStringRules = CRM_Utils_Array::crmArrayMerge($this->_redactionStringRules,
-              array($target => 'name_' . rand(10000, 100000))
+              [$target => 'name_' . rand(10000, 100000)]
             );
             $targetSortName = CRM_Core_DAO::getFieldValue('CRM_Contact_DAO_Contact', $targetID, 'sort_name');
             if (!array_key_exists($targetSortName, $this->_redactionStringRules)) {
@@ -392,39 +392,39 @@ WHERE      a.id = %1
           $targetRedacted[] = $this->redact($target);
         }
 
-        $activity['fields'][] = array(
+        $activity['fields'][] = [
           'label' => $label,
           'value' => implode('; ', $targetRedacted),
           'type' => 'String',
-        );
+        ];
       }
     }
 
     // Activity Type info is a special field
-    $activity['fields'][] = array(
+    $activity['fields'][] = [
       'label' => ts('Activity Type'),
       'value' => $activityTypeInfo['label'],
       'type' => 'String',
-    );
+    ];
 
-    $activity['fields'][] = array(
+    $activity['fields'][] = [
       'label' => ts('Subject'),
       'value' => htmlspecialchars($this->redact($activityDAO->subject)),
       'type' => 'Memo',
-    );
+    ];
 
     $creator = $this->getCreatedBy($activityDAO->id);
     // add Creator to the strings to be redacted across the case session
     if (!array_key_exists($creator, $this->_redactionStringRules)) {
       $this->_redactionStringRules = CRM_Utils_Array::crmArrayMerge($this->_redactionStringRules,
-        array($creator => 'name_' . rand(10000, 100000))
+        [$creator => 'name_' . rand(10000, 100000)]
       );
     }
-    $activity['fields'][] = array(
+    $activity['fields'][] = [
       'label' => ts('Created By'),
       'value' => $this->redact($creator),
       'type' => 'String',
-    );
+    ];
     $activityContacts = CRM_Activity_BAO_ActivityContact::buildOptions('record_type_id', 'validate');
     $sourceID = CRM_Utils_Array::key('Activity Source', $activityContacts);
     $source_contact_id = CRM_Activity_BAO_Activity::getActivityContact($activityDAO->id, $sourceID);
@@ -437,7 +437,7 @@ WHERE      a.id = %1
     // suffixed with a randomly generated 4-digit number
     if (!array_key_exists($reporter, $this->_redactionStringRules)) {
       $this->_redactionStringRules = CRM_Utils_Array::crmArrayMerge($this->_redactionStringRules,
-        array($reporter => 'name_' . rand(10000, 100000))
+        [$reporter => 'name_' . rand(10000, 100000)]
       );
 
       $reporterSortName = CRM_Core_DAO::getFieldValue('CRM_Contact_DAO_Contact',
@@ -449,82 +449,82 @@ WHERE      a.id = %1
       }
     }
 
-    $activity['fields'][] = array(
+    $activity['fields'][] = [
       'label' => ts('Reported By'),
       'value' => $this->redact($reporter),
       'type' => 'String',
-    );
+    ];
 
     if (!empty($activityDAO->assigneeID)) {
       //allow multiple assignee contacts.CRM-4503.
-      $assignee_contact_names = CRM_Activity_BAO_ActivityAssignment::getAssigneeNames(array($activityDAO->id), TRUE);
+      $assignee_contact_names = CRM_Activity_BAO_ActivityAssignment::getAssigneeNames([$activityDAO->id], TRUE);
 
       foreach ($assignee_contact_names as & $assignee) {
         // add Assignee to the strings to be redacted across the case session
         $this->_redactionStringRules = CRM_Utils_Array::crmArrayMerge($this->_redactionStringRules,
-          array($assignee => 'name_' . rand(10000, 100000))
+          [$assignee => 'name_' . rand(10000, 100000)]
         );
         $assignee = $this->redact($assignee);
       }
       $assigneeContacts = implode(', ', $assignee_contact_names);
-      $activity['fields'][] = array(
+      $activity['fields'][] = [
         'label' => ts('Assigned to'),
         'value' => $assigneeContacts,
         'type' => 'String',
-      );
+      ];
     }
 
     if ($activityDAO->medium_id) {
-      $activity['fields'][] = array(
+      $activity['fields'][] = [
         'label' => ts('Medium'),
         'value' => CRM_Core_OptionGroup::getLabel('encounter_medium',
           $activityDAO->medium_id, FALSE
         ),
         'type' => 'String',
-      );
+      ];
     }
 
-    $activity['fields'][] = array(
+    $activity['fields'][] = [
       'label' => ts('Location'),
       'value' => $activityDAO->location,
       'type' => 'String',
-    );
+    ];
 
-    $activity['fields'][] = array(
+    $activity['fields'][] = [
       'label' => ts('Date and Time'),
       'value' => $activityDAO->activity_date_time,
       'type' => 'Date',
-    );
+    ];
 
-    $activity['fields'][] = array(
+    $activity['fields'][] = [
       'label' => ts('Details'),
       'value' => $this->redact(CRM_Utils_String::stripAlternatives($activityDAO->details)),
       'type' => 'Memo',
-    );
+    ];
 
     // Skip Duration field if empty (to avoid " minutes" output). Might want to do this for all fields at some point. dgg
     if ($activityDAO->duration) {
-      $activity['fields'][] = array(
+      $activity['fields'][] = [
         'label' => ts('Duration'),
         'value' => $activityDAO->duration . ' ' . ts('minutes'),
         'type' => 'Int',
-      );
+      ];
     }
-    $activity['fields'][] = array(
+    $activity['fields'][] = [
       'label' => ts('Status'),
       'value' => CRM_Core_PseudoConstant::getLabel('CRM_Activity_DAO_Activity', 'activity_status_id',
         $activityDAO->status_id
       ),
       'type' => 'String',
-    );
+    ];
 
-    $activity['fields'][] = array(
+    $activity['fields'][] = [
       'label' => ts('Priority'),
       'value' => CRM_Core_PseudoConstant::getLabel('CRM_Activity_DAO_Activity', 'priority',
         $activityDAO->priority_id
       ),
       'type' => 'String',
-    );
+    ];
 
     //for now empty custom groups
     $activity['customGroups'] = $this->getCustomData($clientID,
@@ -545,13 +545,13 @@ WHERE      a.id = %1
   public function getCustomData($clientID, $activityDAO, &$activityTypeInfo) {
     list($typeValues, $options, $sql) = $this->getActivityTypeCustomSQL($activityTypeInfo['id'], '%Y-%m-%d');
 
-    $params = array(1 => array($activityDAO->id, 'Integer'));
+    $params = [1 => [$activityDAO->id, 'Integer']];
 
-    $customGroups = array();
+    $customGroups = [];
     foreach ($sql as $tableName => $sqlClause) {
       $dao = CRM_Core_DAO::executeQuery($sqlClause, $params);
       if ($dao->fetch()) {
-        $customGroup = array();
+        $customGroup = [];
         foreach ($typeValues[$tableName] as $columnName => $typeValue) {
 
           if (CRM_Utils_Array::value('type', $typeValue) == 'Date') {
@@ -577,12 +577,12 @@ WHERE      a.id = %1
             }
           }
           //$typeValue
-          $customGroup[] = array(
+          $customGroup[] = [
             'label' => $typeValue['label'],
             'value' => $value,
             'type' => $typeValue['type'],
             'fieldID' => $typeValue['fieldID'],
-          );
+          ];
         }
         $customGroups[$dao->groupTitle] = $customGroup;
       }
@@ -598,7 +598,7 @@ WHERE      a.id = %1
    * @return mixed
    */
   public function getActivityTypeCustomSQL($activityTypeID, $dateFormat = NULL) {
-    static $cache = array();
+    static $cache = [];
 
     if (is_null($activityTypeID)) {
       $activityTypeID = 0;
@@ -628,32 +628,32 @@ AND " . CRM_Core_Permission::customGroupClause(CRM_Core_Permission::VIEW, 'cg.')
         $query .= "AND cg.extends_entity_column_value IS NULL";
       }
       $query .= "ORDER BY cg.weight, cf.weight";
-      $params = array(
-        1 => array(
+      $params = [
+        1 => [
           $activityTypeID,
           'Integer',
-        ),
-      );
+        ],
+      ];
       $dao = CRM_Core_DAO::executeQuery($query, $params);
 
-      $result = $options = $sql = $groupTitle = array();
+      $result = $options = $sql = $groupTitle = [];
       while ($dao->fetch()) {
         if (!array_key_exists($dao->tableName, $result)) {
-          $result[$dao->tableName] = array();
-          $sql[$dao->tableName] = array();
+          $result[$dao->tableName] = [];
+          $sql[$dao->tableName] = [];
         }
-        $result[$dao->tableName][$dao->columnName] = array(
+        $result[$dao->tableName][$dao->columnName] = [
           'label' => $dao->label,
           'type' => $dao->dataType,
           'fieldID' => $dao->fieldID,
-        );
+        ];
 
-        $options[$dao->fieldID] = array();
-        $options[$dao->fieldID]['attributes'] = array(
+        $options[$dao->fieldID] = [];
+        $options[$dao->fieldID]['attributes'] = [
           'label' => $dao->label,
           'data_type' => $dao->dataType,
           'html_type' => $dao->htmlType,
-        );
+        ];
         // since we want to add ISO date format.
         if ($dateFormat && $dao->htmlType == 'Select Date') {
           $options[$dao->fieldID]['attributes']['format'] = $dateFormat;
@@ -665,7 +665,7 @@ SELECT label, value
  WHERE option_group_id = %1
 ";
 
-          $option = CRM_Core_DAO::executeQuery($query, array(1 => array($dao->optionGroupID, 'Positive')));
+          $option = CRM_Core_DAO::executeQuery($query, [1 => [$dao->optionGroupID, 'Positive']]);
           while ($option->fetch()) {
             $dataType = $dao->dataType;
             if ($dataType == 'Int' || $dataType == 'Float') {
@@ -693,7 +693,7 @@ WHERE  entity_id = %1
 ";
       }
 
-      $cache[$activityTypeID] = array($result, $options, $sql);
+      $cache[$activityTypeID] = [$result, $options, $sql];
     }
     return $cache[$activityTypeID];
   }
@@ -714,7 +714,7 @@ AND    l.modified_id  = c.id
 LIMIT  1
 ";
 
-    $params = array(1 => array($activityID, 'Integer'));
+    $params = [1 => [$activityID, 'Integer']];
     return CRM_Core_DAO::singleValueQuery($query, $params);
   }
 
@@ -725,7 +725,7 @@ LIMIT  1
    *
    * @return mixed
    */
-  private function redact($string, $printReport = FALSE, $replaceString = array()) {
+  private function redact($string, $printReport = FALSE, $replaceString = []) {
     if ($printReport) {
       return CRM_Utils_String::redaction($string, $replaceString);
     }
@@ -791,15 +791,15 @@ LIMIT  1
     }
 
     // next get activity set Information
-    $activitySet = array(
+    $activitySet = [
       'label' => $form->getActivitySetLabel($xml, $activitySetName),
       'includeActivities' => 'All',
       'redact' => 'false',
-    );
+    ];
     $template->assign_by_ref('activitySet', $activitySet);
 
     //now collect all the information about activities
-    $activities = array();
+    $activities = [];
     $form->getActivities($clientID, $caseID, $activityTypes, $activities);
     $template->assign_by_ref('activities', $activities);
 
@@ -814,7 +814,7 @@ LIMIT  1
     $activitySetName = CRM_Utils_Request::retrieve('asn', 'String');
     $isRedact = CRM_Utils_Request::retrieve('redact', 'Boolean');
     $includeActivities = CRM_Utils_Request::retrieve('all', 'Positive');
-    $params = $otherRelationships = $globalGroupInfo = array();
+    $params = $otherRelationships = $globalGroupInfo = [];
     $report = new CRM_Case_XMLProcessor_Report($isRedact);
     if ($includeActivities) {
       $params['include_activities'] = 1;
@@ -822,7 +822,7 @@ LIMIT  1
 
     if ($isRedact) {
       $params['is_redact'] = 1;
-      $report->_redactionStringRules = array();
+      $report->_redactionStringRules = [];
     }
     $template = CRM_Core_Smarty::singleton();
 
@@ -839,7 +839,7 @@ LIMIT  1
       if ($isRedact) {
         if (!array_key_exists($value['name'], $report->_redactionStringRules)) {
           $report->_redactionStringRules = CRM_Utils_Array::crmArrayMerge($report->_redactionStringRules,
-            array($value['name'] => 'name_' . rand(10000, 100000))
+            [$value['name'] => 'name_' . rand(10000, 100000)]
           );
         }
         $value['name'] = $report->redact($value['name'], TRUE, $report->_redactionStringRules);
@@ -847,7 +847,7 @@ LIMIT  1
           !array_key_exists($value['email'], $report->_redactionStringRules)
         ) {
           $report->_redactionStringRules = CRM_Utils_Array::crmArrayMerge($report->_redactionStringRules,
-            array($value['email'] => 'email_' . rand(10000, 100000))
+            [$value['email'] => 'email_' . rand(10000, 100000)]
           );
         }
 
@@ -857,7 +857,7 @@ LIMIT  1
           !array_key_exists($value['phone'], $report->_redactionStringRules)
         ) {
           $report->_redactionStringRules = CRM_Utils_Array::crmArrayMerge($report->_redactionStringRules,
-            array($value['phone'] => 'phone_' . rand(10000, 100000))
+            [$value['phone'] => 'phone_' . rand(10000, 100000)]
           );
         }
         $value['phone'] = $report->redact($value['phone'], TRUE, $report->_redactionStringRules);
@@ -870,7 +870,7 @@ LIMIT  1
         if (!array_key_exists(CRM_Utils_Array::value('sort_name', $client), $report->_redactionStringRules)) {
 
           $report->_redactionStringRules = CRM_Utils_Array::crmArrayMerge($report->_redactionStringRules,
-            array(CRM_Utils_Array::value('sort_name', $client) => 'name_' . rand(10000, 100000))
+            [CRM_Utils_Array::value('sort_name', $client) => 'name_' . rand(10000, 100000)]
           );
         }
         if (!array_key_exists(CRM_Utils_Array::value('display_name', $client), $report->_redactionStringRules)) {
@@ -881,7 +881,7 @@ LIMIT  1
           !array_key_exists($client['email'], $report->_redactionStringRules)
         ) {
           $report->_redactionStringRules = CRM_Utils_Array::crmArrayMerge($report->_redactionStringRules,
-            array($client['email'] => 'email_' . rand(10000, 100000))
+            [$client['email'] => 'email_' . rand(10000, 100000)]
           );
         }
         $client['email'] = $report->redact(CRM_Utils_Array::value('email', $client), TRUE, $report->_redactionStringRules);
@@ -890,7 +890,7 @@ LIMIT  1
           !array_key_exists($client['phone'], $report->_redactionStringRules)
         ) {
           $report->_redactionStringRules = CRM_Utils_Array::crmArrayMerge($report->_redactionStringRules,
-            array($client['phone'] => 'phone_' . rand(10000, 100000))
+            [$client['phone'] => 'phone_' . rand(10000, 100000)]
           );
         }
         $client['phone'] = $report->redact(CRM_Utils_Array::value('phone', $client), TRUE, $report->_redactionStringRules);
@@ -905,7 +905,7 @@ LIMIT  1
       if ($isRedact) {
         if (!array_key_exists($r['name'], $report->_redactionStringRules)) {
           $report->_redactionStringRules = CRM_Utils_Array::crmArrayMerge($report->_redactionStringRules,
-            array($r['name'] => 'name_' . rand(10000, 100000))
+            [$r['name'] => 'name_' . rand(10000, 100000)]
           );
         }
         if (!array_key_exists($r['display_name'], $report->_redactionStringRules)) {
@@ -917,7 +917,7 @@ LIMIT  1
           !array_key_exists($r['phone'], $report->_redactionStringRules)
         ) {
           $report->_redactionStringRules = CRM_Utils_Array::crmArrayMerge($report->_redactionStringRules,
-            array($r['phone'] => 'phone_' . rand(10000, 100000))
+            [$r['phone'] => 'phone_' . rand(10000, 100000)]
           );
         }
         $r['phone'] = $report->redact($r['phone'], TRUE, $report->_redactionStringRules);
@@ -926,7 +926,7 @@ LIMIT  1
           !array_key_exists($r['email'], $report->_redactionStringRules)
         ) {
           $report->_redactionStringRules = CRM_Utils_Array::crmArrayMerge($report->_redactionStringRules,
-            array($r['email'] => 'email_' . rand(10000, 100000))
+            [$r['email'] => 'email_' . rand(10000, 100000)]
           );
         }
         $r['email'] = $report->redact($r['email'], TRUE, $report->_redactionStringRules);
@@ -942,7 +942,7 @@ LIMIT  1
       if ($isRedact) {
         if (!array_key_exists($r['sort_name'], $report->_redactionStringRules)) {
           $report->_redactionStringRules = CRM_Utils_Array::crmArrayMerge($report->_redactionStringRules,
-            array($r['sort_name'] => 'name_' . rand(10000, 100000))
+            [$r['sort_name'] => 'name_' . rand(10000, 100000)]
           );
         }
         if (!array_key_exists($r['display_name'], $report->_redactionStringRules)) {
@@ -954,7 +954,7 @@ LIMIT  1
           !array_key_exists($r['phone'], $report->_redactionStringRules)
         ) {
           $report->_redactionStringRules = CRM_Utils_Array::crmArrayMerge($report->_redactionStringRules,
-            array($r['phone'] => 'phone_' . rand(10000, 100000))
+            [$r['phone'] => 'phone_' . rand(10000, 100000)]
           );
         }
         $r['phone'] = $report->redact($r['phone'], TRUE, $report->_redactionStringRules);
@@ -963,7 +963,7 @@ LIMIT  1
           !array_key_exists($r['email'], $report->_redactionStringRules)
         ) {
           $report->_redactionStringRules = CRM_Utils_Array::crmArrayMerge($report->_redactionStringRules,
-            array($r['email'] => 'email_' . rand(10000, 100000))
+            [$r['email'] => 'email_' . rand(10000, 100000)]
           );
         }
         $r['email'] = $report->redact($r['email'], TRUE, $report->_redactionStringRules);
@@ -972,17 +972,17 @@ LIMIT  1
 
     // Retrieve custom values for cases.
     $customValues = CRM_Core_BAO_CustomValueTable::getEntityValues($caseID, 'Case');
-    $extends = array('case');
+    $extends = ['case'];
     $groupTree = CRM_Core_BAO_CustomGroup::getGroupDetail(NULL, NULL, $extends);
-    $caseCustomFields = array();
+    $caseCustomFields = [];
     while (list($gid, $group_values) = each($groupTree)) {
       while (list($id, $field_values) = each($group_values['fields'])) {
         if (array_key_exists($id, $customValues)) {
           $caseCustomFields[$gid]['title'] = $group_values['title'];
-          $caseCustomFields[$gid]['values'][$id] = array(
+          $caseCustomFields[$gid]['values'][$id] = [
             'label' => $field_values['label'],
             'value' => $customValues[$id],
-          );
+          ];
         }
       }
     }

@@ -44,12 +44,12 @@ class WebTest_Case_ActivityToCaseTest extends CiviSeleniumTestCase {
     $this->enableComponents("CiviCase");
 
     // let's give full CiviCase permissions to demo user (registered user).
-    $permission = array(
+    $permission = [
       'edit-2-access-all-cases-and-activities',
       'edit-2-access-my-cases-and-activities',
       'edit-2-administer-civicase',
       'edit-2-delete-in-civicase',
-    );
+    ];
     $this->changePermissions($permission);
 
     // Log in as normal user
@@ -95,12 +95,12 @@ class WebTest_Case_ActivityToCaseTest extends CiviSeleniumTestCase {
     $this->enableComponents("CiviCase");
 
     // let's give full CiviCase permissions to demo user (registered user).
-    $permission = array(
+    $permission = [
       'edit-2-access-all-cases-and-activities',
       'edit-2-access-my-cases-and-activities',
       'edit-2-administer-civicase',
       'edit-2-delete-in-civicase',
-    );
+    ];
     $this->changePermissions($permission);
 
     // Log in as normal user
@@ -183,7 +183,7 @@ class WebTest_Case_ActivityToCaseTest extends CiviSeleniumTestCase {
     $this->waitForText("case_id_$id", $activitySubject);
     $this->click("xpath=//table[@id='case_id_{$id}']/tbody//tr/td[2]/div[text()='{$activitySubject}']/../../td[8]/a[text()='View']");
 
-    $LinkCaseActivityData = array(
+    $LinkCaseActivityData = [
       "Client" => $contact2['first_name'],
       "Activity Type" => "Link Cases",
       "Subject" => $activitySubject,
@@ -194,7 +194,7 @@ class WebTest_Case_ActivityToCaseTest extends CiviSeleniumTestCase {
       "Details" => $activitydetails,
       "Status" => "Scheduled",
       "Priority" => "Normal",
-    );
+    ];
     $this->webtestVerifyTabularData($LinkCaseActivityData);
   }
 
@@ -419,7 +419,7 @@ class WebTest_Case_ActivityToCaseTest extends CiviSeleniumTestCase {
     $textFieldId = explode('&id=', $this->getAttribute("xpath=//table[@id='options']/tbody//tr/td[1]/div[text()='$textFieldLabel']/../../td[8]/span/a[1][text()='Edit Field']/@href"));
     $textFieldId = $textFieldId[1];
 
-    return array($radioOptionLabel1, "custom_{$textFieldId}_-1");
+    return [$radioOptionLabel1, "custom_{$textFieldId}_-1"];
   }
 
 }

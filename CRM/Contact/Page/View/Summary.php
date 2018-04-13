@@ -120,18 +120,18 @@ class CRM_Contact_Page_View_Summary extends CRM_Contact_Page_View {
       ->addScriptFile('civicrm', 'templates/CRM/Contact/Page/View/Summary.js', 2, 'html-header')
       ->addStyleFile('civicrm', 'css/contactSummary.css', 2, 'html-header')
       ->addScriptFile('civicrm', 'templates/CRM/common/TabHeader.js', 1, 'html-header')
-      ->addSetting(array(
-        'summaryPrint' => array('mode' => $this->_print),
-        'tabSettings' => array('active' => CRM_Utils_Request::retrieve('selectedChild', 'String', $this, FALSE, 'summary')),
-      ));
+      ->addSetting([
+        'summaryPrint' => ['mode' => $this->_print],
+        'tabSettings' => ['active' => CRM_Utils_Request::retrieve('selectedChild', 'String', $this, FALSE, 'summary')],
+      ]);
     $this->assign('summaryPrint', $this->_print);
     $session = CRM_Core_Session::singleton();
     $url = CRM_Utils_System::url('civicrm/contact/view', 'reset=1&cid=' . $this->_contactId);
     $session->pushUserContext($url);
     $this->assignFieldMetadataToTemplate('Contact');
 
-    $params = array();
-    $defaults = array();
+    $params = [];
+    $defaults = [];
 
     $params['id'] = $params['contact_id'] = $this->_contactId;
     $params['noRelationships'] = $params['noNotes'] = $params['noGroups'] = TRUE;
@@ -140,34 +140,34 @@ class CRM_Contact_Page_View_Summary extends CRM_Contact_Page_View {
     $mailingBackend = Civi::settings()->get('mailing_backend');
     $this->assign('mailingOutboundOption', $mailingBackend['outBound_option']);
 
-    $communicationType = array(
-      'phone' => array(
+    $communicationType = [
+      'phone' => [
         'type' => 'phoneType',
         'id' => 'phone_type',
         'daoName' => 'CRM_Core_DAO_Phone',
         'fieldName' => 'phone_type_id',
-      ),
-      'im' => array(
+      ],
+      'im' => [
         'type' => 'IMProvider',
         'id' => 'provider',
         'daoName' => 'CRM_Core_DAO_IM',
         'fieldName' => 'provider_id',
-      ),
-      'website' => array(
+      ],
+      'website' => [
         'type' => 'websiteType',
         'id' => 'website_type',
         'daoName' => 'CRM_Core_DAO_Website',
         'fieldName' => 'website_type_id',
-      ),
-      'address' => array('skip' => TRUE, 'customData' => 1),
-      'email' => array('skip' => TRUE),
-      'openid' => array('skip' => TRUE),
-    );
+      ],
+      'address' => ['skip' => TRUE, 'customData' => 1],
+      'email' => ['skip' => TRUE],
+      'openid' => ['skip' => TRUE],
+    ];
 
     foreach ($communicationType as $key => $value) {
       if (!empty($defaults[$key])) {
         foreach ($defaults[$key] as & $val) {
-          CRM_Utils_Array::lookupValue($val, 'location_type', CRM_Core_PseudoConstant::get('CRM_Core_DAO_Address', 'location_type_id', array('labelColumn' => 'display_name')), FALSE);
+          CRM_Utils_Array::lookupValue($val, 'location_type', CRM_Core_PseudoConstant::get('CRM_Core_DAO_Address', 'location_type_id', ['labelColumn' => 'display_name']), FALSE);
           if (empty($value['skip'])) {
             $daoName = $value['daoName'];
             $pseudoConst = $daoName::buildOptions($value['fieldName'], 'get');
@@ -234,16 +234,16 @@ class CRM_Contact_Page_View_Summary extends CRM_Contact_Page_View {
     }
 
     // get contact name of shared contact names
-    $sharedAddresses = array();
+    $sharedAddresses = [];
     $shareAddressContactNames = CRM_Contact_BAO_Contact_Utils::getAddressShareContactNames($defaults['address']);
     foreach ($defaults['address'] as $key => $addressValue) {
       if (!empty($addressValue['master_id']) &&
         !$shareAddressContactNames[$addressValue['master_id']]['is_deleted']
       ) {
-        $sharedAddresses[$key]['shared_address_display'] = array(
+        $sharedAddresses[$key]['shared_address_display'] = [
           'address' => $addressValue['display'],
           'name' => $shareAddressContactNames[$addressValue['master_id']]['name'],
-        );
+        ];
       }
     }
     $this->assign('sharedAddresses', $sharedAddresses);
@@ -264,7 +264,7 @@ class CRM_Contact_Page_View_Summary extends CRM_Contact_Page_View {
     $lastModified = CRM_Core_BAO_Log::lastModified($this->_contactId, 'civicrm_contact');
     $this->assign_by_ref('lastModified', $lastModified);
 
-    $allTabs = array();
+    $allTabs = [];
     $weight = 10;
 
     $this->_viewOptions = CRM_Core_BAO_Setting::valueOptions(
@@ -302,14 +302,14 @@ class CRM_Contact_Page_View_Summary extends CRM_Contact_Page_View {
         if (CRM_Utils_Request::retrieve('isTest', 'Positive', $this)) {
           $q .= "&isTest=1";
         }
-        $allTabs[] = array(
+        $allTabs[] = [
           'id' => $i,
           'url' => CRM_Utils_System::url("civicrm/contact/view/$u", $q),
           'title' => $elem['title'],
           'weight' => $elem['weight'],
           'count' => CRM_Contact_BAO_Contact::getCountComponent($u, $this->_contactId),
           'class' => 'livePage',
-        );
+        ];
         // make sure to get maximum weight, rest of tabs go after
         // FIXME: not very elegant again
         if ($weight < $elem['weight']) {
@@ -318,34 +318,34 @@ class CRM_Contact_Page_View_Summary extends CRM_Contact_Page_View {
       }
     }
 
-    $rest = array(
-      'activity' => array(
+    $rest = [
+      'activity' => [
         'title' => ts('Activities'),
         'class' => 'livePage',
-      ),
-      'rel' => array(
+      ],
+      'rel' => [
         'title' => ts('Relationships'),
         'class' => 'livePage',
-      ),
-      'group' => array(
+      ],
+      'group' => [
         'title' => ts('Groups'),
         'class' => 'ajaxForm',
-      ),
-      'note' => array(
+      ],
+      'note' => [
         'title' => ts('Notes'),
         'class' => 'livePage',
-      ),
-      'tag' => array(
+      ],
+      'tag' => [
         'title' => ts('Tags'),
-      ),
-      'log' => array(
+      ],
+      'log' => [
         'title' => ts('Change Log'),
-      ),
-    );
+      ],
+    ];
 
     foreach ($rest as $k => $v) {
       if ($accessCiviCRM && !empty($this->_viewOptions[$k])) {
-        $allTabs[] = $v + array(
+        $allTabs[] = $v + [
           'id' => $k,
           'url' => CRM_Utils_System::url(
             "civicrm/contact/view/$k",
@@ -353,7 +353,7 @@ class CRM_Contact_Page_View_Summary extends CRM_Contact_Page_View {
           ),
           'weight' => $weight,
           'count' => CRM_Contact_BAO_Contact::getCountComponent($k, $this->_contactId),
-        );
+          ];
         $weight += 10;
       }
     }
@@ -368,7 +368,7 @@ class CRM_Contact_Page_View_Summary extends CRM_Contact_Page_View {
 
     foreach ($activeGroups as $group) {
       $id = "custom_{$group['id']}";
-      $allTabs[] = array(
+      $allTabs[] = [
         'id' => $id,
         'url' => CRM_Utils_System::url($group['path'], $group['query'] . "&selectedChild=$id"),
         'title' => $group['title'],
@@ -376,24 +376,24 @@ class CRM_Contact_Page_View_Summary extends CRM_Contact_Page_View {
         'count' => CRM_Contact_BAO_Contact::getCountComponent($id, $this->_contactId, $group['table_name']),
         'hideCount' => !$group['is_multiple'],
         'class' => 'livePage',
-      );
+      ];
       $weight += 10;
     }
 
-    $context = array('contact_id' => $this->_contactId);
+    $context = ['contact_id' => $this->_contactId];
     // see if any other modules want to add any tabs
     CRM_Utils_Hook::tabs($allTabs, $this->_contactId);
     CRM_Utils_Hook::tabset('civicrm/contact/view', $allTabs, $context);
 
-    $allTabs[] = array(
+    $allTabs[] = [
       'id' => 'summary',
       'url' => '#contact-summary',
       'title' => ts('Summary'),
       'weight' => 0,
-    );
+    ];
 
     // now sort the tabs based on weight
-    usort($allTabs, array('CRM_Utils_Sort', 'cmpFunc'));
+    usort($allTabs, ['CRM_Utils_Sort', 'cmpFunc']);
 
     $this->assign('allTabs', $allTabs);
 
@@ -412,7 +412,7 @@ class CRM_Contact_Page_View_Summary extends CRM_Contact_Page_View {
    */
   public function getTemplateFileName() {
     if ($this->_contactId) {
-      $contactSubtypes = $this->get('contactSubtype') ? explode(CRM_Core_DAO::VALUE_SEPARATOR, $this->get('contactSubtype')) : array();
+      $contactSubtypes = $this->get('contactSubtype') ? explode(CRM_Core_DAO::VALUE_SEPARATOR, $this->get('contactSubtype')) : [];
 
       // there could be multiple subtypes. We check templates for each of the subtype, and return the first one found.
       foreach ($contactSubtypes as $csType) {

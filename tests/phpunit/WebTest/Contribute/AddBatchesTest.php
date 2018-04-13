@@ -39,7 +39,7 @@ class WebTest_Contribute_AddBatchesTest extends CiviSeleniumTestCase {
     $this->webtestLogin();
     $itemCount = 5;
     // create contact
-    $contact = array();
+    $contact = [];
 
     //Open Live Contribution Page
     $this->openCiviPage("batch", "reset=1");
@@ -50,11 +50,11 @@ class WebTest_Contribute_AddBatchesTest extends CiviSeleniumTestCase {
     $this->click("_qf_Batch_next");
     $this->waitForPageToLoad($this->getTimeoutMsec());
     $softCreditTypes = CRM_Core_OptionGroup::values("soft_credit_type", FALSE);
-    $softCreditAmount = array(1 => 50, 2 => 60, 3 => 40, 4 => 70, 5 => 35);
+    $softCreditAmount = [1 => 50, 2 => 60, 3 => 40, 4 => 70, 5 => 35];
     // Add Contact Details
-    $data = array();
+    $data = [];
     for ($i = 1; $i <= $itemCount; $i++) {
-      $data[$i] = array(
+      $data[$i] = [
         'first_name' => 'Ma' . substr(sha1(rand()), 0, 7),
         'last_name' => 'An' . substr(sha1(rand()), 0, 7),
         'financial_type' => 'Donation',
@@ -64,7 +64,7 @@ class WebTest_Contribute_AddBatchesTest extends CiviSeleniumTestCase {
         'soft_credit_amount' => $softCreditAmount[$i],
         'soft_credit_type' => $softCreditTypes[$i],
 
-      );
+      ];
       $this->_fillData($data[$i], $i, "Contribution");
     }
 
@@ -77,9 +77,9 @@ class WebTest_Contribute_AddBatchesTest extends CiviSeleniumTestCase {
     $this->webtestLogin();
     $itemCount = 5;
     $softCreditTypes = CRM_Core_OptionGroup::values("soft_credit_type", FALSE);
-    $softCreditAmount = array(1 => 50, 2 => 60, 3 => 40, 4 => 70, 5 => 35);
+    $softCreditAmount = [1 => 50, 2 => 60, 3 => 40, 4 => 70, 5 => 35];
     // create contact
-    $contact = array();
+    $contact = [];
     $batchTitle = 'Batch-' . substr(sha1(rand()), 0, 7);
 
     //Open Live Contribution Page
@@ -95,9 +95,9 @@ class WebTest_Contribute_AddBatchesTest extends CiviSeleniumTestCase {
     $this->waitForPageToLoad($this->getTimeoutMsec());
 
     // Add Contact Details
-    $data = array();
+    $data = [];
     for ($i = 1; $i <= $itemCount; $i++) {
-      $data[$i] = array(
+      $data[$i] = [
         'first_name' => 'Ma' . substr(sha1(rand()), 0, 7),
         'last_name' => 'An' . substr(sha1(rand()), 0, 7),
         'membership_type' => 'General',
@@ -107,7 +107,7 @@ class WebTest_Contribute_AddBatchesTest extends CiviSeleniumTestCase {
         'soft_credit_last_name' => 'Ki' . substr(sha1(rand()), 0, 7),
         'soft_credit_amount' => $softCreditAmount[$i],
         'soft_credit_type' => $softCreditTypes[$i],
-      );
+      ];
       $this->_fillData($data[$i], $i, "Membership");
     }
     $this->click("_qf_Entry_cancel");
@@ -140,26 +140,26 @@ class WebTest_Contribute_AddBatchesTest extends CiviSeleniumTestCase {
     $this->waitForPageToLoad($this->getTimeoutMsec());
 
     // Add Contact Details
-    $data = array();
+    $data = [];
     for ($i = 1; $i <= $itemCount; $i++) {
       if ($i == 2) {
-        $data[$i] = array('contact' => $contact, 'amount' => 100);
+        $data[$i] = ['contact' => $contact, 'amount' => 100];
       }
       else {
-        $data[$i] = array(
+        $data[$i] = [
           'first_name' => 'Ma' . substr(sha1(rand()), 0, 7),
           'last_name' => 'An' . substr(sha1(rand()), 0, 7),
           'amount' => 100,
-        );
+        ];
       }
-      $data[$i] += array(
+      $data[$i] += [
         'membership_type' => 'General',
         'financial_type' => 'Member Dues',
         'soft_credit_first_name' => 'Ar' . substr(sha1(rand()), 0, 7),
         'soft_credit_last_name' => 'Ki' . substr(sha1(rand()), 0, 7),
         'soft_credit_amount' => 10,
         'soft_credit_type' => $softCreditTypes[$i],
-      );
+      ];
       $this->_fillData($data[$i], $i, "Pledge Payment");
     }
     $this->click("_qf_Entry_cancel");
@@ -270,19 +270,19 @@ class WebTest_Contribute_AddBatchesTest extends CiviSeleniumTestCase {
       $this->type("sort_name", "{$data['last_name']} {$data['first_name']}");
       $this->clickLink("_qf_Search_refresh", "xpath=//table[@class='selector row-highlight']/tbody/tr[1]/td[10]/span//a[text()='View']", FALSE);
       $this->clickLink("xpath=//table[@class='selector row-highlight']/tbody/tr[1]/td[10]/span//a[text()='View']", "_qf_ContributionView_cancel-bottom", FALSE);
-      $expected = array(
+      $expected = [
         'From' => "{$data['first_name']} {$data['last_name']}",
         'Financial Type' => $data['financial_type'],
         'Total Amount' => $data['amount'],
         'Contribution Status' => 'Completed',
-      );
+      ];
 
       $this->webtestVerifyTabularData($expected);
-      $expectedSoft = array(
+      $expectedSoft = [
         'Soft Credit To' => "{$data['soft_credit_first_name']} {$data['soft_credit_last_name']}",
         'Amount (Soft Credit Type)' => "{$data['soft_credit_amount']}",
         'Soft Credit Type' => $data['soft_credit_type'],
-      );
+      ];
       foreach ($expectedSoft as $value) {
         $this->assertElementContainsText("css=table.crm-soft-credit-listing", $value);
       }
@@ -295,10 +295,10 @@ class WebTest_Contribute_AddBatchesTest extends CiviSeleniumTestCase {
       $this->clickLink("_qf_Search_refresh", "xpath=//div[@id='memberSearch']//table//tbody/tr[1]/td[11]/span/a[text()='View']");
       $this->click("xpath=//div[@id='memberSearch']//table/tbody/tr[1]/td[11]/span/a[text()='View']");
       $this->waitForElementPresent("_qf_MembershipView_cancel-bottom");
-      $expected = array(
+      $expected = [
         2 => 'General',
         4 => 'New',
-      );
+      ];
       foreach ($expected as $label => $value) {
         $this->assertElementContainsText("xpath=id('MembershipView')/div[2]/div/table[1]/tbody/tr[$label]/td[2]", $value);
       }
@@ -306,19 +306,19 @@ class WebTest_Contribute_AddBatchesTest extends CiviSeleniumTestCase {
       $this->waitForElementPresent("xpath=//form[@id='MembershipView']/div[2]/div/div[2]/div[2]/table/tbody/tr[1]/td[8]/span/a[1][text()='View']");
       $this->click("xpath=//form[@id='MembershipView']/div[2]/div/div[2]/div[2]/table/tbody/tr[1]/td[8]/span/a[1][text()='View']");
       $this->waitForElementPresent("_qf_ContributionView_cancel-bottom");
-      $expected = array(
+      $expected = [
         'From' => "{$data['first_name']} {$data['last_name']}",
         'Financial Type' => $data['financial_type'],
         'Total Amount' => $data['amount'],
         'Contribution Status' => 'Completed',
-      );
+      ];
 
       $this->webtestVerifyTabularData($expected);
-      $expectedSoft = array(
+      $expectedSoft = [
         'Soft Credit To' => "{$data['soft_credit_first_name']} {$data['soft_credit_last_name']}",
         'Amount (Soft Credit Type)' => "{$data['soft_credit_amount']}",
         'Soft Credit Type' => $data['soft_credit_type'],
-      );
+      ];
       foreach ($expectedSoft as $value) {
         $this->assertElementContainsText("css=table.crm-soft-credit-listing", $value);
       }

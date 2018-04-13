@@ -40,8 +40,8 @@
 class civicrm_cli {
   // required values that must be passed
   // via the command line
-  var $_required_arguments = array('action', 'entity');
-  var $_additional_arguments = array();
+  var $_required_arguments = ['action', 'entity'];
+  var $_additional_arguments = [];
   var $_entity = NULL;
   var $_action = NULL;
   var $_output = FALSE;
@@ -56,9 +56,9 @@ class civicrm_cli {
 
   // all other arguments populate the parameters
   // array that is passed to civicrm_api
-  var $_params = array('version' => 3);
+  var $_params = ['version' => 3];
 
-  var $_errors = array();
+  var $_errors = [];
 
   /**
    * @return bool
@@ -255,7 +255,7 @@ class civicrm_cli {
     $class = 'CRM_Utils_System_' . $this->_config->userFramework;
 
     $cms = new $class();
-    if (!CRM_Utils_System::loadBootstrap(array(), FALSE, FALSE, $civicrm_root)) {
+    if (!CRM_Utils_System::loadBootstrap([], FALSE, FALSE, $civicrm_root)) {
       $this->_log(ts("Failed to bootstrap CMS"));
       return FALSE;
     }
@@ -269,11 +269,11 @@ class civicrm_cli {
 
     if (!empty($this->_user)) {
       if (!CRM_Utils_System::authenticateScript(TRUE, $this->_user, $this->_password, TRUE, FALSE, FALSE)) {
-        $this->_log(ts("Failed to login as %1. Wrong username or password.", array('1' => $this->_user)));
+        $this->_log(ts("Failed to login as %1. Wrong username or password.", ['1' => $this->_user]));
         return FALSE;
       }
       if (($this->_config->userFramework == 'Joomla' && !$cms->loadUser($this->_user, $this->_password)) || !$cms->loadUser($this->_user)) {
-        $this->_log(ts("Failed to login as %1", array('1' => $this->_user)));
+        $this->_log(ts("Failed to login as %1", ['1' => $this->_user]));
         return FALSE;
       }
     }
@@ -290,7 +290,7 @@ class civicrm_cli {
       $index = '_' . $var;
       if (empty($this->$index)) {
         $missing_arg = '--' . $var;
-        $this->_log(ts("The %1 argument is required", array(1 => $missing_arg)));
+        $this->_log(ts("The %1 argument is required", [1 => $missing_arg]));
         $this->_log($this->_getUsage());
         return FALSE;
       }
@@ -345,7 +345,7 @@ class civicrm_cli_csv_exporter extends civicrm_cli {
   /**
    */
   public function __construct() {
-    $this->_required_arguments = array('entity');
+    $this->_required_arguments = ['entity'];
     parent::initialize();
   }
 
@@ -397,8 +397,8 @@ class civicrm_cli_csv_file extends civicrm_cli {
   /**
    */
   public function __construct() {
-    $this->_required_arguments = array('entity', 'file');
-    $this->_additional_arguments = array('f' => 'file');
+    $this->_required_arguments = ['entity', 'file'];
+    $this->_additional_arguments = ['f' => 'file'];
     parent::initialize();
   }
 
@@ -447,7 +447,7 @@ class civicrm_cli_csv_file extends civicrm_cli {
    * @return array
    */
   public function convertLine($data) {
-    $params = array();
+    $params = [];
     foreach ($this->header as $i => $field) {
       //split any multiselect data, denoted with CRM_Core_DAO::VALUE_SEPARATOR
       if (strpos($data[$i], CRM_Core_DAO::VALUE_SEPARATOR) !== FALSE) {

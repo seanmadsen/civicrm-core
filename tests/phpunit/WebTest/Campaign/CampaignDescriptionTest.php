@@ -44,7 +44,7 @@ class WebTest_Campaign_CampaignDescriptionTest extends CiviSeleniumTestCase {
     $groupName = $this->WebtestAddGroup();
 
     // Enable CiviCampaign module if necessary
-    $this->enableComponents(array('CiviCampaign'));
+    $this->enableComponents(['CiviCampaign']);
 
     //Creating a new Campaign
     $this->openCiviPage('campaign/add', 'reset=1', '_qf_Campaign_upload-bottom');
@@ -60,7 +60,7 @@ class WebTest_Campaign_CampaignDescriptionTest extends CiviSeleniumTestCase {
     $this->type("description", $campaignDescription);
 
     // include groups for the campaign
-    $this->multiselect2("includeGroups", array("$groupName", "Advisory Board"));
+    $this->multiselect2("includeGroups", ["$groupName", "Advisory Board"]);
 
     // fill the end date for campaign
     $this->webtestFillDate("end_date", "+1 year");
@@ -83,14 +83,14 @@ class WebTest_Campaign_CampaignDescriptionTest extends CiviSeleniumTestCase {
   public function testAjaxCustomGroupLoad() {
     $this->webtestLogin();
 
-    $this->enableComponents(array('CiviCampaign'));
-    $triggerElement = array('name' => 'campaign_type_id', 'type' => 'select');
-    $customSets = array(
-      array('entity' => 'Campaign', 'subEntity' => 'Referral Program', 'triggerElement' => $triggerElement),
-      array('entity' => 'Campaign', 'subEntity' => 'Constituent Engagement', 'triggerElement' => $triggerElement),
-    );
+    $this->enableComponents(['CiviCampaign']);
+    $triggerElement = ['name' => 'campaign_type_id', 'type' => 'select'];
+    $customSets = [
+      ['entity' => 'Campaign', 'subEntity' => 'Referral Program', 'triggerElement' => $triggerElement],
+      ['entity' => 'Campaign', 'subEntity' => 'Constituent Engagement', 'triggerElement' => $triggerElement],
+    ];
 
-    $pageUrl = array('url' => 'campaign/add', 'args' => 'reset=1');
+    $pageUrl = ['url' => 'campaign/add', 'args' => 'reset=1'];
     $this->customFieldSetLoadOnTheFlyCheck($customSets, $pageUrl);
   }
 

@@ -53,7 +53,7 @@ class CRM_Core_Form_Renderer extends HTML_QuickForm_Renderer_ArraySmarty {
    *
    * @var array
    */
-  static $_sizeMapper = array(
+  static $_sizeMapper = [
     2 => 'two',
     4 => 'four',
     6 => 'six',
@@ -62,7 +62,7 @@ class CRM_Core_Form_Renderer extends HTML_QuickForm_Renderer_ArraySmarty {
     20 => 'medium',
     30 => 'big',
     45 => 'huge',
-  );
+  ];
 
   /**
    * Constructor.
@@ -138,7 +138,7 @@ class CRM_Core_Form_Renderer extends HTML_QuickForm_Renderer_ArraySmarty {
     }
     // Active form elements
     else {
-      $typesToShowEditLink = array('select', 'group');
+      $typesToShowEditLink = ['select', 'group'];
       $hasEditPath = NULL !== $element->getAttribute('data-option-edit-path');
 
       if (in_array($element->getType(), $typesToShowEditLink) && $hasEditPath) {
@@ -168,12 +168,12 @@ class CRM_Core_Form_Renderer extends HTML_QuickForm_Renderer_ArraySmarty {
   public static function updateAttributes(&$element, $required, $error) {
     // lets create an id for all input elements, so we can generate nice label tags
     // to make it nice and clean, we'll just use the elementName if it is non null
-    $attributes = array();
+    $attributes = [];
     if (!$element->getAttribute('id')) {
       $name = $element->getAttribute('name');
       if ($name) {
-        $attributes['id'] = str_replace(array(']', '['),
-          array('', '_'),
+        $attributes['id'] = str_replace([']', '['],
+          ['', '_'],
           $name
         );
       }
@@ -243,8 +243,8 @@ class CRM_Core_Form_Renderer extends HTML_QuickForm_Renderer_ArraySmarty {
       $entity = $field->getAttribute('data-api-entity');
       // Get api params, ensure it is an array
       $params = $field->getAttribute('data-api-params');
-      $params = $params ? json_decode($params, TRUE) : array();
-      $result = civicrm_api3($entity, 'getlist', array('id' => $val) + $params);
+      $params = $params ? json_decode($params, TRUE) : [];
+      $result = civicrm_api3($entity, 'getlist', ['id' => $val] + $params);
       if ($field->isFrozen()) {
         // Prevent js from treating frozen entityRef as a "live" field
         $field->removeAttribute('class');
@@ -269,7 +269,7 @@ class CRM_Core_Form_Renderer extends HTML_QuickForm_Renderer_ArraySmarty {
     $params = json_decode($field->getAttribute('data-select-params'), TRUE);
     $val = $field->getValue();
     if ($val && !empty($params['data'])) {
-      $display = array();
+      $display = [];
       foreach (explode(',', $val) as $item) {
         $match = CRM_Utils_Array::findInTree($item, $params['data']);
         if (isset($match['text']) && strlen($match['text'])) {
@@ -290,17 +290,17 @@ class CRM_Core_Form_Renderer extends HTML_QuickForm_Renderer_ArraySmarty {
   public function renderFrozenEntityRef(&$el, $field) {
     $entity = strtolower($field->getAttribute('data-api-entity'));
     $vals = json_decode($field->getAttribute('data-entity-value'), TRUE);
-    $display = array();
+    $display = [];
 
     // Custom fields of type contactRef store their data in a slightly different format
     if ($field->getAttribute('data-crm-custom') && $entity == 'contact') {
-      $vals = array(array('id' => $vals['id'], 'label' => $vals['text']));
+      $vals = [['id' => $vals['id'], 'label' => $vals['text']]];
     }
 
     foreach ($vals as $val) {
       // Format contact as link
       if ($entity == 'contact' && CRM_Contact_BAO_Contact_Permission::allow($val['id'], CRM_Core_Permission::VIEW)) {
-        $url = CRM_Utils_System::url("civicrm/contact/view", array('reset' => 1, 'cid' => $val['id']));
+        $url = CRM_Utils_System::url("civicrm/contact/view", ['reset' => 1, 'cid' => $val['id']]);
         $val['label'] = '<a class="view-' . $entity . ' no-popup" href="' . $url . '" title="' . ts('View Contact') . '">' . $val['label'] . '</a>';
       }
       $display[] = $val['label'];
@@ -324,21 +324,21 @@ class CRM_Core_Form_Renderer extends HTML_QuickForm_Renderer_ArraySmarty {
         'contact_reference_options'
       ), '1');
 
-      $return = array_unique(array_merge(array('sort_name'), $list));
+      $return = array_unique(array_merge(['sort_name'], $list));
 
-      $contact = civicrm_api('contact', 'getsingle', array('id' => $val, 'return' => $return, 'version' => 3));
+      $contact = civicrm_api('contact', 'getsingle', ['id' => $val, 'return' => $return, 'version' => 3]);
 
       if (!empty($contact['id'])) {
-        $view = array();
+        $view = [];
         foreach ($return as $fld) {
           if (!empty($contact[$fld])) {
             $view[] = $contact[$fld];
           }
         }
-        $field->setAttribute('data-entity-value', json_encode(array(
+        $field->setAttribute('data-entity-value', json_encode([
               'id' => $contact['id'],
               'text' => implode(' :: ', $view),
-            )));
+        ]));
       }
     }
   }

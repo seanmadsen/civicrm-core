@@ -35,8 +35,8 @@
 /*
  * Settings metadata file
  */
-return array(
-  'enable_cart' => array(
+return [
+  'enable_cart' => [
     'name' => 'enable_cart',
     'group_name' => 'Event Preferences',
     'group' => 'event',
@@ -49,8 +49,8 @@ return array(
     'is_contact' => 0,
     'description' => "WRITE ME",
     'help_text' => 'WRITE ME',
-  ),
-  'show_events' => array(
+  ],
+  'show_events' => [
     'name' => 'show_events',
     'group_name' => 'Event Preferences',
     'group' => 'event',
@@ -64,5 +64,5 @@ return array(
     'is_contact' => 0,
     'description' => "Configure how many events should be shown on the dashboard. This overrides the default value of 10 entries.",
     'help_text' => NULL,
-  ),
-);
+  ],
+];

@@ -36,8 +36,8 @@
  * Settings metadata file
  */
 
-return array(
-  'is_enabled' => array(
+return [
+  'is_enabled' => [
     'group_name' => 'Multi Site Preferences',
     'group' => 'multisite',
     'name' => 'is_enabled',
@@ -49,8 +49,8 @@ return array(
     'is_contact' => 0,
     'description' => 'Multisite is enabled',
     'help_text' => NULL,
-  ),
-  'domain_group_id' => array(
+  ],
+  'domain_group_id' => [
     'group_name' => 'Multi Site Preferences',
     'group' => 'multisite',
     'name' => 'domain_group_id',
@@ -62,8 +62,8 @@ return array(
     'is_contact' => 0,
     'description' => NULL,
     'help_text' => NULL,
-  ),
-  'event_price_set_domain_id' => array(
+  ],
+  'event_price_set_domain_id' => [
     'group_name' => 'Multi Site Preferences',
     'group' => 'multisite',
     'name' => 'event_price_set_domain_id',
@@ -75,8 +75,8 @@ return array(
     'is_contact' => 0,
     'description' => '',
     'help_text' => NULL,
-  ),
-  'uniq_email_per_site' => array(
+  ],
+  'uniq_email_per_site' => [
     'group_name' => 'Multi Site Preferences',
     'group' => 'multisite',
     'name' => 'uniq_email_per_site',
@@ -88,5 +88,5 @@ return array(
     'is_contact' => 0,
     'description' => '',
     'help_text' => NULL,
-  ),
-);
+  ],
+];

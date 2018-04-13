@@ -132,14 +132,14 @@ class CRM_Contact_Form_Relationship extends CRM_Core_Form {
 
     $this->assign('display_name_a', $this->_display_name_a);
     //get the relationship values.
-    $this->_values = array();
+    $this->_values = [];
     if ($this->_relationshipId) {
-      $params = array('id' => $this->_relationshipId);
+      $params = ['id' => $this->_relationshipId];
       CRM_Core_DAO::commonRetrieve('CRM_Contact_DAO_Relationship', $params, $this->_values);
     }
 
     // Check for permissions
-    if (in_array($this->_action, array(CRM_Core_Action::ADD, CRM_Core_Action::UPDATE, CRM_Core_Action::DELETE))) {
+    if (in_array($this->_action, [CRM_Core_Action::ADD, CRM_Core_Action::UPDATE, CRM_Core_Action::DELETE])) {
       if (!CRM_Contact_BAO_Contact_Permission::allow($this->_contactId, CRM_Core_Permission::EDIT)
         && !CRM_Contact_BAO_Contact_Permission::allow($this->_values['contact_id_b'], CRM_Core_Permission::EDIT)) {
         CRM_Core_Error::statusBounce(ts('You do not have the necessary permission to edit this contact.'));
@@ -149,19 +149,19 @@ class CRM_Contact_Form_Relationship extends CRM_Core_Form {
     // Set page title based on action
     switch ($this->_action) {
       case CRM_Core_Action::VIEW:
-        CRM_Utils_System::setTitle(ts('View Relationship for %1', array(1 => $this->_display_name_a)));
+        CRM_Utils_System::setTitle(ts('View Relationship for %1', [1 => $this->_display_name_a]));
         break;
 
       case CRM_Core_Action::ADD:
-        CRM_Utils_System::setTitle(ts('Add Relationship for %1', array(1 => $this->_display_name_a)));
+        CRM_Utils_System::setTitle(ts('Add Relationship for %1', [1 => $this->_display_name_a]));
         break;
 
       case CRM_Core_Action::UPDATE:
-        CRM_Utils_System::setTitle(ts('Edit Relationship for %1', array(1 => $this->_display_name_a)));
+        CRM_Utils_System::setTitle(ts('Edit Relationship for %1', [1 => $this->_display_name_a]));
         break;
 
       case CRM_Core_Action::DELETE:
-        CRM_Utils_System::setTitle(ts('Delete Relationship for %1', array(1 => $this->_display_name_a)));
+        CRM_Utils_System::setTitle(ts('Delete Relationship for %1', [1 => $this->_display_name_a]));
         break;
     }
 
@@ -178,7 +178,7 @@ class CRM_Contact_Form_Relationship extends CRM_Core_Form {
     }
 
     //get the relationship type id
-    $this->_relationshipTypeId = str_replace(array('_a_b', '_b_a'), array('', ''), $this->_rtypeId);
+    $this->_relationshipTypeId = str_replace(['_a_b', '_b_a'], ['', ''], $this->_rtypeId);
 
     //get the relationship type
     if (!$this->_rtype) {
@@ -213,7 +213,7 @@ class CRM_Contact_Form_Relationship extends CRM_Core_Form {
    */
   public function setDefaultValues() {
 
-    $defaults = array();
+    $defaults = [];
 
     if ($this->_action & CRM_Core_Action::UPDATE) {
       if (!empty($this->_values)) {
@@ -247,12 +247,12 @@ class CRM_Contact_Form_Relationship extends CRM_Core_Form {
           $this->assign('display_name_b', $this->_display_name_b);
         }
 
-        $noteParams = array(
+        $noteParams = [
           'entity_id' => $this->_relationshipId,
           'entity_table' => 'civicrm_relationship',
           'limit' => 1,
           'version' => 3,
-        );
+        ];
         $note = civicrm_api('Note', 'getsingle', $noteParams);
         $defaults['note'] = CRM_Utils_Array::value('note', $note);
       }
@@ -272,7 +272,7 @@ class CRM_Contact_Form_Relationship extends CRM_Core_Form {
   public function addRules() {
 
     if (!($this->_action & CRM_Core_Action::DELETE)) {
-      $this->addFormRule(array('CRM_Contact_Form_Relationship', 'dateRule'));
+      $this->addFormRule(['CRM_Contact_Form_Relationship', 'dateRule']);
     }
   }
 
@@ -281,17 +281,17 @@ class CRM_Contact_Form_Relationship extends CRM_Core_Form {
    */
   public function buildQuickForm() {
     if ($this->_action & CRM_Core_Action::DELETE) {
-      $this->addButtons(array(
-          array(
+      $this->addButtons([
+          [
             'type' => 'next',
             'name' => ts('Delete'),
             'isDefault' => TRUE,
-          ),
-          array(
+          ],
+          [
             'type' => 'cancel',
             'name' => ts('Cancel'),
-          ),
-        )
+          ],
+        ]
       );
       return;
     }
@@ -309,10 +309,10 @@ class CRM_Contact_Form_Relationship extends CRM_Core_Form {
       }
     }
 
-    $this->addField('relationship_type_id', array('options' => array('' => ts('- select -')) + $relationshipList, 'class' => 'huge', 'placeholder' => '- select -'), TRUE);
+    $this->addField('relationship_type_id', ['options' => ['' => ts('- select -')] + $relationshipList, 'class' => 'huge', 'placeholder' => '- select -'], TRUE);
 
     $label = $this->_action & CRM_Core_Action::ADD ? ts('Contact(s)') : ts('Contact');
-    $contactField = $this->addField('related_contact_id', array('label' => $label, 'name' => 'contact_id_b', 'multiple' => TRUE, 'create' => TRUE), TRUE);
+    $contactField = $this->addField('related_contact_id', ['label' => $label, 'name' => 'contact_id_b', 'multiple' => TRUE, 'create' => TRUE], TRUE);
     // This field cannot be updated
     if ($this->_action & CRM_Core_Action::UPDATE) {
       $contactField->freeze();
@@ -320,39 +320,39 @@ class CRM_Contact_Form_Relationship extends CRM_Core_Form {
 
     $this->add('advcheckbox', 'is_current_employer', $this->_contactType == 'Organization' ? ts('Current Employee') : ts('Current Employer'));
 
-    $this->addField('start_date', array('label' => ts('Start Date'), 'formatType' => 'searchDate'));
-    $this->addField('end_date', array('label' => ts('End Date'), 'formatType' => 'searchDate'));
+    $this->addField('start_date', ['label' => ts('Start Date'), 'formatType' => 'searchDate']);
+    $this->addField('end_date', ['label' => ts('End Date'), 'formatType' => 'searchDate']);
 
-    $this->addField('is_active', array('label' => ts('Enabled?'), 'type' => 'advcheckbox'));
+    $this->addField('is_active', ['label' => ts('Enabled?'), 'type' => 'advcheckbox']);
 
     $this->addField('is_permission_a_b');
     $this->addField('is_permission_b_a');
 
-    $this->addField('description', array('label' => ts('Description')));
+    $this->addField('description', ['label' => ts('Description')]);
 
     CRM_Contact_Form_Edit_Notes::buildQuickForm($this);
 
     if ($this->_action & CRM_Core_Action::VIEW) {
-      $this->addButtons(array(
-        array(
+      $this->addButtons([
+        [
           'type' => 'cancel',
           'name' => ts('Done'),
-        ),
-      ));
+        ],
+      ]);
     }
     else {
       // make this form an upload since we don't know if the custom data injected dynamically is of type file etc.
-      $this->addButtons(array(
-        array(
+      $this->addButtons([
+        [
           'type' => 'upload',
           'name' => ts('Save Relationship'),
           'isDefault' => TRUE,
-        ),
-        array(
+        ],
+        [
           'type' => 'cancel',
           'name' => ts('Cancel'),
-        ),
-      ));
+        ],
+      ]);
     }
   }
 
@@ -366,7 +366,7 @@ class CRM_Contact_Form_Relationship extends CRM_Core_Form {
     switch ($this->getAction()) {
       case CRM_Core_Action::DELETE:
         $this->deleteAction($this->_relationshipId);
-        return array();
+        return [];
 
       case CRM_Core_Action::UPDATE:
         return $this->updateAction($params);
@@ -403,10 +403,10 @@ class CRM_Contact_Form_Relationship extends CRM_Core_Form {
     $this->setEmploymentRelationship($params, $relationshipIds);
 
     // Refresh contact tabs which might have been affected
-    $this->ajaxResponse['updateTabs'] = array(
+    $this->ajaxResponse['updateTabs'] = [
       '#tab_member' => CRM_Contact_BAO_Contact::getCountComponent('membership', $this->_contactId),
       '#tab_contribute' => CRM_Contact_BAO_Contact::getCountComponent('contribution', $this->_contactId),
-    );
+    ];
   }
 
   /**
@@ -419,7 +419,7 @@ class CRM_Contact_Form_Relationship extends CRM_Core_Form {
    *   mixed true or array of errors
    */
   public static function dateRule($params) {
-    $errors = array();
+    $errors = [];
 
     // check start and end date
     if (!empty($params['start_date']) && !empty($params['end_date'])) {
@@ -445,28 +445,28 @@ class CRM_Contact_Form_Relationship extends CRM_Core_Form {
    */
   protected function setMessage($outcome) {
     if (!empty($outcome['valid']) && empty($outcome['saved'])) {
-      CRM_Core_Session::setStatus(ts('Relationship created.', array(
+      CRM_Core_Session::setStatus(ts('Relationship created.', [
         'count' => $outcome['valid'],
         'plural' => '%count relationships created.',
-      )), ts('Saved'), 'success');
+      ]), ts('Saved'), 'success');
     }
     if (!empty($outcome['invalid'])) {
-      CRM_Core_Session::setStatus(ts('%count relationship record was not created due to an invalid contact type.', array(
+      CRM_Core_Session::setStatus(ts('%count relationship record was not created due to an invalid contact type.', [
         'count' => $outcome['invalid'],
         'plural' => '%count relationship records were not created due to invalid contact types.',
-      )), ts('%count invalid relationship record', array(
+      ]), ts('%count invalid relationship record', [
         'count' => $outcome['invalid'],
         'plural' => '%count invalid relationship records',
-      )));
+      ]));
     }
     if (!empty($outcome['duplicate'])) {
-      CRM_Core_Session::setStatus(ts('One relationship was not created because it already exists.', array(
+      CRM_Core_Session::setStatus(ts('One relationship was not created because it already exists.', [
         'count' => $outcome['duplicate'],
         'plural' => '%count relationships were not created because they already exist.',
-      )), ts('%count duplicate relationship', array(
+      ]), ts('%count duplicate relationship', [
         'count' => $outcome['duplicate'],
         'plural' => '%count duplicate relationships',
-      )));
+      ]));
     }
     if (!empty($outcome['saved'])) {
       CRM_Core_Session::setStatus(ts('Relationship record has been updated.'), ts('Saved'), 'success');
@@ -480,21 +480,21 @@ class CRM_Contact_Form_Relationship extends CRM_Core_Form {
   public static function getRelationshipTypeMetadata($relationshipList) {
     $contactTypes = CRM_Contact_BAO_ContactType::contactTypeInfo(TRUE);
     $allRelationshipNames = CRM_Core_PseudoConstant::relationshipType('name');
-    $jsData = array();
+    $jsData = [];
     // Get just what we need to keep the dom small
-    $whatWeWant = array_flip(array(
+    $whatWeWant = array_flip([
       'contact_type_a',
       'contact_type_b',
       'contact_sub_type_a',
       'contact_sub_type_b',
-    ));
+    ]);
     foreach ($allRelationshipNames as $id => $vals) {
       if (isset($relationshipList["{$id}_a_b"]) || isset($relationshipList["{$id}_b_a"])) {
         $jsData[$id] = array_filter(array_intersect_key($allRelationshipNames[$id], $whatWeWant));
         // Add user-friendly placeholder
-        foreach (array('a', 'b') as $x) {
+        foreach (['a', 'b'] as $x) {
           $type = !empty($jsData[$id]["contact_sub_type_$x"]) ? $jsData[$id]["contact_sub_type_$x"] : CRM_Utils_Array::value("contact_type_$x", $jsData[$id]);
-          $jsData[$id]["placeholder_$x"] = $type ? ts('- select %1 -', array(strtolower($contactTypes[$type]['label']))) : ts('- select contact -');
+          $jsData[$id]["placeholder_$x"] = $type ? ts('- select %1 -', [strtolower($contactTypes[$type]['label'])]) : ts('- select contact -');
         }
       }
     }
@@ -511,7 +511,7 @@ class CRM_Contact_Form_Relationship extends CRM_Core_Form {
     CRM_Contact_BAO_Relationship::del($id);
 
     // reload all blocks to reflect this change on the user interface.
-    $this->ajaxResponse['reloadBlocks'] = array('#crm-contactinfo-content');
+    $this->ajaxResponse['reloadBlocks'] = ['#crm-contactinfo-content'];
   }
 
   /**
@@ -534,9 +534,9 @@ class CRM_Contact_Form_Relationship extends CRM_Core_Form {
 
     $this->clearCurrentEmployer($params);
 
-    $this->setMessage(array('saved' => TRUE));
+    $this->setMessage(['saved' => TRUE]);
 
-    return array($params, array($this->_relationshipId));
+    return [$params, [$this->_relationshipId]];
   }
 
   /**
@@ -555,7 +555,7 @@ class CRM_Contact_Form_Relationship extends CRM_Core_Form {
 
     $this->setMessage($outcome);
 
-    return array($params, $relationshipIds);
+    return [$params, $relationshipIds];
   }
 
 
@@ -579,7 +579,7 @@ class CRM_Contact_Form_Relationship extends CRM_Core_Form {
       $params['id'] = $this->_relationshipId;
       $params['contact_id_' . $relationshipTypeParts[2]] = $params['related_contact_id'];
 
-      foreach (array('start_date', 'end_date') as $dateParam) {
+      foreach (['start_date', 'end_date'] as $dateParam) {
         if (!empty($params[$dateParam])) {
           $params[$dateParam] = CRM_Utils_Date::processDate($params[$dateParam]);
         }
@@ -590,7 +590,7 @@ class CRM_Contact_Form_Relationship extends CRM_Core_Form {
     $params['is_permission_a_b'] = CRM_Utils_Array::value('is_permission_a_b', $params, 0);
     $params['is_permission_b_a'] = CRM_Utils_Array::value('is_permission_b_a', $params, 0);
 
-    return array($params, $relationshipTypeParts[1]);
+    return [$params, $relationshipTypeParts[1]];
   }
 
   /**
@@ -601,10 +601,10 @@ class CRM_Contact_Form_Relationship extends CRM_Core_Form {
    */
   private function saveRelationshipNotes($relationshipIds, $note) {
     foreach ($relationshipIds as $id) {
-      $noteParams = array(
+      $noteParams = [
         'entity_id' => $id,
         'entity_table' => 'civicrm_relationship',
-      );
+      ];
 
       $existing = civicrm_api3('note', 'get', $noteParams);
       if (!empty($existing['id'])) {
@@ -637,7 +637,7 @@ class CRM_Contact_Form_Relationship extends CRM_Core_Form {
     if (
       !empty($params['is_current_employer']) &&
       $this->_allRelationshipNames[$params['relationship_type_id']]["name_a_b"] == 'Employee of') {
-      $employerParams = array();
+      $employerParams = [];
       foreach ($relationshipIds as $id) {
         // Fixme this is dumb why do we have to look this up again?
         $rel = CRM_Contact_BAO_Relationship::getRelationshipByID($id);
@@ -646,7 +646,7 @@ class CRM_Contact_Form_Relationship extends CRM_Core_Form {
       // @todo this belongs in the BAO.
       CRM_Contact_BAO_Contact_Utils::setCurrentEmployer($employerParams);
       // Refresh contact summary if in ajax mode
-      $this->ajaxResponse['reloadBlocks'] = array('#crm-contactinfo-content');
+      $this->ajaxResponse['reloadBlocks'] = ['#crm-contactinfo-content'];
     }
   }
 
@@ -664,7 +664,7 @@ class CRM_Contact_Form_Relationship extends CRM_Core_Form {
         CRM_Contact_BAO_Contact_Utils::clearCurrentEmployer($this->_values['contact_id_a']);
 
         // Refresh contact summary if in ajax mode
-        $this->ajaxResponse['reloadBlocks'] = array('#crm-contactinfo-content');
+        $this->ajaxResponse['reloadBlocks'] = ['#crm-contactinfo-content'];
       }
     }
   }

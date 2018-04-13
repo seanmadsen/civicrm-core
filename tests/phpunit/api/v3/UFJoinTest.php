@@ -43,13 +43,13 @@ class api_v3_UFJoinTest extends CiviUnitTestCase {
     parent::setUp();
     //  Truncate the tables
     $this->quickCleanup(
-      array(
+      [
         'civicrm_group',
         'civicrm_contact',
         'civicrm_uf_group',
         'civicrm_uf_join',
         'civicrm_uf_match',
-      )
+      ]
     );
     $this->_apiversion = 3;
     $op = new PHPUnit_Extensions_Database_Operation_Insert();
@@ -62,13 +62,13 @@ class api_v3_UFJoinTest extends CiviUnitTestCase {
   public function tearDown() {
     //  Truncate the tables
     $this->quickCleanup(
-      array(
+      [
         'civicrm_group',
         'civicrm_contact',
         'civicrm_uf_group',
         'civicrm_uf_join',
         'civicrm_uf_match',
-      )
+      ]
     );
   }
 
@@ -76,20 +76,20 @@ class api_v3_UFJoinTest extends CiviUnitTestCase {
    * Find uf join group id.
    */
   public function testFindUFGroupId() {
-    $params = array(
+    $params = [
       'module' => 'CiviContribute',
       'entity_table' => 'civicrm_contribution_page',
       'entity_id' => 1,
       'weight' => 1,
       'uf_group_id' => $this->_ufGroupId,
       'is_active' => 1,
-    );
+    ];
     $ufJoin = $this->callAPISuccess('uf_join', 'create', $params);
 
-    $searchParams = array(
+    $searchParams = [
       'entity_table' => 'civicrm_contribution_page',
       'entity_id' => 1,
-    );
+    ];
     $result = $this->callAPISuccess('uf_join', 'get', $searchParams);
 
     foreach ($result['values'] as $key => $value) {
@@ -105,19 +105,19 @@ class api_v3_UFJoinTest extends CiviUnitTestCase {
   }
 
   public function testUFJoinEditEmptyParams() {
-    $params = array();
+    $params = [];
     $result = $this->callAPIFailure('uf_join', 'create', $params);
     $this->assertEquals($result['error_message'], 'Mandatory key(s) missing from params array: module, weight, uf_group_id');
   }
 
   public function testUFJoinEditWithoutUFGroupId() {
-    $params = array(
+    $params = [
       'module' => 'CiviContribute',
       'entity_table' => 'civicrm_contribution_page',
       'entity_id' => 1,
       'weight' => 1,
       'is_active' => 1,
-    );
+    ];
     $result = $this->callAPIFailure('uf_join', 'create', $params);
     $this->assertEquals($result['error_message'], 'Mandatory key(s) missing from params array: uf_group_id');
   }
@@ -126,7 +126,7 @@ class api_v3_UFJoinTest extends CiviUnitTestCase {
    * Create/update uf join
    */
   public function testCreateUFJoin() {
-    $params = array(
+    $params = [
       'module' => 'CiviContribute',
       'entity_table' => 'civicrm_contribution_page',
       'entity_id' => 1,
@@ -134,13 +134,13 @@ class api_v3_UFJoinTest extends CiviUnitTestCase {
       'uf_group_id' => $this->_ufGroupId,
       'is_active' => 1,
       'sequential' => 1,
-    );
+    ];
     $ufJoin = $this->callAPIAndDocument('uf_join', 'create', $params, __FUNCTION__, __FILE__);
     $this->assertEquals($ufJoin['values'][0]['module'], $params['module']);
     $this->assertEquals($ufJoin['values'][0]['uf_group_id'], $params['uf_group_id']);
     $this->assertEquals($ufJoin['values'][0]['is_active'], $params['is_active']);
 
-    $params = array(
+    $params = [
       'id' => $ufJoin['id'],
       'module' => 'CiviContribute',
       'entity_table' => 'civicrm_contribution_page',
@@ -149,7 +149,7 @@ class api_v3_UFJoinTest extends CiviUnitTestCase {
       'uf_group_id' => $this->_ufGroupId,
       'is_active' => 0,
       'sequential' => 1,
-    );
+    ];
     $ufJoinUpdated = $this->callAPISuccess('uf_join', 'create', $params);
     $this->assertEquals($ufJoinUpdated['values'][0]['module'], $params['module']);
     $this->assertEquals($ufJoinUpdated['values'][0]['uf_group_id'], $params['uf_group_id']);
@@ -161,7 +161,7 @@ class api_v3_UFJoinTest extends CiviUnitTestCase {
    * joins.
    */
   public function testCreateSurveyUFJoin() {
-    $params = array(
+    $params = [
       'module' => 'CiviCampaign',
       'entity_table' => 'civicrm_survey',
       'entity_id' => 1,
@@ -169,7 +169,7 @@ class api_v3_UFJoinTest extends CiviUnitTestCase {
       'uf_group_id' => $this->_ufGroupId,
       'is_active' => 1,
       'sequential' => 1,
-    );
+    ];
     $ufJoin = $this->callAPIAndDocument('uf_join', 'create', $params, __FUNCTION__, __FILE__);
     $this->assertEquals($ufJoin['values'][0]['module'], $params['module']);
     $this->assertEquals($ufJoin['values'][0]['uf_group_id'], $params['uf_group_id']);
@@ -183,18 +183,18 @@ class api_v3_UFJoinTest extends CiviUnitTestCase {
   }
 
   public function testFindUFJoinEmptyParams() {
-    $result = $this->callAPIFailure('uf_join', 'create', array());
+    $result = $this->callAPIFailure('uf_join', 'create', []);
     $this->assertEquals($result['error_message'], 'Mandatory key(s) missing from params array: module, weight, uf_group_id');
   }
 
   public function testFindUFJoinWithoutUFGroupId() {
-    $params = array(
+    $params = [
       'module' => 'CiviContribute',
       'entity_table' => 'civicrm_contribution_page',
       'entity_id' => 1,
       'weight' => 1,
       'is_active' => 1,
-    );
+    ];
     $result = $this->callAPIFailure('uf_join', 'create', $params);
     $this->assertEquals($result['error_message'], 'Mandatory key(s) missing from params array: uf_group_id');
   }
@@ -203,21 +203,21 @@ class api_v3_UFJoinTest extends CiviUnitTestCase {
    * Find uf join id.
    */
   public function testGetUFJoinId() {
-    $params = array(
+    $params = [
       'module' => 'CiviContribute',
       'entity_table' => 'civicrm_contribution_page',
       'entity_id' => 1,
       'weight' => 1,
       'uf_group_id' => $this->_ufGroupId,
       'is_active' => 1,
-    );
+    ];
 
     $ufJoin = $this->callAPISuccess('uf_join', 'create', $params);
-    $searchParams = array(
+    $searchParams = [
       'entity_table' => 'civicrm_contribution_page',
       'entity_id' => 1,
       'sequential' => 1,
-    );
+    ];
 
     $result = $this->callAPIAndDocument('uf_join', 'get', $searchParams, __FUNCTION__, __FILE__);
     $this->assertEquals($result['values'][0]['module'], $params['module']);

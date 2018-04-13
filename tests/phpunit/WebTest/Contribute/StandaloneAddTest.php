@@ -152,23 +152,23 @@ class WebTest_Contribute_StandaloneAddTest extends CiviSeleniumTestCase {
     $this->click("xpath=//form[@class='CRM_Contribute_Form_Search crm-search-form']//div[2]/table[@class='selector row-highlight']//tbody/tr[1]/td[8]/span//a[text()='View']");
     $this->waitForElementPresent("_qf_ContributionView_cancel-bottom");
 
-    $expected = array(
+    $expected = [
       'Financial Type' => $financialType['name'],
       'Total Amount' => '$ 110.00',
       'Contribution Status' => 'Completed',
       'Payment Method' => 'Check',
       'Check Number' => 'check #1041',
-    );
+    ];
 
     foreach ($expected as $label => $value) {
       $this->assertElementContainsText("xpath=id('ContributionView')/div[2]/table[1]/tbody//tr/td[1][text()='$label']/../td[2]", $value);
     }
 
     // verify if soft credit was created successfully
-    $expected = array(
+    $expected = [
       'Soft Credit To' => "{$softCreditFname} {$softCreditLname}",
       'Amount' => '100.00',
-    );
+    ];
 
     foreach ($expected as $value) {
       $this->assertElementContainsText("css=table.crm-soft-credit-listing", $value);
@@ -183,11 +183,11 @@ class WebTest_Contribute_StandaloneAddTest extends CiviSeleniumTestCase {
     $this->waitForElementPresent("link=Record Contribution (Check, Cash, EFT ...)");
     $this->assertElementContainsText("xpath=id('Search')/div[2]/table[2]/tbody/tr[2]/td[1]/a", $contact['display_name']);
     // verify soft credit details
-    $expected = array(
+    $expected = [
       4 => $financialType['name'],
       2 => '100.00',
       6 => 'Completed',
-    );
+    ];
     foreach ($expected as $value => $label) {
       $this->assertElementContainsText("xpath=id('Search')/div[2]/table[2]/tbody/tr[2]/td[$value]", $label);
     }
@@ -204,18 +204,18 @@ class WebTest_Contribute_StandaloneAddTest extends CiviSeleniumTestCase {
     // 2. After Cancellation contribution_amount = -100 and Tax Amount = -10
     // So the sum of all the 4 created financial item's amount would be 0
     $query = "SELECT SUM( amount ) FROM `civicrm_financial_item` WHERE entity_id = %1";
-    $sum = CRM_Core_DAO::singleValueQuery($query, array(1 => array($contriID, 'Integer')));
+    $sum = CRM_Core_DAO::singleValueQuery($query, [1 => [$contriID, 'Integer']]);
     $this->assertEquals($sum, 0.00);
   }
 
   public function testfinancialTypeSearch() {
     $this->webtestLogin();
 
-    $financialType = array(
+    $financialType = [
       'name' => 'Financial type' . substr(sha1(rand()), 0, 7),
       'is_reserved' => FALSE,
       'is_deductible' => FALSE,
-    );
+    ];
 
     $this->addeditFinancialType($financialType);
     $this->addStandaloneContribution($financialType);
@@ -292,13 +292,13 @@ class WebTest_Contribute_StandaloneAddTest extends CiviSeleniumTestCase {
     $this->click("xpath=//table[@class='selector row-highlight']//tbody/tr[1]/td[8]/span//a[text()='View']");
     $this->waitForElementPresent("_qf_ContributionView_cancel-bottom");
 
-    $expected = array(
+    $expected = [
       'Financial Type' => $financialType['name'],
       'Total Amount' => '$ 100.00',
       'Contribution Status' => 'Completed',
       'Payment Method' => 'Check',
       'Check Number' => 'check #1041',
-    );
+    ];
 
     foreach ($expected as $label => $value) {
       $this->assertElementContainsText("xpath=id('ContributionView')/div[2]/table[1]/tbody//tr/td[1][text()='$label']/../td[2]", $value);
@@ -307,13 +307,13 @@ class WebTest_Contribute_StandaloneAddTest extends CiviSeleniumTestCase {
 
   public function testAjaxCustomGroupLoad() {
     $this->webtestLogin();
-    $triggerElement = array('name' => 'financial_type_id', 'type' => 'select');
-    $customSets = array(
-      array('entity' => 'Contribution', 'subEntity' => 'Donation', 'triggerElement' => $triggerElement),
-      array('entity' => 'Contribution', 'subEntity' => 'Member Dues', 'triggerElement' => $triggerElement),
-    );
+    $triggerElement = ['name' => 'financial_type_id', 'type' => 'select'];
+    $customSets = [
+      ['entity' => 'Contribution', 'subEntity' => 'Donation', 'triggerElement' => $triggerElement],
+      ['entity' => 'Contribution', 'subEntity' => 'Member Dues', 'triggerElement' => $triggerElement],
+    ];
 
-    $pageUrl = array('url' => 'contribute/add', 'args' => 'reset=1&action=add&context=standalone');
+    $pageUrl = ['url' => 'contribute/add', 'args' => 'reset=1&action=add&context=standalone'];
     $this->customFieldSetLoadOnTheFlyCheck($customSets, $pageUrl);
   }
 

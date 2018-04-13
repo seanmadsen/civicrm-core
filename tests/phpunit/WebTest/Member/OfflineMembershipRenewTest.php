@@ -106,7 +106,7 @@ class WebTest_Member_OfflineMembershipRenewTest extends CiviSeleniumTestCase {
     $endDate = date('F jS, Y', strtotime("+2 year -1 day"));
 
     // verify membership renewed
-    $verifyMembershipRenewData = array(
+    $verifyMembershipRenewData = [
       'Member' => $contactName,
       'Membership Type' => $membershipTypes['membership_type'],
       'Status' => 'Current',
@@ -114,7 +114,7 @@ class WebTest_Member_OfflineMembershipRenewTest extends CiviSeleniumTestCase {
       'Member Since' => $joinDate,
       'Start date' => $startDate,
       'End date' => $endDate,
-    );
+    ];
     $this->webtestVerifyTabularData($verifyMembershipRenewData);
   }
 
@@ -210,7 +210,7 @@ class WebTest_Member_OfflineMembershipRenewTest extends CiviSeleniumTestCase {
     $endDate = date('F jS, Y', strtotime("+4 year 1 month -1 day"));
 
     // verify membership renew override
-    $verifyMembershipRenewOverrideData = array(
+    $verifyMembershipRenewOverrideData = [
       'Member' => $contactName,
       'Membership Type' => $membershipTypes['membership_type'],
       'Status' => 'New',
@@ -218,7 +218,7 @@ class WebTest_Member_OfflineMembershipRenewTest extends CiviSeleniumTestCase {
       'Member Since' => $joinDate,
       'Start date' => $startDate,
       'End date' => $endDate,
-    );
+    ];
     $this->webtestVerifyTabularData($verifyMembershipRenewOverrideData);
   }
 
@@ -307,7 +307,7 @@ class WebTest_Member_OfflineMembershipRenewTest extends CiviSeleniumTestCase {
     $endDate = date('F jS, Y', strtotime("+1 year -1 day"));
 
     // verify membership renewed and the membership type is changed
-    $verifyMembershipData = array(
+    $verifyMembershipData = [
       'Member' => $contactName,
       'Membership Type' => $newMembershipType['membership_type'],
       'Status' => 'Current',
@@ -315,7 +315,7 @@ class WebTest_Member_OfflineMembershipRenewTest extends CiviSeleniumTestCase {
       'Member Since' => $joinDate,
       'Start date' => $startDate,
       'End date' => $endDate,
-    );
+    ];
     $this->webtestVerifyTabularData($verifyMembershipData);
   }
 
@@ -414,7 +414,7 @@ class WebTest_Member_OfflineMembershipRenewTest extends CiviSeleniumTestCase {
     $endDate = date('F jS, Y', strtotime("+4 year -1 day"));
 
     // verify membership renewed
-    $verifyMembershipRenewData = array(
+    $verifyMembershipRenewData = [
       'Member' => $contactName,
       'Membership Type' => $membershipTypes['membership_type'],
       'Status' => 'Current',
@@ -422,7 +422,7 @@ class WebTest_Member_OfflineMembershipRenewTest extends CiviSeleniumTestCase {
       'Member Since' => $joinDate,
       'Start date' => $startDate,
       'End date' => $endDate,
-    );
+    ];
     $this->webtestVerifyTabularData($verifyMembershipRenewData);
   }
 

@@ -60,11 +60,11 @@ class CRM_Case_Form_Activity_ChangeCaseStartDate {
    * @return array
    */
   public static function setDefaultValues(&$form) {
-    $defaults = array();
+    $defaults = [];
 
     $openCaseActivityType = CRM_Core_PseudoConstant::getKey('CRM_Activity_BAO_Activity', 'activity_type_id', 'Open Case');
     $caseId = CRM_Utils_Array::first($form->_caseId);
-    $openCaseParams = array('activity_type_id' => $openCaseActivityType);
+    $openCaseParams = ['activity_type_id' => $openCaseActivityType];
     $openCaseInfo = CRM_Case_BAO_Case::getCaseActivityDates($caseId, $openCaseParams, TRUE);
     if (empty($openCaseInfo)) {
       list($defaults['start_date'], $defaults['start_date_time']) = CRM_Utils_Date::setDateDefaults();
@@ -91,7 +91,7 @@ class CRM_Case_Form_Activity_ChangeCaseStartDate {
 
     $currentStartDate = CRM_Core_DAO::getFieldValue('CRM_Case_DAO_Case', $caseId, 'start_date');
     $form->assign('current_start_date', $currentStartDate);
-    $form->addDate('start_date', ts('New Start Date'), FALSE, array('formatType' => 'activityDateTime'));
+    $form->addDate('start_date', ts('New Start Date'), FALSE, ['formatType' => 'activityDateTime']);
   }
 
   /**
@@ -168,7 +168,7 @@ class CRM_Case_Form_Activity_ChangeCaseStartDate {
     $activity->save();
     // 2. initiate xml processor
     $xmlProcessor = new CRM_Case_XMLProcessor_Process();
-    $xmlProcessorParams = array(
+    $xmlProcessorParams = [
       'clientID' => $form->_currentlyViewedContactId,
       'creatorID' => $form->_currentUserId,
       'standardTimeline' => 0,
@@ -178,7 +178,7 @@ class CRM_Case_Form_Activity_ChangeCaseStartDate {
       'activityTypeName' => 'Change Case Start Date',
       'activitySetName' => 'standard_timeline',
       'resetTimeline' => 1,
-    );
+    ];
 
     $xmlProcessor->run($caseType, $xmlProcessorParams);
 
@@ -187,21 +187,21 @@ class CRM_Case_Form_Activity_ChangeCaseStartDate {
     if ($form->openCaseActivityId) {
 
       $abao = new CRM_Activity_BAO_Activity();
-      $oldParams = array('id' => $form->openCaseActivityId);
-      $oldActivityDefaults = array();
+      $oldParams = ['id' => $form->openCaseActivityId];
+      $oldActivityDefaults = [];
       $oldActivity = $abao->retrieve($oldParams, $oldActivityDefaults);
 
       // save the old values
       require_once 'api/v3/utils.php';
-      $openCaseParams = array();
+      $openCaseParams = [];
       //@todo calling api functions directly is not supported
       _civicrm_api3_object_to_array($oldActivity, $openCaseParams);
 
       // update existing revision
-      $oldParams = array(
+      $oldParams = [
         'id' => $form->openCaseActivityId,
         'is_current_revision' => 0,
-      );
+      ];
       $oldActivity = new CRM_Activity_DAO_Activity();
       $oldActivity->copyValues($oldParams);
       $oldActivity->save();
@@ -223,17 +223,17 @@ class CRM_Case_Form_Activity_ChangeCaseStartDate {
       }
       else {
         // Create linkage to case
-        $caseActivityParams = array(
+        $caseActivityParams = [
           'activity_id' => $newActivity->id,
           'case_id' => $caseId,
-        );
+        ];
 
         CRM_Case_BAO_Case::processCaseActivity($caseActivityParams);
 
-        $caseActivityParams = array(
+        $caseActivityParams = [
           'activityID' => $form->openCaseActivityId,
           'mainActivityId' => $newActivity->id,
-        );
+        ];
         CRM_Activity_BAO_Activity::copyExtendedActivityData($caseActivityParams);
       }
     }

@@ -45,32 +45,32 @@ class WebTest_Import_ContactSubtypeTest extends ImportCiviSeleniumTestCase {
     list($headers, $rows) = $this->_individualSubtypeCSVData();
 
     // Import and check Individual contacts in Skip mode with contact type Parent.
-    $other = array('contactSubtype' => 'Parent');
+    $other = ['contactSubtype' => 'Parent'];
 
-    $this->importContacts($headers, $rows, 'Individual', 'Skip', array(), $other);
+    $this->importContacts($headers, $rows, 'Individual', 'Skip', [], $other);
 
     // Get imported contact Ids
     $importedContactIds = $this->_getImportedContactIds($rows);
 
     // Build update mode import headers
-    $updateHeaders = array(
+    $updateHeaders = [
       'contact_id' => 'Internal Contact ID',
       'first_name' => 'First Name',
       'last_name' => 'Last Name',
-    );
+    ];
 
     // Create update mode import rows
-    $updateRows = array();
+    $updateRows = [];
     foreach ($importedContactIds as $cid) {
-      $updateRows[$cid] = array(
+      $updateRows[$cid] = [
         'contact_id' => $cid,
         'first_name' => substr(sha1(rand()), 0, 7),
         'last_name' => 'Anderson' . substr(sha1(rand()), 0, 7),
-      );
+      ];
     }
 
     // Import and check Individual contacts in Update mode with contact type Parent.
-    $this->importContacts($updateHeaders, $updateRows, 'Individual', 'Update', array(), $other);
+    $this->importContacts($updateHeaders, $updateRows, 'Individual', 'Update', [], $other);
 
     // Visit contacts to check updated data.
     foreach ($updateRows as $updatedRow) {
@@ -86,9 +86,9 @@ class WebTest_Import_ContactSubtypeTest extends ImportCiviSeleniumTestCase {
     $fillHeaders['gender'] = 'Gender';
     $fillHeaders['dob'] = 'Birth Date';
 
-    $fillRows = array();
+    $fillRows = [];
     foreach ($importedContactIds as $cid) {
-      $fillRows[$cid] = array(
+      $fillRows[$cid] = [
         'contact_id' => $cid,
         // should not update
         'first_name' => substr(sha1(rand()), 0, 7),
@@ -96,11 +96,11 @@ class WebTest_Import_ContactSubtypeTest extends ImportCiviSeleniumTestCase {
         'last_name' => 'Anderson' . substr(sha1(rand()), 0, 7),
         'gender' => 'Male',
         'dob' => '1986-04-16',
-      );
+      ];
     }
 
     // Import and check Individual contacts in Update mode with contact type Parent.
-    $this->importContacts($fillHeaders, $fillRows, 'Individual', 'Fill', array(), $other);
+    $this->importContacts($fillHeaders, $fillRows, 'Individual', 'Fill', [], $other);
 
     // Visit contacts to check filled data.
     foreach ($fillRows as $cid => $fillRow) {
@@ -114,7 +114,7 @@ class WebTest_Import_ContactSubtypeTest extends ImportCiviSeleniumTestCase {
     }
 
     // Recreate same conacts using 'No Duplicate Checking' with contact type Parent.
-    $this->importContacts($headers, $rows, 'Individual', 'No Duplicate Checking', array(), $other);
+    $this->importContacts($headers, $rows, 'Individual', 'No Duplicate Checking', [], $other);
   }
 
   /**
@@ -127,30 +127,30 @@ class WebTest_Import_ContactSubtypeTest extends ImportCiviSeleniumTestCase {
     list($headers, $rows) = $this->_organizationSubtypeCSVData();
 
     // Import and check Organization contacts
-    $other = array('contactSubtype' => 'Team');
+    $other = ['contactSubtype' => 'Team'];
 
-    $this->importContacts($headers, $rows, 'Organization', 'Skip', array(), $other);
+    $this->importContacts($headers, $rows, 'Organization', 'Skip', [], $other);
 
     // Get imported contact Ids
     $importedContactIds = $this->_getImportedContactIds($rows, 'Organization');
 
     // Build update mode import headers
-    $updateHeaders = array(
+    $updateHeaders = [
       'contact_id' => 'Internal Contact ID',
       'organization_name' => 'Organization Name',
-    );
+    ];
 
     // Create update mode import rows
-    $updateRows = array();
+    $updateRows = [];
     foreach ($importedContactIds as $cid) {
-      $updateRows[$cid] = array(
+      $updateRows[$cid] = [
         'contact_id' => $cid,
         'organization_name' => 'UpdatedOrg ' . substr(sha1(rand()), 0, 7),
-      );
+      ];
     }
 
     // Import and check Individual contacts in Update mode with contact type Team.
-    $this->importContacts($updateHeaders, $updateRows, 'Organization', 'Update', array(), $other);
+    $this->importContacts($updateHeaders, $updateRows, 'Organization', 'Update', [], $other);
 
     // Visit contacts to check updated data.
     foreach ($updateRows as $updatedRow) {
@@ -166,18 +166,18 @@ class WebTest_Import_ContactSubtypeTest extends ImportCiviSeleniumTestCase {
     // Headers that should fill.
     $fillHeaders['legal_name'] = 'Legal Name';
 
-    $fillRows = array();
+    $fillRows = [];
     foreach ($importedContactIds as $cid) {
-      $fillRows[$cid] = array(
+      $fillRows[$cid] = [
         'contact_id' => $cid,
         // should not update
         'organization_name' => 'UpdateOrg ' . substr(sha1(rand()), 0, 7),
         'legal_name' => 'org ' . substr(sha1(rand()), 0, 7),
-      );
+      ];
     }
 
     // Import and check Individual contacts in Update mode with contact type Team.
-    $this->importContacts($fillHeaders, $fillRows, 'Organization', 'Fill', array(), $other);
+    $this->importContacts($fillHeaders, $fillRows, 'Organization', 'Fill', [], $other);
 
     // Visit contacts to check filled data.
     foreach ($fillRows as $cid => $fillRow) {
@@ -190,7 +190,7 @@ class WebTest_Import_ContactSubtypeTest extends ImportCiviSeleniumTestCase {
     }
 
     // Recreate same conacts using 'No Duplicate Checking' with contact type Team.
-    $this->importContacts($headers, $rows, 'Organization', 'No Duplicate Checking', array(), $other);
+    $this->importContacts($headers, $rows, 'Organization', 'No Duplicate Checking', [], $other);
   }
 
   /**
@@ -206,30 +206,30 @@ class WebTest_Import_ContactSubtypeTest extends ImportCiviSeleniumTestCase {
     list($headers, $rows) = $this->_householdSubtypeCSVData();
 
     // Import and check Organization contacts
-    $other = array('contactSubtype' => $householdSubtype);
+    $other = ['contactSubtype' => $householdSubtype];
 
-    $this->importContacts($headers, $rows, 'Household', 'Skip', array(), $other);
+    $this->importContacts($headers, $rows, 'Household', 'Skip', [], $other);
 
     // Get imported contact Ids
     $importedContactIds = $this->_getImportedContactIds($rows, 'Household');
 
     // Build update mode import headers
-    $updateHeaders = array(
+    $updateHeaders = [
       'contact_id' => 'Internal Contact ID',
       'household_name' => 'Household Name',
-    );
+    ];
 
     // Create update mode import rows
-    $updateRows = array();
+    $updateRows = [];
     foreach ($importedContactIds as $cid) {
-      $updateRows[$cid] = array(
+      $updateRows[$cid] = [
         'contact_id' => $cid,
         'household_name' => 'UpdatedHousehold ' . substr(sha1(rand()), 0, 7),
-      );
+      ];
     }
 
     // Import and check Individual contacts in Update mode.
-    $this->importContacts($updateHeaders, $updateRows, 'Household', 'Update', array(), $other);
+    $this->importContacts($updateHeaders, $updateRows, 'Household', 'Update', [], $other);
 
     // Visit contacts to check updated data.
     foreach ($updateRows as $updatedRow) {
@@ -245,18 +245,18 @@ class WebTest_Import_ContactSubtypeTest extends ImportCiviSeleniumTestCase {
     // Headers that should fill.
     $fillHeaders['nick_name'] = 'Nick Name';
 
-    $fillRows = array();
+    $fillRows = [];
     foreach ($importedContactIds as $cid) {
-      $fillRows[$cid] = array(
+      $fillRows[$cid] = [
         'contact_id' => $cid,
         // should not update
         'household_name' => 'UpdatedHousehold ' . substr(sha1(rand()), 0, 7),
         'nick_name' => 'Household ' . substr(sha1(rand()), 0, 7),
-      );
+      ];
     }
 
     // Import and check Individual contacts in Update mode.
-    $this->importContacts($fillHeaders, $fillRows, 'Household', 'Fill', array(), $other);
+    $this->importContacts($fillHeaders, $fillRows, 'Household', 'Fill', [], $other);
 
     // Visit contacts to check filled data.
     foreach ($fillRows as $cid => $fillRow) {
@@ -269,7 +269,7 @@ class WebTest_Import_ContactSubtypeTest extends ImportCiviSeleniumTestCase {
     }
 
     // Recreate same conacts using 'No Duplicate Checking'
-    $this->importContacts($headers, $rows, 'Household', 'No Duplicate Checking', array(), $other);
+    $this->importContacts($headers, $rows, 'Household', 'No Duplicate Checking', [], $other);
   }
 
   /*
@@ -299,7 +299,7 @@ class WebTest_Import_ContactSubtypeTest extends ImportCiviSeleniumTestCase {
    * @return array
    */
   public function _individualSubtypeCSVData() {
-    $headers = array(
+    $headers = [
       'first_name' => 'First Name',
       'middle_name' => 'Middle Name',
       'last_name' => 'Last Name',
@@ -310,10 +310,10 @@ class WebTest_Import_ContactSubtypeTest extends ImportCiviSeleniumTestCase {
       'city' => 'City',
       'state' => 'State',
       'country' => 'Country',
-    );
+    ];
 
-    $rows = array(
-      array(
+    $rows = [
+      [
         'first_name' => substr(sha1(rand()), 0, 7),
         'middle_name' => substr(sha1(rand()), 0, 7),
         'last_name' => 'Anderson',
@@ -324,8 +324,8 @@ class WebTest_Import_ContactSubtypeTest extends ImportCiviSeleniumTestCase {
         'city' => 'Watson',
         'state' => 'NY',
         'country' => 'UNITED STATES',
-      ),
-      array(
+      ],
+      [
         'first_name' => substr(sha1(rand()), 0, 7),
         'middle_name' => substr(sha1(rand()), 0, 7),
         'last_name' => 'Summerson',
@@ -336,10 +336,10 @@ class WebTest_Import_ContactSubtypeTest extends ImportCiviSeleniumTestCase {
         'city' => 'Watson',
         'state' => 'NY',
         'country' => 'UNITED STATES',
-      ),
-    );
+      ],
+    ];
 
-    return array($headers, $rows);
+    return [$headers, $rows];
   }
 
   /*
@@ -349,7 +349,7 @@ class WebTest_Import_ContactSubtypeTest extends ImportCiviSeleniumTestCase {
    * @return array
    */
   public function _organizationSubtypeCSVData() {
-    $headers = array(
+    $headers = [
       'organization_name' => 'Organization Name',
       'email' => 'Email',
       'phone' => 'Phone',
@@ -358,10 +358,10 @@ class WebTest_Import_ContactSubtypeTest extends ImportCiviSeleniumTestCase {
       'city' => 'City',
       'state' => 'State',
       'country' => 'Country',
-    );
+    ];
 
-    $rows = array(
-      array(
+    $rows = [
+      [
         'organization_name' => 'org_' . substr(sha1(rand()), 0, 7),
         'email' => substr(sha1(rand()), 0, 7) . '@example.org',
         'phone' => '9949912154',
@@ -370,8 +370,8 @@ class WebTest_Import_ContactSubtypeTest extends ImportCiviSeleniumTestCase {
         'city' => 'Watson',
         'state' => 'NY',
         'country' => 'UNITED STATES',
-      ),
-      array(
+      ],
+      [
         'organization_name' => 'org_' . substr(sha1(rand()), 0, 7),
         'email' => substr(sha1(rand()), 0, 7) . '@example.org',
         'phone' => '6949412154',
@@ -380,10 +380,10 @@ class WebTest_Import_ContactSubtypeTest extends ImportCiviSeleniumTestCase {
         'city' => 'Watson',
         'state' => 'NY',
         'country' => 'UNITED STATES',
-      ),
-    );
+      ],
+    ];
 
-    return array($headers, $rows);
+    return [$headers, $rows];
   }
 
   /*
@@ -393,7 +393,7 @@ class WebTest_Import_ContactSubtypeTest extends ImportCiviSeleniumTestCase {
    * @return array
    */
   public function _householdSubtypeCSVData() {
-    $headers = array(
+    $headers = [
       'household_name' => 'Household Name',
       'email' => 'Email',
       'phone' => 'Phone',
@@ -402,10 +402,10 @@ class WebTest_Import_ContactSubtypeTest extends ImportCiviSeleniumTestCase {
       'city' => 'City',
       'state' => 'State',
       'country' => 'Country',
-    );
+    ];
 
-    $rows = array(
-      array(
+    $rows = [
+      [
         'household_name' => 'household_' . substr(sha1(rand()), 0, 7),
         'email' => substr(sha1(rand()), 0, 7) . '@example.org',
         'phone' => '3949912154',
@@ -414,8 +414,8 @@ class WebTest_Import_ContactSubtypeTest extends ImportCiviSeleniumTestCase {
         'city' => 'Watson',
         'state' => 'NY',
         'country' => 'UNITED STATES',
-      ),
-      array(
+      ],
+      [
         'household_name' => 'household_' . substr(sha1(rand()), 0, 7),
         'email' => substr(sha1(rand()), 0, 7) . '@example.org',
         'phone' => '5949412154',
@@ -424,10 +424,10 @@ class WebTest_Import_ContactSubtypeTest extends ImportCiviSeleniumTestCase {
         'city' => 'Watson',
         'state' => 'NY',
         'country' => 'UNITED STATES',
-      ),
-    );
+      ],
+    ];
 
-    return array($headers, $rows);
+    return [$headers, $rows];
   }
 
 }

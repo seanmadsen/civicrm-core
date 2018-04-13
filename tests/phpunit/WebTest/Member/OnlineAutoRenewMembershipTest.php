@@ -167,10 +167,10 @@ class WebTest_Member_OnlineAutoRenewMembershipTest extends CiviSeleniumTestCase 
       $onBehalf = FALSE;
       $pledges = FALSE;
       $recurring = TRUE;
-      $membershipTypes = array(
-        array('id' => 1, 'auto_renew' => 1),
-        array('id' => 2, 'auto_renew' => 1),
-      );
+      $membershipTypes = [
+        ['id' => 1, 'auto_renew' => 1],
+        ['id' => 2, 'auto_renew' => 1],
+      ];
       $memPriceSetId = NULL;
       $friend = TRUE;
       $profilePreId = NULL;
@@ -183,7 +183,7 @@ class WebTest_Member_OnlineAutoRenewMembershipTest extends CiviSeleniumTestCase 
       $pageId = $this->webtestAddContributionPage($hash,
         $rand,
         $contributionTitle,
-        array($processorName => 'AuthNet'),
+        [$processorName => 'AuthNet'],
         $amountSection,
         $payLater,
         $onBehalf,
@@ -201,7 +201,7 @@ class WebTest_Member_OnlineAutoRenewMembershipTest extends CiviSeleniumTestCase 
       );
 
       //make sure we do have required permissions.
-      $permissions = array("edit-1-make-online-contributions", "edit-1-profile-listings-and-forms");
+      $permissions = ["edit-1-make-online-contributions", "edit-1-profile-listings-and-forms"];
       $this->changePermissions($permissions);
 
       // now logout and do membership test that way

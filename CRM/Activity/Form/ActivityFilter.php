@@ -40,16 +40,16 @@ class CRM_Activity_Form_ActivityFilter extends CRM_Core_Form {
     $activityOptions = CRM_Core_PseudoConstant::activityType(TRUE, TRUE, FALSE, 'label', TRUE);
     asort($activityOptions);
 
-    $this->add('select', 'activity_type_filter_id', ts('Include'), array('' => ts('- all activity type(s) -')) + $activityOptions);
-    $this->add('select', 'activity_type_exclude_filter_id', ts('Exclude'), array('' => ts('- select activity type -')) + $activityOptions);
+    $this->add('select', 'activity_type_filter_id', ts('Include'), ['' => ts('- all activity type(s) -')] + $activityOptions);
+    $this->add('select', 'activity_type_exclude_filter_id', ts('Exclude'), ['' => ts('- select activity type -')] + $activityOptions);
     CRM_Core_Form_Date::buildDateRange(
       $this, 'activity_date', 1,
       '_low', '_high', ts('From:'),
-      FALSE, array(), 'searchDate',
-      FALSE, array('class' => 'crm-select2 medium')
+      FALSE, [], 'searchDate',
+      FALSE, ['class' => 'crm-select2 medium']
     );
     $this->addSelect('status_id',
-      array('entity' => 'activity', 'multiple' => 'multiple', 'option_url' => NULL, 'placeholder' => ts('- any -'))
+      ['entity' => 'activity', 'multiple' => 'multiple', 'option_url' => NULL, 'placeholder' => ts('- any -')]
     );
 
     $this->assign('suppressForm', TRUE);
@@ -66,7 +66,7 @@ class CRM_Activity_Form_ActivityFilter extends CRM_Core_Form {
    */
   public function setDefaultValues() {
     // CRM-11761 retrieve user's activity filter preferences
-    $defaults = array();
+    $defaults = [];
     if (Civi::settings()->get('preserve_activity_tab_filter') && ($userID = CRM_Core_Session::getLoggedInContactID())) {
       $defaults = Civi::service('settings_manager')
         ->getBagByContact(NULL, $userID)

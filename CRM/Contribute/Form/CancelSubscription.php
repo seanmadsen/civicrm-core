@@ -133,7 +133,7 @@ class CRM_Contribute_Form_CancelSubscription extends CRM_Core_Form {
     // Determine if we can cancel recurring contribution via API with this processor
     $cancelSupported = $this->_paymentProcessorObj->supports('CancelRecurring');
     if ($cancelSupported) {
-      $searchRange = array();
+      $searchRange = [];
       $searchRange[] = $this->createElement('radio', NULL, NULL, ts('Yes'), '1');
       $searchRange[] = $this->createElement('radio', NULL, NULL, ts('No'), '0');
 
@@ -141,7 +141,7 @@ class CRM_Contribute_Form_CancelSubscription extends CRM_Core_Form {
         $searchRange,
         'send_cancel_request',
         ts('Send cancellation request to %1 ?',
-          array(1 => $this->_paymentProcessorObj->_processorName))
+          [1 => $this->_paymentProcessorObj->_processorName])
       );
     }
     $this->assign('cancelSupported', $cancelSupported);
@@ -161,18 +161,18 @@ class CRM_Contribute_Form_CancelSubscription extends CRM_Core_Form {
       $type = 'submit';
     }
 
-    $this->addButtons(array(
-        array(
+    $this->addButtons([
+        [
           'type' => $type,
           'name' => $cancelButton,
           'spacing' => '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
           'isDefault' => TRUE,
-        ),
-        array(
+        ],
+        [
           'type' => 'cancel',
           'name' => ts('Not Now'),
-        ),
-      )
+        ],
+      ]
     );
   }
 
@@ -183,10 +183,10 @@ class CRM_Contribute_Form_CancelSubscription extends CRM_Core_Form {
    *   array of default values
    */
   public function setDefaultValues() {
-    return array(
+    return [
       'is_notify' => 1,
       'send_cancel_request' => 1,
-    );
+    ];
   }
 
   /**
@@ -209,7 +209,7 @@ class CRM_Contribute_Form_CancelSubscription extends CRM_Core_Form {
     }
 
     if (CRM_Utils_Array::value('send_cancel_request', $params) == 1) {
-      $cancelParams = array('subscriptionId' => $this->_subscriptionDetails->subscription_id);
+      $cancelParams = ['subscriptionId' => $this->_subscriptionDetails->subscription_id];
       $cancelSubscription = $this->_paymentProcessorObj->cancelSubscription($message, $cancelParams);
     }
 
@@ -218,10 +218,10 @@ class CRM_Contribute_Form_CancelSubscription extends CRM_Core_Form {
     }
     elseif ($cancelSubscription) {
       $activityParams
-        = array(
+        = [
           'subject' => $this->_mid ? ts('Auto-renewal membership cancelled') : ts('Recurring contribution cancelled'),
           'details' => $message,
-        );
+      ];
       $cancelStatus = CRM_Contribute_BAO_ContributionRecur::cancelRecurContribution(
         $this->_subscriptionDetails->recur_id,
         NULL,
@@ -229,16 +229,16 @@ class CRM_Contribute_Form_CancelSubscription extends CRM_Core_Form {
       );
 
       if ($cancelStatus) {
-        $tplParams = array();
+        $tplParams = [];
         if ($this->_mid) {
-          $inputParams = array('id' => $this->_mid);
+          $inputParams = ['id' => $this->_mid];
           CRM_Member_BAO_Membership::getValues($inputParams, $tplParams);
           $tplParams = $tplParams[$this->_mid];
           $tplParams['membership_status']
             = CRM_Core_DAO::getFieldValue('CRM_Member_DAO_MembershipStatus', $tplParams['status_id']);
           $tplParams['membershipType']
             = CRM_Core_DAO::getFieldValue('CRM_Member_DAO_MembershipType', $tplParams['membership_type_id']);
-          $status = ts('The automatic renewal of your %1 membership has been cancelled as requested. This does not affect the status of your membership - you will receive a separate notification when your membership is up for renewal.', array(1 => $tplParams['membershipType']));
+          $status = ts('The automatic renewal of your %1 membership has been cancelled as requested. This does not affect the status of your membership - you will receive a separate notification when your membership is up for renewal.', [1 => $tplParams['membershipType']]);
           $msgTitle = 'Membership Renewal Cancelled';
           $msgType = 'info';
         }
@@ -246,13 +246,13 @@ class CRM_Contribute_Form_CancelSubscription extends CRM_Core_Form {
           $tplParams['recur_frequency_interval'] = $this->_subscriptionDetails->frequency_interval;
           $tplParams['recur_frequency_unit'] = $this->_subscriptionDetails->frequency_unit;
           $tplParams['amount'] = $this->_subscriptionDetails->amount;
-          $tplParams['contact'] = array('display_name' => $this->_donorDisplayName);
+          $tplParams['contact'] = ['display_name' => $this->_donorDisplayName];
           $status = ts('The recurring contribution of %1, every %2 %3 has been cancelled.',
-            array(
+            [
               1 => $this->_subscriptionDetails->amount,
               2 => $this->_subscriptionDetails->frequency_interval,
               3 => $this->_subscriptionDetails->frequency_unit,
-            )
+            ]
           );
           $msgTitle = 'Contribution Cancelled';
           $msgType = 'success';
@@ -265,7 +265,7 @@ class CRM_Contribute_Form_CancelSubscription extends CRM_Core_Form {
               'id',
               $this->_subscriptionDetails->contribution_page_id,
               $value,
-              array('title', 'receipt_from_name', 'receipt_from_email')
+              ['title', 'receipt_from_name', 'receipt_from_email']
             );
             $receiptFrom
               = '"' . CRM_Utils_Array::value('receipt_from_name', $value[$this->_subscriptionDetails->contribution_page_id]) .
@@ -280,7 +280,7 @@ class CRM_Contribute_Form_CancelSubscription extends CRM_Core_Form {
 
           // send notification
           $sendTemplateParams
-            = array(
+            = [
               'groupName' => $this->_mode == 'auto_renew' ? 'msg_tpl_workflow_membership' : 'msg_tpl_workflow_contribution',
               'valueName' => $this->_mode == 'auto_renew' ? 'membership_autorenew_cancelled' : 'contribution_recurring_cancelled',
               'contactId' => $this->_subscriptionDetails->contact_id,
@@ -290,7 +290,7 @@ class CRM_Contribute_Form_CancelSubscription extends CRM_Core_Form {
               'from' => $receiptFrom,
               'toName' => $this->_donorDisplayName,
               'toEmail' => $this->_donorEmail,
-            );
+          ];
           list($sent) = CRM_Core_BAO_MessageTemplate::sendTemplate($sendTemplateParams);
         }
       }

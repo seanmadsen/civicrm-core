@@ -60,14 +60,14 @@ class CRM_Contribute_Form_AdditionalPaymentTest extends CiviUnitTestCase {
    *
    * @var array
    */
-  protected $_processorParams = array();
+  protected $_processorParams = [];
 
   /**
    * Payment instrument mapping.
    *
    * @var array
    */
-  protected $paymentInstruments = array();
+  protected $paymentInstruments = [];
 
   /**
    * Dummy payment processor.
@@ -91,13 +91,13 @@ class CRM_Contribute_Form_AdditionalPaymentTest extends CiviUnitTestCase {
     $this->createLoggedInUser();
 
     $this->_individualId = $this->individualCreate();
-    $this->_params = array(
+    $this->_params = [
       'total_amount' => 100,
       'currency' => 'USD',
       'contact_id' => $this->_individualId,
       'financial_type_id' => 1,
-    );
-    $this->_processorParams = array(
+    ];
+    $this->_processorParams = [
       'domain_id' => 1,
       'name' => 'Dummy',
       'payment_processor_type_id' => 10,
@@ -107,9 +107,9 @@ class CRM_Contribute_Form_AdditionalPaymentTest extends CiviUnitTestCase {
       'url_site' => 'http://dummy.com',
       'url_recur' => 'http://dummy.com',
       'billing_mode' => 1,
-    );
+    ];
 
-    $instruments = $this->callAPISuccess('contribution', 'getoptions', array('field' => 'payment_instrument_id'));
+    $instruments = $this->callAPISuccess('contribution', 'getoptions', ['field' => 'payment_instrument_id']);
     $this->paymentInstruments = $instruments['values'];
 
     $this->paymentProcessor = $this->dummyProcessorCreate();
@@ -133,7 +133,7 @@ class CRM_Contribute_Form_AdditionalPaymentTest extends CiviUnitTestCase {
 
     // pay additional amount by using Credit Card
     $this->submitPayment(70, 'live');
-    $this->checkResults(array(30, 70), 2);
+    $this->checkResults([30, 70], 2);
   }
 
   /**
@@ -144,7 +144,7 @@ class CRM_Contribute_Form_AdditionalPaymentTest extends CiviUnitTestCase {
 
     // pay additional amount
     $this->submitPayment(70);
-    $this->checkResults(array(30, 70), 2);
+    $this->checkResults([30, 70], 2);
   }
 
   /**
@@ -155,12 +155,12 @@ class CRM_Contribute_Form_AdditionalPaymentTest extends CiviUnitTestCase {
 
     // pay additional amount
     $this->submitPayment(50);
-    $contribution = $this->callAPISuccessGetSingle('Contribution', array('id' => $this->_contributionId));
+    $contribution = $this->callAPISuccessGetSingle('Contribution', ['id' => $this->_contributionId]);
     $this->assertEquals('Partially paid', $contribution['contribution_status']);
 
     // pay additional amount
     $this->submitPayment(20);
-    $this->checkResults(array(30, 50, 20), 3);
+    $this->checkResults([30, 50, 20], 3);
   }
 
   /**
@@ -171,12 +171,12 @@ class CRM_Contribute_Form_AdditionalPaymentTest extends CiviUnitTestCase {
 
     // pay additional amount
     $this->submitPayment(50);
-    $contribution = $this->callAPISuccessGetSingle('Contribution', array('id' => $this->_contributionId));
+    $contribution = $this->callAPISuccessGetSingle('Contribution', ['id' => $this->_contributionId]);
     $this->assertEquals('Partially paid', $contribution['contribution_status']);
 
     // pay additional amount by using credit card
     $this->submitPayment(20, 'live');
-    $this->checkResults(array(30, 50, 20), 3);
+    $this->checkResults([30, 50, 20], 3);
   }
 
   /**
@@ -187,7 +187,7 @@ class CRM_Contribute_Form_AdditionalPaymentTest extends CiviUnitTestCase {
 
     // pay additional amount by using Credit Card
     $this->submitPayment(100, 'live');
-    $this->checkResults(array(100), 1);
+    $this->checkResults([100], 1);
   }
 
   /**
@@ -198,12 +198,12 @@ class CRM_Contribute_Form_AdditionalPaymentTest extends CiviUnitTestCase {
 
     // pay additional amount
     $this->submitPayment(70);
-    $contribution = $this->callAPISuccessGetSingle('Contribution', array('id' => $this->_contributionId));
+    $contribution = $this->callAPISuccessGetSingle('Contribution', ['id' => $this->_contributionId]);
     $this->assertEquals('Partially paid', $contribution['contribution_status']);
 
     // pay additional amount
     $this->submitPayment(30);
-    $this->checkResults(array(30, 70), 2);
+    $this->checkResults([30, 70], 2);
   }
 
   /**
@@ -214,15 +214,15 @@ class CRM_Contribute_Form_AdditionalPaymentTest extends CiviUnitTestCase {
     $membership = $this->createPendingMembershipAndRecordContribution($this->_contributionId);
     // pay additional amount
     $this->submitPayment(100);
-    $contribution = $this->callAPISuccessGetSingle('Contribution', array('id' => $this->_contributionId));
-    $contributionMembership = $this->callAPISuccessGetSingle('Membership', array('id' => $membership["id"]));
-    $membershipStatus = $this->callAPISuccessGetSingle('MembershipStatus', array('id' => $contributionMembership["status_id"]));
+    $contribution = $this->callAPISuccessGetSingle('Contribution', ['id' => $this->_contributionId]);
+    $contributionMembership = $this->callAPISuccessGetSingle('Membership', ['id' => $membership["id"]]);
+    $membershipStatus = $this->callAPISuccessGetSingle('MembershipStatus', ['id' => $contributionMembership["status_id"]]);
     $this->assertEquals('New', $membershipStatus['name']);
   }
 
   private function createPendingMembershipAndRecordContribution($contributionId) {
     $this->_individualId = $this->individualCreate();
-    $membershipTypeAnnualFixed = $this->callAPISuccess('membership_type', 'create', array(
+    $membershipTypeAnnualFixed = $this->callAPISuccess('membership_type', 'create', [
       'domain_id' => 1,
       'name' => "AnnualFixed",
       'member_of_contact_id' => 1,
@@ -233,22 +233,22 @@ class CRM_Contribute_Form_AdditionalPaymentTest extends CiviUnitTestCase {
       'fixed_period_rollover_day' => "1231",
       'relationship_type_id' => 20,
       'financial_type_id' => 2,
-    ));
+    ]);
     $membershipStatuses = CRM_Member_PseudoConstant::membershipStatus();
     $pendingStatusId = array_search('Pending', $membershipStatuses);
-    $membership = $this->callAPISuccess('Membership', 'create', array(
+    $membership = $this->callAPISuccess('Membership', 'create', [
       'contact_id' => $this->_individualId,
       'membership_type_id' => $membershipTypeAnnualFixed['id'],
-    ));
+    ]);
     // Updating Membership status to Pending
-    $membership = $this->callAPISuccess('Membership', 'create', array(
+    $membership = $this->callAPISuccess('Membership', 'create', [
       'id' => $membership["id"],
       'status_id' => $pendingStatusId,
-    ));
-    $membershipPayment = $this->callAPISuccess('MembershipPayment', 'create', array(
+    ]);
+    $membershipPayment = $this->callAPISuccess('MembershipPayment', 'create', [
       'membership_id' => $membership["id"],
       'contribution_id' => $contributionId,
-    ));
+    ]);
     return $membership;
   }
 
@@ -260,19 +260,19 @@ class CRM_Contribute_Form_AdditionalPaymentTest extends CiviUnitTestCase {
 
     // pay additional amount
     $this->submitPayment(40);
-    $contribution = $this->callAPISuccessGetSingle('Contribution', array('id' => $this->_contributionId));
+    $contribution = $this->callAPISuccessGetSingle('Contribution', ['id' => $this->_contributionId]);
     $this->assertEquals('Partially paid', $contribution['contribution_status']);
 
     $this->submitPayment(20);
-    $contribution = $this->callAPISuccessGetSingle('Contribution', array('id' => $this->_contributionId));
+    $contribution = $this->callAPISuccessGetSingle('Contribution', ['id' => $this->_contributionId]);
     $this->assertEquals('Partially paid', $contribution['contribution_status']);
 
     $this->submitPayment(30);
-    $contribution = $this->callAPISuccessGetSingle('Contribution', array('id' => $this->_contributionId));
+    $contribution = $this->callAPISuccessGetSingle('Contribution', ['id' => $this->_contributionId]);
     $this->assertEquals('Partially paid', $contribution['contribution_status']);
 
     $this->submitPayment(10);
-    $this->checkResults(array(40, 20, 30, 10), 4);
+    $this->checkResults([40, 20, 30, 10], 4);
   }
 
   /**
@@ -283,19 +283,19 @@ class CRM_Contribute_Form_AdditionalPaymentTest extends CiviUnitTestCase {
 
     // pay additional amount
     $this->submitPayment(50);
-    $contribution = $this->callAPISuccessGetSingle('Contribution', array('id' => $this->_contributionId));
+    $contribution = $this->callAPISuccessGetSingle('Contribution', ['id' => $this->_contributionId]);
     $this->assertEquals('Partially paid', $contribution['contribution_status']);
 
     $this->submitPayment(20, 'live');
-    $contribution = $this->callAPISuccessGetSingle('Contribution', array('id' => $this->_contributionId));
+    $contribution = $this->callAPISuccessGetSingle('Contribution', ['id' => $this->_contributionId]);
     $this->assertEquals('Partially paid', $contribution['contribution_status']);
 
     $this->submitPayment(20);
-    $contribution = $this->callAPISuccessGetSingle('Contribution', array('id' => $this->_contributionId));
+    $contribution = $this->callAPISuccessGetSingle('Contribution', ['id' => $this->_contributionId]);
     $this->assertEquals('Partially paid', $contribution['contribution_status']);
 
     $this->submitPayment(10, 'live');
-    $this->checkResults(array(50, 20, 20, 10), 4);
+    $this->checkResults([50, 20, 20, 10], 4);
   }
 
   /**
@@ -306,20 +306,20 @@ class CRM_Contribute_Form_AdditionalPaymentTest extends CiviUnitTestCase {
    */
   public function createContribution($typeofContribution = 'Pending') {
     if ($typeofContribution == 'Partially paid') {
-      $contributionParams = array_merge($this->_params, array(
+      $contributionParams = array_merge($this->_params, [
         'partial_payment_total' => 100.00,
         'partial_amount_to_pay' => 30,
         'contribution_status_id' => 1,
-      ));
+      ]);
     }
     elseif ($typeofContribution == 'Pending') {
-      $contributionParams = array_merge($this->_params, array(
+      $contributionParams = array_merge($this->_params, [
         'contribution_status_id' => 2,
         'is_pay_later' => 1,
-      ));
+      ]);
     }
     $contribution = $this->callAPISuccess('Contribution', 'create', $contributionParams);
-    $contribution = $this->callAPISuccessGetSingle('Contribution', array('id' => $contribution['id']));
+    $contribution = $this->callAPISuccessGetSingle('Contribution', ['id' => $contribution['id']]);
     $this->assertNotEmpty($contribution);
     $this->assertEquals($typeofContribution, $contribution['contribution_status']);
     $this->_contributionId = $contribution['id'];
@@ -337,7 +337,7 @@ class CRM_Contribute_Form_AdditionalPaymentTest extends CiviUnitTestCase {
   public function submitPayment($amount, $mode = NULL) {
     $form = new CRM_Contribute_Form_AdditionalPayment();
 
-    $submitParams = array(
+    $submitParams = [
       'contribution_id' => $this->_contributionId,
       'contact_id' => $this->_individualId,
       'total_amount' => $amount,
@@ -347,12 +347,12 @@ class CRM_Contribute_Form_AdditionalPaymentTest extends CiviUnitTestCase {
       'receive_date_time' => '11:27PM',
       'trxn_date' => '2017-04-11 13:05:11',
       'payment_processor_id' => 0,
-    );
+    ];
     if ($mode) {
-      $submitParams += array(
+      $submitParams += [
         'payment_instrument_id' => array_search('Credit card', $this->paymentInstruments),
         'payment_processor_id' => $this->paymentProcessorID,
-        'credit_card_exp_date' => array('M' => 5, 'Y' => 2025),
+        'credit_card_exp_date' => ['M' => 5, 'Y' => 2025],
         'credit_card_number' => '411111111111111',
         'cvv2' => 234,
         'credit_card_type' => 'Visa',
@@ -360,13 +360,13 @@ class CRM_Contribute_Form_AdditionalPaymentTest extends CiviUnitTestCase {
         'billing_state_province_id-5' => 1059,
         'billing_postal_code-5' => 1321312,
         'billing_country_id-5' => 1228,
-      );
+      ];
     }
     else {
-      $submitParams += array(
+      $submitParams += [
         'payment_instrument_id' => array_search('Check', $this->paymentInstruments),
         'check_number' => 'check-12345',
-      );
+      ];
     }
     $form->cid = $this->_individualId;
     $form->testSubmit($submitParams, $mode);
@@ -382,16 +382,16 @@ class CRM_Contribute_Form_AdditionalPaymentTest extends CiviUnitTestCase {
    *
    */
   public function checkResults($amounts, $count) {
-    $contribution = $this->callAPISuccessGetSingle('Contribution', array('id' => $this->_contributionId));
+    $contribution = $this->callAPISuccessGetSingle('Contribution', ['id' => $this->_contributionId]);
     $this->assertNotEmpty($contribution);
     $this->assertEquals('Completed', $contribution['contribution_status']);
 
-    $this->callAPISuccessGetCount('EntityFinancialTrxn', array(
+    $this->callAPISuccessGetCount('EntityFinancialTrxn', [
       'entity_table' => "civicrm_contribution",
       'entity_id' => $this->_contributionId,
       'financial_trxn_id.is_payment' => 1,
-      'financial_trxn_id.total_amount' => array('IN' => $amounts),
-    ), $count);
+      'financial_trxn_id.total_amount' => ['IN' => $amounts],
+    ], $count);
   }
 
 }

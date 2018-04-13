@@ -60,7 +60,7 @@ class WebTest_Contact_SearchbyDateFilterTest extends CiviSeleniumTestCase {
 
       $this->waitForPageToLoad(2 * $this->getTimeoutMsec());
       // check the opened panes.
-      $this->_checkOpenedPanes(array($pane));
+      $this->_checkOpenedPanes([$pane]);
     }
 
   }
@@ -160,7 +160,7 @@ class WebTest_Contact_SearchbyDateFilterTest extends CiviSeleniumTestCase {
   /**
    * @param array $openedPanes
    */
-  public function _checkOpenedPanes($openedPanes = array()) {
+  public function _checkOpenedPanes($openedPanes = []) {
     if (!$this->isTextPresent('None found.')) {
       $this->click('css=div.crm-advanced_search_form-accordion div.crm-accordion-header');
     }
@@ -182,7 +182,7 @@ class WebTest_Contact_SearchbyDateFilterTest extends CiviSeleniumTestCase {
    * @param $paneRef
    * @param array $selectFields
    */
-  public function _selectPaneFields($paneRef, $selectFields = array()) {
+  public function _selectPaneFields($paneRef, $selectFields = []) {
     $pane = $this->_advanceSearchPanesDateFilter($paneRef);
 
     $this->click("css=div.crm-accordion-wrapper {$pane['headerLocator']}");
@@ -236,106 +236,106 @@ class WebTest_Contact_SearchbyDateFilterTest extends CiviSeleniumTestCase {
     static $_advance_search_panes;
 
     if (!isset($_advance_search_panes) || empty($_advance_search_panes)) {
-      $_advance_search_panes = array(
-        'activity' => array(
+      $_advance_search_panes = [
+        'activity' => [
           'headerLocator' => 'div#activity',
           'bodyLocator' => 'select#activity_date_relative',
           'title' => 'Activities',
-          'fields' => array(
-            'Activity Dates' => array(
+          'fields' => [
+            'Activity Dates' => [
               'type' => 'select',
               'locator' => 'activity_date_relative',
-              'values' => array('This Year'),
-            ),
-          ),
-        ),
-        'demographics' => array(
+              'values' => ['This Year'],
+            ],
+          ],
+        ],
+        'demographics' => [
           'headerLocator' => 'div#demographics',
           'bodyLocator' => 'input#birth_date_low',
           'title' => 'Demographics',
-          'fields' => array(
-            'Deceased Dates' => array(
+          'fields' => [
+            'Deceased Dates' => [
               'type' => 'select',
               'locator' => 'deceased_date_relative',
-              'values' => array('This Quarter'),
-            ),
-          ),
-        ),
-        'change_log' => array(
+              'values' => ['This Quarter'],
+            ],
+          ],
+        ],
+        'change_log' => [
           'headerLocator' => 'div#changeLog',
           'bodyLocator' => 'input#changed_by',
           'title' => 'Change Log',
-          'fields' => array(
-            'Modified Between' => array(
+          'fields' => [
+            'Modified Between' => [
               'type' => 'select',
               'locator' => 'log_date_relative',
-              'values' => array('This Week'),
-            ),
-          ),
-        ),
-        'mailing' => array(
+              'values' => ['This Week'],
+            ],
+          ],
+        ],
+        'mailing' => [
           'headerLocator' => 'div#CiviMail',
           'bodyLocator' => 'select#mailing_date_relative',
           'title' => 'Mailings',
-          'fields' => array(
-            'Mailing Date' => array(
+          'fields' => [
+            'Mailing Date' => [
               'type' => 'select',
               'locator' => 'mailing_date_relative',
-              'values' => array('Prior to Previous Quarter'),
-            ),
-          ),
-        ),
-        'contribution' => array(
+              'values' => ['Prior to Previous Quarter'],
+            ],
+          ],
+        ],
+        'contribution' => [
           'headerLocator' => 'div#CiviContribute',
           'bodyLocator' => 'select#financial_type_id',
           'title' => 'Contributions',
-          'fields' => array(
-            'Date Received' => array(
+          'fields' => [
+            'Date Received' => [
               'type' => 'select',
               'locator' => 'contribution_date_relative',
-              'values' => array('Today'),
-            ),
-          ),
-        ),
-        'pledge' => array(
+              'values' => ['Today'],
+            ],
+          ],
+        ],
+        'pledge' => [
           'headerLocator' => 'div#CiviPledge',
           'bodyLocator' => 'select#pledge_payment_date_relative',
           'title' => 'Pledges',
-          'fields' => array(
-            'Date Received' => array(
+          'fields' => [
+            'Date Received' => [
               'type' => 'select',
               'locator' => 'pledge_payment_date_relative',
-              'values' => array('Prior to Previous Month'),
-            ),
-          ),
-        ),
-        'membership' => array(
+              'values' => ['Prior to Previous Month'],
+            ],
+          ],
+        ],
+        'membership' => [
           'headerLocator' => 'div#CiviMember',
           'bodyLocator' => 'input#member_source',
           'title' => 'Memberships',
-          'fields' => array(
-            'Member Since' => array(
+          'fields' => [
+            'Member Since' => [
               'type' => 'select',
               'locator' => 'member_join_date_relative',
-              'values' => array('Previous Year'),
-            ),
+              'values' => ['Previous Year'],
+            ],
 
-          ),
-        ),
-        'event' => array(
+          ],
+        ],
+        'event' => [
           'headerLocator' => 'div#CiviEvent',
           'bodyLocator' => 'input#event_id',
           'title' => 'Events',
-          'fields' => array(
-            'Event Dates' => array(
+          'fields' => [
+            'Event Dates' => [
               'type' => 'select',
               'locator' => 'event_relative',
-              'values' => array('Previous Week'),
-            ),
-          ),
-        ),
+              'values' => ['Previous Week'],
+            ],
+          ],
+        ],
 
-      );
+      ];
     }
 
     if ($paneRef) {

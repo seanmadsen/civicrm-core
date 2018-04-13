@@ -132,7 +132,7 @@ class WebTest_Event_MultiprofileEventTest extends CiviSeleniumTestCase {
 
   public function testAnoumyousRegisterPage() {
     // add the required Drupal permission
-    $permission = array('edit-1-access-all-custom-data');
+    $permission = ['edit-1-access-all-custom-data'];
     $this->changePermissions($permission);
 
     $customGrp1 = "Custom Data1_" . substr(sha1(rand()), 0, 7);
@@ -283,7 +283,7 @@ class WebTest_Event_MultiprofileEventTest extends CiviSeleniumTestCase {
    * @return array
    */
   public function _testGetCustomFieldId($customGrpId1) {
-    $customId = array();
+    $customId = [];
 
     // Create a custom data to add in profile
 
@@ -347,68 +347,68 @@ class WebTest_Event_MultiprofileEventTest extends CiviSeleniumTestCase {
    */
   public function _testGetProfileId($customId) {
     // create profiles
-    $profileId = array();
-    $profilefield = array(
+    $profileId = [];
+    $profilefield = [
       'street_address' => 'street_address',
       'supplemental_address_1' => 'supplemental_address_1',
       'city' => 'city',
-    );
+    ];
     $location = 1;
     $type = "Contact";
     $profileId1 = $this->_testCreateProfile($profilefield, $location, $type);
     array_push($profileId, $profileId1);
 
-    $profilefield = array(
+    $profilefield = [
       'street_address' => 'street_address',
       'city' => 'city',
       'phone' => 'phone',
       'postal_code' => 'postal_code',
-    );
+    ];
     $location = 0;
     $type = "Contact";
     $profileId2 = $this->_testCreateProfile($profilefield, $location, $type);
     array_push($profileId, $profileId2);
 
-    $profilefield = array(
+    $profilefield = [
       'nick_name' => 'nick_name',
       'url' => 'url',
-    );
+    ];
     $location = 0;
     $type = "Contact";
     $profileId3 = $this->_testCreateProfile($profilefield, $location, $type);
     array_push($profileId, $profileId3);
 
-    $profilefield = array(
+    $profilefield = [
       'current_employer' => 'current_employer',
       'job_title' => 'job_title',
-    );
+    ];
     $location = 0;
     $type = "Individual";
     $profileId4 = $this->_testCreateProfile($profilefield, $location, $type);
     array_push($profileId, $profileId4);
 
-    $profilefield = array(
+    $profilefield = [
       'middle_name' => 'middle_name',
       'gender_id' => 'gender_id',
-    );
+    ];
     $location = 0;
     $type = "Individual";
     $profileId5 = $this->_testCreateProfile($profilefield, $location, $type);
     array_push($profileId, $profileId5);
 
-    $profilefield = array(
+    $profilefield = [
       'custom_' . $customId[0] => 'custom_' . $customId[0],
       'custom_' . $customId[1] => 'custom_' . $customId[1],
       'custom_' . $customId[2] => 'custom_' . $customId[2],
-    );
+    ];
     $location = 0;
     $type = "Contact";
     $profileId6 = $this->_testCreateProfile($profilefield, $location, $type);
     array_push($profileId, $profileId6);
 
-    $profilefield = array(
+    $profilefield = [
       'participant_role' => 'participant_role',
-    );
+    ];
     $location = 0;
     $type = "Participant";
     $profileId7 = $this->_testCreateProfile($profilefield, $location, $type);
@@ -427,7 +427,7 @@ class WebTest_Event_MultiprofileEventTest extends CiviSeleniumTestCase {
    * @return null
    */
   public function _testCreateProfile($profileField, $location = 0, $type) {
-    $locationFields = array(
+    $locationFields = [
       'supplemental_address_1',
       'supplemental_address_2',
       'supplemental_address_3',
@@ -437,7 +437,7 @@ class WebTest_Event_MultiprofileEventTest extends CiviSeleniumTestCase {
       'state',
       'street_address',
       'postal_code',
-    );
+    ];
 
     // Add new profile.
     $profileName = "Profile_" . substr(sha1(rand()), 0, 7);

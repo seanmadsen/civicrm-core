@@ -47,7 +47,7 @@ class CRM_Upgrade_Incremental_php_FourTwo extends CRM_Upgrade_Incremental_Base {
    */
   public function setPreUpgradeMessage(&$preUpgradeMessage, $rev, $currentVer = NULL) {
     if ($rev == '4.2.alpha1') {
-      $tables = array('civicrm_contribution_page', 'civicrm_event', 'civicrm_group', 'civicrm_contact');
+      $tables = ['civicrm_contribution_page', 'civicrm_event', 'civicrm_group', 'civicrm_contact'];
       if (!CRM_Core_DAO::schemaRequiresRebuilding($tables)) {
         $errors = "The upgrade has identified some schema integrity issues in the database. It seems some of your constraints are missing. You will have to rebuild your schema before re-trying the upgrade. Please refer to " . CRM_Utils_System::docURL2("Ensuring Schema Integrity on Upgrades", FALSE, "Ensuring Schema Integrity on Upgrades", NULL, NULL, "wiki");
         CRM_Core_Error::fatal($errors);
@@ -93,18 +93,18 @@ ORDER BY mp.contribution_id, mp.membership_id";
     if ($rev == '4.2.beta2') {
       // note: error conditions are also checked in upgrade_4_2_beta2()
       if (!defined('CIVICRM_SETTINGS_PATH')) {
-        $preUpgradeMessage .= '<br />' . ts('Could not determine path to civicrm.settings.php. Please manually locate it and add these lines at the bottom: <pre>%1</pre>', array(
+        $preUpgradeMessage .= '<br />' . ts('Could not determine path to civicrm.settings.php. Please manually locate it and add these lines at the bottom: <pre>%1</pre>', [
             1 => self::SETTINGS_SNIPPET,
-          ));
+          ]);
       }
       elseif (preg_match(self::SETTINGS_SNIPPET_PATTERN, file_get_contents(CIVICRM_SETTINGS_PATH))) {
         // OK, nothing to do
       }
       elseif (!is_writable(CIVICRM_SETTINGS_PATH)) {
-        $preUpgradeMessage .= '<br />' . ts('The settings file (%1) must be updated. Please make it writable or manually add these lines:<pre>%2</pre>', array(
+        $preUpgradeMessage .= '<br />' . ts('The settings file (%1) must be updated. Please make it writable or manually add these lines:<pre>%2</pre>', [
             1 => CIVICRM_SETTINGS_PATH,
             2 => self::SETTINGS_SNIPPET,
-          ));
+          ]);
       }
     }
     if ($rev == '4.2.2' && version_compare($currentVer, '3.3.alpha1') >= 0) {
@@ -144,9 +144,9 @@ INNER JOIN civicrm_price_set cps ON cps.id = cpf.price_set_id AND cps.name <>'de
     if ($rev == '4.2.beta5') {
       $config = CRM_Core_Config::singleton();
       if (!empty($config->extensionsDir)) {
-        $postUpgradeMessage .= '<br />' . ts('Please <a href="%1" target="_blank">configure the Extension Resource URL</a>.', array(
+        $postUpgradeMessage .= '<br />' . ts('Please <a href="%1" target="_blank">configure the Extension Resource URL</a>.', [
             1 => CRM_Utils_System::url('civicrm/admin/setting/url', 'reset=1'),
-          ));
+          ]);
       }
     }
     if ($rev == '4.2.7') {
@@ -160,12 +160,12 @@ INNER JOIN civicrm_price_set cps ON cps.id = cpf.price_set_id AND cps.name <>'de
   public function upgrade_4_2_alpha1($rev) {
     //checking whether the foreign key exists before dropping it
     //drop foreign key queries of CRM-9850
-    $params = array();
-    $tables = array(
+    $params = [];
+    $tables = [
       'civicrm_contribution_page' => 'FK_civicrm_contribution_page_payment_processor_id',
       'civicrm_event' => 'FK_civicrm_event_payment_processor_id',
       'civicrm_group' => 'FK_civicrm_group_saved_search_id',
-    );
+    ];
     foreach ($tables as $tableName => $fKey) {
       $foreignKeyExists = CRM_Core_DAO::checkConstraintExists($tableName, $fKey);
       if ($foreignKeyExists) {
@@ -196,7 +196,7 @@ INNER JOIN civicrm_price_set cps ON cps.id = cpf.price_set_id AND cps.name <>'de
 
     // Some steps take a long time, so we break them up into separate
     // tasks and enqueue them separately.
-    $this->addTask(ts('Upgrade DB to %1: SQL', array(1 => '4.2.alpha1')), 'runSql', $rev);
+    $this->addTask(ts('Upgrade DB to %1: SQL', [1 => '4.2.alpha1']), 'runSql', $rev);
     $this->addTask('Upgrade DB to 4.2.alpha1: Price Sets', 'task_4_2_alpha1_createPriceSets', $rev);
     self::convertContribution();
     $this->addTask('Upgrade DB to 4.2.alpha1: Event Profile', 'task_4_2_alpha1_eventProfile');
@@ -220,7 +220,7 @@ INNER JOIN civicrm_price_set cps ON cps.id = cpf.price_set_id AND cps.name <>'de
    * @param $rev
    */
   public function upgrade_4_2_beta3($rev) {
-    $this->addTask(ts('Upgrade DB to %1: SQL', array(1 => '4.2.beta3')), 'runSql', $rev);
+    $this->addTask(ts('Upgrade DB to %1: SQL', [1 => '4.2.beta3']), 'runSql', $rev);
     $minParticipantId = CRM_Core_DAO::singleValueQuery('SELECT coalesce(min(id),0) FROM civicrm_participant');
     $maxParticipantId = CRM_Core_DAO::singleValueQuery('SELECT coalesce(max(id),0) FROM civicrm_participant');
 
@@ -247,14 +247,14 @@ INNER JOIN civicrm_price_set cps ON cps.id = cpf.price_set_id AND cps.name <>'de
    * @param $rev
    */
   public function upgrade_4_2_0($rev) {
-    $this->addTask(ts('Upgrade DB to %1: SQL', array(1 => '4.2.0')), 'runSql', $rev);
+    $this->addTask(ts('Upgrade DB to %1: SQL', [1 => '4.2.0']), 'runSql', $rev);
   }
 
   /**
    * @param $rev
    */
   public function upgrade_4_2_2($rev) {
-    $this->addTask(ts('Upgrade DB to %1: SQL', array(1 => '4.2.2')), 'runSql', $rev);
+    $this->addTask(ts('Upgrade DB to %1: SQL', [1 => '4.2.2']), 'runSql', $rev);
     //create line items for memberships and participants for api/import
     self::convertContribution();
 
@@ -294,7 +294,7 @@ INNER JOIN civicrm_price_set cps ON cps.id = cpf.price_set_id AND cps.name <>'de
    * @param $rev
    */
   public function upgrade_4_2_3($rev) {
-    $this->addTask(ts('Upgrade DB to %1: SQL', array(1 => '4.2.3')), 'runSql', $rev);
+    $this->addTask(ts('Upgrade DB to %1: SQL', [1 => '4.2.3']), 'runSql', $rev);
     // CRM-10953 Remove duplicate activity type for 'Reminder Sent' which is mistakenly inserted by 4.2.alpha1 upgrade script
     $queryMin = "
 SELECT coalesce(min(value),0) from civicrm_option_value ov
@@ -336,7 +336,7 @@ DELETE from civicrm_option_value
    * @param $rev
    */
   public function upgrade_4_2_5($rev) {
-    $this->addTask(ts('Upgrade DB to %1: SQL', array(1 => '4.2.5')), 'runSql', $rev);
+    $this->addTask(ts('Upgrade DB to %1: SQL', [1 => '4.2.5']), 'runSql', $rev);
     //CRM-11077
     $sql = " SELECT cpse.entity_id, cpse.price_set_id
 FROM `civicrm_price_set_entity` cpse
@@ -385,16 +385,16 @@ HAVING COUNT(cpse.price_set_id) > 1 AND MIN(cpse1.id) <> cpse.id ";
    */
   public static function task_4_2_alpha1_createPriceSets(CRM_Queue_TaskContext $ctx, $rev) {
     $upgrade = new CRM_Upgrade_Form();
-    $daoName = array(
-      'civicrm_contribution_page' => array(
+    $daoName = [
+      'civicrm_contribution_page' => [
         'CRM_Contribute_BAO_ContributionPage',
         CRM_Core_Component::getComponentID('CiviContribute'),
-      ),
-      'civicrm_event' => array(
+      ],
+      'civicrm_event' => [
         'CRM_Event_BAO_Event',
         CRM_Core_Component::getComponentID('CiviEvent'),
-      ),
-    );
+      ],
+    ];
 
     // get all option group used for event and contribution page
     $query = "
@@ -405,7 +405,7 @@ WHERE  name LIKE '%.amount.%' ";
     while ($dao->fetch()) {
       $addTo = explode('.', $dao->name);
       if (!empty($addTo[2])) {
-        $options = array('optionGroup' => $dao->name);
+        $options = ['optionGroup' => $dao->name];
         self::createPriceSet($daoName, $addTo, $options);
       }
       CRM_Core_OptionGroup::deleteAssoc($dao->name);
@@ -419,13 +419,13 @@ LEFT JOIN civicrm_membership_block cmb ON  cmb.entity_id = ccp.id AND cmb.entity
 LEFT JOIN civicrm_price_set_entity cpse ON cpse.entity_id = ccp.id and cpse.entity_table = 'civicrm_contribution_page'
 WHERE     cpse.price_set_id IS NULL";
     $dao = CRM_Core_DAO::executeQuery($query);
-    $addTo = array('civicrm_contribution_page');
+    $addTo = ['civicrm_contribution_page'];
     while ($dao->fetch()) {
       $addTo[2] = $dao->contribution_page_id;
-      $options = array(
+      $options = [
         'otherAmount' => $dao->is_allow_other_amount,
         'membership' => $dao->membership_block_id,
-      );
+      ];
       self::createPriceSet($daoName, $addTo, $options);
     }
 
@@ -439,10 +439,10 @@ WHERE     cpse.price_set_id IS NULL";
    * @param string $addTo
    * @param array $options
    */
-  public static function createPriceSet($daoName, $addTo, $options = array()) {
+  public static function createPriceSet($daoName, $addTo, $options = []) {
     $query = "SELECT title FROM {$addTo[0]} where id =%1";
     $setParams['title'] = CRM_Core_DAO::singleValueQuery($query,
-      array(1 => array($addTo[2], 'Integer'))
+      [1 => [$addTo[2], 'Integer']]
     );
     $pageTitle = strtolower(CRM_Utils_String::munge($setParams['title'], '_', 245));
 
@@ -453,7 +453,7 @@ WHERE     cpse.price_set_id IS NULL";
       return;
     }
 
-    $optionValue = array();
+    $optionValue = [];
     if (!empty($options['optionGroup'])) {
       CRM_Core_OptionGroup::getAssoc($options['optionGroup'], $optionValue);
       if (empty($optionValue)) {
@@ -485,7 +485,7 @@ WHERE     cpse.price_set_id IS NULL";
       if ($addTo[0] == 'civicrm_event') {
         $query = "SELECT fee_label FROM civicrm_event where id =%1";
         $fieldParams['name'] = $fieldParams['label'] = CRM_Core_DAO::singleValueQuery($query,
-          array(1 => array($addTo[2], 'Integer'))
+          [1 => [$addTo[2], 'Integer']]
         );
         $defaultAmountColumn = 'default_fee_id';
       }
@@ -516,7 +516,7 @@ WHERE     cpse.price_set_id IS NULL";
 
       if ($dao->find(TRUE)) {
         if ($dao->membership_types) {
-          $fieldParams = array(
+          $fieldParams = [
             'name' => strtolower(CRM_Utils_String::munge("Membership Amount", '_', 245)),
             'label' => "Membership Amount",
             'is_required' => $dao->is_required,
@@ -525,7 +525,7 @@ WHERE     cpse.price_set_id IS NULL";
             'price_set_id' => $priceSet->id,
             'html_type' => 'Radio',
             'weight' => 1,
-          );
+          ];
           $membershipTypes = unserialize($dao->membership_types);
           $rowcount = 0;
           foreach ($membershipTypes as $membershipType => $autoRenew) {
@@ -541,18 +541,18 @@ WHERE     cpse.price_set_id IS NULL";
           }
           $priceField = CRM_Upgrade_Snapshot_V4p2_Price_BAO_Field::create($fieldParams);
 
-          $setParams = array(
+          $setParams = [
             'id' => $priceSet->id,
             'extends' => CRM_Core_Component::getComponentID('CiviMember'),
             'contribution_type_id' => CRM_Core_DAO::getFieldValue($daoName[$addTo[0]][0], $addTo[2], 'contribution_type_id'),
-          );
+          ];
           CRM_Upgrade_Snapshot_V4p2_Price_BAO_Set::create($setParams);
         }
       }
     }
     if (!empty($options['otherAmount'])) {
 
-      $fieldParams = array(
+      $fieldParams = [
         'name' => strtolower(CRM_Utils_String::munge("Other Amount", '_', 245)),
         'label' => "Other Amount",
         'is_required' => 0,
@@ -561,7 +561,7 @@ WHERE     cpse.price_set_id IS NULL";
         'price_set_id' => $priceSet->id,
         'html_type' => 'Text',
         'weight' => 3,
-      );
+      ];
       $fieldParams['option_label'][1] = "Other Amount";
       $fieldParams['option_amount'][1] = 1;
       $fieldParams['option_weight'][1] = 1;
@@ -597,10 +597,10 @@ WHERE     cpse.price_set_id IS NULL";
  LEFT JOIN civicrm_price_field_value cpfv ON cpfv.membership_type_id = cm.membership_type_id AND cpf.id = cpfv.price_field_id
  WHERE (cc.id BETWEEN %1 AND %2) AND cli.entity_id IS NULL ;
  ";
-    $sqlParams = array(
-      1 => array($startId, 'Integer'),
-      2 => array($endId, 'Integer'),
-    );
+    $sqlParams = [
+      1 => [$startId, 'Integer'],
+      2 => [$endId, 'Integer'],
+    ];
     CRM_Core_DAO::executeQuery($query, $sqlParams);
 
     // create lineitems for contribution done for membership
@@ -624,23 +624,23 @@ FROM      civicrm_price_field cpf
 LEFT JOIN civicrm_price_field_value cpfv ON cpf.id = cpfv.price_field_id
 WHERE     cpf.price_set_id = %1
 ";
-      $lineParams = array(
+      $lineParams = [
         'entity_table' => 'civicrm_contribution',
         'entity_id' => $result->id,
-      );
+      ];
       if ($result->membership_id) {
         $sql .= " AND cpf.name = %2 AND cpfv.membership_type_id = %3 ";
-        $params = array(
-          '1' => array($result->price_set_id, 'Integer'),
-          '2' => array('membership_amount', 'String'),
-          '3' => array(
+        $params = [
+          '1' => [$result->price_set_id, 'Integer'],
+          '2' => ['membership_amount', 'String'],
+          '3' => [
             CRM_Core_DAO::getFieldValue('CRM_Member_DAO_Membership', $result->membership_id, 'membership_type_id'),
             'Integer',
-          ),
-        );
+          ],
+        ];
         $res = CRM_Core_DAO::executeQuery($sql, $params);
         if ($res->fetch()) {
-          $lineParams += array(
+          $lineParams += [
             'price_field_id' => $res->id,
             'label' => $res->label,
             'qty' => 1,
@@ -648,7 +648,7 @@ WHERE     cpf.price_set_id = %1
             'line_total' => $res->amount,
             'participant_count' => $res->count ? $res->count : 0,
             'price_field_value_id' => $res->price_field_value_id,
-          );
+          ];
         }
         else {
           $lineParams['price_field_id'] = CRM_Core_DAO::getFieldValue('CRM_Upgrade_Snapshot_V4p2_Price_DAO_Field', $result->price_set_id, 'id', 'price_set_id');
@@ -675,13 +675,13 @@ WHERE     cpf.price_set_id = %1
           }
         }
 
-        $params = array(
-          '1' => array($priceSetId, 'Integer'),
-          '2' => array($result->total_amount, 'String'),
-        );
+        $params = [
+          '1' => [$priceSetId, 'Integer'],
+          '2' => [$result->total_amount, 'String'],
+        ];
         $res = CRM_Core_DAO::executeQuery($sql, $params);
         if ($res->fetch()) {
-          $lineParams += array(
+          $lineParams += [
             'price_field_id' => $res->id,
             'label' => $res->label,
             'qty' => 1,
@@ -689,14 +689,14 @@ WHERE     cpf.price_set_id = %1
             'line_total' => $res->amount,
             'participant_count' => $res->count ? $res->count : 0,
             'price_field_value_id' => $res->price_field_value_id,
-          );
+          ];
         }
         else {
-          $params = array(
+          $params = [
             'price_set_id' => $priceSetId,
             'name' => 'other_amount',
-          );
-          $defaults = array();
+          ];
+          $defaults = [];
           CRM_Upgrade_Snapshot_V4p2_Price_BAO_Field::retrieve($params, $defaults);
           if (!empty($defaults)) {
             $lineParams['price_field_id'] = $defaults['id'];
@@ -748,10 +748,10 @@ LEFT JOIN civicrm_price_field cpf ON cpf.price_set_id = cpse.price_set_id
 LEFT JOIN civicrm_price_field_value cpfv ON cpfv.price_field_id = cpf.id AND cpfv.label = cp.fee_level
 WHERE     (cp.id BETWEEN %1 AND %2)
 AND       cli.entity_id IS NULL AND cp.fee_amount IS NOT NULL";
-    $sqlParams = array(
-      1 => array($startId, 'Integer'),
-      2 => array($endId, 'Integer'),
-    );
+    $sqlParams = [
+      1 => [$startId, 'Integer'],
+      2 => [$endId, 'Integer'],
+    ];
     $dao = CRM_Core_DAO::executeQuery($query, $sqlParams);
     if ($dao->N) {
       $defaultPriceSetId = CRM_Core_DAO::getFieldValue('CRM_Upgrade_Snapshot_V4p2_Price_DAO_Set', 'default_contribution_amount', 'id', 'name');
@@ -760,7 +760,7 @@ AND       cli.entity_id IS NULL AND cp.fee_amount IS NOT NULL";
     }
 
     while ($dao->fetch()) {
-      $lineParams = array(
+      $lineParams = [
         'entity_table' => 'civicrm_participant',
         'entity_id' => $dao->participant_id,
         'label' => $dao->fee_level ? $dao->fee_level : ts('Default'),
@@ -768,12 +768,12 @@ AND       cli.entity_id IS NULL AND cp.fee_amount IS NOT NULL";
         'unit_price' => $dao->fee_amount,
         'line_total' => $dao->fee_amount,
         'participant_count' => 1,
-      );
+      ];
       if ($dao->is_monetary && $dao->price_field_id) {
-        $lineParams += array(
+        $lineParams += [
           'price_field_id' => $dao->price_field_id,
           'price_field_value_id' => $dao->price_field_value_id,
-        );
+        ];
         $priceSetId = $dao->price_set_id;
       }
       else {
@@ -805,9 +805,9 @@ VALUES
   (1, 'Individual, Contact', %1, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, NULL, 0, NULL, 0, 'event_registration', NULL, NULL, 0);
 ";
 
-    $params = array(
-      1 => array($profileTitle, 'String'),
-    );
+    $params = [
+      1 => [$profileTitle, 'String'],
+    ];
 
     CRM_Core_DAO::executeQuery($sql, $params);
 
@@ -869,7 +869,7 @@ VALUES
   public static function deleteInvalidPairs() {
     require_once 'CRM/Member/PseudoConstant.php';
     require_once 'CRM/Contribute/PseudoConstant.php';
-    $processedRecords = array();
+    $processedRecords = [];
 
     $tempTableName1 = CRM_Core_DAO::createTempTableName();
     // 1. collect all duplicates
@@ -918,7 +918,7 @@ VALUES
         $memType = CRM_Utils_Array::value($dao->membership_type_id, $membershipType);
         $memStatus = CRM_Utils_Array::value($dao->status_id, $membershipStatus);
         $contribStatus = CRM_Utils_Array::value($dao->contribution_status_id, $contributionStatus);
-        $processedRecords[] = array(
+        $processedRecords[] = [
           $dao->contact_id,
           $dao->contribution_id,
           $contribStatus,
@@ -928,7 +928,7 @@ VALUES
           $dao->end_date,
           $memStatus,
           $status,
-        );
+        ];
       }
     }
 

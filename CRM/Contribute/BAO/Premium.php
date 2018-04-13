@@ -102,7 +102,7 @@ class CRM_Contribute_BAO_Premium extends CRM_Contribute_DAO_Premium {
    * @param string $selectedOption
    */
   public static function buildPremiumBlock(&$form, $pageID, $formItems = FALSE, $selectedProductID = NULL, $selectedOption = NULL) {
-    $form->add('hidden', "selectProduct", $selectedProductID, array('id' => 'selectProduct'));
+    $form->add('hidden', "selectProduct", $selectedProductID, ['id' => 'selectProduct']);
 
     $dao = new CRM_Contribute_DAO_Premium();
     $dao->entity_table = 'civicrm_contribution_page';
@@ -116,7 +116,7 @@ class CRM_Contribute_BAO_Premium extends CRM_Contribute_DAO_Premium {
 
     if ($dao->find(TRUE)) {
       $premiumID = $dao->id;
-      $premiumBlock = array();
+      $premiumBlock = [];
       CRM_Core_DAO::storeValues($dao, $premiumBlock);
 
       $dao = new CRM_Contribute_DAO_PremiumsProduct();
@@ -125,8 +125,8 @@ class CRM_Contribute_BAO_Premium extends CRM_Contribute_DAO_Premium {
       $dao->orderBy('weight');
       $dao->find();
 
-      $products = array();
-      $radio = array();
+      $products = [];
+      $radio = [];
       while ($dao->fetch()) {
         $productDAO = new CRM_Contribute_DAO_Product();
         $productDAO->id = $dao->product_id;
@@ -147,7 +147,7 @@ class CRM_Contribute_BAO_Premium extends CRM_Contribute_DAO_Premium {
             CRM_Core_DAO::storeValues($productDAO, $products[$productDAO->id]);
           }
         }
-        $options = $temp = array();
+        $options = $temp = [];
         $temp = explode(',', $productDAO->options);
         foreach ($temp as $value) {
           $options[trim($value)] = trim($value);
@@ -187,7 +187,7 @@ class CRM_Contribute_BAO_Premium extends CRM_Contribute_DAO_Premium {
     }
 
     $radio[$productDAO->id] = $form->createElement('radio', NULL, NULL, NULL, $productDAO->id, NULL);
-    $options = $temp = array();
+    $options = $temp = [];
     $temp = explode(',', $productDAO->options);
     foreach ($temp as $value) {
       $options[$value] = $value;
@@ -217,10 +217,10 @@ class CRM_Contribute_BAO_Premium extends CRM_Contribute_DAO_Premium {
     //need to delete entries from civicrm_premiums
     //as well as from civicrm_premiums_product, CRM-4586
 
-    $params = array(
+    $params = [
       'entity_id' => $contributionPageID,
       'entity_table' => 'civicrm_contribution_page',
-    );
+    ];
 
     $premium = new CRM_Contribute_DAO_Premium();
     $premium->copyValues($params);
@@ -244,7 +244,7 @@ class CRM_Contribute_BAO_Premium extends CRM_Contribute_DAO_Premium {
    */
   public static function getPremiumProductInfo() {
     if (!self::$productInfo) {
-      $products = $options = array();
+      $products = $options = [];
 
       $dao = new CRM_Contribute_DAO_Product();
       $dao->is_active = 1;
@@ -261,7 +261,7 @@ class CRM_Contribute_BAO_Premium extends CRM_Contribute_DAO_Premium {
         }
       }
 
-      self::$productInfo = array($products, $options);
+      self::$productInfo = [$products, $options];
     }
     return self::$productInfo;
   }

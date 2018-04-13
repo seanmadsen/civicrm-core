@@ -49,11 +49,11 @@ class api_v3_ActivityContactTest extends CiviUnitTestCase {
     $activity = $this->activityCreate();
     $this->_activityID = $activity['id'];
     CRM_Core_PseudoConstant::flush();
-    $this->_params = array(
+    $this->_params = [
       'contact_id' => $this->_contactID,
       'activity_id' => $this->_activityID,
       'record_type_id' => 2,
-    );
+    ];
   }
 
   public function testCreateActivityContact() {
@@ -62,18 +62,18 @@ class api_v3_ActivityContactTest extends CiviUnitTestCase {
     $this->assertEquals(1, $result['count']);
     $this->assertNotNull($result['values'][$result['id']]['id']);
 
-    $this->callAPISuccess('activity_contact', 'delete', array('id' => $result['id']));
+    $this->callAPISuccess('activity_contact', 'delete', ['id' => $result['id']]);
   }
 
   public function testDeleteActivityContact() {
     //create one
     $create = $this->callAPISuccess('activity_contact', 'create', $this->_params);
 
-    $result = $this->callAPIAndDocument('activity_contact', 'delete', array('id' => $create['id']), __FUNCTION__, __FILE__);
+    $result = $this->callAPIAndDocument('activity_contact', 'delete', ['id' => $create['id']], __FUNCTION__, __FILE__);
     $this->assertEquals(1, $result['count']);
-    $get = $this->callAPISuccess('activity_contact', 'get', array(
+    $get = $this->callAPISuccess('activity_contact', 'get', [
       'id' => $create['id'],
-    ));
+    ]);
     $this->assertEquals(0, $get['count'], 'ActivityContact not successfully deleted');
   }
 
@@ -81,27 +81,27 @@ class api_v3_ActivityContactTest extends CiviUnitTestCase {
    *
    */
   public function testGetActivitiesByContact() {
-    $this->callAPISuccess('ActivityContact', 'Get', array('contact_id' => $this->_contactID));
+    $this->callAPISuccess('ActivityContact', 'Get', ['contact_id' => $this->_contactID]);
   }
 
   public function testGetActivitiesByActivity() {
-    $this->callAPISuccess('ActivityContact', 'Get', array('activity_id' => $this->_activityID));
+    $this->callAPISuccess('ActivityContact', 'Get', ['activity_id' => $this->_activityID]);
   }
 
   /**
    * Test civicrm_activity_contact_get with empty params.
    */
   public function testGetEmptyParams() {
-    $this->callAPISuccess('ActivityContact', 'Get', array());
+    $this->callAPISuccess('ActivityContact', 'Get', []);
   }
 
   /**
    * Test civicrm_activity_contact_get with wrong params.
    */
   public function testGetWrongParams() {
-    $this->callAPIFailure('ActivityContact', 'Get', array('contact_id' => 'abc'));
-    $this->callAPIFailure('ActivityContact', 'Get', array('activity_id' => 'abc'));
-    $this->callAPIFailure('ActivityContact', 'Get', array('record_type_id' => 'abc'));
+    $this->callAPIFailure('ActivityContact', 'Get', ['contact_id' => 'abc']);
+    $this->callAPIFailure('ActivityContact', 'Get', ['activity_id' => 'abc']);
+    $this->callAPIFailure('ActivityContact', 'Get', ['record_type_id' => 'abc']);
   }
 
 }

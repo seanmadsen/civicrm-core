@@ -60,7 +60,7 @@ class CRM_Core_BAO_Cache extends CRM_Core_DAO_Cache {
    */
   public static function &getItem($group, $path, $componentID = NULL) {
     if (self::$_cache === NULL) {
-      self::$_cache = array();
+      self::$_cache = [];
     }
 
     $argString = "CRM_CT_{$group}_{$path}_{$componentID}";
@@ -93,7 +93,7 @@ class CRM_Core_BAO_Cache extends CRM_Core_DAO_Cache {
    */
   public static function &getItems($group, $componentID = NULL) {
     if (self::$_cache === NULL) {
-      self::$_cache = array();
+      self::$_cache = [];
     }
 
     $argString = "CRM_CT_CI_{$group}_{$componentID}";
@@ -105,7 +105,7 @@ class CRM_Core_BAO_Cache extends CRM_Core_DAO_Cache {
         $where = self::whereCache($group, NULL, $componentID);
         $dao = CRM_Core_DAO::executeQuery("SELECT path, data FROM $table WHERE $where");
 
-        $result = array();
+        $result = [];
         while ($dao->fetch()) {
           $result[$dao->path] = unserialize($dao->data);
         }
@@ -133,7 +133,7 @@ class CRM_Core_BAO_Cache extends CRM_Core_DAO_Cache {
    */
   public static function setItem(&$data, $group, $path, $componentID = NULL) {
     if (self::$_cache === NULL) {
-      self::$_cache = array();
+      self::$_cache = [];
     }
 
     // get a lock so that multiple ajax requests on the same page
@@ -154,22 +154,22 @@ class CRM_Core_BAO_Cache extends CRM_Core_DAO_Cache {
     // "INSERT ... ON DUPE". Instead, use SELECT+(INSERT|UPDATE).
     if ($dataExists) {
       $sql = "UPDATE $table SET data = %1, created_date = %2 WHERE {$where}";
-      $args = array(
-        1 => array($dataSerialized, 'String'),
-        2 => array($now, 'String'),
-      );
+      $args = [
+        1 => [$dataSerialized, 'String'],
+        2 => [$now, 'String'],
+      ];
       $dao = CRM_Core_DAO::executeQuery($sql, $args, TRUE, NULL, FALSE, FALSE);
     }
     else {
       $insert = CRM_Utils_SQL_Insert::into($table)
-        ->row(array(
+        ->row([
           'group_name' => $group,
           'path' => $path,
           'component_id' => $componentID,
           'data' => $dataSerialized,
           'created_date' => $now,
-        ));
-      $dao = CRM_Core_DAO::executeQuery($insert->toSQL(), array(), TRUE, NULL, FALSE, FALSE);
+        ]);
+      $dao = CRM_Core_DAO::executeQuery($insert->toSQL(), [], TRUE, NULL, FALSE, FALSE);
     }
 
     $lock->release();
@@ -308,19 +308,19 @@ class CRM_Core_BAO_Cache extends CRM_Core_DAO_Cache {
     // first delete all sessions more than 20 minutes old which are related to any potential transaction
     $timeIntervalMins = (int) Civi::settings()->get('secure_cache_timeout_minutes');
     if ($timeIntervalMins && $session) {
-      $transactionPages = array(
+      $transactionPages = [
         'CRM_Contribute_Controller_Contribution',
         'CRM_Event_Controller_Registration',
-      );
+      ];
 
-      $params = array(
-        1 => array(
+      $params = [
+        1 => [
           date('Y-m-d H:i:s', time() - $timeIntervalMins * 60),
           'String',
-        ),
-      );
+        ],
+      ];
       foreach ($transactionPages as $trPage) {
-        $params[] = array("%${trPage}%", 'String');
+        $params[] = ["%${trPage}%", 'String'];
         $where[] = 'path LIKE %' . count($params);
       }
 
@@ -379,7 +379,7 @@ AND         created_date < date_sub( NOW( ), INTERVAL $timeIntervalDays DAY )
    * @return string
    */
   protected static function whereCache($group, $path, $componentID) {
-    $clauses = array();
+    $clauses = [];
     $clauses[] = ('group_name = "' . CRM_Core_DAO::escapeString($group) . '"');
     if ($path) {
       $clauses[] = ('path = "' . CRM_Core_DAO::escapeString($path) . '"');

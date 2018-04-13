@@ -61,38 +61,38 @@ class WebTest_Import_DuplicateMatchingTest extends ImportCiviSeleniumTestCase {
     $this->waitForPageToLoad($this->getTimeoutMsec());
     $this->waitForText('crm-notification-container', "Contact Saved");
 
-    $existingContact = array(
+    $existingContact = [
       'first_name' => $firstName,
       'last_name' => $lastName,
       'email' => $email,
-    );
+    ];
 
     // Get sample import data.
     list($headers, $rows) = $this->_individualDuplicateMatchingCSVData($existingContact);
 
     // Import and check Individual contacts in Skip mode.
-    $other = array('callbackImportSummary' => 'checkDuplicateContacts');
-    $this->importContacts($headers, $rows, 'Individual', 'Skip', array(), $other);
+    $other = ['callbackImportSummary' => 'checkDuplicateContacts'];
+    $this->importContacts($headers, $rows, 'Individual', 'Skip', [], $other);
 
     // Get imported contact Ids
     $importedContactIds = $this->_getImportedContactIds($rows);
 
     // Build update mode import headers
-    $updateHeaders = array(
+    $updateHeaders = [
       'email' => 'Email',
       'first_name' => 'First Name',
       'last_name' => 'Last Name',
-    );
+    ];
 
     // Create update mode import rows
-    $updateRows = array();
+    $updateRows = [];
     $contact = current($rows);
     foreach ($importedContactIds as $cid) {
-      $updateRows[$cid] = array(
+      $updateRows[$cid] = [
         'email' => $contact['email'],
         'first_name' => substr(sha1(rand()), 0, 7),
         'last_name' => 'Anderson' . substr(sha1(rand()), 0, 7),
-      );
+      ];
       $contact = next($rows);
     }
 
@@ -106,9 +106,9 @@ class WebTest_Import_DuplicateMatchingTest extends ImportCiviSeleniumTestCase {
     $fillHeaders['gender'] = 'Gender';
     $fillHeaders['dob'] = 'Birth Date';
 
-    $fillRows = array();
+    $fillRows = [];
     foreach ($importedContactIds as $cid) {
-      $fillRows[$cid] = array(
+      $fillRows[$cid] = [
         'email' => $updateRows[$cid]['email'],
         // should not update
         'first_name' => substr(sha1(rand()), 0, 7),
@@ -116,7 +116,7 @@ class WebTest_Import_DuplicateMatchingTest extends ImportCiviSeleniumTestCase {
         'last_name' => 'Anderson' . substr(sha1(rand()), 0, 7),
         'gender' => 'Male',
         'dob' => '1986-04-16',
-      );
+      ];
     }
 
     // Import and check Individual contacts in Fill mode.
@@ -165,34 +165,34 @@ class WebTest_Import_DuplicateMatchingTest extends ImportCiviSeleniumTestCase {
     // and Organization email (default)
     $this->webtestStrictDedupeRuleDefault('Organization');
 
-    $organizationFields = array(
+    $organizationFields = [
       'organization_name' => $organizationName,
       'email' => $organizationEmail,
-    );
+    ];
     // Get sample import data.
     list($headers, $rows) = $this->_organizationDuplicateMatchingCSVData($organizationFields);
 
     // Import and check Individual contacts in Skip mode.
-    $other = array('callbackImportSummary' => 'checkDuplicateContacts');
-    $this->importContacts($headers, $rows, 'Organization', 'Skip', array(), $other);
+    $other = ['callbackImportSummary' => 'checkDuplicateContacts'];
+    $this->importContacts($headers, $rows, 'Organization', 'Skip', [], $other);
 
     // Get imported contact Ids
     $importedContactIds = $this->_getImportedContactIds($rows, 'Organization');
 
     // Build update mode import headers
-    $updateHeaders = array(
+    $updateHeaders = [
       'email' => 'Email',
       'organization_name' => 'Organization Name',
-    );
+    ];
 
     // Create update mode import rows
-    $updateRows = array();
+    $updateRows = [];
     $contact = current($rows);
     foreach ($importedContactIds as $cid) {
-      $updateRows[$cid] = array(
+      $updateRows[$cid] = [
         'email' => $contact['email'],
         'organization_name' => 'UpdatedOrg ' . substr(sha1(rand()), 0, 7),
-      );
+      ];
       $contact = next($rows);
     }
 
@@ -205,14 +205,14 @@ class WebTest_Import_DuplicateMatchingTest extends ImportCiviSeleniumTestCase {
     // Headers that should fill.
     $fillHeaders['legal_name'] = 'Legal Name';
 
-    $fillRows = array();
+    $fillRows = [];
     foreach ($importedContactIds as $cid) {
-      $fillRows[$cid] = array(
+      $fillRows[$cid] = [
         'email' => $updateRows[$cid]['email'],
         // should not update
         'organization_name' => 'UpdateOrg ' . substr(sha1(rand()), 0, 7),
         'legal_name' => 'org ' . substr(sha1(rand()), 0, 7),
-      );
+      ];
     }
 
     // Import and check Individual contacts in Fill mode.
@@ -261,35 +261,35 @@ class WebTest_Import_DuplicateMatchingTest extends ImportCiviSeleniumTestCase {
     $this->waitForPageToLoad($this->getTimeoutMsec());
 
     // Store household contact value in array
-    $householdFields = array(
+    $householdFields = [
       'household_name' => $householdName,
       'email' => $householdEmail,
-    );
+    ];
 
     // Get sample import data.
     list($headers, $rows) = $this->_householdDuplicateMatchingCSVData($householdFields);
 
     // Import and check Individual contacts in Skip mode.
-    $other = array('callbackImportSummary' => 'checkDuplicateContacts');
-    $this->importContacts($headers, $rows, 'Household', 'Skip', array(), $other);
+    $other = ['callbackImportSummary' => 'checkDuplicateContacts'];
+    $this->importContacts($headers, $rows, 'Household', 'Skip', [], $other);
 
     // Get imported contact Ids
     $importedContactIds = $this->_getImportedContactIds($rows, 'Household');
 
     // Build update mode import headers
-    $updateHeaders = array(
+    $updateHeaders = [
       'email' => 'Email',
       'household_name' => 'Household Name',
-    );
+    ];
 
     // Create update mode import rows
-    $updateRows = array();
+    $updateRows = [];
     $contact = current($rows);
     foreach ($importedContactIds as $cid) {
-      $updateRows[$cid] = array(
+      $updateRows[$cid] = [
         'email' => $contact['email'],
         'household_name' => 'UpdatedHousehold ' . substr(sha1(rand()), 0, 7),
-      );
+      ];
       $contact = next($rows);
     }
 
@@ -301,14 +301,14 @@ class WebTest_Import_DuplicateMatchingTest extends ImportCiviSeleniumTestCase {
     // Headers that should fill.
     $fillHeaders['nick_name'] = 'Nick Name';
 
-    $fillRows = array();
+    $fillRows = [];
     foreach ($importedContactIds as $cid) {
-      $fillRows[$cid] = array(
+      $fillRows[$cid] = [
         'email' => $updateRows[$cid]['email'],
         // should not update
         'household_name' => 'UpdatedHousehold ' . substr(sha1(rand()), 0, 7),
         'nick_name' => 'Household ' . substr(sha1(rand()), 0, 7),
-      );
+      ];
     }
 
     // Import and check Individual contacts in Fill mode.
@@ -335,11 +335,11 @@ class WebTest_Import_DuplicateMatchingTest extends ImportCiviSeleniumTestCase {
   public function checkDuplicateContacts($originalHeaders, $originalRows, $checkSummary) {
     $this->assertTrue($this->isTextPresent('CiviCRM has detected one record which is a duplicate of existing CiviCRM contact record. These records have not been imported.'));
 
-    $checkSummary = array(
+    $checkSummary = [
       'Total Rows' => '2',
       'Duplicate Rows' => '1',
       'Total Contacts' => '1',
-    );
+    ];
 
     foreach ($checkSummary as $label => $value) {
       $this->verifyText("xpath=//table[@id='summary-counts']/tbody/tr/td[text()='{$label}']/following-sibling::td", preg_quote($value));
@@ -356,7 +356,7 @@ class WebTest_Import_DuplicateMatchingTest extends ImportCiviSeleniumTestCase {
    * @return array
    */
   public function _individualDuplicateMatchingCSVData($individualFields) {
-    $headers = array(
+    $headers = [
       'first_name' => 'First Name',
       'middle_name' => 'Middle Name',
       'last_name' => 'Last Name',
@@ -367,10 +367,10 @@ class WebTest_Import_DuplicateMatchingTest extends ImportCiviSeleniumTestCase {
       'city' => 'City',
       'state' => 'State',
       'country' => 'Country',
-    );
+    ];
 
-    $rows = array(
-      array(
+    $rows = [
+      [
         'first_name' => isset($individualFields['first_name']) ? $individualFields['first_name'] : substr(sha1(rand()), 0, 7),
         'middle_name' => isset($individualFields['middle_name']) ? $individualFields['middle_name'] : substr(sha1(rand()), 0, 7),
         'last_name' => isset($individualFields['last_name']) ? $individualFields['last_name'] : 'Anderson',
@@ -381,8 +381,8 @@ class WebTest_Import_DuplicateMatchingTest extends ImportCiviSeleniumTestCase {
         'city' => 'Watson',
         'state' => 'NY',
         'country' => 'UNITED STATES',
-      ),
-      array(
+      ],
+      [
         'first_name' => substr(sha1(rand()), 0, 7),
         'middle_name' => substr(sha1(rand()), 0, 7),
         'last_name' => 'Summerson',
@@ -393,10 +393,10 @@ class WebTest_Import_DuplicateMatchingTest extends ImportCiviSeleniumTestCase {
         'city' => 'Watson',
         'state' => 'NY',
         'country' => 'UNITED STATES',
-      ),
-    );
+      ],
+    ];
 
-    return array($headers, $rows);
+    return [$headers, $rows];
   }
 
   /*
@@ -409,7 +409,7 @@ class WebTest_Import_DuplicateMatchingTest extends ImportCiviSeleniumTestCase {
    * @return array
    */
   public function _organizationDuplicateMatchingCSVData($organizationFields) {
-    $headers = array(
+    $headers = [
       'organization_name' => 'Organization Name',
       'email' => 'Email',
       'phone' => 'Phone',
@@ -418,9 +418,9 @@ class WebTest_Import_DuplicateMatchingTest extends ImportCiviSeleniumTestCase {
       'city' => 'City',
       'state' => 'State',
       'country' => 'Country',
-    );
-    $rows = array(
-      array(
+    ];
+    $rows = [
+      [
         'organization_name' => isset($organizationFields['organization_name']) ? $organizationFields['organization_name'] : 'org_' . substr(sha1(rand()), 0, 7),
         'email' => isset($organizationFields['email']) ? $organizationFields['email'] : substr(sha1(rand()), 0, 7) . 'example.org',
         'phone' => '9949912154',
@@ -429,8 +429,8 @@ class WebTest_Import_DuplicateMatchingTest extends ImportCiviSeleniumTestCase {
         'city' => 'Watson',
         'state' => 'NY',
         'country' => 'UNITED STATES',
-      ),
-      array(
+      ],
+      [
         'organization_name' => 'org_' . substr(sha1(rand()), 0, 7),
         'email' => substr(sha1(rand()), 0, 7) . '@example.org',
         'phone' => '6949412154',
@@ -439,10 +439,10 @@ class WebTest_Import_DuplicateMatchingTest extends ImportCiviSeleniumTestCase {
         'city' => 'Watson',
         'state' => 'NY',
         'country' => 'UNITED STATES',
-      ),
-    );
+      ],
+    ];
 
-    return array($headers, $rows);
+    return [$headers, $rows];
   }
 
   /**
@@ -454,7 +454,7 @@ class WebTest_Import_DuplicateMatchingTest extends ImportCiviSeleniumTestCase {
    * @return array
    */
   public function _householdDuplicateMatchingCSVData($householdFields) {
-    $headers = array(
+    $headers = [
       'household_name' => 'Household Name',
       'email' => 'Email',
       'phone' => 'Phone',
@@ -463,10 +463,10 @@ class WebTest_Import_DuplicateMatchingTest extends ImportCiviSeleniumTestCase {
       'city' => 'City',
       'state' => 'State',
       'country' => 'Country',
-    );
+    ];
 
-    $rows = array(
-      array(
+    $rows = [
+      [
         'household_name' => isset($householdFields['household_name']) ? $householdFields['household_name'] : 'household_' . substr(sha1(rand()), 0, 7),
         'email' => isset($householdFields['email']) ? $householdFields['email'] : substr(sha1(rand()), 0, 7) . '@example.com',
         'phone' => '3949912154',
@@ -475,8 +475,8 @@ class WebTest_Import_DuplicateMatchingTest extends ImportCiviSeleniumTestCase {
         'city' => 'Watson',
         'state' => 'NY',
         'country' => 'UNITED STATES',
-      ),
-      array(
+      ],
+      [
         'household_name' => 'household_' . substr(sha1(rand()), 0, 7),
         'email' => substr(sha1(rand()), 0, 7) . '@example.org',
         'phone' => '5949412154',
@@ -485,10 +485,10 @@ class WebTest_Import_DuplicateMatchingTest extends ImportCiviSeleniumTestCase {
         'city' => 'Watson',
         'state' => 'NY',
         'country' => 'UNITED STATES',
-      ),
-    );
+      ],
+    ];
 
-    return array($headers, $rows);
+    return [$headers, $rows];
   }
 
 }

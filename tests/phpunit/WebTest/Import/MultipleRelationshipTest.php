@@ -56,7 +56,7 @@ class WebTest_Import_MultipleRelationshipTest extends ImportCiviSeleniumTestCase
    */
   public function _individualRelationshipCSVData() {
 
-    $headers = array(
+    $headers = [
       'first_name' => 'First Name',
       'middle_name' => 'Middle Name',
       'last_name' => 'Last Name',
@@ -68,24 +68,24 @@ class WebTest_Import_MultipleRelationshipTest extends ImportCiviSeleniumTestCase
       'state' => 'State',
       'country' => 'Country',
       'contact_relationships' =>
-      array(
-        '4_a_b' => array(
+      [
+        '4_a_b' => [
           'organization_name' => 'Organization Name',
           'organization_email' => 'Organization Email',
           'organization_add' => 'Organization Street Address',
           'organization_city' => 'Organization City',
           'organization_state' => 'Organization State',
           'organization_country' => 'Organization Country',
-        ),
-        '7_a_b' => array(
+        ],
+        '7_a_b' => [
           'household_name' => 'Household Name',
           'household_email' => 'Household Name',
           'household_add' => 'Household Street Address',
           'household_city' => 'Household City',
           'household_state' => 'Household State',
           'household_country' => 'Household Country',
-        ),
-        '2_a_b' => array(
+        ],
+        '2_a_b' => [
           'spouse_f_name' => 'Spouse First Name',
           'spouse_l_name' => 'Spouse Last Name',
           'spouse_email' => 'Spouse Email',
@@ -93,12 +93,12 @@ class WebTest_Import_MultipleRelationshipTest extends ImportCiviSeleniumTestCase
           'spouse_city' => 'Spouse City',
           'spouse_state' => 'Spouse State',
           'spouse_country' => 'Spouse Country',
-        ),
-      ),
-    );
+        ],
+      ],
+    ];
 
-    $rows = array(
-      array(
+    $rows = [
+      [
         'first_name' => substr(sha1(rand()), 0, 7),
         'middle_name' => substr(sha1(rand()), 0, 7),
         'last_name' => 'Anderson',
@@ -110,24 +110,24 @@ class WebTest_Import_MultipleRelationshipTest extends ImportCiviSeleniumTestCase
         'state' => 'NY',
         'country' => 'UNITED STATES',
         'contact_relationships' =>
-        array(
-          '4_a_b' => array(
+        [
+          '4_a_b' => [
             'organization_name' => 'Org ' . substr(sha1(rand()), 0, 7),
             'organization_email' => substr(sha1(rand()), 0, 7) . 'org@example.org',
             'organization_add' => 'Org Street Address',
             'organization_city' => 'Org City',
             'organization_state' => 'NY',
             'organization_country' => 'UNITED STATES',
-          ),
-          '7_a_b' => array(
+          ],
+          '7_a_b' => [
             'household_name' => 'House ' . substr(sha1(rand()), 0, 7),
             'household_email' => substr(sha1(rand()), 0, 7) . 'house@example.org',
             'household_add' => 'House Street Address',
             'household_city' => 'House City',
             'household_state' => 'NY',
             'household_country' => 'UNITED STATES',
-          ),
-          '2_a_b' => array(
+          ],
+          '2_a_b' => [
             'spouse_f_name' => substr(sha1(rand()), 0, 7),
             'spouse_l_name' => substr(sha1(rand()), 0, 7),
             'spouse_email' => substr(sha1(rand()), 0, 7) . 'spouse@example.org',
@@ -135,10 +135,10 @@ class WebTest_Import_MultipleRelationshipTest extends ImportCiviSeleniumTestCase
             'spouse_city' => 'Spouse City',
             'spouse_state' => 'NY',
             'spouse_country' => 'UNITED STATES',
-          ),
-        ),
-      ),
-      array(
+          ],
+        ],
+      ],
+      [
         'first_name' => substr(sha1(rand()), 0, 7),
         'middle_name' => substr(sha1(rand()), 0, 7),
         'last_name' => 'Summerson',
@@ -150,24 +150,24 @@ class WebTest_Import_MultipleRelationshipTest extends ImportCiviSeleniumTestCase
         'state' => 'NY',
         'country' => 'UNITED STATES',
         'contact_relationships' =>
-        array(
-          '4_a_b' => array(
+        [
+          '4_a_b' => [
             'organization_name' => 'Org ' . substr(sha1(rand()), 0, 7),
             'organization_email' => substr(sha1(rand()), 0, 7) . 'org@example.org',
             'organization_add' => 'Org Street Address',
             'organization_city' => 'Org City',
             'organization_state' => 'NY',
             'organization_country' => 'UNITED STATES',
-          ),
-          '7_a_b' => array(
+          ],
+          '7_a_b' => [
             'household_name' => 'House ' . substr(sha1(rand()), 0, 7),
             'household_email' => substr(sha1(rand()), 0, 7) . 'house@example.org',
             'household_add' => 'House Street Address',
             'household_city' => 'House City',
             'household_state' => 'NY',
             'household_country' => 'UNITED STATES',
-          ),
-          '2_a_b' => array(
+          ],
+          '2_a_b' => [
             'spouse_f_name' => substr(sha1(rand()), 0, 7),
             'spouse_l_name' => substr(sha1(rand()), 0, 7),
             'spouse_email' => substr(sha1(rand()), 0, 7) . 'spouse@example.org',
@@ -175,12 +175,12 @@ class WebTest_Import_MultipleRelationshipTest extends ImportCiviSeleniumTestCase
             'spouse_city' => 'Spouse City',
             'spouse_state' => 'NY',
             'spouse_country' => 'UNITED STATES',
-          ),
-        ),
-      ),
-    );
+          ],
+        ],
+      ],
+    ];
     // for Employee of relationship
-    $fieldMapper = array(
+    $fieldMapper = [
       'mapper[10][0]' => '5_a_b',
       'mapper[10][1]' => 'organization_name',
       'mapper[11][0]' => '5_a_b',
@@ -221,9 +221,9 @@ class WebTest_Import_MultipleRelationshipTest extends ImportCiviSeleniumTestCase
       'mapper[27][1]' => 'state_province',
       'mapper[28][0]' => '2_a_b',
       'mapper[28][1]' => 'country',
-    );
+    ];
 
-    return array($headers, $rows, $fieldMapper);
+    return [$headers, $rows, $fieldMapper];
   }
 
 }

@@ -109,7 +109,7 @@ class WebTest_Export_ContactTest extends ExportCiviSeleniumTestCase {
     require_once 'CRM/Contact/BAO/Contact.php';
     $expotableFields = CRM_Contact_BAO_Contact::exportableFields('All', FALSE, TRUE);
 
-    $checkHeaders = array();
+    $checkHeaders = [];
     foreach ($expotableFields as $key => $field) {
       // Exclude custom fields.
       if ($key && (substr($key, 0, 6) == 'custom')) {
@@ -119,15 +119,15 @@ class WebTest_Export_ContactTest extends ExportCiviSeleniumTestCase {
     }
 
     // All other rows to be check.
-    $checkRows = array(
-      1 => array(
+    $checkRows = [
+      1 => [
         'First Name' => $secondContactName,
         'Last Name' => 'John',
         'Email' => '' . strtolower($emailContactSecond) . '',
         'Individual Suffix' => $suffixLabelContactScnd,
         'Gender' => $genderLabelContactScnd,
-      ),
-      2 => array(
+      ],
+      2 => [
         'First Name' => $firstContactName,
         'Last Name' => 'Smith',
         'Email' => '' . strtolower($emailContactFirst) . '',
@@ -136,8 +136,8 @@ class WebTest_Export_ContactTest extends ExportCiviSeleniumTestCase {
         'Individual Prefix' => $prefixLabelContactFrst,
         'Individual Suffix' => $suffixLabelContactFrst,
         'Gender' => $genderLabelContactFrst,
-      ),
-    );
+      ],
+    ];
 
     // Read CSV and fire assertions.
     $this->reviewCSV($csvFile, $checkHeaders, $checkRows, 2);
@@ -226,7 +226,7 @@ class WebTest_Export_ContactTest extends ExportCiviSeleniumTestCase {
     require_once 'CRM/Contact/BAO/Contact.php';
     $expotableFields = CRM_Contact_BAO_Contact::exportableFields('All', FALSE, TRUE);
 
-    $checkHeaders = array();
+    $checkHeaders = [];
     foreach ($expotableFields as $key => $field) {
       // Exclude custom fields.
       if ($key && (substr($key, 0, 6) == 'custom')) {
@@ -236,22 +236,22 @@ class WebTest_Export_ContactTest extends ExportCiviSeleniumTestCase {
     }
 
     // All other rows to be check.
-    $checkRows = array(
-      1 => array(
+    $checkRows = [
+      1 => [
         'First Name' => $childName,
         'Last Name' => 'John',
         'Email' => "$childName.john@example.org",
         'Sort Name' => $childSortName,
         'Display Name' => $childDisplayName,
-      ),
-      2 => array(
+      ],
+      2 => [
         'First Name' => $firstName,
         'Last Name' => 'Smith',
         'Email' => "$firstName.smith@example.org",
         'Sort Name' => $sortName,
         'Display Name' => $displayName,
-      ),
-    );
+      ],
+    ];
 
     // Read CSV and fire assertions.
     $this->reviewCSV($csvFile, $checkHeaders, $checkRows, 2);
@@ -381,7 +381,7 @@ class WebTest_Export_ContactTest extends ExportCiviSeleniumTestCase {
     require_once 'CRM/Contact/BAO/Contact.php';
     $expotableFields = CRM_Contact_BAO_Contact::exportableFields('All', FALSE, TRUE);
 
-    $checkHeaders = array();
+    $checkHeaders = [];
     foreach ($expotableFields as $key => $field) {
       // Exclude custom fields.
       if ($key && (substr($key, 0, 6) == 'custom')) {
@@ -391,19 +391,19 @@ class WebTest_Export_ContactTest extends ExportCiviSeleniumTestCase {
     }
 
     // All other rows to be check.
-    $checkRows = array(
-      1 => array(
+    $checkRows = [
+      1 => [
         'Contact Type' => 'Household',
         'Household Name' => $houseHold,
-      ),
-      2 => array(
+      ],
+      2 => [
         'Contact Type' => 'Individual',
         'First Name' => $firstName1,
         'Email' => "{$firstName1}.smith@example.org",
         'Sort Name' => $sortName1,
         'Display Name' => $displayName1,
-      ),
-    );
+      ],
+    ];
 
     // Read CSV and fire assertions.
     $this->reviewCSV($csvFile, $checkHeaders, $checkRows, 2);
@@ -433,11 +433,11 @@ class WebTest_Export_ContactTest extends ExportCiviSeleniumTestCase {
     if ($email) {
       $this->type('email_1_email', $email);
     }
-    $genderLabelArray = array(
+    $genderLabelArray = [
       1 => 'Female',
       2 => 'Male',
       3 => 'Other',
-    );
+    ];
     $prefix = rand(1, 4);
     $suffix = rand(1, 8);
     $gender = rand(1, 3);
@@ -453,7 +453,7 @@ class WebTest_Export_ContactTest extends ExportCiviSeleniumTestCase {
     $prefixLabel = WebTest_Export_ContactTest::getOptionLabel('individual_prefix', $prefix);
     $suffixLabel = WebTest_Export_ContactTest::getOptionLabel('individual_suffix', $suffix);
     $genderLabel = WebTest_Export_ContactTest::getOptionLabel('gender', $gender);
-    return array($email, $prefixLabel, $suffixLabel, $genderLabel);
+    return [$email, $prefixLabel, $suffixLabel, $genderLabel];
   }
 
   /**
@@ -463,13 +463,13 @@ class WebTest_Export_ContactTest extends ExportCiviSeleniumTestCase {
    * @return array|int
    */
   public function getOptionLabel($optionGroupName, $optionValue) {
-    $params = array(
+    $params = [
       'version' => 3,
       'sequential' => 1,
       'option_group_name' => $optionGroupName,
       'value' => $optionValue,
       'return' => 'label',
-    );
+    ];
     $optionLabel = $this->webtest_civicrm_api("OptionValue", "getvalue", $params);
     return $optionLabel;
   }
@@ -547,25 +547,25 @@ class WebTest_Export_ContactTest extends ExportCiviSeleniumTestCase {
     $csvFile = $this->downloadCSV("_qf_Map_next-bottom", 'CiviCRM_Contribution_Search.csv');
 
     // All other rows to be check.
-    $checkRows = array(
-      1 => array(
+    $checkRows = [
+      1 => [
         'Soft Credit Amount' => '',
         'Soft Credit For' => '',
         'Soft Credit For Contribution ID' => '',
         'Soft Credit Type' => '',
         'Soft Credit For Contact ID' => '',
-      ),
-      2 => array(
+      ],
+      2 => [
         'Soft Credit Amount' => 50.00,
         'Soft Credit For' => "{$lastName}, {$firstName}",
         'Soft Credit For Contribution ID' => $contributionID,
         'Soft Credit Type' => 'Solicited',
         'Soft Credit For Contact ID' => $contactId,
-      ),
-    );
+      ],
+    ];
 
     // Read CSV and fire assertions.
-    $this->reviewCSV($csvFile, array(), $checkRows, 2);
+    $this->reviewCSV($csvFile, [], $checkRows, 2);
 
   }
 

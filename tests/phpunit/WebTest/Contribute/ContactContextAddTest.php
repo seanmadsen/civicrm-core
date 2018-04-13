@@ -149,7 +149,7 @@ class WebTest_Contribute_ContactContextAddTest extends CiviSeleniumTestCase {
     $this->waitForElementPresent('_qf_ContributionView_cancel-bottom');
 
     // verify Contribution created. Non-deductible amount derived from market value of selected 'sample' coffee mug premium (CRM-11956)
-    $verifyData = array(
+    $verifyData = [
       'From' => $firstName . " Anderson",
       'Financial Type' => 'Donation',
       'Contribution Status' => 'Completed',
@@ -157,18 +157,18 @@ class WebTest_Contribute_ContactContextAddTest extends CiviSeleniumTestCase {
       'Total Amount' => '$ 100.00',
       'Non-deductible Amount' => '$ 12.50',
       'Check Number' => 'check #1041',
-    );
+    ];
     foreach ($verifyData as $label => $value) {
       $this->assertElementContainsText("xpath=//form[@id='ContributionView']//table/tbody/tr/td[text()='{$label}']/following-sibling::td", $value);
     }
 
     // check values of contribution record in the DB
 
-    $searchParams = array('id' => $id);
-    $compareParams = array(
+    $searchParams = ['id' => $id];
+    $compareParams = [
       'contact_id' => $cid,
       'total_amount' => '100.00',
-    );
+    ];
     $this->assertDBCompareValues('CRM_Contribute_DAO_Contribution', $searchParams, $compareParams);
 
     // go to soft creditor contact view page
@@ -180,12 +180,12 @@ class WebTest_Contribute_ContactContextAddTest extends CiviSeleniumTestCase {
     $this->waitForElementPresent("link=Record Contribution (Check, Cash, EFT ...)");
 
     // verify soft credit details
-    $expected = array(
+    $expected = [
       4 => 'Donation',
       2 => '100.00',
       6 => 'Completed',
       1 => "{$firstName} Anderson",
-    );
+    ];
     foreach ($expected as $value => $label) {
       $this->assertElementContainsText("xpath=id('Search')/div[2]/table[2]/tbody//tr/td[$value]", $label);
     }

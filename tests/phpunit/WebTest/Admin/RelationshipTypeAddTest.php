@@ -67,12 +67,12 @@ class WebTest_Admin_RelationshipTypeAddTest extends CiviSeleniumTestCase {
 
     $this->waitForElementPresent('link=Add Relationship Type');
     //validate data.
-    $data = array(
+    $data = [
       'Relationship A to B' => $labelAB,
       'Relationship B to A' => $labelBA,
       'Contact Type A' => 'Individual',
       'Contact Type B' => 'Individual',
-    );
+    ];
     foreach ($data as $param => $val) {
       $this->assertElementContainsText("xpath=//table[@class='display dataTable no-footer']", $val, "Could not able to save $param");
     }

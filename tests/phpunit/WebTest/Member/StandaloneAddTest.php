@@ -80,11 +80,11 @@ class WebTest_Member_StandaloneAddTest extends CiviSeleniumTestCase {
     $this->click("xpath=//div[@id='memberships']//table/tbody/tr[1]/td[9]/span/a[text()='View']");
     $this->waitForElementPresent("_qf_MembershipView_cancel-bottom");
 
-    $expected = array(
+    $expected = [
       'Membership Type' => $membershipTypes['membership_type'],
       'Status' => 'New',
       'Source' => 'Membership StandaloneAddTest Webtest',
-    );
+    ];
     $this->webtestVerifyTabularData($expected);
   }
 
@@ -142,13 +142,13 @@ class WebTest_Member_StandaloneAddTest extends CiviSeleniumTestCase {
     $this->waitForElementPresent("_qf_MembershipView_cancel-bottom");
 
     // verify soft credit data
-    $expected = array(
+    $expected = [
       '1' => $giftMemberfirstName . ' Memberson',
       '2' => $totalAmount,
       '3' => 'Gift',
       '4' => 'Donation',
       '6' => 'Completed',
-    );
+    ];
 
     foreach ($expected as $key => $value) {
       $this->verifyText("xpath=//div[@class='crm-accordion-wrapper']//table/tbody//tr/td[$key]", $value);
@@ -227,23 +227,23 @@ class WebTest_Member_StandaloneAddTest extends CiviSeleniumTestCase {
     $this->click("xpath=//div[@id='memberships']//table//tbody/tr[1]/td[9]/span/a[text()='View']");
     $this->waitForElementPresent("_qf_MembershipView_cancel-bottom");
 
-    $expected = array(
+    $expected = [
       'Membership Type' => $membershipTypes['membership_type'],
       'Status' => 'Grace',
       'Source' => 'Membership StandaloneAddTest Webtest',
-    );
+    ];
     $this->webtestVerifyTabularData($expected);
   }
 
   public function testAjaxCustomGroupLoad() {
     $this->webtestLogin();
-    $triggerElement = array('name' => 'membership_type_id_1', 'type' => 'select');
-    $customSets = array(
-      array('entity' => 'Membership', 'subEntity' => 'General', 'triggerElement' => $triggerElement),
-      array('entity' => 'Membership', 'subEntity' => 'Student', 'triggerElement' => $triggerElement),
-    );
+    $triggerElement = ['name' => 'membership_type_id_1', 'type' => 'select'];
+    $customSets = [
+      ['entity' => 'Membership', 'subEntity' => 'General', 'triggerElement' => $triggerElement],
+      ['entity' => 'Membership', 'subEntity' => 'Student', 'triggerElement' => $triggerElement],
+    ];
 
-    $pageUrl = array('url' => 'member/add', 'args' => 'reset=1&action=add&context=standalone');
+    $pageUrl = ['url' => 'member/add', 'args' => 'reset=1&action=add&context=standalone'];
 
     //case where we should fire certain
     //ui actions which helps triggering possible

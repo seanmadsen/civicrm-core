@@ -32,7 +32,7 @@
 class CRM_Core_BAO_CacheTest extends CiviUnitTestCase {
 
   public function testSetGetItem() {
-    $originalValue = array('abc' => 'def');
+    $originalValue = ['abc' => 'def'];
     CRM_Core_BAO_Cache::setItem($originalValue, __CLASS__, 'testSetGetItem');
 
     $return_1 = CRM_Core_BAO_Cache::getItem(__CLASS__, 'testSetGetItem');

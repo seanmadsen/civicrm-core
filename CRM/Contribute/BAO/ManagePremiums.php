@@ -96,14 +96,14 @@ class CRM_Contribute_BAO_ManagePremiums extends CRM_Contribute_DAO_Product {
    * @return CRM_Contribute_DAO_Product
    */
   public static function add(&$params, &$ids) {
-    $params = array_merge(array(
+    $params = array_merge([
       'id' => CRM_Utils_Array::value('premium', $ids),
       'image' => '',
       'thumbnail' => '',
       'is_active' => 0,
       'is_deductible' => FALSE,
       'currency' => CRM_Core_Config::singleton()->defaultCurrency,
-    ), $params);
+    ], $params);
 
     // Modify the submitted values for 'image' and 'thumbnail' so that we use
     // local URLs for these images when possible.
@@ -128,7 +128,7 @@ class CRM_Contribute_BAO_ManagePremiums extends CRM_Contribute_DAO_Product {
     $premiumsProduct->product_id = $productID;
     if ($premiumsProduct->find(TRUE)) {
       $session = CRM_Core_Session::singleton();
-      $message .= ts('This Premium is being linked to <a href=\'%1\'>Online Contribution page</a>. Please remove it in order to delete this Premium.', array(1 => CRM_Utils_System::url('civicrm/admin/contribute', 'reset=1')), ts('Deletion Error'), 'error');
+      $message .= ts('This Premium is being linked to <a href=\'%1\'>Online Contribution page</a>. Please remove it in order to delete this Premium.', [1 => CRM_Utils_System::url('civicrm/admin/contribute', 'reset=1')], ts('Deletion Error'), 'error');
       CRM_Core_Session::setStatus($message);
       return CRM_Utils_System::redirect(CRM_Utils_System::url('civicrm/admin/contribute/managePremiums', 'reset=1&action=browse'));
     }

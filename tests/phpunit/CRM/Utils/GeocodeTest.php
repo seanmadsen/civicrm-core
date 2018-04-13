@@ -14,7 +14,7 @@ class CRM_Utils_GeocodeTest extends CiviUnitTestCase {
   }
 
   public function testStateProvinceFormat() {
-    $params = array('state_province_id' => 1022, 'country' => 'U.S.A');
+    $params = ['state_province_id' => 1022, 'country' => 'U.S.A'];
     $formatted = CRM_Utils_Geocode_Google::format($params);
     if (isset($params['geo_code_error']) && $params['geo_code_error'] == 'OVER_QUERY_LIMIT') {
       $this->markTestIncomplete('geo_code_error: OVER_QUERY_LIMIT');
@@ -26,24 +26,24 @@ class CRM_Utils_GeocodeTest extends CiviUnitTestCase {
 
   public function testGeocodeMethodOff() {
     // Set a geocoding provider.
-    $result = civicrm_api3('Setting', 'create', array(
+    $result = civicrm_api3('Setting', 'create', [
       'geoProvider' => "Google",
-    ));
+    ]);
 
     CRM_Utils_GeocodeProvider::disableForSession();
 
     // Save a contact with geo coding disabled.
-    $params = array(
+    $params = [
       'first_name' => 'Abraham',
       'last_name' => 'Lincoln',
       'contact_type' => 'Individual',
-      'api.Address.create' => array(
+      'api.Address.create' => [
         'street_address' => '1600 Pennsylvania Avenue',
         'city' => 'Washington',
         'state_province' => 'DC',
         'location_type_id' => 1,
-      ),
-    );
+      ],
+    ];
     $result = civicrm_api3('Contact', 'create', $params);
     $contact_values = array_pop($result['values']);
     $address_values = array_pop($contact_values['api.Address.create']['values']);
@@ -53,12 +53,12 @@ class CRM_Utils_GeocodeTest extends CiviUnitTestCase {
     // Run the geocode job on that specific contact
     CRM_Utils_GeocodeProvider::reset();
     try {
-      $params_geocode = array(
+      $params_geocode = [
         'start' => $contact_values['id'],
         'end' => $contact_values['id'] + 1,
         'geocoding' => 1,
         'parse' => 0,
-      );
+      ];
       $result_geocode = civicrm_api3('Job', 'geocode', $params_geocode);
     }
     catch (CiviCRM_API3_Exception $e) {
@@ -69,9 +69,9 @@ class CRM_Utils_GeocodeTest extends CiviUnitTestCase {
         throw $e;
       }
     }
-    $params_address_getsingle = array(
+    $params_address_getsingle = [
       'contact_id' => $contact_values['id'],
-    );
+    ];
     $result_address_getsingle = civicrm_api3('Address', 'getsingle', $params_address_getsingle);
 
     // We should get a geo code setting.

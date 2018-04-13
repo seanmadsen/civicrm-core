@@ -36,7 +36,7 @@
  */
 class CRM_Admin_Form_Setting extends CRM_Core_Form {
 
-  protected $_settings = array();
+  protected $_settings = [];
 
   /**
    * Set default values for the form.
@@ -45,8 +45,8 @@ class CRM_Admin_Form_Setting extends CRM_Core_Form {
    */
   public function setDefaultValues() {
     if (!$this->_defaults) {
-      $this->_defaults = array();
-      $formArray = array('Component', 'Localization');
+      $this->_defaults = [];
+      $formArray = ['Component', 'Localization'];
       $formMode = FALSE;
       if (in_array($this->_name, $formArray)) {
         $formMode = TRUE;
@@ -56,11 +56,11 @@ class CRM_Admin_Form_Setting extends CRM_Core_Form {
 
       // we can handle all the ones defined in the metadata here. Others to be converted
       foreach ($this->_settings as $setting => $group) {
-        $this->_defaults[$setting] = civicrm_api('setting', 'getvalue', array(
+        $this->_defaults[$setting] = civicrm_api('setting', 'getvalue', [
             'version' => 3,
             'name' => $setting,
             'group' => $group,
-          )
+          ]
         );
       }
 
@@ -80,27 +80,27 @@ class CRM_Admin_Form_Setting extends CRM_Core_Form {
    */
   public function buildQuickForm() {
     CRM_Core_Session::singleton()->pushUserContext(CRM_Utils_System::url('civicrm/admin', 'reset=1'));
-    $this->addButtons(array(
-        array(
+    $this->addButtons([
+        [
           'type' => 'next',
           'name' => ts('Save'),
           'isDefault' => TRUE,
-        ),
-        array(
+        ],
+        [
           'type' => 'cancel',
           'name' => ts('Cancel'),
-        ),
-      )
+        ],
+      ]
     );
 
-    $descriptions = array();
+    $descriptions = [];
     $settingMetaData = $this->getSettingsMetaData();
     foreach ($settingMetaData as $setting => $props) {
       if (isset($props['quick_form_type'])) {
         if (isset($props['pseudoconstant'])) {
-          $options = civicrm_api3('Setting', 'getoptions', array(
+          $options = civicrm_api3('Setting', 'getoptions', [
             'field' => $setting,
-          ));
+          ]);
         }
         else {
           $options = NULL;
@@ -117,20 +117,20 @@ class CRM_Admin_Form_Setting extends CRM_Core_Form {
             $props['html_type'],
             $setting,
             ts($props['title']),
-            ($options !== NULL) ? $options['values'] : CRM_Utils_Array::value('html_attributes', $props, array()),
-            ($options !== NULL) ? CRM_Utils_Array::value('html_attributes', $props, array()) : NULL
+            ($options !== NULL) ? $options['values'] : CRM_Utils_Array::value('html_attributes', $props, []),
+            ($options !== NULL) ? CRM_Utils_Array::value('html_attributes', $props, []) : NULL
           );
         }
         elseif ($add == 'addSelect') {
           $this->addElement('select', $setting, ts($props['title']), $options['values'], CRM_Utils_Array::value('html_attributes', $props));
         }
         elseif ($add == 'addCheckBox') {
-          $this->addCheckBox($setting, ts($props['title']), $options['values'], NULL, CRM_Utils_Array::value('html_attributes', $props), NULL, NULL, array('&nbsp;&nbsp;'));
+          $this->addCheckBox($setting, ts($props['title']), $options['values'], NULL, CRM_Utils_Array::value('html_attributes', $props), NULL, NULL, ['&nbsp;&nbsp;']);
         }
         elseif ($add == 'addChainSelect') {
-          $this->addChainSelect($setting, array(
+          $this->addChainSelect($setting, [
             'label' => ts($props['title']),
-          ));
+          ]);
         }
         elseif ($add == 'addMonthDay') {
           $this->add('date', $setting, ts($props['title']), CRM_Core_SelectValues::date(NULL, 'M d'));
@@ -153,7 +153,7 @@ class CRM_Admin_Form_Setting extends CRM_Core_Form {
       }
     }
     if (!empty($setStatus)) {
-      CRM_Core_Session::setStatus(ts("Some fields are loaded as 'readonly' as they have been set (overridden) in civicrm.settings.php."), '', 'info', array('expires' => 0));
+      CRM_Core_Session::setStatus(ts("Some fields are loaded as 'readonly' as they have been set (overridden) in civicrm.settings.php."), '', 'info', ['expires' => 0]);
     }
     // setting_description should be deprecated - see Mail.tpl for metadata based tpl.
     $this->assign('setting_descriptions', $descriptions);
@@ -204,20 +204,20 @@ class CRM_Admin_Form_Setting extends CRM_Core_Form {
 
     // save components to be enabled
     if (array_key_exists('enableComponents', $params)) {
-      civicrm_api3('setting', 'create', array(
+      civicrm_api3('setting', 'create', [
         'enable_components' => $params['enableComponents'],
-      ));
+      ]);
       unset($params['enableComponents']);
     }
 
-    foreach (array('verifySSL', 'enableSSL') as $name) {
+    foreach (['verifySSL', 'enableSSL'] as $name) {
       if (isset($params[$name])) {
         Civi::settings()->set($name, $params[$name]);
         unset($params[$name]);
       }
     }
     $settings = array_intersect_key($params, $this->_settings);
-    $result = civicrm_api('setting', 'create', $settings + array('version' => 3));
+    $result = civicrm_api('setting', 'create', $settings + ['version' => 3]);
     foreach ($settings as $setting => $settingGroup) {
       //@todo array_diff this
       unset($params[$setting]);
@@ -265,13 +265,13 @@ class CRM_Admin_Form_Setting extends CRM_Core_Form {
     $cRlistEnabled = CRM_Core_BAO_Setting::valueOptions(CRM_Core_BAO_Setting::SYSTEM_PREFERENCES_NAME,
       'contact_reference_options'
     );
-    $cRSearchFields = array();
+    $cRSearchFields = [];
     if (!empty($cRlist) && !empty($cRlistEnabled)) {
       $cRSearchFields = array_combine($cRlist, $cRlistEnabled);
     }
-    return array(
+    return [
       '1' => 1,
-    ) + $cRSearchFields;
+      ] + $cRSearchFields;
   }
 
   /**
@@ -288,14 +288,14 @@ class CRM_Admin_Form_Setting extends CRM_Core_Form {
     $listEnabled = CRM_Core_BAO_Setting::valueOptions(CRM_Core_BAO_Setting::SYSTEM_PREFERENCES_NAME,
       'contact_autocomplete_options'
     );
-    $autoSearchFields = array();
+    $autoSearchFields = [];
     if (!empty($list) && !empty($listEnabled)) {
       $autoSearchFields = array_combine($list, $listEnabled);
     }
     //Set defaults for autocomplete and contact reference options
-    return array(
+    return [
       '1' => 1,
-    ) + $autoSearchFields;
+      ] + $autoSearchFields;
   }
 
   /**
@@ -304,7 +304,7 @@ class CRM_Admin_Form_Setting extends CRM_Core_Form {
    * @return array
    */
   protected function getSettingsMetaData() {
-    $allSettingMetaData = civicrm_api3('setting', 'getfields', array());
+    $allSettingMetaData = civicrm_api3('setting', 'getfields', []);
     $settingMetaData = array_intersect_key($allSettingMetaData['values'], $this->_settings);
     // This array_merge re-orders to the key order of $this->_settings.
     $settingMetaData = array_merge($this->_settings, $settingMetaData);

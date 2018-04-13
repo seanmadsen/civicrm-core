@@ -44,13 +44,13 @@ class WebTest_Contact_DeceasedContactsAdvancedSearchTest extends CiviSeleniumTes
 
     // Add contacts from the quick add block
     $lastName = substr(sha1(rand()), 0, 7);
-    $names = array(
+    $names = [
       'firstName1' => FALSE,
       'firstName2' => FALSE,
       'firstName3' => FALSE,
       'firstName4' => TRUE,
       'firstName5' => TRUE,
-    );
+    ];
 
     foreach ($names as $key => $value) {
       $$key = substr(sha1(rand()), 0, 7);

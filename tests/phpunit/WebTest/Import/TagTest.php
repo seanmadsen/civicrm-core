@@ -48,12 +48,12 @@ class WebTest_Import_TagTest extends ImportCiviSeleniumTestCase {
     $tagName = 'tag_' . substr(sha1(rand()), 0, 7);
 
     // Import and check Individual contacts in Skip mode.
-    $other = array(
+    $other = [
       'createTag' => TRUE,
       'createTagName' => $tagName,
-    );
+    ];
 
-    $this->importContacts($headers, $rows, 'Individual', 'Skip', array(), $other);
+    $this->importContacts($headers, $rows, 'Individual', 'Skip', [], $other);
 
     $this->openCiviPage("contact/search", "reset=1");
     $this->select('tag', "label={$tagName}");
@@ -71,9 +71,9 @@ class WebTest_Import_TagTest extends ImportCiviSeleniumTestCase {
 
     // Import and check Individual contacts in Skip mode.
     // Sending Tag Name For Re-use
-    $other = array('selectTag' => array($tagName));
+    $other = ['selectTag' => [$tagName]];
 
-    $this->importContacts($headers, $rows, 'Individual', 'Skip', array(), $other);
+    $this->importContacts($headers, $rows, 'Individual', 'Skip', [], $other);
 
     $this->openCiviPage("contact/search", "reset=1");
 
@@ -94,7 +94,7 @@ class WebTest_Import_TagTest extends ImportCiviSeleniumTestCase {
    * @return array
    */
   public function _contactTagCSVData() {
-    $headers = array(
+    $headers = [
       'first_name' => 'First Name',
       'middle_name' => 'Middle Name',
       'last_name' => 'Last Name',
@@ -105,10 +105,10 @@ class WebTest_Import_TagTest extends ImportCiviSeleniumTestCase {
       'city' => 'City',
       'state' => 'State',
       'country' => 'Country',
-    );
+    ];
 
-    $rows = array(
-      array(
+    $rows = [
+      [
         'first_name' => substr(sha1(rand()), 0, 7),
         'middle_name' => substr(sha1(rand()), 0, 7),
         'last_name' => 'Anderson',
@@ -119,8 +119,8 @@ class WebTest_Import_TagTest extends ImportCiviSeleniumTestCase {
         'city' => 'Watson',
         'state' => 'NY',
         'country' => 'UNITED STATES',
-      ),
-      array(
+      ],
+      [
         'first_name' => substr(sha1(rand()), 0, 7),
         'middle_name' => substr(sha1(rand()), 0, 7),
         'last_name' => 'Summerson',
@@ -131,10 +131,10 @@ class WebTest_Import_TagTest extends ImportCiviSeleniumTestCase {
         'city' => 'Watson',
         'state' => 'NY',
         'country' => 'UNITED STATES',
-      ),
-    );
+      ],
+    ];
 
-    return array($headers, $rows);
+    return [$headers, $rows];
   }
 
 }

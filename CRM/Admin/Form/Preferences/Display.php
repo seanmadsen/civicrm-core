@@ -39,81 +39,81 @@ class CRM_Admin_Form_Preferences_Display extends CRM_Admin_Form_Preferences {
     CRM_Utils_System::setTitle(ts('Settings - Display Preferences'));
     $optionValues = CRM_Activity_BAO_Activity::buildOptions('activity_type_id');
 
-    $this->_varNames = array(
-      CRM_Core_BAO_Setting::SYSTEM_PREFERENCES_NAME => array(
-        'contact_view_options' => array(
+    $this->_varNames = [
+      CRM_Core_BAO_Setting::SYSTEM_PREFERENCES_NAME => [
+        'contact_view_options' => [
           'html_type' => 'checkboxes',
           'title' => ts('Viewing Contacts'),
           'weight' => 1,
-        ),
-        'contact_smart_group_display' => array(
+        ],
+        'contact_smart_group_display' => [
           'html_type' => 'radio',
           'title' => ts('Viewing Smart Groups'),
           'weight' => 2,
-        ),
-        'contact_edit_options' => array(
+        ],
+        'contact_edit_options' => [
           'html_type' => 'checkboxes',
           'title' => ts('Editing Contacts'),
           'weight' => 3,
-        ),
-        'advanced_search_options' => array(
+        ],
+        'advanced_search_options' => [
           'html_type' => 'checkboxes',
           'title' => ts('Contact Search'),
           'weight' => 4,
-        ),
-        'activity_assignee_notification' => array(
+        ],
+        'activity_assignee_notification' => [
           'html_type' => 'checkbox',
           'title' => ts('Notify Activity Assignees'),
           'weight' => 5,
-        ),
-        'activity_assignee_notification_ics' => array(
+        ],
+        'activity_assignee_notification_ics' => [
           'html_type' => 'checkbox',
           'title' => ts('Include ICal Invite to Activity Assignees'),
           'weight' => 6,
-        ),
-        'preserve_activity_tab_filter' => array(
+        ],
+        'preserve_activity_tab_filter' => [
           'html_type' => 'checkbox',
           'title' => ts('Preserve activity filters as a user preference'),
           'weight' => 7,
-        ),
-        'contact_ajax_check_similar' => array(
+        ],
+        'contact_ajax_check_similar' => [
           'html_type' => 'checkbox',
           'title' => ts('Check for Similar Contacts'),
           'weight' => 8,
-        ),
-        'user_dashboard_options' => array(
+        ],
+        'user_dashboard_options' => [
           'html_type' => 'checkboxes',
           'title' => ts('Contact Dashboard'),
           'weight' => 9,
-        ),
-        'display_name_format' => array(
+        ],
+        'display_name_format' => [
           'html_type' => 'textarea',
           'title' => ts('Individual Display Name Format'),
           'weight' => 10,
-        ),
-        'sort_name_format' => array(
+        ],
+        'sort_name_format' => [
           'html_type' => 'textarea',
           'title' => ts('Individual Sort Name Format'),
           'weight' => 11,
-        ),
-        'editor_id' => array(
+        ],
+        'editor_id' => [
           'html_type' => NULL,
           'weight' => 12,
-        ),
-        'ajaxPopupsEnabled' => array(
+        ],
+        'ajaxPopupsEnabled' => [
           'html_type' => 'checkbox',
           'title' => ts('Enable Popup Forms'),
           'weight' => 13,
-        ),
-        'do_not_notify_assignees_for' => array(
+        ],
+        'do_not_notify_assignees_for' => [
           'html_type' => 'select',
           'option_values' => $optionValues,
-          'attributes' => array('multiple' => 1, "class" => "huge crm-select2"),
+          'attributes' => ['multiple' => 1, "class" => "huge crm-select2"],
           'title' => ts('Do not notify assignees for'),
           'weight' => 14,
-        ),
-      ),
-    );
+        ],
+      ],
+    ];
 
     parent::preProcess();
   }
@@ -145,7 +145,7 @@ class CRM_Admin_Form_Preferences_Display extends CRM_Admin_Form_Preferences {
     $invoiceSettings = Civi::settings()->get('contribution_invoice_settings');
     $invoicing = CRM_Utils_Array::value('invoicing', $invoiceSettings);
     $this->assign('invoicing', $invoicing);
-    $extra = array();
+    $extra = [];
 
     $this->addElement('select', 'editor_id', ts('WYSIWYG Editor'), $wysiwyg_options, $extra);
     $this->addElement('submit', 'ckeditor_config', ts('Configure CKEditor'));
@@ -159,7 +159,7 @@ class CRM_Admin_Form_Preferences_Display extends CRM_Admin_Form_Preferences {
     $nameFields = CRM_Core_OptionGroup::values('contact_edit_options', FALSE, FALSE, FALSE, 'AND v.filter = 2');
     $this->assign('nameFields', $nameFields);
 
-    $this->addElement('hidden', 'contact_edit_preferences', NULL, array('id' => 'contact_edit_preferences'));
+    $this->addElement('hidden', 'contact_edit_preferences', NULL, ['id' => 'contact_edit_preferences']);
 
     $optionValues = CRM_Core_OptionGroup::values('user_dashboard_options', FALSE, FALSE, FALSE, NULL, 'name');
     $invoicesKey = array_search('Invoices / Credit Notes', $optionValues);

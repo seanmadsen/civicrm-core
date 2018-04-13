@@ -55,7 +55,7 @@ class CRM_Utils_VersionCheck {
    *
    * @var array
    */
-  public $versionInfo = array();
+  public $versionInfo = [];
 
   /**
    * @var bool
@@ -65,7 +65,7 @@ class CRM_Utils_VersionCheck {
   /**
    * @var array
    */
-  public $cronJob = array();
+  public $cronJob = [];
 
   /**
    * @var string
@@ -77,7 +77,7 @@ class CRM_Utils_VersionCheck {
    *
    * @var array
    */
-  protected $stats = array();
+  protected $stats = [];
 
   /**
    * Path to cache file
@@ -171,11 +171,11 @@ class CRM_Utils_VersionCheck {
    *   version
    */
   public function isNewerVersionAvailable() {
-    $return = array(
+    $return = [
       'version' => NULL,
       'upgrade' => NULL,
       'status' => NULL,
-    );
+    ];
 
     if ($this->versionInfo && $this->localVersion) {
       if (isset($this->versionInfo[$this->localMajorVersion])) {
@@ -223,11 +223,11 @@ class CRM_Utils_VersionCheck {
         if ($wayOld) {
           $releases = $this->checkBranchForNewVersion($majorVersion);
 
-          $return = array(
+          $return = [
             'version' => $releases['newest'],
             'upgrade' => 'security',
             'status' => 'eol',
-          );
+          ];
         }
       }
     }
@@ -248,10 +248,10 @@ class CRM_Utils_VersionCheck {
    * @return null|string
    */
   private function checkBranchForNewVersion($majorVersion) {
-    $newerVersion = array(
+    $newerVersion = [
       'newest' => NULL,
       'security' => NULL,
-    );
+    ];
     if (!empty($majorVersion['releases'])) {
       foreach ($majorVersion['releases'] as $release) {
         if (version_compare($this->localVersion, $release['version']) < 0) {
@@ -273,11 +273,11 @@ class CRM_Utils_VersionCheck {
     $siteKey = md5(defined('CIVICRM_SITE_KEY') ? CIVICRM_SITE_KEY : '');
 
     // Calorie-free pingback for alphas
-    $this->stats = array('version' => $this->localVersion);
+    $this->stats = ['version' => $this->localVersion];
 
     // Non-alpha versions get the full treatment
     if ($this->localVersion && !strpos($this->localVersion, 'alpha')) {
-      $this->stats += array(
+      $this->stats += [
         'hash' => md5($siteKey . $config->userFrameworkBaseURL),
         'uf' => $config->userFramework,
         'lang' => $config->lcMessages,
@@ -286,7 +286,7 @@ class CRM_Utils_VersionCheck {
         'PHP' => phpversion(),
         'MySQL' => CRM_CORE_DAO::singleValueQuery('SELECT VERSION()'),
         'communityMessagesUrl' => Civi::settings()->get('communityMessagesUrl'),
-      );
+      ];
       $this->getDomainStats();
       $this->getPayProcStats();
       $this->getEntityStats();
@@ -301,7 +301,7 @@ class CRM_Utils_VersionCheck {
     $dao = new CRM_Financial_DAO_PaymentProcessor();
     $dao->is_active = 1;
     $dao->find();
-    $ppTypes = array();
+    $ppTypes = [];
 
     // Get title and id for all processor types
     $ppTypeNames = CRM_Core_PseudoConstant::paymentProcessorType();
@@ -318,7 +318,7 @@ class CRM_Utils_VersionCheck {
    * Add info to the 'entities' array
    */
   private function getEntityStats() {
-    $tables = array(
+    $tables = [
       'CRM_Activity_DAO_Activity' => 'is_test = 0',
       'CRM_Case_DAO_Case' => 'is_deleted = 0',
       'CRM_Contact_DAO_Contact' => 'is_deleted = 0',
@@ -341,17 +341,17 @@ class CRM_Utils_VersionCheck {
       'CRM_Pledge_DAO_Pledge' => 'is_test = 0',
       'CRM_Pledge_DAO_PledgeBlock' => NULL,
       'CRM_Mailing_Event_DAO_Delivered' => NULL,
-    );
+    ];
     foreach ($tables as $daoName => $where) {
       $dao = new $daoName();
       if ($where) {
         $dao->whereAdd($where);
       }
       $short_name = substr($daoName, strrpos($daoName, '_') + 1);
-      $this->stats['entities'][] = array(
+      $this->stats['entities'][] = [
         'name' => $short_name,
         'size' => $dao->count(),
-      );
+      ];
     }
   }
 
@@ -363,11 +363,11 @@ class CRM_Utils_VersionCheck {
     // Core components
     $config = CRM_Core_Config::singleton();
     foreach ($config->enableComponents as $comp) {
-      $this->stats['extensions'][] = array(
+      $this->stats['extensions'][] = [
         'name' => 'org.civicrm.component.' . strtolower($comp),
         'enabled' => 1,
         'version' => $this->stats['version'],
-      );
+      ];
     }
     // Contrib extensions
     $mapper = CRM_Extension_System::singleton()->getMapper();
@@ -375,11 +375,11 @@ class CRM_Utils_VersionCheck {
     $dao->find();
     while ($dao->fetch()) {
       $info = $mapper->keyToInfo($dao->full_name);
-      $this->stats['extensions'][] = array(
+      $this->stats['extensions'][] = [
         'name' => $dao->full_name,
         'enabled' => $dao->is_active,
         'version' => isset($info->version) ? $info->version : NULL,
-      );
+      ];
     }
   }
 
@@ -390,21 +390,21 @@ class CRM_Utils_VersionCheck {
     // Start with default value NULL, then check to see if there's a better
     // value to be had.
     $this->stats['domain_isoCode'] = NULL;
-    $params = array(
+    $params = [
       'id' => CRM_Core_Config::domainID(),
-    );
+    ];
     $domain_result = civicrm_api3('domain', 'getsingle', $params);
     if (!empty($domain_result['contact_id'])) {
-      $address_params = array(
+      $address_params = [
         'contact_id' => $domain_result['contact_id'],
         'is_primary' => 1,
         'sequential' => 1,
-      );
+      ];
       $address_result = civicrm_api3('address', 'get', $address_params);
       if ($address_result['count'] == 1 && !empty($address_result['values'][0]['country_id'])) {
-        $country_params = array(
+        $country_params = [
           'id' => $address_result['values'][0]['country_id'],
-        );
+        ];
         $country_result = civicrm_api3('country', 'getsingle', $country_params);
         if (!empty($country_result['iso_code'])) {
           $this->stats['domain_isoCode'] = $country_result['iso_code'];
@@ -418,13 +418,13 @@ class CRM_Utils_VersionCheck {
    * Store results in the cache file
    */
   private function pingBack() {
-    $params = array(
-      'http' => array(
+    $params = [
+      'http' => [
         'method' => 'POST',
         'header' => 'Content-type: application/x-www-form-urlencoded',
         'content' => http_build_query($this->stats),
-      ),
-    );
+      ],
+    ];
     $ctx = stream_context_create($params);
     $rawJson = file_get_contents($this->pingbackUrl, FALSE, $ctx);
     $versionInfo = $rawJson ? json_decode($rawJson, TRUE) : NULL;
@@ -464,12 +464,12 @@ class CRM_Utils_VersionCheck {
    * Lookup version_check scheduled job
    */
   private function getJob() {
-    $jobs = civicrm_api3('Job', 'get', array(
+    $jobs = civicrm_api3('Job', 'get', [
       'sequential' => 1,
       'api_action' => "version_check",
       'api_entity' => "job",
-    ));
-    $this->cronJob = CRM_Utils_Array::value(0, $jobs['values'], array());
+    ]);
+    $this->cronJob = CRM_Utils_Array::value(0, $jobs['values'], []);
   }
 
 }

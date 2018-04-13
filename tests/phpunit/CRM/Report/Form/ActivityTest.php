@@ -31,13 +31,13 @@
  * @package CiviCRM
  */
 class CRM_Report_Form_ActivityTest extends CiviReportTestCase {
-  protected $_tablesToTruncate = array(
+  protected $_tablesToTruncate = [
     'civicrm_contact',
     'civicrm_email',
     'civicrm_phone',
     'civicrm_address',
     'civicrm_contribution',
-  );
+  ];
 
   public function setUp() {
     parent::setUp();
@@ -57,23 +57,23 @@ class CRM_Report_Form_ActivityTest extends CiviReportTestCase {
   public function testLongCustomFieldNames() {
     // Create custom group with long name and custom field with long name.
     $long_name = 'this is a very very very very long name with 65 characters in it';
-    $group_params = array(
+    $group_params = [
       'title' => $long_name,
       'extends' => 'Activity',
-    );
+    ];
     $result = $this->customGroupCreate($group_params);
     $custom_group_id = $result['id'];
-    $field_params = array(
+    $field_params = [
       'custom_group_id' => $custom_group_id,
       'label' => $long_name,
-    );
+    ];
     $result = $this->customFieldCreate($field_params);
     $custom_field_id = $result['id'];
-    $input = array(
-      'fields' => array(
+    $input = [
+      'fields' => [
         'custom_' . $custom_field_id,
-      ),
-    );
+      ],
+    ];
     $obj = $this->getReportObject('CRM_Report_Form_Activity', $input);
     //$params = $obj->_params;
     //$params['fields'] = array('custom_' . $custom_field_id);

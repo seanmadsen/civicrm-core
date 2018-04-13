@@ -39,7 +39,7 @@ class WebTest_Contribute_ContributionPageAddTest extends CiviSeleniumTestCase {
     $rand = 2 * rand(2, 50);
     $pageTitle = 'Donate Online ' . $hash;
     // create contribution page with randomized title and default params
-    $pageId = $this->webtestAddContributionPage($hash, $rand, $pageTitle, array('Test Processor' => 'Dummy'), TRUE, TRUE, 'required');
+    $pageId = $this->webtestAddContributionPage($hash, $rand, $pageTitle, ['Test Processor' => 'Dummy'], TRUE, TRUE, 'required');
 
     $this->openCiviPage("admin/contribute", "reset=1");
 
@@ -54,7 +54,7 @@ class WebTest_Contribute_ContributionPageAddTest extends CiviSeleniumTestCase {
 
     // verify whatever’s possible to verify
     // FIXME: ideally should be expanded
-    $texts = array(
+    $texts = [
       "Title - New Membership $hash",
       "This is introductory message for $pageTitle",
       'Student - $ 50.00',
@@ -65,7 +65,7 @@ class WebTest_Contribute_ContributionPageAddTest extends CiviSeleniumTestCase {
       'I pledge to contribute this amount every',
       'Name and Address',
       'Summary Overlay',
-    );
+    ];
     foreach ($texts as $text) {
       $this->assertTrue($this->isTextPresent($text), 'Missing text: ' . $text);
       $this->waitForAjaxContent();
@@ -97,7 +97,7 @@ class WebTest_Contribute_ContributionPageAddTest extends CiviSeleniumTestCase {
     $rand = 2 * rand(2, 50);
     $pageTitle = 'Donate Online ' . $hash;
     // create contribution page with randomized title and default params
-    $pageId = $this->webtestAddContributionPage($hash, $rand, $pageTitle, array('Test Processor' => 'Dummy'), TRUE, TRUE, 'required');
+    $pageId = $this->webtestAddContributionPage($hash, $rand, $pageTitle, ['Test Processor' => 'Dummy'], TRUE, TRUE, 'required');
 
     $this->openCiviPage("admin/contribute", "reset=1");
 
@@ -125,7 +125,7 @@ class WebTest_Contribute_ContributionPageAddTest extends CiviSeleniumTestCase {
 
     // verify whatever’s possible to verify
     // FIXME: ideally should be expanded
-    $texts = array(
+    $texts = [
       "Title - New Membership $hash",
       "This is introductory message for $pageTitle",
       'Student - $ 50.00',
@@ -136,7 +136,7 @@ class WebTest_Contribute_ContributionPageAddTest extends CiviSeleniumTestCase {
       'I pledge to contribute this amount every',
       'Name and Address',
       'Summary Overlay',
-    );
+    ];
     foreach ($texts as $text) {
       $this->assertTrue($this->isTextPresent($text), 'Missing text: ' . $text);
       $this->waitForAjaxContent();
@@ -156,7 +156,7 @@ class WebTest_Contribute_ContributionPageAddTest extends CiviSeleniumTestCase {
     $pageTitle = 'Donate Online ' . $hash;
 
     // create contribution page with randomized title, default params and separate payment for Membership and Contribution
-    $pageId = $this->webtestAddContributionPage($hash, $rand, $pageTitle, array('Test Processor' => 'Dummy'),
+    $pageId = $this->webtestAddContributionPage($hash, $rand, $pageTitle, ['Test Processor' => 'Dummy'],
       TRUE, TRUE, 'required', TRUE, FALSE, TRUE, NULL, TRUE,
       1, 7, TRUE, TRUE, TRUE, TRUE, FALSE, TRUE
     );
@@ -172,7 +172,7 @@ class WebTest_Contribute_ContributionPageAddTest extends CiviSeleniumTestCase {
     $this->isTextPresent($pageTitle);
     $this->openCiviPage("contribute/transact", "reset=1&action=preview&id=$pageId", '_qf_Main_upload-bottom');
 
-    $texts = array(
+    $texts = [
       "Title - New Membership $hash",
       "This is introductory message for $pageTitle",
       "Label $hash - $ $rand.00",
@@ -182,7 +182,7 @@ class WebTest_Contribute_ContributionPageAddTest extends CiviSeleniumTestCase {
       'I pledge to contribute this amount every',
       'Name and Address',
       'Summary Overlay',
-    );
+    ];
     foreach ($texts as $text) {
       $this->assertTrue($this->isTextPresent($text), 'Missing text: ' . $text);
       $this->waitForAjaxContent();
@@ -243,12 +243,12 @@ class WebTest_Contribute_ContributionPageAddTest extends CiviSeleniumTestCase {
     $this->select('financial_type_id', "label=Member Dues");
     $this->clickLink('_qf_Search_refresh', "xpath=//table[@class='selector row-highlight']/tbody/tr[1]/td[10]/span//a[text()='View']", FALSE);
     $this->clickLink("xpath=//table[@class='selector row-highlight']/tbody/tr[1]/td[10]/span//a[text()='View']", '_qf_ContributionView_cancel-bottom', FALSE);
-    $expected = array(
+    $expected = [
       'From' => "{$firstName} {$lastName}",
       'Financial Type' => 'Member Dues',
       'Total Amount' => '$ 50.00',
       'Contribution Status' => 'Pending : Pay Later',
-    );
+    ];
     $this->webtestVerifyTabularData($expected);
     $this->click('_qf_ContributionView_cancel-bottom');
 
@@ -263,11 +263,11 @@ class WebTest_Contribute_ContributionPageAddTest extends CiviSeleniumTestCase {
     $this->click("xpath=//table[@class='selector row-highlight']/tbody/tr/td[4][text()='Donation']/../td[10]/span//a[text()='View']");
     $this->waitForElementPresent("xpath=//table/tbody/tr/td[text()='From']/following-sibling::td");
     $this->waitForAjaxContent();
-    $expected = array(
+    $expected = [
       'From' => "{$firstName} {$lastName}",
       'Financial Type' => 'Donation',
       'Contribution Status' => 'Pending : Pay Later',
-    );
+    ];
     $this->webtestVerifyTabularData($expected);
     $this->click('_qf_ContributionView_cancel-bottom');
 
@@ -279,11 +279,11 @@ class WebTest_Contribute_ContributionPageAddTest extends CiviSeleniumTestCase {
     $this->waitForAjaxContent();
 
     //View Membership Record
-    $expected = array(
+    $expected = [
       'Member' => "{$firstName} {$lastName}",
       'Membership Type' => 'Student',
       'Status' => 'Pending',
-    );
+    ];
     $this->webtestVerifyTabularData($expected);
     $this->click('_qf_MembershipView_cancel-bottom');
   }
@@ -299,7 +299,7 @@ class WebTest_Contribute_ContributionPageAddTest extends CiviSeleniumTestCase {
     $hash = substr(sha1(rand()), 0, 7);
     $rand = 2 * rand(2, 50);
     $pageTitle = 'Donate Online ' . $hash;
-    $processor = array('Test Processor' => 'Dummy');
+    $processor = ['Test Processor' => 'Dummy'];
 
     // Create a new payment processor
     while (list($processorName, $processorType) = each($processor)) {

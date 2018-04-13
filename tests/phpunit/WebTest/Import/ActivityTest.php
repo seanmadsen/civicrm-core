@@ -41,12 +41,12 @@ class WebTest_Import_ActivityTest extends ImportCiviSeleniumTestCase {
 
     // Get sample import data.
     list($headers, $rows) = $this->_activityCSVData();
-    $fieldMapper = array(
+    $fieldMapper = [
       'mapper[0][0]' => 'target_contact_id',
       'mapper[1][0]' => 'activity_label',
       'mapper[2][0]' => 'activity_subject',
       'mapper[3][0]' => 'activity_date_time',
-    );
+    ];
     $this->importCSVComponent('Activity', $headers, $rows, NULL, NULL, $fieldMapper);
   }
 
@@ -65,7 +65,7 @@ class WebTest_Import_ActivityTest extends ImportCiviSeleniumTestCase {
     $this->webtestAddContact($firstName2, 'Anderson', $email2);
     $id2 = $this->urlArg('cid');
 
-    $headers = array(
+    $headers = [
       'target_contact_id' => 'Contact ID',
       'activity_type_label' => 'Activity Type Label',
       'subject' => 'Subject',
@@ -73,10 +73,10 @@ class WebTest_Import_ActivityTest extends ImportCiviSeleniumTestCase {
       'activity_status_id' => 'Activity Status Id',
       'duration' => 'Duration',
       'location' => 'Location',
-    );
+    ];
 
-    $rows = array(
-      array(
+    $rows = [
+      [
         'target_contact_id' => $id1,
         'activity_type_label' => 'Meeting',
         'subject' => 'Test Meeting',
@@ -84,8 +84,8 @@ class WebTest_Import_ActivityTest extends ImportCiviSeleniumTestCase {
         'activity_status_id' => 'Completed',
         'duration' => '20',
         'location' => 'UK',
-      ),
-      array(
+      ],
+      [
         'target_contact_id' => $id2,
         'activity_type_label' => 'Phone Call',
         'subject' => 'Test Phone Call',
@@ -93,10 +93,10 @@ class WebTest_Import_ActivityTest extends ImportCiviSeleniumTestCase {
         'activity_status_id' => 'Completed',
         'duration' => '20',
         'location' => 'USA',
-      ),
-    );
+      ],
+    ];
 
-    return array($headers, $rows);
+    return [$headers, $rows];
   }
 
 }

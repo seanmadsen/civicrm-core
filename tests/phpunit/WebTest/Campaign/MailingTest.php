@@ -40,7 +40,7 @@ class WebTest_Campaign_MailingTest extends CiviSeleniumTestCase {
     $this->webtestLogin('admin');
 
     // Enable CiviCampaign module if necessary
-    $this->enableComponents(array('CiviMail', 'CiviCampaign'));
+    $this->enableComponents(['CiviMail', 'CiviCampaign']);
 
     $this->setupDefaultMailbox();
 
@@ -58,7 +58,7 @@ class WebTest_Campaign_MailingTest extends CiviSeleniumTestCase {
     // We're using Quick Add block on the main page for this.
     $firstName = substr(sha1(rand()), 0, 7);
     $this->webtestAddContact($firstName, "Smith", "$firstName.smith@example.org");
-    $this->_contactNames = array("$firstName.smith@example.org" => "Smith, $firstName");
+    $this->_contactNames = ["$firstName.smith@example.org" => "Smith, $firstName"];
 
     // add contact to group
     // visit group tab
@@ -82,7 +82,7 @@ class WebTest_Campaign_MailingTest extends CiviSeleniumTestCase {
     $this->type("description", "This is a test campaign");
 
     // include groups for the campaign
-    $this->multiselect2("includeGroups", array("$groupName", "Advisory Board"));
+    $this->multiselect2("includeGroups", ["$groupName", "Advisory Board"]);
 
     // fill the end date for campaign
     $this->webtestFillDate("end_date", "+1 year");
@@ -195,10 +195,10 @@ class WebTest_Campaign_MailingTest extends CiviSeleniumTestCase {
     // do check for other option
     $this->waitForTextPresent("Mailing $mailingName Webtest");
     $this->click("xpath=//div[@class='content']//a[text()='~2 recipients']");
-    $verifyData = array(
+    $verifyData = [
       "$firstUserName Smith" => "$firstUserName.smith@example.org",
       "$firstName Mailson" => "mailino$firstName@mailson.co.in",
-    );
+    ];
     $this->webtestVerifyTabularData($verifyData);
     $this->waitForTextPresent("(Include: $groupName)");
     $this->assertChecked("xpath=//input[@id='schedule-send-now']");
@@ -277,7 +277,7 @@ class WebTest_Campaign_MailingTest extends CiviSeleniumTestCase {
 
     // Select the Mailing Tab
     $this->clickAjaxLink("CiviMail", 'campaigns');
-    $this->multiselect2("campaigns", array("$campaignTitle"));
+    $this->multiselect2("campaigns", ["$campaignTitle"]);
     $this->click("_qf_Advanced_refresh");
 
     // Check for contacts inserted while adding Campaing and Mailing

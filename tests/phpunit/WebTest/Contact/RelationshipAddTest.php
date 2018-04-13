@@ -39,13 +39,13 @@ class WebTest_Contact_RelationshipAddTest extends CiviSeleniumTestCase {
     $this->webtestLogin();
 
     //create a relationship type between different contact types
-    $params = array(
+    $params = [
       'label_a_b' => 'Owner of ' . rand(),
       'label_b_a' => 'Belongs to ' . rand(),
       'contact_type_a' => 'Individual',
       'contact_type_b' => 'Household',
       'description' => 'The company belongs to this individual',
-    );
+    ];
 
     $this->webtestAddRelationshipType($params);
 
@@ -96,10 +96,10 @@ class WebTest_Contact_RelationshipAddTest extends CiviSeleniumTestCase {
     $this->click("xpath=//div[@class='dataTables_wrapper no-footer']/table/tbody/tr/td[9]//span//a[text()='View']");
 
     $this->webtestVerifyTabularData(
-      array(
+      [
         'Description' => $description,
         'Status' => 'Enabled',
-      )
+      ]
     );
 
     $this->assertTrue($this->isTextPresent($params['label_b_a']));
@@ -177,10 +177,10 @@ class WebTest_Contact_RelationshipAddTest extends CiviSeleniumTestCase {
     $this->click("xpath=//div[@class='dataTables_wrapper no-footer']/table/tbody/tr/td[9]//span//a[text()='View']");
 
     $this->webtestVerifyTabularData(
-      array(
+      [
         'Description' => $description,
         'Status' => 'Enabled',
-      )
+      ]
     );
 
     $this->assertTrue($this->isTextPresent($params['label_b_a']));
@@ -190,13 +190,13 @@ class WebTest_Contact_RelationshipAddTest extends CiviSeleniumTestCase {
     $typeb = "Household__" . $householdSubtypeName;
 
     //create a relationship type between different contact types
-    $params = array(
+    $params = [
       'label_a_b' => 'Owner of ' . rand(),
       'label_b_a' => 'Belongs to ' . rand(),
       'contact_type_a' => 'Individual',
       'contact_type_b' => $typeb,
       'description' => 'The company belongs to this individual',
-    );
+    ];
 
     //create relationship type
     $this->openCiviPage('admin/reltype', 'reset=1&action=add');
@@ -269,10 +269,10 @@ class WebTest_Contact_RelationshipAddTest extends CiviSeleniumTestCase {
     $this->click("xpath=//div[@class='dataTables_wrapper no-footer']/table/tbody/tr/td[9]//span//a[text()='View']");
 
     $this->webtestVerifyTabularData(
-      array(
+      [
         'Description' => $description,
         'Status' => 'Enabled',
-      )
+      ]
     );
 
     $this->assertTrue($this->isTextPresent($params['label_b_a']));
@@ -282,13 +282,13 @@ class WebTest_Contact_RelationshipAddTest extends CiviSeleniumTestCase {
     $this->webtestLogin();
 
     //create a relationship type between different contact types
-    $params = array(
+    $params = [
       'label_a_b' => 'Board Member of ' . rand(),
       'label_b_a' => 'Board Member is' . rand(),
       'contact_type_a' => 'Individual',
       'contact_type_b' => 'Organization',
       'description' => 'Board members of organizations.',
-    );
+    ];
 
     $this->webtestAddRelationshipType($params);
 
@@ -336,10 +336,10 @@ class WebTest_Contact_RelationshipAddTest extends CiviSeleniumTestCase {
     $this->click("xpath=//div[@class='dataTables_wrapper no-footer']/table/tbody/tr/td[9]/span[1]//a[text()='View']");
 
     $this->webtestVerifyTabularData(
-      array(
+      [
         'Description' => $description,
         'Status' => 'Enabled',
-      )
+      ]
     );
     $this->assertTrue($this->isTextPresent($params['label_a_b']));
   }
@@ -352,13 +352,13 @@ class WebTest_Contact_RelationshipAddTest extends CiviSeleniumTestCase {
     $this->webtestAddContact($firstName, "Anderson", "$firstName@anderson.name");
     $contactId = explode('cid=', $this->getLocation());
 
-    $triggerElement = array('name' => 'relationship_type_id', 'type' => 'select');
-    $customSets = array(
-      array('entity' => 'Relationship', 'subEntity' => 'Partner of', 'triggerElement' => $triggerElement),
-      array('entity' => 'Relationship', 'subEntity' => 'Spouse of', 'triggerElement' => $triggerElement),
-    );
+    $triggerElement = ['name' => 'relationship_type_id', 'type' => 'select'];
+    $customSets = [
+      ['entity' => 'Relationship', 'subEntity' => 'Partner of', 'triggerElement' => $triggerElement],
+      ['entity' => 'Relationship', 'subEntity' => 'Spouse of', 'triggerElement' => $triggerElement],
+    ];
 
-    $pageUrl = array('url' => 'contact/view/rel', 'args' => "cid={$contactId[1]}&action=add&reset=1");
+    $pageUrl = ['url' => 'contact/view/rel', 'args' => "cid={$contactId[1]}&action=add&reset=1"];
     $this->customFieldSetLoadOnTheFlyCheck($customSets, $pageUrl);
   }
 
@@ -410,11 +410,11 @@ class WebTest_Contact_RelationshipAddTest extends CiviSeleniumTestCase {
     $this->click("xpath=//div[@class='dataTables_wrapper no-footer']/table/tbody/tr/td[9]//span//a[text()='View']");
 
     $this->webtestVerifyTabularData(
-      array(
+      [
         'Description' => $description,
         'Current Employee?' => 'Yes',
         'Status' => 'Enabled',
-      )
+      ]
     );
     $this->assertTrue($this->isTextPresent("Employee of"), "Employee of relationship type not visible on View Relationship page.");
   }

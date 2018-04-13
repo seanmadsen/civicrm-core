@@ -43,12 +43,12 @@ class WebTest_Case_CaseDashboardTest extends CiviSeleniumTestCase {
     $this->enableComponents("CiviCase");
 
     // let's give full CiviCase permissions to demo user (registered user).
-    $permission = array(
+    $permission = [
       'edit-2-access-all-cases-and-activities',
       'edit-2-access-my-cases-and-activities',
       'edit-2-administer-civicase',
       'edit-2-delete-in-civicase',
-    );
+    ];
     $this->changePermissions($permission);
 
     // Log in as normal user
@@ -82,8 +82,8 @@ class WebTest_Case_CaseDashboardTest extends CiviSeleniumTestCase {
     // Fill in other form values. We'll use a case type which is included in CiviCase sample data / xml files.
     $caseTypeLabel = "Adult Day Care Referral";
     // activity types we expect for this case type
-    $activityTypes = array("ADC referral", "Follow up", "Medical evaluation", "Mental health evaluation");
-    $caseRoles = array("Senior Services Coordinator", "Health Services Coordinator", "Benefits Specialist", "Client");
+    $activityTypes = ["ADC referral", "Follow up", "Medical evaluation", "Mental health evaluation"];
+    $caseRoles = ["Senior Services Coordinator", "Health Services Coordinator", "Benefits Specialist", "Client"];
     $caseStatusLabel = "Ongoing";
     $subject = "Safe daytime setting - senior female";
     $this->select("medium_id", "value=1");

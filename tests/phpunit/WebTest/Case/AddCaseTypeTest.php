@@ -36,9 +36,9 @@ class WebTest_Case_AddCaseTypeTest extends CiviSeleniumTestCase {
   }
 
   public function testAddEditCaseType() {
-    $caseRoles = array(1 => 'Parent of', 2 => 'Spouse of', 3 => 'Partner of');
-    $activityTypes = array(1 => 'Meeting', 2 => 'Contribution', 3 => 'Event Registration');
-    $timelineActivityTypes = array(1 => 'Meeting', 2 => 'Phone Call', 3 => 'Email');
+    $caseRoles = [1 => 'Parent of', 2 => 'Spouse of', 3 => 'Partner of'];
+    $activityTypes = [1 => 'Meeting', 2 => 'Contribution', 3 => 'Event Registration'];
+    $timelineActivityTypes = [1 => 'Meeting', 2 => 'Phone Call', 3 => 'Email'];
     // Log in as admin first to verify permissions for CiviCase
     $this->webtestLogin('admin');
 
@@ -46,12 +46,12 @@ class WebTest_Case_AddCaseTypeTest extends CiviSeleniumTestCase {
     $this->enableComponents("CiviCase");
 
     // let's give full CiviCase permissions to demo user (registered user).
-    $permission = array(
+    $permission = [
       'edit-2-access-all-cases-and-activities',
       'edit-2-access-my-cases-and-activities',
       'edit-2-administer-civicase',
       'edit-2-delete-in-civicase',
-    );
+    ];
     $this->changePermissions($permission);
 
     // Log in as normal user

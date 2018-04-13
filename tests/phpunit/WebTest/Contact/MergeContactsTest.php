@@ -232,7 +232,7 @@ class WebTest_Contact_MergeContactsTest extends CiviSeleniumTestCase {
     $this->type('last_name', $lName);
     $this->type('email_1_email', "{$firstName}.{$lastName}@example.com");
     $this->waitForElementPresent('contact_sub_type');
-    $this->multiselect2('contact_sub_type', array("Student", "Staff"));
+    $this->multiselect2('contact_sub_type', ["Student", "Staff"]);
     $this->click("_qf_Contact_upload_view");
     $this->waitForText('crm-notification-container', "Contact Saved");
     $this->openCiviPage("contact/deduperules", "reset=1");
@@ -623,11 +623,11 @@ class WebTest_Contact_MergeContactsTest extends CiviSeleniumTestCase {
     $mergedContacts = $totalContacts - $unMergedContacts;
 
     //check the existence of merged contacts
-    $contactEmails = array(
+    $contactEmails = [
       1 => "{$firstName}.{$lastName}@example.com",
       2 => "{$firstName2}.{$lastName2}@example.com",
       3 => "{$firstName3}.{$lastName3}@example.com",
-    );
+    ];
 
     foreach ($contactEmails as $key => $value) {
       $this->click('sort_name_navigation');
@@ -729,10 +729,10 @@ class WebTest_Contact_MergeContactsTest extends CiviSeleniumTestCase {
       $duplicateId = explode("Contact ID:", trim($this->getText("xpath=//div[@id='crm-record-log']/span[@class='col1']")));
       $duplicateId = trim($duplicateId[1]);
 
-      return array(
+      return [
         'mainId' => $mainId,
         'duplicateId' => $duplicateId,
-      );
+      ];
     }
   }
 
@@ -778,7 +778,7 @@ class WebTest_Contact_MergeContactsTest extends CiviSeleniumTestCase {
     // build organisation name
     $orgnaizationName = 'org_' . substr(sha1(rand()), 0, 7);
 
-    $contactIds = array();
+    $contactIds = [];
     // create organization and its duplicate
     $contactIds = $this->_createContacts(NULL, NULL, $orgnaizationName, 'Organization');
 

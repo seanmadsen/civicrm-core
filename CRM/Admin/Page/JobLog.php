@@ -73,14 +73,14 @@ class CRM_Admin_Page_JobLog extends CRM_Core_Page_Basic {
   public function run() {
     // set title and breadcrumb
     CRM_Utils_System::setTitle(ts('Settings - Scheduled Jobs Log'));
-    $breadCrumb = array(
-      array(
+    $breadCrumb = [
+      [
         'title' => ts('Administration'),
         'url' => CRM_Utils_System::url('civicrm/admin',
           'reset=1'
         ),
-      ),
-    );
+      ],
+    ];
     CRM_Utils_System::appendBreadCrumb($breadCrumb);
     return parent::run();
   }
@@ -114,7 +114,7 @@ class CRM_Admin_Page_JobLog extends CRM_Core_Page_Basic {
     }
     $dao->find();
 
-    $rows = array();
+    $rows = [];
     while ($dao->fetch()) {
       unset($row);
       CRM_Core_DAO::storeValues($dao, $row);

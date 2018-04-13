@@ -81,16 +81,16 @@ class CRM_Member_Form_MembershipStatus extends CRM_Member_Form_MembershipConfig 
       CRM_Core_DAO::getAttribute('CRM_Member_DAO_MembershipStatus', 'label'), TRUE
     );
     $this->addRule('label', ts('A membership status with this label already exists. Please select another label.'),
-      'objectExists', array('CRM_Member_DAO_MembershipStatus', $this->_id, 'name')
+      'objectExists', ['CRM_Member_DAO_MembershipStatus', $this->_id, 'name']
     );
 
     $this->add('select', 'start_event', ts('Start Event'), CRM_Core_SelectValues::eventDate(), TRUE);
-    $this->add('select', 'start_event_adjust_unit', ts('Start Event Adjustment'), array('' => ts('- select -')) + CRM_Core_SelectValues::unitList());
+    $this->add('select', 'start_event_adjust_unit', ts('Start Event Adjustment'), ['' => ts('- select -')] + CRM_Core_SelectValues::unitList());
     $this->add('text', 'start_event_adjust_interval', ts('Start Event Adjust Interval'),
       CRM_Core_DAO::getAttribute('CRM_Member_DAO_MembershipStatus', 'start_event_adjust_interval')
     );
-    $this->add('select', 'end_event', ts('End Event'), array('' => ts('- select -')) + CRM_Core_SelectValues::eventDate());
-    $this->add('select', 'end_event_adjust_unit', ts('End Event Adjustment'), array('' => ts('- select -')) + CRM_Core_SelectValues::unitList());
+    $this->add('select', 'end_event', ts('End Event'), ['' => ts('- select -')] + CRM_Core_SelectValues::eventDate());
+    $this->add('select', 'end_event_adjust_unit', ts('End Event Adjustment'), ['' => ts('- select -')] + CRM_Core_SelectValues::unitList());
     $this->add('text', 'end_event_adjust_interval', ts('End Event Adjust Interval'),
       CRM_Core_DAO::getAttribute('CRM_Member_DAO_MembershipStatus', 'end_event_adjust_interval')
     );
@@ -121,7 +121,7 @@ class CRM_Member_Form_MembershipStatus extends CRM_Member_Form_MembershipConfig 
       CRM_Core_Session::setStatus(ts('Selected membership status has been deleted.'), ts('Record Deleted'), 'success');
     }
     else {
-      $params = $ids = array();
+      $params = $ids = [];
       // store the submitted values in an array
       $params = $this->exportValues();
       $params['is_active'] = CRM_Utils_Array::value('is_active', $params, FALSE);
@@ -145,7 +145,7 @@ class CRM_Member_Form_MembershipStatus extends CRM_Member_Form_MembershipConfig 
 
       $membershipStatus = CRM_Member_BAO_MembershipStatus::add($params, $ids);
       CRM_Core_Session::setStatus(ts('The membership status \'%1\' has been saved.',
-        array(1 => $membershipStatus->label)
+        [1 => $membershipStatus->label]
       ), ts('Saved'), 'success');
     }
   }

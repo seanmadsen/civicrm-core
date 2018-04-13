@@ -46,19 +46,19 @@ class api_v3_UFGroupTest extends CiviUnitTestCase {
     $this->_groupId = $this->groupCreate();
     $this->_contactId = $this->individualCreate();
     $this->createLoggedInUser();
-    $ufGroup = $this->callAPISuccess('uf_group', 'create', array(
+    $ufGroup = $this->callAPISuccess('uf_group', 'create', [
       'group_type' => 'Contact',
       'help_pre' => 'Profile to Test API',
       'title' => 'Test Profile',
-    ));
+    ]);
     $this->_ufGroupId = $ufGroup['id'];
-    $ufMatch = $this->callAPISuccess('uf_match', 'create', array(
+    $ufMatch = $this->callAPISuccess('uf_match', 'create', [
       'contact_id' => $this->_contactId,
       'uf_id' => 42,
       'uf_name' => 'email@mail.com',
-    ));
+    ]);
     $this->_ufMatchId = $ufMatch['id'];
-    $this->params = array(
+    $this->params = [
       'add_captcha' => 1,
       'add_contact_to_group' => $this->_groupId,
       'group' => $this->_groupId,
@@ -79,19 +79,19 @@ class api_v3_UFGroupTest extends CiviUnitTestCase {
       'notify' => 'admin@example.org',
       'post_URL' => 'http://example.org/post',
       'title' => 'Test Group',
-    );
+    ];
   }
 
   public function tearDown() {
     //  Truncate the tables
     $this->quickCleanup(
-      array(
+      [
         'civicrm_group',
         'civicrm_contact',
         'civicrm_uf_group',
         'civicrm_uf_join',
         'civicrm_uf_match',
-      )
+      ]
     );
   }
 
@@ -99,12 +99,12 @@ class api_v3_UFGroupTest extends CiviUnitTestCase {
    * Updating group.
    */
   public function testUpdateUFGroup() {
-    $params = array(
+    $params = [
       'title' => 'Edited Test Profile',
       'help_post' => 'Profile Pro help text.',
       'is_active' => 1,
       'id' => $this->_ufGroupId,
-    );
+    ];
 
     $result = $this->callAPISuccess('uf_group', 'create', $params);
     foreach ($params as $key => $value) {
@@ -130,11 +130,11 @@ class api_v3_UFGroupTest extends CiviUnitTestCase {
   }
 
   public function testUFGroupCreateWithWrongParams() {
-    $result = $this->callAPIFailure('uf_group', 'create', array('name' => 'A title-less group'));
+    $result = $this->callAPIFailure('uf_group', 'create', ['name' => 'A title-less group']);
   }
 
   public function testUFGroupUpdate() {
-    $params = array(
+    $params = [
       'id' => $this->_ufGroupId,
       'add_captcha' => 1,
       'add_contact_to_group' => $this->_groupId,
@@ -156,7 +156,7 @@ class api_v3_UFGroupTest extends CiviUnitTestCase {
       'notify' => 'admin@example.org',
       'post_URL' => 'http://example.org/post',
       'title' => 'Test Group',
-    );
+    ];
     $result = $this->callAPISuccess('uf_group', 'create', $params);
     $params['created_date'] = date('YmdHis', strtotime($params['created_date']));
     foreach ($params as $key => $value) {
@@ -172,7 +172,7 @@ class api_v3_UFGroupTest extends CiviUnitTestCase {
 
   public function testUFGroupGet() {
     $result = $this->callAPISuccess('uf_group', 'create', $this->params);
-    $params = array('id' => $result['id']);
+    $params = ['id' => $result['id']];
     $result = $this->callAPIAndDocument('uf_group', 'get', $params, __FUNCTION__, __FILE__);
     $this->assertEquals($result['values'][$result['id']]['add_to_group_id'], $this->params['add_contact_to_group']);
     $this->assertEquals($result['values'][$result['id']]['limit_listings_group_id'], $this->params['group']);
@@ -188,12 +188,12 @@ class api_v3_UFGroupTest extends CiviUnitTestCase {
   }
 
   public function testUFGroupUpdateWithEmptyParams() {
-    $result = $this->callAPIFailure('uf_group', 'create', array(), 'Mandatory key(s) missing from params array: title');
+    $result = $this->callAPIFailure('uf_group', 'create', [], 'Mandatory key(s) missing from params array: title');
   }
 
   public function testUFGroupDelete() {
     $ufGroup = $this->callAPISuccess('uf_group', 'create', $this->params);
-    $params = array('id' => $ufGroup['id']);
+    $params = ['id' => $ufGroup['id']];
     $this->assertEquals(1, $this->callAPISuccess('uf_group', 'getcount', $params), "in line " . __LINE__);
     $result = $this->callAPIAndDocument('uf_group', 'delete', $params, __FUNCTION__, __FILE__);
     $this->assertEquals(0, $this->callAPISuccess('uf_group', 'getcount', $params), "in line " . __LINE__);

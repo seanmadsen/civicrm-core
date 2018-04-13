@@ -44,24 +44,24 @@ class WebTest_Financial_FinancialAccountTypeTest extends CiviSeleniumTestCase {
     $financialType['is_deductible'] = TRUE;
     $financialType['is_reserved'] = FALSE;
     $this->addeditFinancialType($financialType);
-    $expected = array(
-      array(
+    $expected = [
+      [
         'financial_account' => $financialType['name'],
         'account_relationship' => "Income Account is",
-      ),
-      array(
+      ],
+      [
         'financial_account' => 'Banking Fees',
         'account_relationship' => 'Expense Account is',
-      ),
-      array(
+      ],
+      [
         'financial_account' => 'Accounts Receivable',
         'account_relationship' => 'Accounts Receivable Account is',
-      ),
-      array(
+      ],
+      [
         'financial_account' => 'Premiums',
         'account_relationship' => 'Cost of Sales Account is',
-      ),
-    );
+      ],
+    ];
 
     $this->waitForElementPresent('newFinancialType');
     $this->click("xpath=id('ltype')/div/table/tbody//tr/td[1]/div[text()='$financialType[name]']/../../td[7]/span/a[text()='Accounts']");

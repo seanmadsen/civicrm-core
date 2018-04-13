@@ -38,18 +38,18 @@ class WebTest_Contact_AdvanceSearchPrivacyOptionsTest extends CiviSeleniumTestCa
   public function testSearchForPrivacyOptions() {
     $this->webtestLogin();
 
-    $privacyOptions = array(
-      'dn_phone_mail' => array('do_not_phone', 'do_not_mail'),
-      'dn_phone_email' => array('do_not_phone', 'do_not_email'),
-      'dn_trade_sms' => array('do_not_trade', 'do_not_sms'),
-    );
+    $privacyOptions = [
+      'dn_phone_mail' => ['do_not_phone', 'do_not_mail'],
+      'dn_phone_email' => ['do_not_phone', 'do_not_email'],
+      'dn_trade_sms' => ['do_not_trade', 'do_not_sms'],
+    ];
     $randString = substr(sha1(rand()), 0, 7);
 
-    $contactsReffOptions = array(
-      'dn_phone_mail' => array('first_name' => $randString . 'John', 'last_name' => $randString . 'Smith'),
-      'dn_phone_email' => array('first_name' => $randString . 'Jeff', 'last_name' => $randString . 'Adams'),
-      'dn_trade_sms' => array('first_name' => $randString . 'Rocky', 'last_name' => $randString . 'Stanley'),
-    );
+    $contactsReffOptions = [
+      'dn_phone_mail' => ['first_name' => $randString . 'John', 'last_name' => $randString . 'Smith'],
+      'dn_phone_email' => ['first_name' => $randString . 'Jeff', 'last_name' => $randString . 'Adams'],
+      'dn_trade_sms' => ['first_name' => $randString . 'Rocky', 'last_name' => $randString . 'Stanley'],
+    ];
 
     //creating individuals
     $this->_addIndividual($contactsReffOptions['dn_phone_mail']['first_name'], $contactsReffOptions['dn_phone_mail']['last_name'], $privacyOptions['dn_phone_mail']);
@@ -58,13 +58,13 @@ class WebTest_Contact_AdvanceSearchPrivacyOptionsTest extends CiviSeleniumTestCa
 
     //advance search for created contacts
     $this->openCiviPage('contact/search/advanced', 'reset=1', '_qf_Advanced_refresh');
-    $allPrivacyOptions = array(
+    $allPrivacyOptions = [
       'do_not_phone',
       'do_not_mail',
       'do_not_email',
       'do_not_sms',
       'do_not_trade',
-    );
+    ];
 
     $this->_addPrivacyCriteria('include', $privacyOptions['dn_phone_mail'], 'OR', $allPrivacyOptions);
     $this->click('_qf_Advanced_refresh');

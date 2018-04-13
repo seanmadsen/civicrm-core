@@ -45,32 +45,32 @@ class WebTest_Import_ContactTest extends ImportCiviSeleniumTestCase {
     list($headers, $rows) = $this->_individualCSVData();
 
     // Import and check Individual contacts in Skip mode.
-    $other = array(
+    $other = [
       'saveMapping' => TRUE,
       'createGroup' => TRUE,
       'createTag' => TRUE,
-    );
+    ];
 
-    $this->importContacts($headers, $rows, 'Individual', 'Skip', array(), $other);
+    $this->importContacts($headers, $rows, 'Individual', 'Skip', [], $other);
 
     // Get imported contact Ids
     $importedContactIds = $this->_getImportedContactIds($rows);
 
     // Build update mode import headers
-    $updateHeaders = array(
+    $updateHeaders = [
       'contact_id' => 'Internal Contact ID',
       'first_name' => 'First Name',
       'last_name' => 'Last Name',
-    );
+    ];
 
     // Create update mode import rows
-    $updateRows = array();
+    $updateRows = [];
     foreach ($importedContactIds as $cid) {
-      $updateRows[$cid] = array(
+      $updateRows[$cid] = [
         'contact_id' => $cid,
         'first_name' => substr(sha1(rand()), 0, 7),
         'last_name' => 'Anderson' . substr(sha1(rand()), 0, 7),
-      );
+      ];
     }
 
     // Import and check Individual contacts in Update mode.
@@ -91,9 +91,9 @@ class WebTest_Import_ContactTest extends ImportCiviSeleniumTestCase {
     $fillHeaders['gender'] = 'Gender';
     $fillHeaders['dob'] = 'Birth Date';
 
-    $fillRows = array();
+    $fillRows = [];
     foreach ($importedContactIds as $cid) {
-      $fillRows[$cid] = array(
+      $fillRows[$cid] = [
         'contact_id' => $cid,
         // should not update
         'first_name' => substr(sha1(rand()), 0, 7),
@@ -101,7 +101,7 @@ class WebTest_Import_ContactTest extends ImportCiviSeleniumTestCase {
         'last_name' => 'Anderson' . substr(sha1(rand()), 0, 7),
         'gender' => 'Male',
         'dob' => '1986-04-16',
-      );
+      ];
     }
 
     // Import and check Individual contacts in Update mode.
@@ -133,30 +133,30 @@ class WebTest_Import_ContactTest extends ImportCiviSeleniumTestCase {
     list($headers, $rows) = $this->_organizationCSVData();
 
     // Import and check Organization contacts
-    $other = array(
+    $other = [
       'saveMapping' => TRUE,
       'createGroup' => TRUE,
       'createTag' => TRUE,
-    );
+    ];
 
-    $this->importContacts($headers, $rows, 'Organization', 'Skip', array(), $other);
+    $this->importContacts($headers, $rows, 'Organization', 'Skip', [], $other);
 
     // Get imported contact Ids
     $importedContactIds = $this->_getImportedContactIds($rows, 'Organization');
 
     // Build update mode import headers
-    $updateHeaders = array(
+    $updateHeaders = [
       'contact_id' => 'Internal Contact ID',
       'organization_name' => 'Organization Name',
-    );
+    ];
 
     // Create update mode import rows
-    $updateRows = array();
+    $updateRows = [];
     foreach ($importedContactIds as $cid) {
-      $updateRows[$cid] = array(
+      $updateRows[$cid] = [
         'contact_id' => $cid,
         'organization_name' => 'UpdatedOrg ' . substr(sha1(rand()), 0, 7),
-      );
+      ];
     }
 
     // Import and check Individual contacts in Update mode.
@@ -176,14 +176,14 @@ class WebTest_Import_ContactTest extends ImportCiviSeleniumTestCase {
     // Headers that should fill.
     $fillHeaders['legal_name'] = 'Legal Name';
 
-    $fillRows = array();
+    $fillRows = [];
     foreach ($importedContactIds as $cid) {
-      $fillRows[$cid] = array(
+      $fillRows[$cid] = [
         'contact_id' => $cid,
         // should not update
         'organization_name' => 'UpdateOrg ' . substr(sha1(rand()), 0, 7),
         'legal_name' => 'org ' . substr(sha1(rand()), 0, 7),
-      );
+      ];
     }
 
     // Import and check Individual contacts in Update mode.
@@ -214,30 +214,30 @@ class WebTest_Import_ContactTest extends ImportCiviSeleniumTestCase {
     list($headers, $rows) = $this->_householdCSVData();
 
     // Import and check Household contacts
-    $other = array(
+    $other = [
       'saveMapping' => TRUE,
       'createGroup' => TRUE,
       'createTag' => TRUE,
-    );
+    ];
 
-    $this->importContacts($headers, $rows, 'Household', 'Skip', array(), $other);
+    $this->importContacts($headers, $rows, 'Household', 'Skip', [], $other);
 
     // Get imported contact Ids
     $importedContactIds = $this->_getImportedContactIds($rows, 'Household');
 
     // Build update mode import headers
-    $updateHeaders = array(
+    $updateHeaders = [
       'contact_id' => 'Internal Contact ID',
       'household_name' => 'Household Name',
-    );
+    ];
 
     // Create update mode import rows
-    $updateRows = array();
+    $updateRows = [];
     foreach ($importedContactIds as $cid) {
-      $updateRows[$cid] = array(
+      $updateRows[$cid] = [
         'contact_id' => $cid,
         'household_name' => 'UpdatedHousehold ' . substr(sha1(rand()), 0, 7),
-      );
+      ];
     }
 
     // Import and check Individual contacts in Update mode.
@@ -257,14 +257,14 @@ class WebTest_Import_ContactTest extends ImportCiviSeleniumTestCase {
     // Headers that should fill.
     $fillHeaders['nick_name'] = 'Nick Name';
 
-    $fillRows = array();
+    $fillRows = [];
     foreach ($importedContactIds as $cid) {
-      $fillRows[$cid] = array(
+      $fillRows[$cid] = [
         'contact_id' => $cid,
         // should not update
         'household_name' => 'UpdatedHousehold ' . substr(sha1(rand()), 0, 7),
         'nick_name' => 'Household ' . substr(sha1(rand()), 0, 7),
-      );
+      ];
     }
 
     // Import and check Individual contacts in Update mode.
@@ -291,7 +291,7 @@ class WebTest_Import_ContactTest extends ImportCiviSeleniumTestCase {
    * @return array
    */
   public function _individualCSVData() {
-    $headers = array(
+    $headers = [
       'first_name' => 'First Name',
       'middle_name' => 'Middle Name',
       'last_name' => 'Last Name',
@@ -302,10 +302,10 @@ class WebTest_Import_ContactTest extends ImportCiviSeleniumTestCase {
       'city' => 'City',
       'state' => 'State',
       'country' => 'Country',
-    );
+    ];
 
-    $rows = array(
-      array(
+    $rows = [
+      [
         'first_name' => substr(sha1(rand()), 0, 7),
         'middle_name' => substr(sha1(rand()), 0, 7),
         'last_name' => 'Anderson',
@@ -316,8 +316,8 @@ class WebTest_Import_ContactTest extends ImportCiviSeleniumTestCase {
         'city' => 'Watson',
         'state' => 'NY',
         'country' => 'UNITED STATES',
-      ),
-      array(
+      ],
+      [
         'first_name' => substr(sha1(rand()), 0, 7),
         'middle_name' => substr(sha1(rand()), 0, 7),
         'last_name' => 'Summerson',
@@ -328,10 +328,10 @@ class WebTest_Import_ContactTest extends ImportCiviSeleniumTestCase {
         'city' => 'Watson',
         'state' => 'NY',
         'country' => 'UNITED STATES',
-      ),
-    );
+      ],
+    ];
 
-    return array($headers, $rows);
+    return [$headers, $rows];
   }
 
   /*
@@ -341,7 +341,7 @@ class WebTest_Import_ContactTest extends ImportCiviSeleniumTestCase {
    * @return array
    */
   public function _organizationCSVData() {
-    $headers = array(
+    $headers = [
       'organization_name' => 'Organization Name',
       'email' => 'Email',
       'phone' => 'Phone',
@@ -350,10 +350,10 @@ class WebTest_Import_ContactTest extends ImportCiviSeleniumTestCase {
       'city' => 'City',
       'state' => 'State',
       'country' => 'Country',
-    );
+    ];
 
-    $rows = array(
-      array(
+    $rows = [
+      [
         'organization_name' => 'org_' . substr(sha1(rand()), 0, 7),
         'email' => substr(sha1(rand()), 0, 7) . '@example.org',
         'phone' => '9949912154',
@@ -362,8 +362,8 @@ class WebTest_Import_ContactTest extends ImportCiviSeleniumTestCase {
         'city' => 'Watson',
         'state' => 'NY',
         'country' => 'UNITED STATES',
-      ),
-      array(
+      ],
+      [
         'organization_name' => 'org_' . substr(sha1(rand()), 0, 7),
         'email' => substr(sha1(rand()), 0, 7) . '@example.org',
         'phone' => '6949412154',
@@ -372,10 +372,10 @@ class WebTest_Import_ContactTest extends ImportCiviSeleniumTestCase {
         'city' => 'Watson',
         'state' => 'NY',
         'country' => 'UNITED STATES',
-      ),
-    );
+      ],
+    ];
 
-    return array($headers, $rows);
+    return [$headers, $rows];
   }
 
   /*
@@ -385,7 +385,7 @@ class WebTest_Import_ContactTest extends ImportCiviSeleniumTestCase {
    * @return array
    */
   public function _householdCSVData() {
-    $headers = array(
+    $headers = [
       'household_name' => 'Household Name',
       'email' => 'Email',
       'phone' => 'Phone',
@@ -394,10 +394,10 @@ class WebTest_Import_ContactTest extends ImportCiviSeleniumTestCase {
       'city' => 'City',
       'state' => 'State',
       'country' => 'Country',
-    );
+    ];
 
-    $rows = array(
-      array(
+    $rows = [
+      [
         'household_name' => 'household_' . substr(sha1(rand()), 0, 7),
         'email' => substr(sha1(rand()), 0, 7) . '@example.org',
         'phone' => '3949912154',
@@ -406,8 +406,8 @@ class WebTest_Import_ContactTest extends ImportCiviSeleniumTestCase {
         'city' => 'Watson',
         'state' => 'NY',
         'country' => 'UNITED STATES',
-      ),
-      array(
+      ],
+      [
         'household_name' => 'household_' . substr(sha1(rand()), 0, 7),
         'email' => substr(sha1(rand()), 0, 7) . '@example.org',
         'phone' => '5949412154',
@@ -416,10 +416,10 @@ class WebTest_Import_ContactTest extends ImportCiviSeleniumTestCase {
         'city' => 'Watson',
         'state' => 'NY',
         'country' => 'UNITED STATES',
-      ),
-    );
+      ],
+    ];
 
-    return array($headers, $rows);
+    return [$headers, $rows];
   }
 
 }

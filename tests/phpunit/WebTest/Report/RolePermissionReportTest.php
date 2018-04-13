@@ -66,12 +66,12 @@ class WebTest_Report_RolePermissionReportTest extends CiviSeleniumTestCase {
     $user2 = $this->_testCreateUser($roleId2);
 
     // let's give full CiviReport permissions.
-    $permissions = array(
+    $permissions = [
       "edit-2-access-civireport",
       "edit-2-view-all-contacts",
       "edit-2-administer-civicrm",
       "edit-2-access-civicrm",
-    );
+    ];
     $this->changePermissions($permissions);
 
     // change report setting to for a particular role
@@ -121,12 +121,12 @@ class WebTest_Report_RolePermissionReportTest extends CiviSeleniumTestCase {
       $this->click("_qf_Summary_submit_save");
       $this->waitForPageToLoad($this->getTimeoutMsec());
     }
-    $permissions = array(
+    $permissions = [
       "edit-{$roleId}-access-civireport",
       "edit-{$roleId}-view-all-contacts",
       "edit-{$roleId}-administer-reports",
       "edit-{$roleId}-access-civicrm",
-    );
+    ];
     $this->changePermissions($permissions);
 
     $this->webtestLogin($user, 'Test12345');
@@ -136,13 +136,13 @@ class WebTest_Report_RolePermissionReportTest extends CiviSeleniumTestCase {
     $this->assertTrue($this->isElementPresent("xpath=//div[@id='report-tab-access']/table/tbody//tr/td[2]/span/tt[text()='[ ]']"));
 
     // let's give full CiviReport permissions.
-    $permissions = array(
+    $permissions = [
       "edit-{$roleId}-access-civireport",
       "edit-{$roleId}-view-all-contacts",
       "edit-{$roleId}-administer-reports",
       "edit-{$roleId}-access-civicrm",
       "edit-{$roleId}-administer-reserved-reports",
-    );
+    ];
     $this->changePermissions($permissions);
 
     $this->openCiviPage('report/instance/1', 'reset=1');

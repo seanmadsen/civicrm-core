@@ -45,7 +45,7 @@ class WebTest_Contribute_UpdateBatchPendingContributionTest extends CiviSelenium
 
     $this->type("sort_name", "Individual");
     $this->waitForElementPresent("contribution_status_id");
-    $this->multiselect2('contribution_status_id', array("Pending"));
+    $this->multiselect2('contribution_status_id', ["Pending"]);
     $this->clickLink("_qf_Search_refresh");
 
     $this->click('radio_ts', 'ts_all');
@@ -63,16 +63,16 @@ class WebTest_Contribute_UpdateBatchPendingContributionTest extends CiviSelenium
 
     $this->type("sort_name", "Individual");
     $this->waitForElementPresent("contribution_status_id");
-    $this->multiselect2('contribution_status_id', array("Completed"));
+    $this->multiselect2('contribution_status_id', ["Completed"]);
     $this->click("_qf_Search_refresh");
 
     $this->waitForPageToLoad($this->getTimeoutMsec());
     $this->click("xpath=//table[@class='selector row-highlight']/tbody/tr[1]/td[10]/span//a[text()='View']");
     $this->waitForElementPresent("_qf_ContributionView_cancel-bottom");
-    $expected = array(
+    $expected = [
       'Received Into' => "Deposit Bank Account",
       'Contribution Status' => "Completed",
-    );
+    ];
 
     $this->webtestVerifyTabularData($expected);
   }
@@ -103,7 +103,7 @@ class WebTest_Contribute_UpdateBatchPendingContributionTest extends CiviSelenium
     $this->openCiviPage("contribute/search", "reset=1", "contribution_date_low");
 
     $this->type("sort_name", "Anderson");
-    $this->multiselect2('contribution_status_id', array("Pending"));
+    $this->multiselect2('contribution_status_id', ["Pending"]);
     $this->click("_qf_Search_refresh");
 
     $this->waitForPageToLoad($this->getTimeoutMsec());
@@ -121,16 +121,16 @@ class WebTest_Contribute_UpdateBatchPendingContributionTest extends CiviSelenium
     $this->waitForElementPresent("contribution_date_low");
 
     $this->type("sort_name", "Anderson");
-    $this->multiselect2('contribution_status_id', array("Completed"));
+    $this->multiselect2('contribution_status_id', ["Completed"]);
     $this->click("_qf_Search_refresh");
 
     $this->waitForPageToLoad($this->getTimeoutMsec());
     $this->click("xpath=//table[@class='selector row-highlight']/tbody/tr[1]/td[10]/span//a[text()='View']");
     $this->waitForElementPresent("_qf_ContributionView_cancel-bottom");
-    $expected = array(
+    $expected = [
       'Received Into' => "Deposit Bank Account",
       'Contribution Status' => "Completed",
-    );
+    ];
 
     $this->webtestVerifyTabularData($expected);
   }
@@ -149,7 +149,7 @@ class WebTest_Contribute_UpdateBatchPendingContributionTest extends CiviSelenium
     $this->select2('event_id', "Rain-forest Cup Youth Soccer Tournament");
 
     // Select role
-    $this->multiselect2('role_id', array('Volunteer'));
+    $this->multiselect2('role_id', ['Volunteer']);
 
     // Select participant status
     $this->select('status_id', 'value=1');
@@ -183,13 +183,13 @@ class WebTest_Contribute_UpdateBatchPendingContributionTest extends CiviSelenium
     $this->waitForElementPresent('_qf_ParticipantView_cancel-bottom');
 
     $this->webtestVerifyTabularData(
-      array(
+      [
         'Event' => 'Rain-forest Cup Youth Soccer Tournament',
         'Participant Role' => 'Attendee',
         'Status' => 'Registered',
         'Event Source' => 'Event StandaloneAddTest Webtest',
         'Fees' => '$ 800.00',
-      )
+      ]
     );
   }
 
@@ -223,11 +223,11 @@ class WebTest_Contribute_UpdateBatchPendingContributionTest extends CiviSelenium
     $this->click("xpath=//div[@class='view-content']//table[2]/tbody/tr[1]/td[8]/span/a[text()='View']");
     $this->waitForElementPresent("_qf_ContributionView_cancel-bottom");
 
-    $expected = array(
+    $expected = [
       'Financial Type' => 'Donation',
       'Total Amount' => '100.00',
       'Contribution Status' => 'Pending',
-    );
+    ];
     foreach ($expected as $label => $value) {
       $this->assertElementContainsText("xpath=id('ContributionView')/div[2]/table[1]/tbody//tr/td[1][text()='$label']/../td[2]", $value);
     }

@@ -98,7 +98,7 @@ class WebTest_Campaign_OfflineEventRegistrationTest extends CiviSeleniumTestCase
 
     // include groups for the campaign
     $this->waitForAjaxContent();
-    $this->multiselect2("includeGroups", array("$groupName", "Advisory Board"));
+    $this->multiselect2("includeGroups", ["$groupName", "Advisory Board"]);
 
     // fill the end date for campaign
     $this->webtestFillDate("end_date", "+1 year");
@@ -155,7 +155,7 @@ class WebTest_Campaign_OfflineEventRegistrationTest extends CiviSeleniumTestCase
 
     // Select role
     $this->waitForAjaxContent();
-    $this->multiselect2("role_id", array('Volunteer'));
+    $this->multiselect2("role_id", ['Volunteer']);
 
     // Choose Registration Date.
     // Using helper webtestFillDate function.

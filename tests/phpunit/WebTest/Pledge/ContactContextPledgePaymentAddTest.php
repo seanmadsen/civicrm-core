@@ -97,7 +97,7 @@ class WebTest_Pledge_ContactContextPledgePaymentAddTest extends CiviSeleniumTest
     $this->waitForElementPresent("_qf_PledgeView_next-bottom");
     $pledgeDate = date('F jS, Y', strtotime('now'));
 
-    $this->webtestVerifyTabularData(array(
+    $this->webtestVerifyTabularData([
         'Pledge By' => $firstName . ' ' . $lastName,
         'Total Pledge Amount' => '$ 30.00',
         'To be paid in' => '3 installments of $ 10.00 every 1 week(s)',
@@ -108,7 +108,7 @@ class WebTest_Pledge_ContactContextPledgePaymentAddTest extends CiviSeleniumTest
         'Initial Reminder Day' => '4 days prior to schedule date',
         'Maximum Reminders Send' => 2,
         'Send additional reminders' => '4 days after the last one sent',
-      )
+      ]
     );
 
     $this->clickLink("_qf_PledgeView_next-bottom", "xpath=//div[@class='view-content']//table//tbody/tr[1]/td[10]/span/a[text()='View']", FALSE);
@@ -143,7 +143,7 @@ class WebTest_Pledge_ContactContextPledgePaymentAddTest extends CiviSeleniumTest
     $this->waitForElementPresent("_qf_PledgeView_next-bottom");
     $pledgeDate = date('F jS, Y', strtotime('now'));
 
-    $this->webtestVerifyTabularData(array(
+    $this->webtestVerifyTabularData([
         'Pledge By' => $firstName . ' ' . $lastName,
         'Total Pledge Amount' => '$ 30.00',
         'To be paid in' => '3 installments of $ 10.00 every 1 week(s)',
@@ -154,7 +154,7 @@ class WebTest_Pledge_ContactContextPledgePaymentAddTest extends CiviSeleniumTest
         'Initial Reminder Day' => '4 days prior to schedule date',
         'Maximum Reminders Send' => 2,
         'Send additional reminders' => '4 days after the last one sent',
-      )
+      ]
     );
 
     $this->clickLink("_qf_PledgeView_next-bottom", "xpath=//div[@class='view-content']//table//tbody/tr[1]/td[10]/span/a[text()='View']", FALSE);
@@ -188,7 +188,7 @@ class WebTest_Pledge_ContactContextPledgePaymentAddTest extends CiviSeleniumTest
     $this->click("xpath=//form[@class='CRM_Pledge_Form_Search crm-search-form']/div[2]/table/tbody/tr[1]/td[10]/span/a[text()='View']");
 
     $this->waitForElementPresent("_qf_PledgeView_next-bottom");
-    $this->webtestVerifyTabularData(array(
+    $this->webtestVerifyTabularData([
         'Pledge By' => $firstName . ' ' . $lastName,
         'Total Pledge Amount' => '$ 30.00',
         'To be paid in' => '3 installments of $ 10.00 every 1 week(s)',
@@ -199,7 +199,7 @@ class WebTest_Pledge_ContactContextPledgePaymentAddTest extends CiviSeleniumTest
         'Initial Reminder Day' => '4 days prior to schedule date',
         'Maximum Reminders Send' => 2,
         'Send additional reminders' => '4 days after the last one sent',
-      )
+      ]
     );
     $this->openCiviPage('admin/setting/localization', 'reset=1');
     $this->waitForElementPresent("currencyLimit");
@@ -266,7 +266,7 @@ class WebTest_Pledge_ContactContextPledgePaymentAddTest extends CiviSeleniumTest
     $this->waitForElementPresent("_qf_PledgeView_next-bottom");
     $pledgeDate = date('F jS, Y', strtotime('now'));
 
-    $this->webtestVerifyTabularData(array(
+    $this->webtestVerifyTabularData([
         'Pledge By' => $firstName . ' ' . $lastName,
         'Total Pledge Amount' => '$ 30.00',
         'To be paid in' => '3 installments of $ 10.00 every 1 week(s)',
@@ -277,7 +277,7 @@ class WebTest_Pledge_ContactContextPledgePaymentAddTest extends CiviSeleniumTest
         'Initial Reminder Day' => '4 days prior to schedule date',
         'Maximum Reminders Send' => 2,
         'Send additional reminders' => '4 days after the last one sent',
-      )
+      ]
     );
     $this->clickLink("_qf_PledgeView_next-bottom", "xpath=//div[@class='view-content']//table//tbody/tr[1]/td[10]/span/a[text()='View']", FALSE);
     $this->click("xpath=//table[@class='selector row-highlight']/tbody/tr[1]/td[1]/a");
@@ -310,7 +310,7 @@ class WebTest_Pledge_ContactContextPledgePaymentAddTest extends CiviSeleniumTest
     $this->waitForElementPresent("_qf_PledgeView_next-bottom");
     $pledgeDate = date('F jS, Y', strtotime('now'));
 
-    $this->webtestVerifyTabularData(array(
+    $this->webtestVerifyTabularData([
         'Pledge By' => $firstName . ' ' . $lastName,
         'Total Pledge Amount' => '$ 40.00',
         'To be paid in' => '3 installments of $ 10.00 every 1 week(s)',
@@ -321,7 +321,7 @@ class WebTest_Pledge_ContactContextPledgePaymentAddTest extends CiviSeleniumTest
         'Initial Reminder Day' => '4 days prior to schedule date',
         'Maximum Reminders Send' => 2,
         'Send additional reminders' => '4 days after the last one sent',
-      )
+      ]
     );
 
     $this->clickLink("_qf_PledgeView_next-bottom", "xpath=//div[@class='view-content']//table//tbody/tr[1]/td[10]/span/a[text()='View']", FALSE);
@@ -337,7 +337,7 @@ class WebTest_Pledge_ContactContextPledgePaymentAddTest extends CiviSeleniumTest
     $this->click("xpath=//div[@class='view-content']//table//tbody/tr[1]/td[10]/span/a[text()='View']");
 
     $this->waitForElementPresent("_qf_PledgeView_next-bottom");
-    $this->webtestVerifyTabularData(array(
+    $this->webtestVerifyTabularData([
         'Pledge By' => $firstName . ' ' . $lastName,
         'Total Pledge Amount' => '$ 40.00',
         'To be paid in' => '3 installments of $ 10.00 every 1 week(s)',
@@ -348,7 +348,7 @@ class WebTest_Pledge_ContactContextPledgePaymentAddTest extends CiviSeleniumTest
         'Initial Reminder Day' => '4 days prior to schedule date',
         'Maximum Reminders Send' => 2,
         'Send additional reminders' => '4 days after the last one sent',
-      )
+      ]
     );
     // Re-enable pop-ups to leave things in the same state
     $this->enableDisablePopups(TRUE);
@@ -435,7 +435,7 @@ class WebTest_Pledge_ContactContextPledgePaymentAddTest extends CiviSeleniumTest
     $this->waitForElementPresent("_qf_PledgeView_next-bottom");
     $pledgeDate = date('F jS, Y', strtotime('now'));
 
-    $this->webtestVerifyTabularData(array(
+    $this->webtestVerifyTabularData([
         'Pledge By' => $firstName . ' ' . $lastName,
         'Total Pledge Amount' => '$ 30.00',
         'To be paid in' => '3 installments of $ 10.00 every 1 week(s)',
@@ -446,7 +446,7 @@ class WebTest_Pledge_ContactContextPledgePaymentAddTest extends CiviSeleniumTest
         'Initial Reminder Day' => '4 days prior to schedule date',
         'Maximum Reminders Send' => 2,
         'Send additional reminders' => '4 days after the last one sent',
-      )
+      ]
     );
     // Re-enable pop-ups to leave things in the same state
     $this->enableDisablePopups(TRUE);

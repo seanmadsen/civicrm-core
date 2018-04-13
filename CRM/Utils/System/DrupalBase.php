@@ -73,10 +73,10 @@ abstract class CRM_Utils_System_DrupalBase extends CRM_Utils_System_Base {
       $filesURL = $baseURL . "sites/default/files/civicrm/";
     }
 
-    return array(
+    return [
       'url' => $filesURL,
       'path' => CRM_Utils_File::baseFilePath(),
-    );
+    ];
   }
 
   /**
@@ -85,7 +85,7 @@ abstract class CRM_Utils_System_DrupalBase extends CRM_Utils_System_Base {
   public function getDefaultSiteSettings($dir) {
     $config = CRM_Core_Config::singleton();
     $siteName = $siteRoot = NULL;
-    $matches = array();
+    $matches = [];
     if (preg_match(
       '|/sites/([\w\.\-\_]+)/|',
       $config->templateCompileDir,
@@ -101,7 +101,7 @@ abstract class CRM_Utils_System_DrupalBase extends CRM_Utils_System_Base {
       }
     }
     $url = $config->userFrameworkBaseURL;
-    return array($url, $siteName, $siteRoot);
+    return [$url, $siteName, $siteRoot];
   }
 
   /**
@@ -268,10 +268,10 @@ abstract class CRM_Utils_System_DrupalBase extends CRM_Utils_System_Base {
   public function getUserRecordUrl($contactID) {
     $uid = CRM_Core_BAO_UFMatch::getUFId($contactID);
     if (CRM_Core_Session::singleton()
-        ->get('userID') == $contactID || CRM_Core_Permission::checkAnyPerm(array(
+        ->get('userID') == $contactID || CRM_Core_Permission::checkAnyPerm([
           'cms:administer users',
           'cms:view user account',
-        ))
+      ])
     ) {
       return $this->url('user/' . $uid);
     };
@@ -289,7 +289,7 @@ abstract class CRM_Utils_System_DrupalBase extends CRM_Utils_System_Base {
    */
   public function logger($message) {
     if (CRM_Core_Config::singleton()->userFrameworkLogging && function_exists('watchdog')) {
-      watchdog('civicrm', '%message', array('%message' => $message), NULL, WATCHDOG_DEBUG);
+      watchdog('civicrm', '%message', ['%message' => $message], NULL, WATCHDOG_DEBUG);
     }
   }
 
@@ -320,7 +320,7 @@ abstract class CRM_Utils_System_DrupalBase extends CRM_Utils_System_Base {
    * @inheritDoc
    */
   public function getModules() {
-    $result = array();
+    $result = [];
     $q = db_query('SELECT name, status FROM {system} WHERE type = \'module\' AND schema_version <> -1');
     foreach ($q as $row) {
       $result[] = new CRM_Core_Module('drupal.' . $row->name, ($row->status == 1) ? TRUE : FALSE);
@@ -342,7 +342,7 @@ abstract class CRM_Utils_System_DrupalBase extends CRM_Utils_System_Base {
     $roles = user_roles(FALSE, $oldPerm);
     if (!empty($roles)) {
       foreach (array_keys($roles) as $rid) {
-        user_role_revoke_permissions($rid, array($oldPerm));
+        user_role_revoke_permissions($rid, [$oldPerm]);
         user_role_grant_permissions($rid, $newPerms);
       }
     }
@@ -503,7 +503,7 @@ abstract class CRM_Utils_System_DrupalBase extends CRM_Utils_System_Base {
    *
    * FIXME: Document values accepted/required by $params
    */
-  public function userLoginFinalize($params = array()) {
+  public function userLoginFinalize($params = []) {
     user_login_finalize($params);
   }
 
@@ -643,7 +643,7 @@ abstract class CRM_Utils_System_DrupalBase extends CRM_Utils_System_Base {
       include $confdir . "/sites.php";
     }
     else {
-      $sites = array();
+      $sites = [];
     }
 
     $uri = explode('/', $phpSelf);

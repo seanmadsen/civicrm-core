@@ -45,9 +45,9 @@ class WebTest_Import_DateFormatTest extends ImportCiviSeleniumTestCase {
     list($headers, $rows) = $this->_individualCSVData_yyyy_mm_dd();
 
     // Import and check Individual contacts in Skip mode and yyyy-mm-dd OR yyyymmdd dateformat.
-    $other = array('dateFormat' => 'yyyy-mm-dd OR yyyymmdd');
+    $other = ['dateFormat' => 'yyyy-mm-dd OR yyyymmdd'];
 
-    $this->importContacts($headers, $rows, 'Individual', 'Skip', array(), $other);
+    $this->importContacts($headers, $rows, 'Individual', 'Skip', [], $other);
   }
 
   /**
@@ -61,9 +61,9 @@ class WebTest_Import_DateFormatTest extends ImportCiviSeleniumTestCase {
 
     // Import and check Individual contacts in Skip mode and
     // mm/dd/yy OR mm-dd-yy date format.
-    $other = array('dateFormat' => 'mm/dd/yy OR mm-dd-yy');
+    $other = ['dateFormat' => 'mm/dd/yy OR mm-dd-yy'];
 
-    $this->importContacts($headers, $rows, 'Individual', 'Skip', array(), $other);
+    $this->importContacts($headers, $rows, 'Individual', 'Skip', [], $other);
   }
 
   /**
@@ -82,9 +82,9 @@ class WebTest_Import_DateFormatTest extends ImportCiviSeleniumTestCase {
 
     // Import and check Individual contacts in Skip mode and
     // mm/dd/yyyy OR mm-dd-yyyy date format.
-    $other = array('dateFormat' => 'mm/dd/yyyy OR mm-dd-yyyy');
+    $other = ['dateFormat' => 'mm/dd/yyyy OR mm-dd-yyyy'];
 
-    $this->importContacts($headers, $rows, 'Individual', 'Skip', array(), $other);
+    $this->importContacts($headers, $rows, 'Individual', 'Skip', [], $other);
   }
 
   /**
@@ -103,9 +103,9 @@ class WebTest_Import_DateFormatTest extends ImportCiviSeleniumTestCase {
 
     // Import and check Individual contacts in Skip mode and
     // Month dd, yyyy date format.
-    $other = array('dateFormat' => 'Month dd, yyyy');
+    $other = ['dateFormat' => 'Month dd, yyyy'];
 
-    $this->importContacts($headers, $rows, 'Individual', 'Skip', array(), $other);
+    $this->importContacts($headers, $rows, 'Individual', 'Skip', [], $other);
   }
 
   /**
@@ -124,9 +124,9 @@ class WebTest_Import_DateFormatTest extends ImportCiviSeleniumTestCase {
 
     // Import and check Individual contacts in Skip mode and
     // dd-mon-yy OR dd/mm/yy date format.
-    $other = array('dateFormat' => 'dd-mon-yy OR dd/mm/yy');
+    $other = ['dateFormat' => 'dd-mon-yy OR dd/mm/yy'];
 
-    $this->importContacts($headers, $rows, 'Individual', 'Skip', array(), $other);
+    $this->importContacts($headers, $rows, 'Individual', 'Skip', [], $other);
   }
 
   /**
@@ -145,9 +145,9 @@ class WebTest_Import_DateFormatTest extends ImportCiviSeleniumTestCase {
 
     // Import and check Individual contacts in Skip mode and
     // dd/mm/yyyy date format.
-    $other = array('dateFormat' => 'dd/mm/yyyy');
+    $other = ['dateFormat' => 'dd/mm/yyyy'];
 
-    $this->importContacts($headers, $rows, 'Individual', 'Skip', array(), $other);
+    $this->importContacts($headers, $rows, 'Individual', 'Skip', [], $other);
   }
 
   /**
@@ -157,7 +157,7 @@ class WebTest_Import_DateFormatTest extends ImportCiviSeleniumTestCase {
    * @return array
    */
   public function _individualCSVData_yyyy_mm_dd() {
-    $headers = array(
+    $headers = [
       'first_name' => 'First Name',
       'middle_name' => 'Middle Name',
       'last_name' => 'Last Name',
@@ -169,10 +169,10 @@ class WebTest_Import_DateFormatTest extends ImportCiviSeleniumTestCase {
       'state' => 'State',
       'country' => 'Country',
       'birth_date' => 'Birth Date',
-    );
+    ];
 
-    $rows = array(
-      array(
+    $rows = [
+      [
         'first_name' => substr(sha1(rand()), 0, 7),
         'middle_name' => substr(sha1(rand()), 0, 7),
         'last_name' => 'Anderson',
@@ -184,8 +184,8 @@ class WebTest_Import_DateFormatTest extends ImportCiviSeleniumTestCase {
         'state' => 'NY',
         'country' => 'UNITED STATES',
         'birth_date' => '1998-12-25',
-      ),
-      array(
+      ],
+      [
         'first_name' => substr(sha1(rand()), 0, 7),
         'middle_name' => substr(sha1(rand()), 0, 7),
         'last_name' => 'Summerson',
@@ -197,10 +197,10 @@ class WebTest_Import_DateFormatTest extends ImportCiviSeleniumTestCase {
         'state' => 'NY',
         'country' => 'UNITED STATES',
         'birth_date' => '1999-11-26',
-      ),
-    );
+      ],
+    ];
 
-    return array($headers, $rows);
+    return [$headers, $rows];
   }
 
   /**
@@ -210,7 +210,7 @@ class WebTest_Import_DateFormatTest extends ImportCiviSeleniumTestCase {
    * @return array
    */
   public function _individualCSVData_mm_dd_yy() {
-    $headers = array(
+    $headers = [
       'first_name' => 'First Name',
       'middle_name' => 'Middle Name',
       'last_name' => 'Last Name',
@@ -222,10 +222,10 @@ class WebTest_Import_DateFormatTest extends ImportCiviSeleniumTestCase {
       'state' => 'State',
       'country' => 'Country',
       'birth_date' => 'Birth Date',
-    );
+    ];
 
-    $rows = array(
-      array(
+    $rows = [
+      [
         'first_name' => substr(sha1(rand()), 0, 7),
         'middle_name' => substr(sha1(rand()), 0, 7),
         'last_name' => 'Anderson',
@@ -237,8 +237,8 @@ class WebTest_Import_DateFormatTest extends ImportCiviSeleniumTestCase {
         'state' => 'NY',
         'country' => 'UNITED STATES',
         'birth_date' => '12/23/98',
-      ),
-      array(
+      ],
+      [
         'first_name' => substr(sha1(rand()), 0, 7),
         'middle_name' => substr(sha1(rand()), 0, 7),
         'last_name' => 'Summerson',
@@ -250,10 +250,10 @@ class WebTest_Import_DateFormatTest extends ImportCiviSeleniumTestCase {
         'state' => 'NY',
         'country' => 'UNITED STATES',
         'birth_date' => '11/24/88',
-      ),
-    );
+      ],
+    ];
 
-    return array($headers, $rows);
+    return [$headers, $rows];
   }
 
   /**
@@ -263,7 +263,7 @@ class WebTest_Import_DateFormatTest extends ImportCiviSeleniumTestCase {
    * @return array
    */
   public function _individualCSVData_mm_dd_yyyy() {
-    $headers = array(
+    $headers = [
       'first_name' => 'First Name',
       'middle_name' => 'Middle Name',
       'last_name' => 'Last Name',
@@ -275,10 +275,10 @@ class WebTest_Import_DateFormatTest extends ImportCiviSeleniumTestCase {
       'state' => 'State',
       'country' => 'Country',
       'birth_date' => 'Birth Date',
-    );
+    ];
 
-    $rows = array(
-      array(
+    $rows = [
+      [
         'first_name' => substr(sha1(rand()), 0, 7),
         'middle_name' => substr(sha1(rand()), 0, 7),
         'last_name' => 'Anderson',
@@ -290,8 +290,8 @@ class WebTest_Import_DateFormatTest extends ImportCiviSeleniumTestCase {
         'state' => 'NY',
         'country' => 'UNITED STATES',
         'birth_date' => '11/12/1995',
-      ),
-      array(
+      ],
+      [
         'first_name' => substr(sha1(rand()), 0, 7),
         'middle_name' => substr(sha1(rand()), 0, 7),
         'last_name' => 'Summerson',
@@ -303,10 +303,10 @@ class WebTest_Import_DateFormatTest extends ImportCiviSeleniumTestCase {
         'state' => 'NY',
         'country' => 'UNITED STATES',
         'birth_date' => '12/12/1995',
-      ),
-    );
+      ],
+    ];
 
-    return array($headers, $rows);
+    return [$headers, $rows];
   }
 
   /**
@@ -316,7 +316,7 @@ class WebTest_Import_DateFormatTest extends ImportCiviSeleniumTestCase {
    * @return array
    */
   public function _individualCSVData_Month_dd_yyyy() {
-    $headers = array(
+    $headers = [
       'first_name' => 'First Name',
       'middle_name' => 'Middle Name',
       'last_name' => 'Last Name',
@@ -328,10 +328,10 @@ class WebTest_Import_DateFormatTest extends ImportCiviSeleniumTestCase {
       'state' => 'State',
       'country' => 'Country',
       'birth_date' => 'Birth Date',
-    );
+    ];
 
-    $rows = array(
-      array(
+    $rows = [
+      [
         'first_name' => substr(sha1(rand()), 0, 7),
         'middle_name' => substr(sha1(rand()), 0, 7),
         'last_name' => 'Anderson',
@@ -343,8 +343,8 @@ class WebTest_Import_DateFormatTest extends ImportCiviSeleniumTestCase {
         'state' => 'NY',
         'country' => 'UNITED STATES',
         'birth_date' => 'December 12, 1998',
-      ),
-      array(
+      ],
+      [
         'first_name' => substr(sha1(rand()), 0, 7),
         'middle_name' => substr(sha1(rand()), 0, 7),
         'last_name' => 'Summerson',
@@ -356,10 +356,10 @@ class WebTest_Import_DateFormatTest extends ImportCiviSeleniumTestCase {
         'state' => 'NY',
         'country' => 'UNITED STATES',
         'birth_date' => 'December 13, 1998',
-      ),
-    );
+      ],
+    ];
 
-    return array($headers, $rows);
+    return [$headers, $rows];
   }
 
   /**
@@ -369,7 +369,7 @@ class WebTest_Import_DateFormatTest extends ImportCiviSeleniumTestCase {
    * @return array
    */
   public function _individualCSVData_dd_mon_yy() {
-    $headers = array(
+    $headers = [
       'first_name' => 'First Name',
       'middle_name' => 'Middle Name',
       'last_name' => 'Last Name',
@@ -381,10 +381,10 @@ class WebTest_Import_DateFormatTest extends ImportCiviSeleniumTestCase {
       'state' => 'State',
       'country' => 'Country',
       'birth_date' => 'Birth Date',
-    );
+    ];
 
-    $rows = array(
-      array(
+    $rows = [
+      [
         'first_name' => substr(sha1(rand()), 0, 7),
         'middle_name' => substr(sha1(rand()), 0, 7),
         'last_name' => 'Anderson',
@@ -396,8 +396,8 @@ class WebTest_Import_DateFormatTest extends ImportCiviSeleniumTestCase {
         'state' => 'NY',
         'country' => 'UNITED STATES',
         'birth_date' => '25/12/98',
-      ),
-      array(
+      ],
+      [
         'first_name' => substr(sha1(rand()), 0, 7),
         'middle_name' => substr(sha1(rand()), 0, 7),
         'last_name' => 'Summerson',
@@ -409,10 +409,10 @@ class WebTest_Import_DateFormatTest extends ImportCiviSeleniumTestCase {
         'state' => 'NY',
         'country' => 'UNITED STATES',
         'birth_date' => '26/12/99',
-      ),
-    );
+      ],
+    ];
 
-    return array($headers, $rows);
+    return [$headers, $rows];
   }
 
   /**
@@ -422,7 +422,7 @@ class WebTest_Import_DateFormatTest extends ImportCiviSeleniumTestCase {
    * @return array
    */
   public function _individualCSVData_dd_mm_yyyy() {
-    $headers = array(
+    $headers = [
       'first_name' => 'First Name',
       'middle_name' => 'Middle Name',
       'last_name' => 'Last Name',
@@ -434,10 +434,10 @@ class WebTest_Import_DateFormatTest extends ImportCiviSeleniumTestCase {
       'state' => 'State',
       'country' => 'Country',
       'birth_date' => 'Birth Date',
-    );
+    ];
 
-    $rows = array(
-      array(
+    $rows = [
+      [
         'first_name' => substr(sha1(rand()), 0, 7),
         'middle_name' => substr(sha1(rand()), 0, 7),
         'last_name' => 'Anderson',
@@ -449,8 +449,8 @@ class WebTest_Import_DateFormatTest extends ImportCiviSeleniumTestCase {
         'state' => 'NY',
         'country' => 'UNITED STATES',
         'birth_date' => '25/12/1998',
-      ),
-      array(
+      ],
+      [
         'first_name' => substr(sha1(rand()), 0, 7),
         'middle_name' => substr(sha1(rand()), 0, 7),
         'last_name' => 'Summerson',
@@ -462,10 +462,10 @@ class WebTest_Import_DateFormatTest extends ImportCiviSeleniumTestCase {
         'state' => 'NY',
         'country' => 'UNITED STATES',
         'birth_date' => '24/11/1996',
-      ),
-    );
+      ],
+    ];
 
-    return array($headers, $rows);
+    return [$headers, $rows];
   }
 
 }

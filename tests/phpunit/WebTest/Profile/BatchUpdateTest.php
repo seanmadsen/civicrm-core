@@ -58,13 +58,13 @@ class WebTest_Profile_BatchUpdateTest extends CiviSeleniumTestCase {
     $this->webtestAddContact($firstName3, $lastName3, "$firstName3.$lastName3@example.com", "Staff");
 
     $profileTitle = 'Batch Profile test_' . substr(sha1(rand()), 0, 7);
-    $profileFields = array(
-      array(
+    $profileFields = [
+      [
         'type' => 'Individual',
         'name' => 'Last Name',
         'label' => 'Last Name',
-      ),
-    );
+      ],
+    ];
     $this->addProfile($profileTitle, $profileFields);
     $this->openCiviPage('contact/search', 'reset=1', '_qf_Basic_refresh');
     $this->type('sort_name', "Smiths_x");
@@ -559,7 +559,7 @@ class WebTest_Profile_BatchUpdateTest extends CiviSeleniumTestCase {
    * @return array
    */
   public function _addCustomData($profileFor) {
-    $returnArray = array();
+    $returnArray = [];
     $customGroupTitle = 'Custom_' . substr(sha1(rand()), 0, 4);
 
     $this->openCiviPage('admin/custom/group', 'reset=1');
@@ -613,7 +613,7 @@ class WebTest_Profile_BatchUpdateTest extends CiviSeleniumTestCase {
     //Is custom field created
     $this->waitForText('crm-notification-container', "Custom field '$checkLabel1' has been saved.");
     $this->waitForElementPresent("label");
-    $returnArray[1] = array($customGroupTitle, $checkLabel1);
+    $returnArray[1] = [$customGroupTitle, $checkLabel1];
 
     // create another custom field - Integer Radio
     //for checkbox 2
@@ -641,7 +641,7 @@ class WebTest_Profile_BatchUpdateTest extends CiviSeleniumTestCase {
 
     //Is custom field created
     $this->waitForText('crm-notification-container', "Custom field '$checkLabel2' has been saved.");
-    $returnArray[2] = array($customGroupTitle, $checkLabel2);
+    $returnArray[2] = [$customGroupTitle, $checkLabel2];
 
     // create another custom field - Date
     $this->waitForElementPresent("label");
@@ -666,7 +666,7 @@ class WebTest_Profile_BatchUpdateTest extends CiviSeleniumTestCase {
     $this->clickLink('_qf_Field_next_new-top', '_qf_Field_done-bottom', FALSE);
     //Is custom field created
     $this->waitForText('crm-notification-container', "Custom field '$dateFieldLabel' has been saved.");
-    $returnArray[3] = array($customGroupTitle, $dateFieldLabel);
+    $returnArray[3] = [$customGroupTitle, $dateFieldLabel];
 
     //create rich text editor field
     $this->waitForElementPresent("label");
@@ -682,7 +682,7 @@ class WebTest_Profile_BatchUpdateTest extends CiviSeleniumTestCase {
 
     //Is custom field created
     $this->waitForText('crm-notification-container', "Custom field '$richTextField' has been saved.");
-    $returnArray[4] = array($customGroupTitle, $richTextField);
+    $returnArray[4] = [$customGroupTitle, $richTextField];
 
     //create radio button field
     //for radio 1
@@ -711,7 +711,7 @@ class WebTest_Profile_BatchUpdateTest extends CiviSeleniumTestCase {
 
     //Is custom field created
     $this->waitForText('crm-notification-container', "Custom field '$radioLabel1' has been saved.");
-    $returnArray[5] = array($customGroupTitle, $radioLabel1);
+    $returnArray[5] = [$customGroupTitle, $radioLabel1];
 
     // create another custom field - Alpha Radio
     //for radio 2
@@ -740,7 +740,7 @@ class WebTest_Profile_BatchUpdateTest extends CiviSeleniumTestCase {
 
     //Is custom field created
     $this->waitForText('crm-notification-container', "Custom field '$radioLabel2' has been saved.");
-    $returnArray[6] = array($customGroupTitle, $radioLabel2);
+    $returnArray[6] = [$customGroupTitle, $radioLabel2];
 
     return $returnArray;
   }

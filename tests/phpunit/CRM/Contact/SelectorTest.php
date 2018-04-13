@@ -50,9 +50,9 @@ class CRM_Contact_Form_SelectorTest extends CiviUnitTestCase {
    * @dataProvider querySets
    */
   public function testSelectorQuery($dataSet) {
-    $params = CRM_Contact_BAO_Query::convertFormValues($dataSet['form_values'], 0, FALSE, NULL, array());
+    $params = CRM_Contact_BAO_Query::convertFormValues($dataSet['form_values'], 0, FALSE, NULL, []);
     foreach ($dataSet['settings'] as $setting) {
-      $this->callAPISuccess('Setting', 'create', array($setting['name'] => $setting['value']));
+      $this->callAPISuccess('Setting', 'create', [$setting['name'] => $setting['value']]);
     }
     $selector = new CRM_Contact_Selector(
       $dataSet['class'],
@@ -83,108 +83,108 @@ class CRM_Contact_Form_SelectorTest extends CiviUnitTestCase {
    * Data sets for testing.
    */
   public function querySets() {
-    return array(
-      array(
-        array(
+    return [
+      [
+        [
           'description' => 'Normal default behaviour',
           'class' => 'CRM_Contact_Selector',
-          'settings' => array(),
-          'form_values' => array('email' => 'mickey@mouseville.com'),
-          'params' => array(),
+          'settings' => [],
+          'form_values' => ['email' => 'mickey@mouseville.com'],
+          'params' => [],
           'return_properties' => NULL,
           'context' => 'advanced',
           'action' => CRM_Core_Action::ADVANCED,
           'includeContactIds' => NULL,
           'searchDescendentGroups' => FALSE,
-          'expected_query' => array(
+          'expected_query' => [
             0 => 'default',
             1 => 'default',
             2 => "WHERE  ( civicrm_email.email LIKE '%mickey@mouseville.com%' )  AND (contact_a.is_deleted = 0)",
-          ),
-        ),
-      ),
-      array(
-        array(
+          ],
+        ],
+      ],
+      [
+        [
           'description' => 'Normal default + user added wildcard',
           'class' => 'CRM_Contact_Selector',
-          'settings' => array(),
-          'form_values' => array('email' => '%mickey@mouseville.com', 'sort_name' => 'Mouse'),
-          'params' => array(),
+          'settings' => [],
+          'form_values' => ['email' => '%mickey@mouseville.com', 'sort_name' => 'Mouse'],
+          'params' => [],
           'return_properties' => NULL,
           'context' => 'advanced',
           'action' => CRM_Core_Action::ADVANCED,
           'includeContactIds' => NULL,
           'searchDescendentGroups' => FALSE,
-          'expected_query' => array(
+          'expected_query' => [
             0 => 'default',
             1 => 'default',
             2 => "WHERE  ( civicrm_email.email LIKE '%mickey@mouseville.com%'  AND ( ( ( contact_a.sort_name LIKE '%mouse%' ) OR ( civicrm_email.email LIKE '%mouse%' ) ) ) ) AND (contact_a.is_deleted = 0)",
-          ),
-        ),
-      ),
-      array(
-        array(
+          ],
+        ],
+      ],
+      [
+        [
           'description' => 'Site set to not pre-pend wildcard',
           'class' => 'CRM_Contact_Selector',
-          'settings' => array(array('name' => 'includeWildCardInName', 'value' => FALSE)),
-          'form_values' => array('email' => 'mickey@mouseville.com', 'sort_name' => 'Mouse'),
-          'params' => array(),
+          'settings' => [['name' => 'includeWildCardInName', 'value' => FALSE]],
+          'form_values' => ['email' => 'mickey@mouseville.com', 'sort_name' => 'Mouse'],
+          'params' => [],
           'return_properties' => NULL,
           'context' => 'advanced',
           'action' => CRM_Core_Action::ADVANCED,
           'includeContactIds' => NULL,
           'searchDescendentGroups' => FALSE,
-          'expected_query' => array(
+          'expected_query' => [
             0 => 'default',
             1 => 'default',
             2 => "WHERE  ( civicrm_email.email LIKE 'mickey@mouseville.com%'  AND ( ( ( contact_a.sort_name LIKE 'mouse%' ) OR ( civicrm_email.email LIKE 'mouse%' ) ) ) ) AND (contact_a.is_deleted = 0)",
-          ),
-        ),
-      ),
-      array(
-        array(
+          ],
+        ],
+      ],
+      [
+        [
           'description' => 'Use of quotes for exact string',
           'use_case_comments' => 'This is something that was in the code but seemingly not working. No UI info on it though!',
           'class' => 'CRM_Contact_Selector',
-          'settings' => array(array('name' => 'includeWildCardInName', 'value' => FALSE)),
-          'form_values' => array('email' => '"mickey@mouseville.com"', 'sort_name' => 'Mouse'),
-          'params' => array(),
+          'settings' => [['name' => 'includeWildCardInName', 'value' => FALSE]],
+          'form_values' => ['email' => '"mickey@mouseville.com"', 'sort_name' => 'Mouse'],
+          'params' => [],
           'return_properties' => NULL,
           'context' => 'advanced',
           'action' => CRM_Core_Action::ADVANCED,
           'includeContactIds' => NULL,
           'searchDescendentGroups' => FALSE,
-          'expected_query' => array(
+          'expected_query' => [
             0 => 'default',
             1 => 'default',
             2 => "WHERE  ( civicrm_email.email = 'mickey@mouseville.com'  AND ( ( ( contact_a.sort_name LIKE 'mouse%' ) OR ( civicrm_email.email LIKE 'mouse%' ) ) ) ) AND (contact_a.is_deleted = 0)",
-          ),
-        ),
-      ),
-      array(
-        array(
+          ],
+        ],
+      ],
+      [
+        [
           'description' => 'Normal search builder behaviour',
           'class' => 'CRM_Contact_Selector',
-          'settings' => array(),
-          'form_values' => array('contact_type' => 'Individual'),
-          'params' => array(),
-          'return_properties' => array(
+          'settings' => [],
+          'form_values' => ['contact_type' => 'Individual'],
+          'params' => [],
+          'return_properties' => [
             'contact_type' => 1,
             'contact_sub_type' => 1,
             'sort_name' => 1,
-          ),
+          ],
           'context' => 'builder',
           'action' => CRM_Core_Action::NONE,
           'includeContactIds' => NULL,
           'searchDescendentGroups' => FALSE,
-          'expected_query' => array(
+          'expected_query' => [
             0 => 'SELECT contact_a.id as contact_id, contact_a.contact_type as `contact_type`, contact_a.contact_sub_type as `contact_sub_type`, contact_a.sort_name as `sort_name`',
             1 => ' FROM civicrm_contact contact_a',
             2 => 'WHERE  ( contact_a.contact_type IN ("Individual") )  AND (contact_a.is_deleted = 0)',
-          ),
-        ),
-      ),
-    );
+          ],
+        ],
+      ],
+    ];
   }
 
   /**

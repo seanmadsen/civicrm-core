@@ -167,10 +167,10 @@ class CRM_Upgrade_Snapshot_V4p2_Price_DAO_Set extends CRM_Core_DAO {
    */
   public function links() {
     if (!(self::$_links)) {
-      self::$_links = array(
+      self::$_links = [
         'domain_id' => 'civicrm_domain:id',
         'contribution_type_id' => 'civicrm_contribution_type:id',
-      );
+      ];
     }
     return self::$_links;
   }
@@ -182,82 +182,82 @@ class CRM_Upgrade_Snapshot_V4p2_Price_DAO_Set extends CRM_Core_DAO {
    */
   public static function &fields() {
     if (!(self::$_fields)) {
-      self::$_fields = array(
-        'id' => array(
+      self::$_fields = [
+        'id' => [
           'name' => 'id',
           'type' => CRM_Utils_Type::T_INT,
           'required' => TRUE,
-        ),
-        'domain_id' => array(
+        ],
+        'domain_id' => [
           'name' => 'domain_id',
           'type' => CRM_Utils_Type::T_INT,
           'FKClassName' => 'CRM_Core_DAO_Domain',
-        ),
-        'name' => array(
+        ],
+        'name' => [
           'name' => 'name',
           'type' => CRM_Utils_Type::T_STRING,
           'title' => ts('Name'),
           'required' => TRUE,
           'maxlength' => 255,
           'size' => CRM_Utils_Type::HUGE,
-        ),
-        'title' => array(
+        ],
+        'title' => [
           'name' => 'title',
           'type' => CRM_Utils_Type::T_STRING,
           'title' => ts('Title'),
           'required' => TRUE,
           'maxlength' => 255,
           'size' => CRM_Utils_Type::HUGE,
-        ),
-        'is_active' => array(
+        ],
+        'is_active' => [
           'name' => 'is_active',
           'type' => CRM_Utils_Type::T_BOOLEAN,
           'default' => '',
-        ),
-        'help_pre' => array(
+        ],
+        'help_pre' => [
           'name' => 'help_pre',
           'type' => CRM_Utils_Type::T_TEXT,
           'title' => ts('Help Pre'),
           'rows' => 4,
           'cols' => 80,
-        ),
-        'help_post' => array(
+        ],
+        'help_post' => [
           'name' => 'help_post',
           'type' => CRM_Utils_Type::T_TEXT,
           'title' => ts('Help Post'),
           'rows' => 4,
           'cols' => 80,
-        ),
-        'javascript' => array(
+        ],
+        'javascript' => [
           'name' => 'javascript',
           'type' => CRM_Utils_Type::T_STRING,
           'title' => ts('Javascript'),
           'maxlength' => 64,
           'size' => CRM_Utils_Type::BIG,
-        ),
-        'extends' => array(
+        ],
+        'extends' => [
           'name' => 'extends',
           'type' => CRM_Utils_Type::T_STRING,
           'title' => ts('Extends'),
           'required' => TRUE,
           'maxlength' => 255,
           'size' => CRM_Utils_Type::HUGE,
-        ),
-        'contribution_type_id' => array(
+        ],
+        'contribution_type_id' => [
           'name' => 'contribution_type_id',
           'type' => CRM_Utils_Type::T_INT,
           'default' => 'UL',
           'FKClassName' => 'CRM_Contribute_DAO_ContributionType',
-        ),
-        'is_quick_config' => array(
+        ],
+        'is_quick_config' => [
           'name' => 'is_quick_config',
           'type' => CRM_Utils_Type::T_BOOLEAN,
-        ),
-        'is_reserved' => array(
+        ],
+        'is_reserved' => [
           'name' => 'is_reserved',
           'type' => CRM_Utils_Type::T_BOOLEAN,
-        ),
-      );
+        ],
+      ];
     }
     return self::$_fields;
   }
@@ -289,7 +289,7 @@ class CRM_Upgrade_Snapshot_V4p2_Price_DAO_Set extends CRM_Core_DAO {
    */
   static function &import($prefix = FALSE) {
     if (!(self::$_import)) {
-      self::$_import = array();
+      self::$_import = [];
       $fields = self::fields();
       foreach ($fields as $name => $field) {
         if (!empty($field['import'])) {
@@ -314,7 +314,7 @@ class CRM_Upgrade_Snapshot_V4p2_Price_DAO_Set extends CRM_Core_DAO {
    */
   static function &export($prefix = FALSE) {
     if (!(self::$_export)) {
-      self::$_export = array();
+      self::$_export = [];
       $fields = self::fields();
       foreach ($fields as $name => $field) {
         if (!empty($field['export'])) {

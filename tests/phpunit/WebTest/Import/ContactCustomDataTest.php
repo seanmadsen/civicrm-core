@@ -78,18 +78,18 @@ class WebTest_Import_ContactCustomDataTest extends ImportCiviSeleniumTestCase {
     list($headers, $rows) = $this->_individualCustomCSVData($customDataParams, $firstName1);
 
     // Import and check Individual contacts in Skip mode.
-    $other = array(
+    $other = [
       'saveMapping' => TRUE,
       'callbackImportSummary' => 'checkDuplicateContacts',
       'dedupe' => $rgId[0],
-    );
+    ];
 
     // Check duplicates
-    $this->importContacts($headers, $rows, 'Individual', 'Skip', array(), $other);
+    $this->importContacts($headers, $rows, 'Individual', 'Skip', [], $other);
 
     // Import without duplicate checking
-    $other = array('saveMapping' => TRUE);
-    $this->importContacts($headers, $rows, 'Individual', 'No Duplicate Checking', array(), $other);
+    $other = ['saveMapping' => TRUE];
+    $this->importContacts($headers, $rows, 'Individual', 'No Duplicate Checking', [], $other);
 
     // Type search name in autocomplete.
     $this->click('sort_name_navigation');
@@ -114,21 +114,21 @@ class WebTest_Import_ContactCustomDataTest extends ImportCiviSeleniumTestCase {
    * @return array
    */
   public function _individualCustomCSVData($customDataParams, $firstName1) {
-    $headers = array(
+    $headers = [
       'first_name' => 'First Name',
       'last_name' => 'Last Name',
       "custom_{$customDataParams[0]}" => "{$customDataParams[1]} :: {$customDataParams[2]}",
-    );
+    ];
 
-    $rows = array(
-      array(
+    $rows = [
+      [
         'first_name' => $firstName1,
         'last_name' => 'Anderson',
         "custom_{$customDataParams[0]}" => 'This is a test field',
-      ),
-    );
+      ],
+    ];
 
-    return array($headers, $rows);
+    return [$headers, $rows];
   }
 
   /**
@@ -188,7 +188,7 @@ class WebTest_Import_ContactCustomDataTest extends ImportCiviSeleniumTestCase {
     $customFieldId = explode('&id=', $this->getAttribute("xpath=//div[@id='field_page']//table/tbody//tr/td/div[text()='$customField']/../../td[8]/span/a@href"));
     $customFieldId = $customFieldId[1];
 
-    return array("custom_{$customFieldId}", $customField, $customGroupTitle);
+    return ["custom_{$customFieldId}", $customField, $customGroupTitle];
   }
 
 }

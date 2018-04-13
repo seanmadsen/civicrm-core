@@ -53,7 +53,7 @@ class WebTest_Admin_MoveCustomDataTest extends CiviSeleniumTestCase {
     $this->_fillCustomDataForContact($cid_from_missing, $to_group_id);
 
     //to verify data hasn't been lost, we load the values for each contact
-    $pre_move_values = array();
+    $pre_move_values = [];
     $pre_move_values[$cid_all]['source'] = $this->_loadDataFromApi($cid_all, $from_group_id);
     $pre_move_values[$cid_all]['destination'] = $this->_loadDataFromApi($cid_all, $to_group_id);
     $pre_move_values[$cid_from_missing]['source'] = $this->_loadDataFromApi($cid_from_missing, $from_group_id);
@@ -64,14 +64,14 @@ class WebTest_Admin_MoveCustomDataTest extends CiviSeleniumTestCase {
     //ok, so after all that setup, we are now good to actually move a field
 
     //first, pick a random field from the source group to move
-    $fields = $this->webtest_civicrm_api("CustomField", "get", array('custom_group_id' => $from_group_id));
+    $fields = $this->webtest_civicrm_api("CustomField", "get", ['custom_group_id' => $from_group_id]);
     $field_to_move = array_rand($fields['values']);
 
     //move the field
     $this->_moveCustomField($field_to_move, $from_group_id, $to_group_id);
 
     //now lets verify the data, load up the new values from the api...
-    $post_move_values = array();
+    $post_move_values = [];
     $post_move_values[$cid_all]['source'] = $this->_loadDataFromApi($cid_all, $from_group_id, TRUE);
     $post_move_values[$cid_all]['destination'] = $this->_loadDataFromApi($cid_all, $to_group_id);
     $post_move_values[$cid_from_missing]['source'] = $this->_loadDataFromApi($cid_from_missing, $from_group_id);
@@ -80,15 +80,15 @@ class WebTest_Admin_MoveCustomDataTest extends CiviSeleniumTestCase {
     $post_move_values[$cid_to_missing]['destination'] = $this->_loadDataFromApi($cid_to_missing, $to_group_id);
 
     // Make sure that only the appropriate values have changed.
-    foreach (array(
+    foreach ([
                $cid_all,
                $cid_from_missing,
                $cid_to_missing,
-             ) as $cid) {
-      foreach (array(
+             ] as $cid) {
+      foreach ([
                  'source',
                  'destination',
-               ) as $fieldset) {
+               ] as $fieldset) {
         foreach ($pre_move_values[$cid][$fieldset] as $id => $value) {
           if ($id != $field_to_move) {
             //All fields that were there should still be there
@@ -108,9 +108,9 @@ class WebTest_Admin_MoveCustomDataTest extends CiviSeleniumTestCase {
     $this->openCiviPage('contact/view', "reset=1&cid={$cid_all}");
 
     //load the names of the custom fieldsets
-    $source = $this->webtest_civicrm_api("CustomGroup", "get", array('id' => $from_group_id));
+    $source = $this->webtest_civicrm_api("CustomGroup", "get", ['id' => $from_group_id]);
     $source = $source['values'][$from_group_id];
-    $destination = $this->webtest_civicrm_api("CustomGroup", "get", array('id' => $to_group_id));
+    $destination = $this->webtest_civicrm_api("CustomGroup", "get", ['id' => $to_group_id]);
     $destination = $destination['values'][$to_group_id];
 
     //assert that the moved custom field is missing from the source fieldset
@@ -175,22 +175,22 @@ class WebTest_Admin_MoveCustomDataTest extends CiviSeleniumTestCase {
    */
   public function _loadDataFromApi($contact_id, $group_id, $reset_cache = FALSE) {
     // cache the fields, just to speed things up a little
-    static $field_ids = array();
+    static $field_ids = [];
 
     if ($reset_cache) {
-      $field_ids = array();
+      $field_ids = [];
     }
 
     //if the field ids havent been cached yet, grab them
     if (!isset($field_ids[$group_id])) {
-      $fields = $this->webtest_civicrm_api("CustomField", "get", array('custom_group_id' => $group_id));
-      $field_ids[$group_id] = array();
+      $fields = $this->webtest_civicrm_api("CustomField", "get", ['custom_group_id' => $group_id]);
+      $field_ids[$group_id] = [];
       foreach ($fields['values'] as $id => $field) {
         $field_ids[$group_id][] = $id;
       }
     }
 
-    $params = array('contact_id' => $contact_id);
+    $params = ['contact_id' => $contact_id];
     foreach ($field_ids[$group_id] as $id) {
       $params['return.custom_' . $id] = 1;
     }
@@ -198,7 +198,7 @@ class WebTest_Admin_MoveCustomDataTest extends CiviSeleniumTestCase {
     $contact = $this->webtest_civicrm_api("Contact", "get", $params);
 
     //clean up the api results a bit....
-    $results = array();
+    $results = [];
     foreach ($field_ids[$group_id] as $id) {
       if (isset($contact['values'][$contact_id]['custom_' . $id])) {
         $results[$id] = $contact['values'][$contact_id]['custom_' . $id];
@@ -266,11 +266,11 @@ class WebTest_Admin_MoveCustomDataTest extends CiviSeleniumTestCase {
    */
   public function _addCustomFieldToGroup($group_id, $type = 'Alphanumeric', $widget = 'CheckBox', $prefix = '') {
     //A mapping of data type names to integer keys
-    $type_map = array(
-      'alphanumeric' => array(
+    $type_map = [
+      'alphanumeric' => [
         'id' => 0,
-        'widgets' => array('Text', 'Select', 'Radio', 'CheckBox', 'Multi-Select'),
-        'options' => array(
+        'widgets' => ['Text', 'Select', 'Radio', 'CheckBox', 'Multi-Select'],
+        'options' => [
           'option_01',
           'option_02',
           'option_03',
@@ -281,35 +281,35 @@ class WebTest_Admin_MoveCustomDataTest extends CiviSeleniumTestCase {
           'option_08',
           'option_09',
           'option_10',
-        ),
-      ),
-      'integer' => array(
+        ],
+      ],
+      'integer' => [
         'id' => 1,
-        'widgets' => array('Text', 'Select', 'Radio'),
-        'options' => array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),
-      ),
-      'number' => array(
+        'widgets' => ['Text', 'Select', 'Radio'],
+        'options' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+      ],
+      'number' => [
         'id' => 2,
-        'widgets' => array('Text', 'Select', 'Radio'),
-        'options' => array(1.01, 2.02, 3.03, 4.04, 5.05, 6.06, 7.07, 8.08 . 9.09, 10.1),
-      ),
-      'money' => array(
+        'widgets' => ['Text', 'Select', 'Radio'],
+        'options' => [1.01, 2.02, 3.03, 4.04, 5.05, 6.06, 7.07, 8.08 . 9.09, 10.1],
+      ],
+      'money' => [
         'id' => 3,
-        'widgets' => array('Text', 'Select', 'Radio'),
-        'options' => array(1.01, 2.02, 3.03, 4.04, 5.05, 6.06, 7.07, 8.08 . 9.09, 10.1),
-      ),
-      'note' => array(
+        'widgets' => ['Text', 'Select', 'Radio'],
+        'options' => [1.01, 2.02, 3.03, 4.04, 5.05, 6.06, 7.07, 8.08 . 9.09, 10.1],
+      ],
+      'note' => [
         'id' => 4,
-        'widgets' => array('TextArea'),
-      ),
-      'date' => array(
+        'widgets' => ['TextArea'],
+      ],
+      'date' => [
         'id' => 5,
-        'widgets' => array('Date'),
-      ),
-      'yes or no' => array(
+        'widgets' => ['Date'],
+      ],
+      'yes or no' => [
         'id' => 6,
-        'widgets' => array('Radio'),
-      ),
+        'widgets' => ['Radio'],
+      ],
       //'state/province'    => array(
       //  'id' => 7,
       //),
@@ -323,7 +323,7 @@ class WebTest_Admin_MoveCustomDataTest extends CiviSeleniumTestCase {
       //  'id' => 11,
       //),
       //'file' => 9, hahaha im not doing files.
-    );
+    ];
 
     //downcase the type
     $type = strtolower($type);
@@ -401,10 +401,10 @@ class WebTest_Admin_MoveCustomDataTest extends CiviSeleniumTestCase {
     $this->waitForText('crm-notification-container', "Custom field '$fieldLabel' has been saved.");
 
     //get the custom id of the custom field that was just created
-    $results = $this->webtest_civicrm_api("CustomField", "get", array(
+    $results = $this->webtest_civicrm_api("CustomField", "get", [
         'label' => $fieldLabel,
         'custom_group_id' => $group_id,
-      ));
+    ]);
     //While there _technically_ could be two fields with the same name, its highly unlikely
     //so assert that exactly one result is return
     $this->assertTrue($results['count'] == 1, "Could not uniquely get custom field id");
@@ -417,7 +417,7 @@ class WebTest_Admin_MoveCustomDataTest extends CiviSeleniumTestCase {
    * @param string $prefix
    * @param array $values
    */
-  public function _createFieldOptions($count = 3, $prefix = "option", $values = array()) {
+  public function _createFieldOptions($count = 3, $prefix = "option", $values = []) {
     // Only support up to 10 options on the creation form
     $count = $count > 10 ? 10 : $count;
 
@@ -441,18 +441,18 @@ class WebTest_Admin_MoveCustomDataTest extends CiviSeleniumTestCase {
     $this->waitForElementPresent("address_1_street_address");
 
     //get the custom fields for the group
-    $fields = $this->webtest_civicrm_api("CustomField", "get", array('custom_group_id' => $group_id));
+    $fields = $this->webtest_civicrm_api("CustomField", "get", ['custom_group_id' => $group_id]);
     $fields = $fields['values'];
 
     //we need the id the contact's record in the table for this custom group.
     //Recent (4.0.6+, i think?) versions of the api return this when getting
     //custom data for a contact.  So we do that.
     $field_ids = array_keys($fields);
-    $contact = $this->webtest_civicrm_api("Contact", "get", array(
+    $contact = $this->webtest_civicrm_api("Contact", "get", [
         'contact_id' => $contact_id,
         'return.custom_' . $field_ids[0] => 1,
-      ));
-    $group = $this->webtest_civicrm_api("CustomGroup", "get", array('id' => $group_id, 'return.table_name' => 1));
+    ]);
+    $group = $this->webtest_civicrm_api("CustomGroup", "get", ['id' => $group_id, 'return.table_name' => 1]);
 
     //if the contact has not been saved since this fieldset has been creative,
     //the form uses id = -1. In this case the table pk wont be in the api results
@@ -471,7 +471,7 @@ class WebTest_Admin_MoveCustomDataTest extends CiviSeleniumTestCase {
         $this->webtestFillDate("custom_" . $field['id'] . "_" . $table_pk, "+1 week");
       }
       elseif (isset($field['option_group_id'])) {
-        $options = $this->webtest_civicrm_api("OptionValue", "get", array('option_group_id' => $field['option_group_id']));
+        $options = $this->webtest_civicrm_api("OptionValue", "get", ['option_group_id' => $field['option_group_id']]);
         $options = $options['values'];
         $pick_me = $options[array_rand($options)]['label'];
         $this->click("xpath=//table//tr/td/label[text()=\"$pick_me\"]");

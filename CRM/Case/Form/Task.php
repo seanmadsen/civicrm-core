@@ -59,7 +59,7 @@ class CRM_Case_Form_Task extends CRM_Core_Form_Task {
    * @param CRM_Core_Form $form
    */
   public static function preProcessCommon(&$form) {
-    $form->_caseIds = array();
+    $form->_caseIds = [];
 
     $values = $form->controller->exportValues($form->get('searchFormName'));
 
@@ -67,7 +67,7 @@ class CRM_Case_Form_Task extends CRM_Core_Form_Task {
     $caseTasks = CRM_Case_Task::tasks();
     $form->assign('taskName', $caseTasks[$form->_task]);
 
-    $ids = array();
+    $ids = [];
     if ($values['radio_ts'] == 'ts_sel') {
       foreach ($values as $name => $value) {
         if (substr($name, 0, CRM_Core_Form::CB_PREFIX_LEN) == CRM_Core_Form::CB_PREFIX) {

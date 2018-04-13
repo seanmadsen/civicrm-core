@@ -45,7 +45,7 @@ class WebTest_Contribute_OnlineMultiplePaymentProcessorTest extends CiviSelenium
     $pageId = $this->webtestAddContributionPage($hash = NULL,
       $rand = NULL,
       $pageTitle = $donationPageTitle,
-      $processor = array($proProcessorName => 'Dummy', $standardProcessorName => 'PayPal_Standard'),
+      $processor = [$proProcessorName => 'Dummy', $standardProcessorName => 'PayPal_Standard'],
       $amountSection = TRUE,
       $payLater = TRUE,
       $onBehalf = FALSE,
@@ -129,7 +129,7 @@ class WebTest_Contribute_OnlineMultiplePaymentProcessorTest extends CiviSelenium
     $pageId = $this->webtestAddContributionPage($hash,
       $rand = NULL,
       $pageTitle = $donationPageTitle,
-      $processor = array($proProcessorName => 'Dummy'),
+      $processor = [$proProcessorName => 'Dummy'],
       $amountSection = TRUE,
       $payLater = TRUE,
       $onBehalf = FALSE,
@@ -196,11 +196,11 @@ class WebTest_Contribute_OnlineMultiplePaymentProcessorTest extends CiviSelenium
     $this->waitForElementPresent("xpath=//table[@class='selector row-highlight']/tbody/tr[1]/td[10]/span//a[text()='View']");
     $this->click("xpath=//table[@class='selector row-highlight']/tbody/tr[1]/td[10]/span//a[text()='View']");
     $this->waitForElementPresent("_qf_ContributionView_cancel-bottom");
-    $expected = array(
+    $expected = [
       'From' => "{$firstName} {$lastName}",
       'Financial Type' => 'Donation',
       'Contribution Status' => 'Pending : Pay Later',
-    );
+    ];
     $this->webtestVerifyTabularData($expected);
     $this->click('_qf_ContributionView_cancel-bottom');
   }

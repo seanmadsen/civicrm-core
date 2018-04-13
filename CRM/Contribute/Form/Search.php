@@ -73,7 +73,7 @@ class CRM_Contribute_Form_Search extends CRM_Core_Form_Search {
 
     $this->_done = FALSE;
     // @todo - is this an error - $this->_defaults is used.
-    $this->defaults = array();
+    $this->defaults = [];
 
     /*
      * we allow the controller to set force/reset externally, useful when we are being
@@ -271,10 +271,10 @@ class CRM_Contribute_Form_Search extends CRM_Core_Form_Search {
       $this->_formValues["contribution_test"] = 0;
     }
 
-    foreach (array(
+    foreach ([
                'contribution_amount_low',
                'contribution_amount_high',
-             ) as $f) {
+             ] as $f) {
       if (isset($this->_formValues[$f])) {
         $this->_formValues[$f] = CRM_Utils_Rule::cleanMoney($this->_formValues[$f]);
       }
@@ -282,7 +282,7 @@ class CRM_Contribute_Form_Search extends CRM_Core_Form_Search {
 
     $config = CRM_Core_Config::singleton();
     if (!empty($_POST)) {
-      $specialParams = array(
+      $specialParams = [
         'financial_type_id',
         'contribution_soft_credit_type_id',
         'contribution_status_id',
@@ -293,7 +293,7 @@ class CRM_Contribute_Form_Search extends CRM_Core_Form_Search {
         'invoice_id',
         'payment_instrument_id',
         'contribution_batch_id',
-      );
+      ];
       CRM_Contact_BAO_Query::processSpecialFormValue($this->_formValues, $specialParams);
 
       $tags = CRM_Utils_Array::value('contact_tags', $this->_formValues);
@@ -395,8 +395,8 @@ class CRM_Contribute_Form_Search extends CRM_Core_Form_Search {
 
     $status = CRM_Utils_Request::retrieve('status', 'String');
     if ($status) {
-      $this->_formValues['contribution_status_id'] = array($status => 1);
-      $this->_defaults['contribution_status_id'] = array($status => 1);
+      $this->_formValues['contribution_status_id'] = [$status => 1];
+      $this->_defaults['contribution_status_id'] = [$status => 1];
     }
 
     $pcpid = (array) CRM_Utils_Request::retrieve('pcpid', 'String', $this);

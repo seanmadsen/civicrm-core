@@ -140,17 +140,17 @@ abstract class CRM_Contact_Import_Parser extends CRM_Import_Parser {
     $this->_invalidRowCount = $this->_validCount = 0;
     $this->_totalCount = $this->_conflictCount = 0;
 
-    $this->_errors = array();
-    $this->_warnings = array();
-    $this->_conflicts = array();
-    $this->_unparsedAddresses = array();
+    $this->_errors = [];
+    $this->_warnings = [];
+    $this->_conflicts = [];
+    $this->_unparsedAddresses = [];
 
     $this->_tableName = $tableName;
     $this->_primaryKeyName = $primaryKeyName;
     $this->_statusFieldName = $statusFieldName;
 
     if ($mode == self::MODE_MAPFIELD) {
-      $this->_rows = array();
+      $this->_rows = [];
     }
     else {
       $this->_activeFieldCount = count($this->_activeFields);
@@ -296,30 +296,30 @@ abstract class CRM_Contact_Import_Parser extends CRM_Import_Parser {
 
       if ($this->_invalidRowCount) {
         // removed view url for invlaid contacts
-        $headers = array_merge(array(
+        $headers = array_merge([
             ts('Line Number'),
             ts('Reason'),
-          ),
+        ],
           $customHeaders
         );
         $this->_errorFileName = self::errorFileName(self::ERROR);
         self::exportCSV($this->_errorFileName, $headers, $this->_errors);
       }
       if ($this->_conflictCount) {
-        $headers = array_merge(array(
+        $headers = array_merge([
             ts('Line Number'),
             ts('Reason'),
-          ),
+        ],
           $customHeaders
         );
         $this->_conflictFileName = self::errorFileName(self::CONFLICT);
         self::exportCSV($this->_conflictFileName, $headers, $this->_conflicts);
       }
       if ($this->_duplicateCount) {
-        $headers = array_merge(array(
+        $headers = array_merge([
             ts('Line Number'),
             ts('View Contact URL'),
-          ),
+        ],
           $customHeaders
         );
 
@@ -327,10 +327,10 @@ abstract class CRM_Contact_Import_Parser extends CRM_Import_Parser {
         self::exportCSV($this->_duplicateFileName, $headers, $this->_duplicates);
       }
       if ($this->_unMatchCount) {
-        $headers = array_merge(array(
+        $headers = array_merge([
             ts('Line Number'),
             ts('Reason'),
-          ),
+        ],
           $customHeaders
         );
 
@@ -338,10 +338,10 @@ abstract class CRM_Contact_Import_Parser extends CRM_Import_Parser {
         self::exportCSV($this->_misMatchFilemName, $headers, $this->_unMatch);
       }
       if ($this->_unparsedAddressCount) {
-        $headers = array_merge(array(
+        $headers = array_merge([
             ts('Line Number'),
             ts('Contact Edit URL'),
-          ),
+        ],
           $customHeaders
         );
         $this->_errorFileName = self::errorFileName(self::UNPARSED_ADDRESS_WARNING);
@@ -488,7 +488,7 @@ abstract class CRM_Contact_Import_Parser extends CRM_Import_Parser {
    *   (reference ) associative array of name/value pairs
    */
   public function &getActiveFieldParams() {
-    $params = array();
+    $params = [];
 
     for ($i = 0; $i < $this->_activeFieldCount; $i++) {
       if ($this->_activeFields[$i]->_name == 'do_not_import') {
@@ -498,13 +498,13 @@ abstract class CRM_Contact_Import_Parser extends CRM_Import_Parser {
       if (isset($this->_activeFields[$i]->_value)) {
         if (isset($this->_activeFields[$i]->_hasLocationType)) {
           if (!isset($params[$this->_activeFields[$i]->_name])) {
-            $params[$this->_activeFields[$i]->_name] = array();
+            $params[$this->_activeFields[$i]->_name] = [];
           }
 
-          $value = array(
+          $value = [
             $this->_activeFields[$i]->_name => $this->_activeFields[$i]->_value,
             'location_type_id' => $this->_activeFields[$i]->_hasLocationType,
-          );
+          ];
 
           if (isset($this->_activeFields[$i]->_phoneType)) {
             $value['phone_type_id'] = $this->_activeFields[$i]->_phoneType;
@@ -518,10 +518,10 @@ abstract class CRM_Contact_Import_Parser extends CRM_Import_Parser {
           $params[$this->_activeFields[$i]->_name][] = $value;
         }
         elseif (isset($this->_activeFields[$i]->_websiteType)) {
-          $value = array(
+          $value = [
             $this->_activeFields[$i]->_name => $this->_activeFields[$i]->_value,
             'website_type_id' => $this->_activeFields[$i]->_websiteType,
-          );
+          ];
 
           $params[$this->_activeFields[$i]->_name][] = $value;
         }
@@ -535,7 +535,7 @@ abstract class CRM_Contact_Import_Parser extends CRM_Import_Parser {
         //minor fix for CRM-4062
         if (isset($this->_activeFields[$i]->_related)) {
           if (!isset($params[$this->_activeFields[$i]->_related])) {
-            $params[$this->_activeFields[$i]->_related] = array();
+            $params[$this->_activeFields[$i]->_related] = [];
           }
 
           if (!isset($params[$this->_activeFields[$i]->_related]['contact_type']) && !empty($this->_activeFields[$i]->_relatedContactType)) {
@@ -546,12 +546,12 @@ abstract class CRM_Contact_Import_Parser extends CRM_Import_Parser {
             if (!empty($params[$this->_activeFields[$i]->_related][$this->_activeFields[$i]->_relatedContactDetails]) &&
               !is_array($params[$this->_activeFields[$i]->_related][$this->_activeFields[$i]->_relatedContactDetails])
             ) {
-              $params[$this->_activeFields[$i]->_related][$this->_activeFields[$i]->_relatedContactDetails] = array();
+              $params[$this->_activeFields[$i]->_related][$this->_activeFields[$i]->_relatedContactDetails] = [];
             }
-            $value = array(
+            $value = [
               $this->_activeFields[$i]->_relatedContactDetails => $this->_activeFields[$i]->_value,
               'location_type_id' => $this->_activeFields[$i]->_relatedContactLocType,
-            );
+            ];
 
             if (isset($this->_activeFields[$i]->_relatedContactPhoneType)) {
               $value['phone_type_id'] = $this->_activeFields[$i]->_relatedContactPhoneType;
@@ -565,10 +565,10 @@ abstract class CRM_Contact_Import_Parser extends CRM_Import_Parser {
             $params[$this->_activeFields[$i]->_related][$this->_activeFields[$i]->_relatedContactDetails][] = $value;
           }
           elseif (isset($this->_activeFields[$i]->_relatedContactWebsiteType)) {
-            $params[$this->_activeFields[$i]->_related][$this->_activeFields[$i]->_relatedContactDetails][] = array(
+            $params[$this->_activeFields[$i]->_related][$this->_activeFields[$i]->_relatedContactDetails][] = [
               'url' => $this->_activeFields[$i]->_value,
               'website_type_id' => $this->_activeFields[$i]->_relatedContactWebsiteType,
-            );
+            ];
           }
           else {
             $params[$this->_activeFields[$i]->_related][$this->_activeFields[$i]->_relatedContactDetails] = $this->_activeFields[$i]->_value;
@@ -584,7 +584,7 @@ abstract class CRM_Contact_Import_Parser extends CRM_Import_Parser {
    * @return array
    */
   public function getColumnPatterns() {
-    $values = array();
+    $values = [];
     foreach ($this->_fields as $name => $field) {
       $values[$name] = $field->_columnPattern;
     }
@@ -685,8 +685,8 @@ abstract class CRM_Contact_Import_Parser extends CRM_Import_Parser {
       CRM_Core_Error::movedSiteError($fileName);
     }
     //hack to remove '_status', '_statusMsg' and '_id' from error file
-    $errorValues = array();
-    $dbRecordStatus = array('IMPORTED', 'ERROR', 'DUPLICATE', 'INVALID', 'NEW');
+    $errorValues = [];
+    $dbRecordStatus = ['IMPORTED', 'ERROR', 'DUPLICATE', 'INVALID', 'NEW'];
     foreach ($data as $rowCount => $rowValues) {
       $count = 0;
       foreach ($rowValues as $key => $val) {
@@ -699,7 +699,7 @@ abstract class CRM_Contact_Import_Parser extends CRM_Import_Parser {
     }
     $data = $errorValues;
 
-    $output = array();
+    $output = [];
     $fd = fopen($fileName, 'w');
 
     foreach ($header as $key => $value) {
@@ -736,11 +736,11 @@ abstract class CRM_Contact_Import_Parser extends CRM_Import_Parser {
                       SET    $statusFieldName = ?,
                              ${statusFieldName}Msg = ?
                       WHERE  $primaryKeyName = ?";
-      $args = array(
+      $args = [
         $params[$statusFieldName],
         CRM_Utils_Array::value("${statusFieldName}Msg", $params),
         $id,
-      );
+      ];
 
       //print "Running query: $query<br/>With arguments: ".$params[$statusFieldName].", ".$params["${statusFieldName}Msg"].", $id<br/>";
 
@@ -759,9 +759,9 @@ abstract class CRM_Contact_Import_Parser extends CRM_Import_Parser {
    *   Contact DAO fields.
    */
   public function formatCommonData($params, &$formatted, &$contactFields) {
-    $csType = array(
+    $csType = [
       CRM_Utils_Array::value('contact_type', $formatted),
-    );
+    ];
 
     //CRM-5125
     //add custom fields for contact sub type
@@ -779,11 +779,11 @@ abstract class CRM_Contact_Import_Parser extends CRM_Import_Parser {
     $customFields = $customFields + $addressCustomFields;
 
     //if a Custom Email Greeting, Custom Postal Greeting or Custom Addressee is mapped, and no "Greeting / Addressee Type ID" is provided, then automatically set the type = Customized, CRM-4575
-    $elements = array(
+    $elements = [
       'email_greeting_custom' => 'email_greeting',
       'postal_greeting_custom' => 'postal_greeting',
       'addressee_custom' => 'addressee',
-    );
+    ];
     foreach ($elements as $k => $v) {
       if (array_key_exists($k, $params) && !(array_key_exists($v, $params))) {
         $label = key(CRM_Core_OptionGroup::values($v, TRUE, NULL, NULL, 'AND v.name = "Customized"'));
@@ -863,9 +863,9 @@ abstract class CRM_Contact_Import_Parser extends CRM_Import_Parser {
         }
       }
 
-      $formatValues = array(
+      $formatValues = [
         $key => $field,
-      );
+      ];
 
       if (($key !== 'preferred_communication_method') && (array_key_exists($key, $contactFields))) {
         // due to merging of individual table and
@@ -913,8 +913,8 @@ abstract class CRM_Contact_Import_Parser extends CRM_Import_Parser {
             if (!empty($formatted[$key]) && !empty($params[$key])) {
               $mulValues = explode(',', $formatted[$key]);
               $customOption = CRM_Core_BAO_CustomOption::getCustomOption($customFieldID, TRUE);
-              $formatted[$key] = array();
-              $params[$key] = array();
+              $formatted[$key] = [];
+              $params[$key] = [];
               foreach ($mulValues as $v1) {
                 foreach ($customOption as $v2) {
                   if ((strtolower($v2['label']) == strtolower(trim($v1))) ||
@@ -1006,7 +1006,7 @@ abstract class CRM_Contact_Import_Parser extends CRM_Import_Parser {
     //      Custom
 
     // Cache the various object fields
-    static $fields = array();
+    static $fields = [];
 
     // first add core contact values since for other Civi modules they are not added
     $contactFields = CRM_Contact_DAO_Contact::fields();
@@ -1046,10 +1046,10 @@ abstract class CRM_Contact_Import_Parser extends CRM_Import_Parser {
     // CRM-4575
     if (isset($values['email_greeting'])) {
       if (!empty($params['email_greeting_id'])) {
-        $emailGreetingFilter = array(
+        $emailGreetingFilter = [
           'contact_type' => CRM_Utils_Array::value('contact_type', $params),
           'greeting_type' => 'email_greeting',
-        );
+        ];
         $emailGreetings = CRM_Core_PseudoConstant::greeting($emailGreetingFilter);
         $params['email_greeting'] = $emailGreetings[$params['email_greeting_id']];
       }
@@ -1062,10 +1062,10 @@ abstract class CRM_Contact_Import_Parser extends CRM_Import_Parser {
 
     if (isset($values['postal_greeting'])) {
       if (!empty($params['postal_greeting_id'])) {
-        $postalGreetingFilter = array(
+        $postalGreetingFilter = [
           'contact_type' => CRM_Utils_Array::value('contact_type', $params),
           'greeting_type' => 'postal_greeting',
-        );
+        ];
         $postalGreetings = CRM_Core_PseudoConstant::greeting($postalGreetingFilter);
         $params['postal_greeting'] = $postalGreetings[$params['postal_greeting_id']];
       }
@@ -1077,10 +1077,10 @@ abstract class CRM_Contact_Import_Parser extends CRM_Import_Parser {
 
     if (isset($values['addressee'])) {
       if (!empty($params['addressee_id'])) {
-        $addresseeFilter = array(
+        $addresseeFilter = [
           'contact_type' => CRM_Utils_Array::value('contact_type', $params),
           'greeting_type' => 'addressee',
-        );
+        ];
         $addressee = CRM_Core_PseudoConstant::addressee($addresseeFilter);
         $params['addressee'] = $addressee[$params['addressee_id']];
       }
@@ -1102,7 +1102,7 @@ abstract class CRM_Contact_Import_Parser extends CRM_Import_Parser {
     }
 
     if (!empty($values['preferred_communication_method'])) {
-      $comm = array();
+      $comm = [];
       $pcm = array_change_key_case(array_flip(CRM_Core_PseudoConstant::get('CRM_Contact_DAO_Contact', 'preferred_communication_method')), CASE_LOWER);
 
       $preffComm = explode(',', $values['preferred_communication_method']);
@@ -1126,7 +1126,7 @@ abstract class CRM_Contact_Import_Parser extends CRM_Import_Parser {
       if (!array_key_exists('website', $params) ||
         !is_array($params['website'])
       ) {
-        $params['website'] = array();
+        $params['website'] = [];
       }
 
       $websiteCount = count($params['website']);
@@ -1139,13 +1139,13 @@ abstract class CRM_Contact_Import_Parser extends CRM_Import_Parser {
 
     // get the formatted location blocks into params - w/ 3.0 format, CRM-4605
     if (!empty($values['location_type_id'])) {
-      $blockTypes = array(
+      $blockTypes = [
         'phone' => 'Phone',
         'email' => 'Email',
         'im' => 'IM',
         'openid' => 'OpenID',
         'phone_ext' => 'Phone',
-      );
+      ];
       foreach ($blockTypes as $blockFieldName => $block) {
         if (!array_key_exists($blockFieldName, $values)) {
           continue;
@@ -1153,7 +1153,7 @@ abstract class CRM_Contact_Import_Parser extends CRM_Import_Parser {
 
         // block present in value array.
         if (!array_key_exists($blockFieldName, $params) || !is_array($params[$blockFieldName])) {
-          $params[$blockFieldName] = array();
+          $params[$blockFieldName] = [];
         }
 
         if (!array_key_exists($block, $fields)) {
@@ -1174,7 +1174,7 @@ abstract class CRM_Contact_Import_Parser extends CRM_Import_Parser {
 
         if ($values['location_type_id'] === 'Primary') {
           if (!empty($params['id'])) {
-            $primary = civicrm_api3($block, 'get', array('return' => 'location_type_id', 'contact_id' => $params['id'], 'is_primary' => 1, 'sequential' => 1));
+            $primary = civicrm_api3($block, 'get', ['return' => 'location_type_id', 'contact_id' => $params['id'], 'is_primary' => 1, 'sequential' => 1]);
           }
           $defaultLocationType = CRM_Core_BAO_LocationType::getDefault();
           $values['location_type_id'] = (isset($primary) && $primary['count']) ? $primary['values'][0]['location_type_id'] : $defaultLocationType->id;
@@ -1191,7 +1191,7 @@ abstract class CRM_Contact_Import_Parser extends CRM_Import_Parser {
 
       // handle address fields.
       if (!array_key_exists('address', $params) || !is_array($params['address'])) {
-        $params['address'] = array();
+        $params['address'] = [];
       }
 
       if (!array_key_exists('Address', $fields)) {
@@ -1202,7 +1202,7 @@ abstract class CRM_Contact_Import_Parser extends CRM_Import_Parser {
       // The actual formatting (like date, country ..etc) for address custom fields is taken care of while saving
       // the address in CRM_Core_BAO_Address::create method
       if (!empty($values['location_type_id'])) {
-        static $customFields = array();
+        static $customFields = [];
         if (empty($customFields)) {
           $customFields = CRM_Core_BAO_CustomField::getFields('Address');
         }
@@ -1222,7 +1222,7 @@ abstract class CRM_Contact_Import_Parser extends CRM_Import_Parser {
                 if ($val) {
                   $mulValues = explode(',', $val);
                   $customOption = CRM_Core_BAO_CustomOption::getCustomOption($customFieldID, TRUE);
-                  $newValues[$key] = array();
+                  $newValues[$key] = [];
                   foreach ($mulValues as $v1) {
                     foreach ($customOption as $v2) {
                       if ((strtolower($v2['label']) == strtolower(trim($v1))) ||
@@ -1248,7 +1248,7 @@ abstract class CRM_Contact_Import_Parser extends CRM_Import_Parser {
 
       _civicrm_api3_store_values($fields['Address'], $values, $params['address'][$values['location_type_id']]);
 
-      $addressFields = array(
+      $addressFields = [
         'county',
         'country',
         'state_province',
@@ -1256,12 +1256,12 @@ abstract class CRM_Contact_Import_Parser extends CRM_Import_Parser {
         'supplemental_address_2',
         'supplemental_address_3',
         'StateProvince.name',
-      );
+      ];
 
       foreach ($addressFields as $field) {
         if (array_key_exists($field, $values)) {
           if (!array_key_exists('address', $params)) {
-            $params['address'] = array();
+            $params['address'] = [];
           }
           $params['address'][$values['location_type_id']][$field] = $values[$field];
         }
@@ -1269,7 +1269,7 @@ abstract class CRM_Contact_Import_Parser extends CRM_Import_Parser {
 
       if ($values['location_type_id'] === 'Primary') {
         if (!empty($params['id'])) {
-          $primary = civicrm_api3('Address', 'get', array('return' => 'location_type_id', 'contact_id' => $params['id'], 'is_primary' => 1, 'sequential' => 1));
+          $primary = civicrm_api3('Address', 'get', ['return' => 'location_type_id', 'contact_id' => $params['id'], 'is_primary' => 1, 'sequential' => 1]);
         }
         $defaultLocationType = CRM_Core_BAO_LocationType::getDefault();
         $params['address'][$values['location_type_id']]['location_type_id'] = (isset($primary) && $primary['count']) ? $primary['values'][0]['location_type_id'] : $defaultLocationType->id;
@@ -1282,11 +1282,11 @@ abstract class CRM_Contact_Import_Parser extends CRM_Import_Parser {
     if (isset($values['note'])) {
       // add a note field
       if (!isset($params['note'])) {
-        $params['note'] = array();
+        $params['note'] = [];
       }
       $noteBlock = count($params['note']) + 1;
 
-      $params['note'][$noteBlock] = array();
+      $params['note'][$noteBlock] = [];
       if (!isset($fields['Note'])) {
         $fields['Note'] = CRM_Core_DAO_Note::fields();
       }

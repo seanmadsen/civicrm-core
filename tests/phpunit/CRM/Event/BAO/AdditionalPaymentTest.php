@@ -41,7 +41,7 @@ class CRM_Event_BAO_AdditionalPaymentTest extends CiviUnitTestCase {
   public function tearDown() {
     $this->eventDelete($this->_eventId);
     $this->quickCleanup(
-      array(
+      [
         'civicrm_contact',
         'civicrm_contribution',
         'civicrm_participant',
@@ -51,7 +51,7 @@ class CRM_Event_BAO_AdditionalPaymentTest extends CiviUnitTestCase {
         'civicrm_financial_trxn',
         'civicrm_price_set',
         'civicrm_entity_financial_trxn',
-      ),
+      ],
       TRUE
     );
   }
@@ -71,7 +71,7 @@ class CRM_Event_BAO_AdditionalPaymentTest extends CiviUnitTestCase {
 
     // create participant record
     $eventId = $this->_eventId;
-    $participantParams = array(
+    $participantParams = [
       'send_receipt' => 1,
       'is_test' => 0,
       'is_pay_later' => 0,
@@ -83,11 +83,11 @@ class CRM_Event_BAO_AdditionalPaymentTest extends CiviUnitTestCase {
       'contact_id' => $this->_contactId,
       'note' => 'Note added for Event_' . $eventId,
       'fee_level' => 'Price_Field - 55',
-    );
+    ];
     $participant = $this->callAPISuccess('participant', 'create', $participantParams);
-    $this->callAPISuccessGetSingle('participant', array('id' => $participant['id']));
+    $this->callAPISuccessGetSingle('participant', ['id' => $participant['id']]);
     // create participant contribution with partial payment
-    $contributionParams = array(
+    $contributionParams = [
       'total_amount' => $actualPaidAmt,
       'source' => 'Fall Fundraiser Dinner: Offline registration',
       'currency' => 'USD',
@@ -100,20 +100,20 @@ class CRM_Event_BAO_AdditionalPaymentTest extends CiviUnitTestCase {
       'skipLineItem' => 1,
       'partial_payment_total' => $feeTotal,
       'partial_amount_to_pay' => $actualPaidAmt,
-    );
+    ];
 
     $contribution = $this->callAPISuccess('Contribution', 'create', $contributionParams);
     $contributionId = $contribution['id'];
-    $participant = $this->callAPISuccessGetSingle('participant', array('id' => $participant['id']));
+    $participant = $this->callAPISuccessGetSingle('participant', ['id' => $participant['id']]);
 
     // add participant payment entry
-    $this->callAPISuccess('participant_payment', 'create', array(
+    $this->callAPISuccess('participant_payment', 'create', [
         'participant_id' => $participant['id'],
         'contribution_id' => $contributionId,
-      ));
+    ]);
 
     // -- processing priceSet using the BAO
-    $lineItem = array();
+    $lineItem = [];
     $priceSet = CRM_Price_BAO_PriceSet::getSetDetail($priceSetId, TRUE, FALSE);
     $priceSet = CRM_Utils_Array::value($priceSetId, $priceSet);
     $feeBlock = CRM_Utils_Array::value('fields', $priceSet);
@@ -126,14 +126,14 @@ class CRM_Event_BAO_AdditionalPaymentTest extends CiviUnitTestCase {
     $lineItemVal[$priceSetId] = $lineItem;
     CRM_Price_BAO_LineItem::processPriceSet($participant['id'], $lineItemVal, $this->getContributionObject($contributionId), 'civicrm_participant');
 
-    return array(
+    return [
       'participant' => $participant,
       'contribution' => $contribution['values'][$contribution['id']],
       'lineItem' => $templineItems,
       'params' => $tempParams,
       'feeBlock' => $feeBlock,
       'priceSetId' => $priceSetId,
-    );
+    ];
   }
 
   /**
@@ -168,10 +168,10 @@ class CRM_Event_BAO_AdditionalPaymentTest extends CiviUnitTestCase {
     extract($result);
 
     //Complete the partial payment.
-    $submittedValues = array(
+    $submittedValues = [
       'total_amount' => 20,
       'payment_instrument_id' => 3,
-    );
+    ];
     CRM_Contribute_BAO_Contribution::recordAdditionalPayment($contributionID, $submittedValues, 'owed', $participant['id']);
 
     //Change selection to a lower amount.

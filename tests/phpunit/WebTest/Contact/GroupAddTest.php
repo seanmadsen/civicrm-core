@@ -41,7 +41,7 @@ class WebTest_Contact_GroupAddTest extends CiviSeleniumTestCase {
     $this->openCiviPage('group/add', 'reset=1', '_qf_Edit_upload-bottom');
 
     // Group name
-    $params = array('name' => 'group_' . substr(sha1(rand()), 0, 7));
+    $params = ['name' => 'group_' . substr(sha1(rand()), 0, 7)];
 
     // fill group name
     $this->type("title", $params['name']);
@@ -111,7 +111,7 @@ class WebTest_Contact_GroupAddTest extends CiviSeleniumTestCase {
     $this->openCiviPage('group/add', 'reset=1', '_qf_Edit_upload-bottom');
 
     // take group name
-    $params = array('name' => 'group_' . substr(sha1(rand()), 0, 7));
+    $params = ['name' => 'group_' . substr(sha1(rand()), 0, 7)];
 
     // fill group name
     $this->type("title", $params['name']);
@@ -158,10 +158,10 @@ class WebTest_Contact_GroupAddTest extends CiviSeleniumTestCase {
     $roleId = explode('/', $this->getAttribute("xpath=//table[@id='user-roles']/tbody//tr/td[1][text()='{$role}']/../td[4]/a[text()='edit permissions']/@href"));
     $roleId = end($roleId);
     $user = $this->_testCreateUser($roleId);
-    $permissions = array(
+    $permissions = [
       "edit-{$roleId}-view-all-contacts",
       "edit-{$roleId}-access-civicrm",
-    );
+    ];
     $this->changePermissions($permissions);
 
     // Now logout as admin, login as regular user and verify that Group settings,

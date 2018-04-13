@@ -27,9 +27,9 @@ class CRM_Core_DAOConformanceTest extends CiviUnitTestCase {
   public function getAllDAO() {
     $this->setUp(); // Ugh. Need full bootstrap to enumerate classes.
     $classList = CRM_Core_DAO_AllCoreTables::getClasses();
-    $return = array();
+    $return = [];
     foreach ($classList as $class) {
-      $return[] = array($class);
+      $return[] = [$class];
     }
     return $return;
   }

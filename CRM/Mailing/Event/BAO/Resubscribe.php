@@ -101,8 +101,8 @@ class CRM_Mailing_Event_BAO_Resubscribe {
 
     // Make a list of groups and a list of prior mailings that received
     // this mailing.
-    $groups = array();
-    $mailings = array();
+    $groups = [];
+    $mailings = [];
 
     while ($do->fetch()) {
       if ($do->entity_table == $group) {
@@ -123,7 +123,7 @@ class CRM_Mailing_Event_BAO_Resubscribe {
                 WHERE       $mg.mailing_id IN (" . implode(', ', $mailings) . ")
                     AND     $mg.group_type = 'Include'");
 
-      $mailings = array();
+      $mailings = [];
 
       while ($do->fetch()) {
         if ($do->entity_table == $group) {
@@ -157,7 +157,7 @@ class CRM_Mailing_Event_BAO_Resubscribe {
       $groups[$do->group_id] = $do->title;
     }
 
-    $contacts = array($contact_id);
+    $contacts = [$contact_id];
     foreach ($groups as $group_id => $group_name) {
       $notadded = 0;
       if ($group_name) {
@@ -269,13 +269,13 @@ class CRM_Mailing_Event_BAO_Resubscribe {
 
     $emailDomain = CRM_Core_BAO_MailSettings::defaultDomain();
 
-    $headers = array(
+    $headers = [
       'Subject' => $component->subject,
       'From' => "\"$domainEmailName\" <do-not-reply@$emailDomain>",
       'To' => $eq->email,
       'Reply-To' => "do-not-reply@$emailDomain",
       'Return-Path' => "do-not-reply@$emailDomain",
-    );
+    ];
     CRM_Mailing_BAO_Mailing::addMessageIdHeader($headers, 'e', $job, $queue_id, $eq->hash);
     $b = CRM_Utils_Mail::setMimeParams($message);
     $h = $message->headers($headers);

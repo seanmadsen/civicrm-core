@@ -93,7 +93,7 @@ class CRM_Utils_Hook_Joomla extends CRM_Utils_Hook {
         }
       }
 
-      $result = $app->triggerEvent($fnSuffix, array(&$arg1, &$arg2, &$arg3, &$arg4, &$arg5, &$arg6));
+      $result = $app->triggerEvent($fnSuffix, [&$arg1, &$arg2, &$arg3, &$arg4, &$arg5, &$arg6]);
 
       $moduleResult = $this->commonInvoke($numParams,
         $arg1, $arg2, $arg3, $arg4, $arg5, $arg6,
@@ -112,10 +112,10 @@ class CRM_Utils_Hook_Joomla extends CRM_Utils_Hook {
       if (!empty($result)) {
         // collapse result returned from hooks
         // CRM-9XXX
-        $finalResult = array();
+        $finalResult = [];
         foreach ($result as $res) {
           if (!is_array($res)) {
-            $res = array($res);
+            $res = [$res];
           }
           $finalResult = array_merge($finalResult, $res);
         }

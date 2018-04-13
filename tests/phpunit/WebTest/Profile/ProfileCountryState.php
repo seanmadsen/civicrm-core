@@ -59,11 +59,11 @@ class WebTest_Profile_ProfileCountryState extends CiviSeleniumTestCase {
     $gid = $this->urlArg('gid');
 
     //Add Country field to profile
-    $this->openCiviPage('admin/uf/group/field/add', array(
+    $this->openCiviPage('admin/uf/group/field/add', [
         'action' => 'add',
         'reset' => 1,
         'gid' => $gid,
-      ), 'field_name[0]');
+    ], 'field_name[0]');
     $this->click('field_name[0]');
     $this->select('field_name[0]', 'value=Contact');
     $this->click("//option[@value='Contact']");
@@ -89,10 +89,10 @@ class WebTest_Profile_ProfileCountryState extends CiviSeleniumTestCase {
 
     if ($gid) {
       $this->openCiviPage('admin/setting/localization', 'reset=1', '_qf_Localization_next-bottom');
-      $country = array(1001 => 'Afghanistan', 1013 => 'Australia', 1039 => 'Canada', 1101 => 'India');
+      $country = [1001 => 'Afghanistan', 1013 => 'Australia', 1039 => 'Canada', 1101 => 'India'];
       $enabledCountries = $this->getSelectOptions("countryLimit-t");
       $enabledStates = $this->getSelectOptions("provinceLimit-t");
-      $newCountry = array();
+      $newCountry = [];
       foreach ($country as $countryID => $countryName) {
         if (!in_array($countryName, $enabledCountries)) {
           $newCountry[$countryID] = $countryName;

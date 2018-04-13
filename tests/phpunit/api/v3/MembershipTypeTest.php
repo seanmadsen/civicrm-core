@@ -51,7 +51,7 @@ class api_v3_MembershipTypeTest extends CiviUnitTestCase {
    * This should return an empty array but not an error.
    */
   public function testGetWithoutId() {
-    $params = array(
+    $params = [
       'name' => '60+ Membership',
       'description' => 'people above 60 are given health instructions',
       'financial_type_id' => 1,
@@ -59,7 +59,7 @@ class api_v3_MembershipTypeTest extends CiviUnitTestCase {
       'duration_unit' => 'month',
       'duration_interval' => '10',
       'visibility' => 'public',
-    );
+    ];
 
     $membershipType = $this->callAPISuccess('membership_type', 'get', $params);
     $this->assertEquals($membershipType['count'], 0);
@@ -69,11 +69,11 @@ class api_v3_MembershipTypeTest extends CiviUnitTestCase {
    * Test get works.
    */
   public function testGet() {
-    $id = $this->membershipTypeCreate(array('member_of_contact_id' => $this->_contactID));
+    $id = $this->membershipTypeCreate(['member_of_contact_id' => $this->_contactID]);
 
-    $params = array(
+    $params = [
       'id' => $id,
-    );
+    ];
     $membershipType = $this->callAPIAndDocument('membership_type', 'get', $params, __FUNCTION__, __FILE__);
     $this->assertEquals($membershipType['values'][$id]['name'], 'General');
     $this->assertEquals($membershipType['values'][$id]['member_of_contact_id'], $this->_contactID);
@@ -88,7 +88,7 @@ class api_v3_MembershipTypeTest extends CiviUnitTestCase {
    * Test create with missing mandatory field.
    */
   public function testCreateWithoutMemberOfContactId() {
-    $params = array(
+    $params = [
       'name' => '60+ Membership',
       'description' => 'people above 60 are given health instructions',
       'financial_type_id' => 1,
@@ -98,7 +98,7 @@ class api_v3_MembershipTypeTest extends CiviUnitTestCase {
       'duration_interval' => '10',
       'period_type' => 'rolling',
       'visibility' => 'public',
-    );
+    ];
 
     $this->callAPIFailure('membership_type', 'create', $params, 'Mandatory key(s) missing from params array: member_of_contact_id');
   }
@@ -107,7 +107,7 @@ class api_v3_MembershipTypeTest extends CiviUnitTestCase {
    * Test successful create.
    */
   public function testCreate() {
-    $params = array(
+    $params = [
       'name' => '40+ Membership',
       'description' => 'people above 40 are given health instructions',
       'member_of_contact_id' => $this->_contactID,
@@ -118,18 +118,18 @@ class api_v3_MembershipTypeTest extends CiviUnitTestCase {
       'duration_interval' => '10',
       'period_type' => 'rolling',
       'visibility' => 'public',
-    );
+    ];
 
     $membershipType = $this->callAPIAndDocument('membership_type', 'create', $params, __FUNCTION__, __FILE__);
     $this->assertNotNull($membershipType['values']);
-    $this->membershipTypeDelete(array('id' => $membershipType['id']));
+    $this->membershipTypeDelete(['id' => $membershipType['id']]);
   }
 
   /**
    * Test update fails with no ID.
    */
   public function testUpdateWithoutId() {
-    $params = array(
+    $params = [
       'name' => '60+ Membership',
       'description' => 'people above 60 are given health instructions',
       'member_of_contact_id' => $this->_contactID,
@@ -139,7 +139,7 @@ class api_v3_MembershipTypeTest extends CiviUnitTestCase {
       'duration_interval' => '10',
       'period_type' => 'rolling',
       'visibility' => 'public',
-    );
+    ];
 
     $membershipType = $this->callAPIFailure('membership_type', 'create', $params);
     $this->assertEquals($membershipType['error_message'], 'Mandatory key(s) missing from params array: domain_id');
@@ -149,7 +149,7 @@ class api_v3_MembershipTypeTest extends CiviUnitTestCase {
    *  CRM-20010 Tests period_type is required for MemberType create
    */
   public function testMemberTypePeriodiTypeRequired() {
-    $this->callAPIFailure('MembershipType', 'create', array(
+    $this->callAPIFailure('MembershipType', 'create', [
       'domain_id' => "Default Domain Name",
       'member_of_contact_id' => 1,
       'financial_type_id' => "Member Dues",
@@ -157,21 +157,21 @@ class api_v3_MembershipTypeTest extends CiviUnitTestCase {
       'duration_interval' => 1,
       'name' => "Standard Member",
       'minimum_fee' => 100,
-    ));
+    ]);
   }
 
   /**
    * Test update.
    */
   public function testUpdate() {
-    $id = $this->membershipTypeCreate(array('member_of_contact_id' => $this->_contactID, 'financial_type_id' => 2));
-    $newMemberOrgParams = array(
+    $id = $this->membershipTypeCreate(['member_of_contact_id' => $this->_contactID, 'financial_type_id' => 2]);
+    $newMemberOrgParams = [
       'organization_name' => 'New membership organisation',
       'contact_type' => 'Organization',
       'visibility' => 1,
-    );
+    ];
 
-    $params = array(
+    $params = [
       'id' => $id,
       'name' => 'Updated General',
       'member_of_contact_id' => $this->organizationCreate($newMemberOrgParams),
@@ -179,7 +179,7 @@ class api_v3_MembershipTypeTest extends CiviUnitTestCase {
       'duration_interval' => '10',
       'period_type' => 'fixed',
       'domain_id' => 1,
-    );
+    ];
 
     $this->callAPISuccess('membership_type', 'update', $params);
 
@@ -190,10 +190,10 @@ class api_v3_MembershipTypeTest extends CiviUnitTestCase {
    * Test successful delete.
    */
   public function testDelete() {
-    $membershipTypeID = $this->membershipTypeCreate(array('member_of_contact_id' => $this->organizationCreate()));
-    $params = array(
+    $membershipTypeID = $this->membershipTypeCreate(['member_of_contact_id' => $this->organizationCreate()]);
+    $params = [
       'id' => $membershipTypeID,
-    );
+    ];
 
     $this->callAPIAndDocument('membership_type', 'delete', $params, __FUNCTION__, __FILE__);
   }
@@ -204,36 +204,36 @@ class api_v3_MembershipTypeTest extends CiviUnitTestCase {
    * I can't skim this & understand it so if anyone does explain it here.
    */
   public function testDeleteRelationshipTypesUsedByMembershipType() {
-    $rel1 = $this->relationshipTypeCreate(array(
+    $rel1 = $this->relationshipTypeCreate([
       'name_a_b' => 'abcde',
       'name_b_a' => 'abcde',
-    ));
-    $rel2 = $this->relationshipTypeCreate(array(
+    ]);
+    $rel2 = $this->relationshipTypeCreate([
       'name_a_b' => 'fghij',
       'name_b_a' => 'fghij',
-    ));
-    $rel3 = $this->relationshipTypeCreate(array(
+    ]);
+    $rel3 = $this->relationshipTypeCreate([
       'name_a_b' => 'lkmno',
       'name_b_a' => 'lkmno',
-    ));
-    $id = $this->membershipTypeCreate(array(
+    ]);
+    $id = $this->membershipTypeCreate([
       'member_of_contact_id' => $this->_contactID,
-      'relationship_type_id' => array($rel1, $rel2, $rel3),
-      'relationship_direction' => array('a_b', 'a_b', 'b_a'),
-    ));
+      'relationship_type_id' => [$rel1, $rel2, $rel3],
+      'relationship_direction' => ['a_b', 'a_b', 'b_a'],
+    ]);
 
-    $this->callAPISuccess('RelationshipType', 'delete', array('id' => $rel2));
-    $newValues = $this->callAPISuccess('MembershipType', 'getsingle', array('id' => $id));
-    $this->assertEquals(array($rel1, $rel3), $newValues['relationship_type_id']);
-    $this->assertEquals(array('a_b', 'b_a'), $newValues['relationship_direction']);
+    $this->callAPISuccess('RelationshipType', 'delete', ['id' => $rel2]);
+    $newValues = $this->callAPISuccess('MembershipType', 'getsingle', ['id' => $id]);
+    $this->assertEquals([$rel1, $rel3], $newValues['relationship_type_id']);
+    $this->assertEquals(['a_b', 'b_a'], $newValues['relationship_direction']);
 
-    $this->callAPISuccess('RelationshipType', 'delete', array('id' => $rel1));
-    $newValues = $this->callAPISuccess('MembershipType', 'getsingle', array('id' => $id));
-    $this->assertEquals(array($rel3), $newValues['relationship_type_id']);
-    $this->assertEquals(array('b_a'), $newValues['relationship_direction']);
+    $this->callAPISuccess('RelationshipType', 'delete', ['id' => $rel1]);
+    $newValues = $this->callAPISuccess('MembershipType', 'getsingle', ['id' => $id]);
+    $this->assertEquals([$rel3], $newValues['relationship_type_id']);
+    $this->assertEquals(['b_a'], $newValues['relationship_direction']);
 
-    $this->callAPISuccess('RelationshipType', 'delete', array('id' => $rel3));
-    $newValues = $this->callAPISuccess('MembershipType', 'getsingle', array('id' => $id));
+    $this->callAPISuccess('RelationshipType', 'delete', ['id' => $rel3]);
+    $newValues = $this->callAPISuccess('MembershipType', 'getsingle', ['id' => $id]);
     $this->assertTrue(empty($newValues['relationship_type_id']));
     $this->assertTrue(empty($newValues['relationship_direction']));
   }
@@ -243,9 +243,9 @@ class api_v3_MembershipTypeTest extends CiviUnitTestCase {
    */
   public function testMembershipTypeGetList() {
     $this->membershipTypeCreate();
-    $this->membershipTypeCreate(array('name' => 'cheap-skates'));
-    $this->membershipTypeCreate(array('name' => 'disabled cheap-skates', 'is_active' => 0));
-    $result = $this->callAPISuccess('MembershipType', 'getlist', array());
+    $this->membershipTypeCreate(['name' => 'cheap-skates']);
+    $this->membershipTypeCreate(['name' => 'disabled cheap-skates', 'is_active' => 0]);
+    $result = $this->callAPISuccess('MembershipType', 'getlist', []);
     $this->assertEquals(2, $result['count']);
     $this->assertEquals('cheap-skates', $result['values'][0]['label']);
     $this->assertEquals('General', $result['values'][1]['label']);
@@ -256,19 +256,19 @@ class api_v3_MembershipTypeTest extends CiviUnitTestCase {
    * selected in contribution pages.
    */
   public function testEnableMembershipTypeOnContributionPage() {
-    $memType = array();
-    $memType[1] = $this->membershipTypeCreate(array('member_of_contact_id' => $this->_contactID, 'minimum_fee' => 100));
-    $priceSet = $this->callAPISuccess('price_set', 'getvalue', array(
+    $memType = [];
+    $memType[1] = $this->membershipTypeCreate(['member_of_contact_id' => $this->_contactID, 'minimum_fee' => 100]);
+    $priceSet = $this->callAPISuccess('price_set', 'getvalue', [
       'name' => 'default_membership_type_amount',
       'return' => 'id',
-    ));
-    $field = $this->callAPISuccess('price_field', 'create', array(
+    ]);
+    $field = $this->callAPISuccess('price_field', 'create', [
       'price_set_id' => $priceSet,
       'name' => 'membership_amount',
       'label' => 'Membership Amount',
       'html_type' => 'Radio',
-    ));
-    $priceFieldValue = $this->callAPISuccess('price_field_value', 'create', array(
+    ]);
+    $priceFieldValue = $this->callAPISuccess('price_field_value', 'create', [
       'name' => 'membership_amount',
       'label' => 'Membership Amount',
       'amount' => 100,
@@ -276,17 +276,17 @@ class api_v3_MembershipTypeTest extends CiviUnitTestCase {
       'format.only_id' => TRUE,
       'membership_type_id' => $memType[1],
       'price_field_id' => $field['id'],
-    ));
+    ]);
 
-    $memType[2] = $this->membershipTypeCreate(array('member_of_contact_id' => $this->_contactID, 'minimum_fee' => 200));
-    $fieldParams = array(
+    $memType[2] = $this->membershipTypeCreate(['member_of_contact_id' => $this->_contactID, 'minimum_fee' => 200]);
+    $fieldParams = [
       'id' => $field['id'],
       'label' => 'Membership Amount',
       'html_type' => 'Radio',
-    );
+    ];
     foreach ($memType as $rowCount => $type) {
       $membetype = CRM_Member_BAO_MembershipType::getMembershipTypeDetails($type);
-      $fieldParams['option_id'] = array(1 => $priceFieldValue['id']);
+      $fieldParams['option_id'] = [1 => $priceFieldValue['id']];
       $fieldParams['option_label'][$rowCount] = CRM_Utils_Array::value('name', $membetype);
       $fieldParams['option_amount'][$rowCount] = CRM_Utils_Array::value('minimum_fee', $membetype, 0);
       $fieldParams['option_weight'][$rowCount] = CRM_Utils_Array::value('weight', $membetype);
@@ -298,7 +298,7 @@ class api_v3_MembershipTypeTest extends CiviUnitTestCase {
     $this->assertEquals($priceField->id, $fieldParams['id']);
 
     foreach ($memType as $type) {
-      $this->callAPISuccess('membership_type', 'delete', array('id' => $type));
+      $this->callAPISuccess('membership_type', 'delete', ['id' => $type]);
     }
 
   }

@@ -43,7 +43,7 @@ class E2E_Extern_SoapTest extends CiviEndToEndTestCase {
     $this->adminPass = $_CV['ADMIN_PASS'];
     $this->url = CRM_Core_Resources::singleton()->getUrl('civicrm', 'extern/soap.php');
 
-    foreach (array('adminUser', 'adminPass', 'url') as $prop) {
+    foreach (['adminUser', 'adminPass', 'url'] as $prop) {
       if (empty($this->{$prop})) {
         $this->markTestSkipped("Failed to lookup SOAP URL, user, or password. Have you configured `cv` for testing?");
       }
@@ -68,7 +68,7 @@ class E2E_Extern_SoapTest extends CiviEndToEndTestCase {
   public function testAuthenticationBadKey() {
     $client = $this->createClient();
     $key = $client->authenticate($this->adminUser, $this->adminPass);
-    $client->get_contact(mt_rand(), array());
+    $client->get_contact(mt_rand(), []);
   }
 
   /**
@@ -77,10 +77,10 @@ class E2E_Extern_SoapTest extends CiviEndToEndTestCase {
   public function testGetContact() {
     $client = $this->createClient();
     $key = $client->authenticate($this->adminUser, $this->adminPass);
-    $contacts = $client->get_contact($key, array(
+    $contacts = $client->get_contact($key, [
       'contact_id' => 101,
       'return.display_name' => 1,
-    ));
+    ]);
     $this->assertEquals($contacts['is_error'], 0);
     $this->assertEquals($contacts['count'], 1);
     $this->assertEquals($contacts['values'][101]['contact_id'], 101);
@@ -90,11 +90,11 @@ class E2E_Extern_SoapTest extends CiviEndToEndTestCase {
    * @return \SoapClient
    */
   protected function createClient() {
-    return new SoapClient(NULL, array(
+    return new SoapClient(NULL, [
         'location' => $this->url,
         'uri' => 'urn:civicrm',
         'trace' => 1,
-      )
+      ]
     );
   }
 

@@ -124,7 +124,7 @@ class WebTest_Activity_ContactContextAddTest extends CiviSeleniumTestCase {
 
     // verify Activity created
     $this->webtestVerifyTabularData(
-      array(
+      [
         'Subject' => $subject,
         'Location' => 'Some location needs to be put in this field.',
         'Activity Status' => 'Scheduled',
@@ -132,15 +132,15 @@ class WebTest_Activity_ContactContextAddTest extends CiviSeleniumTestCase {
         // Tough luck filling in WYSIWYG editor, so skipping verification for now.
         //'Details'    => 'Really brief details information.',
         'Priority' => 'Urgent',
-      ),
+      ],
       "/label"
     );
 
     $this->webtestVerifyTabularData(
-      array(
+      [
         'With Contact' => "Anderson, {$firstName2}",
         'Assigned to' => "Summerson, {$firstName1}",
-      ),
+      ],
       "/label"
     );
   }
@@ -222,7 +222,7 @@ class WebTest_Activity_ContactContextAddTest extends CiviSeleniumTestCase {
 
     $this->clickLink('_qf_Search_refresh');
 
-    $targetContacts = array("Summerson, " . $firstName1, "Andersonnn, " . $firstName2, "Anderson, " . $firstName3);
+    $targetContacts = ["Summerson, " . $firstName1, "Andersonnn, " . $firstName2, "Anderson, " . $firstName3];
 
     //check whether separate activities are created for the target contacts
     foreach ($targetContacts as $contact) {

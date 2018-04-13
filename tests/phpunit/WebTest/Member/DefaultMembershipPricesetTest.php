@@ -51,10 +51,10 @@ class WebTest_Member_DefaultMembershipPricesetTest extends CiviSeleniumTestCase 
     $sid = $this->urlArg('sid');
     $this->assertType('numeric', $sid);
 
-    $fields = array("National Membership $title" => 'Radio');
+    $fields = ["National Membership $title" => 'Radio'];
     list($memTypeTitle1, $memTypeTitle2, $memTypeTitle3) = $this->_testAddPriceFields($fields, $validateStrings, FALSE, $title, $sid, TRUE, $contributionType);
 
-    $fields = array("Second Membership $title" => 'CheckBox');
+    $fields = ["Second Membership $title" => 'CheckBox'];
     list($memTypeTitle1, $memTypeTitle2, $memTypeTitle3) = $this->_testAddPriceFields($fields, $validateStrings, FALSE, $title, $sid, FALSE, $contributionType);
 
     $hash = substr(sha1(rand()), 0, 7);
@@ -62,16 +62,16 @@ class WebTest_Member_DefaultMembershipPricesetTest extends CiviSeleniumTestCase 
     $pageTitle = 'Contribution page for membership ' . $hash;
     $processorName = 'Dummy ' . $hash;
     $memPriceSetId = $sid;
-    $membershipContributionPageId = $this->webtestAddContributionPage($hash, $rand, $pageTitle, array($processorName => 'Dummy'), TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, $memPriceSetId, FALSE, NULL, NULL, TRUE, FALSE, FALSE, TRUE, FALSE, FALSE, TRUE);
+    $membershipContributionPageId = $this->webtestAddContributionPage($hash, $rand, $pageTitle, [$processorName => 'Dummy'], TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, $memPriceSetId, FALSE, NULL, NULL, TRUE, FALSE, FALSE, TRUE, FALSE, FALSE, TRUE);
 
     $firstName = 'John_' . substr(sha1(rand()), 0, 7);
     $lastName = 'Anderson_' . substr(sha1(rand()), 0, 7);
     $email = "{$firstName}.{$lastName}@example.com";
-    $contactParams = array(
+    $contactParams = [
       'first_name' => $firstName,
       'last_name' => $lastName,
       'email-5' => $email,
-    );
+    ];
     $streetAddress = "100 Main Street";
 
     //adding contact for membership sign up
@@ -245,44 +245,44 @@ class WebTest_Member_DefaultMembershipPricesetTest extends CiviSeleniumTestCase 
 
       switch ($type) {
         case 'Radio':
-          $options = array(
-            1 => array(
+          $options = [
+            1 => [
               'label' => "$memTypeTitle1",
               'membership_type_id' => $memTypeId1,
               'amount' => '100.00',
-            ),
-            2 => array(
+            ],
+            2 => [
               'label' => "$memTypeTitle2",
               'membership_type_id' => $memTypeId2,
               'amount' => '50.00',
-            ),
-            3 => array(
+            ],
+            3 => [
               'label' => "$memTypeTitle3",
               'membership_type_id' => $memTypeId3,
               'amount' => '1,200.00',
-            ),
-          );
+            ],
+          ];
           $this->addMultipleChoiceOptions($options, $validateStrings);
           break;
 
         case 'CheckBox':
-          $options = array(
-            1 => array(
+          $options = [
+            1 => [
               'label' => "$memTypeTitle1",
               'membership_type_id' => $memTypeId1,
               'amount' => '100.00',
-            ),
-            2 => array(
+            ],
+            2 => [
               'label' => "$memTypeTitle2",
               'membership_type_id' => $memTypeId2,
               'amount' => '50.00',
-            ),
-            3 => array(
+            ],
+            3 => [
               'label' => "$memTypeTitle3",
               'membership_type_id' => $memTypeId3,
               'amount' => '1,200.00',
-            ),
-          );
+            ],
+          ];
           $this->addMultipleChoiceOptions($options, $validateStrings);
           break;
 
@@ -293,7 +293,7 @@ class WebTest_Member_DefaultMembershipPricesetTest extends CiviSeleniumTestCase 
       $this->clickLink('_qf_Field_next_new-bottom', '_qf_Field_next-bottom');
       $this->assertTrue($this->isTextPresent("Price Field '{$label}' has been saved."));
     }
-    return array($memTypeTitle1, $memTypeTitle2, $memTypeTitle3);
+    return [$memTypeTitle1, $memTypeTitle2, $memTypeTitle3];
   }
 
 }

@@ -67,7 +67,7 @@ class WebTest_Contribute_UpdatePendingContributionTest extends CiviSeleniumTestC
     $this->clickPopupLink("xpath=//table[@class='selector row-highlight']/tbody//tr/td[8]/span/a[@title='View Contribution']");
 
     // View Contribution Record and test for expected values
-    $expected = array(
+    $expected = [
       'From' => $contact['display_name'],
       'Financial Type' => 'Donation',
       'Total Amount' => '$ 100.00',
@@ -76,7 +76,7 @@ class WebTest_Contribute_UpdatePendingContributionTest extends CiviSeleniumTestC
       'Received Into' => 'Payment Processor Account',
       'Net Amount' => '$ 98.50',
       'Fee Amount' => '$ 1.50',
-    );
+    ];
     $this->webtestVerifyTabularData($expected);
   }
 
@@ -192,13 +192,13 @@ class WebTest_Contribute_UpdatePendingContributionTest extends CiviSeleniumTestC
     $this->waitForElementPresent("_qf_ContributionView_cancel-bottom");
 
     // View Contribution Record and test for expected values
-    $expected = array(
+    $expected = [
       'Financial Type' => 'Donation',
       'Total Amount' => '$ 100.00',
       'Contribution Status' => 'Pending',
       'Payment Method' => 'Check',
       'Check Number' => 'check #1041',
-    );
+    ];
     $this->webtestVerifyTabularData($expected);
 
     // go to soft creditor contact view page - this also does the soft credit check
@@ -211,12 +211,12 @@ class WebTest_Contribute_UpdatePendingContributionTest extends CiviSeleniumTestC
     $this->waitForElementPresent("link=Record Contribution (Check, Cash, EFT ...)");
 
     // verify soft credit details
-    $expected = array(
+    $expected = [
       4 => 'Donation',
       2 => '$ 100.00',
       6 => 'Pending',
       1 => $contact['display_name'],
-    );
+    ];
     foreach ($expected as $value => $label) {
       $this->verifyText("xpath=id('Search')/div[2]/table[2]/tbody/tr[2]/td[$value]", preg_quote($label));
     }
@@ -253,7 +253,7 @@ class WebTest_Contribute_UpdatePendingContributionTest extends CiviSeleniumTestC
     $pageId = $this->webtestAddContributionPage($hash,
       $rand,
       $pageTitle,
-      array($processorName => $processorType),
+      [$processorName => $processorType],
       $amountSection,
       $payLater,
       $onBehalf,
@@ -304,12 +304,12 @@ class WebTest_Contribute_UpdatePendingContributionTest extends CiviSeleniumTestC
     $this->clickLink("_qf_Search_refresh", "xpath=//div[@id='contributionSearch']//table/tbody/tr[1]//td/span/a[text()='View']", FALSE);
     $this->click("xpath=//div[@id='contributionSearch']//table/tbody/tr[1]//td/span/a[text()='View']");
     // View Contribution Record and test for expected values
-    $expected = array(
+    $expected = [
       'From' => $contact['display_name'],
       'Financial Type' => 'Donation',
       'Total Amount' => '100.00',
       'Contribution Status' => 'Pending : Pay Later',
-    );
+    ];
     $this->webtestVerifyTabularData($expected);
   }
 

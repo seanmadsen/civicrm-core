@@ -188,7 +188,7 @@ class CiviMailUtils extends PHPUnit_Framework_TestCase {
    * @return array(ezcMail)|array(string)
    */
   public function getAllMessages($type = 'raw') {
-    $msgs = array();
+    $msgs = [];
 
     if ($this->_webtest) {
       throw new Exception("Not implemented: getAllMessages for WebTest");
@@ -249,7 +249,7 @@ class CiviMailUtils extends PHPUnit_Framework_TestCase {
    *
    * @return \ezcMail|string
    */
-  public function checkMailLog($strings, $absentStrings = array(), $prefix = '') {
+  public function checkMailLog($strings, $absentStrings = [], $prefix = '') {
     $mail = $this->getMostRecentEmail('raw');
     return $this->checkMailForStrings($strings, $absentStrings, $prefix, $mail);
   }
@@ -265,7 +265,7 @@ class CiviMailUtils extends PHPUnit_Framework_TestCase {
    *
    * @return \ezcMail|string
    */
-  public function checkAllMailLog($strings, $absentStrings = array(), $prefix = '') {
+  public function checkAllMailLog($strings, $absentStrings = [], $prefix = '') {
     $mails = $this->getAllMessages('raw');
     $mail = implode(',', $mails);
     return $this->checkMailForStrings($strings, $absentStrings, $prefix, $mail);
@@ -287,7 +287,7 @@ class CiviMailUtils extends PHPUnit_Framework_TestCase {
    *   Array($msgPos => array($recipPos => $emailAddr)).
    */
   public function assertRecipients($expectedRecipients) {
-    $recipients = array();
+    $recipients = [];
     foreach ($this->getAllMessages('ezc') as $message) {
       $recipients[] = CRM_Utils_Array::collect('email', $message->to);
     }
@@ -302,7 +302,7 @@ class CiviMailUtils extends PHPUnit_Framework_TestCase {
     $this->_ut->assertEquals(
       $expectedRecipients,
       $recipients,
-      "Incorrect recipients: " . print_r(array('expected' => $expectedRecipients, 'actual' => $recipients), TRUE)
+      "Incorrect recipients: " . print_r(['expected' => $expectedRecipients, 'actual' => $recipients], TRUE)
     );
   }
 
@@ -313,7 +313,7 @@ class CiviMailUtils extends PHPUnit_Framework_TestCase {
    *   Array(string $subj).
    */
   public function assertSubjects($expectedSubjects) {
-    $subjects = array();
+    $subjects = [];
     foreach ($this->getAllMessages('ezc') as $message) {
       /** @var ezcMail $message */
       $subjects[] = $message->subject;
@@ -323,7 +323,7 @@ class CiviMailUtils extends PHPUnit_Framework_TestCase {
     $this->_ut->assertEquals(
       $expectedSubjects,
       $subjects,
-      "Incorrect subjects: " . print_r(array('expected' => $expectedSubjects, 'actual' => $subjects), TRUE)
+      "Incorrect subjects: " . print_r(['expected' => $expectedSubjects, 'actual' => $subjects], TRUE)
     );
   }
 

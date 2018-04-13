@@ -60,24 +60,24 @@ class CRM_Contact_Page_DedupeMerge extends CRM_Core_Page {
 
     $cacheKeyString = CRM_Dedupe_Merger::getMergeCacheKeyString($rgid, $gid);
 
-    $urlQry = array(
+    $urlQry = [
       'reset' => 1,
       'action' => 'update',
       'rgid' => $rgid,
       'gid' => $gid,
       'limit' => $limit,
-    );
+    ];
 
     if ($mode == 'aggressive' && !CRM_Core_Permission::check('force merge duplicate contacts')) {
       CRM_Core_Session::setStatus(ts('You do not have permission to force merge duplicate contact records'), ts('Permission Denied'), 'error');
       CRM_Utils_System::redirect(CRM_Utils_System::url('civicrm/contact/dedupefind', $urlQry));
     }
     // Setup the Queue
-    $queue = CRM_Queue_Service::singleton()->create(array(
+    $queue = CRM_Queue_Service::singleton()->create([
       'name'  => $cacheKeyString,
       'type'  => 'Sql',
       'reset' => TRUE,
-    ));
+    ]);
 
     $where = NULL;
     if ($action == CRM_Core_Action::MAP) {
@@ -100,8 +100,8 @@ class CRM_Contact_Page_DedupeMerge extends CRM_Core_Page {
 
     for ($i = 1; $i <= ceil($total / self::BATCHLIMIT); $i++) {
       $task  = new CRM_Queue_Task(
-        array('CRM_Contact_Page_DedupeMerge', 'callBatchMerge'),
-        array($rgid, $gid, $mode, self::BATCHLIMIT, $isSelected),
+        ['CRM_Contact_Page_DedupeMerge', 'callBatchMerge'],
+        [$rgid, $gid, $mode, self::BATCHLIMIT, $isSelected],
         "Processed " . $i * self::BATCHLIMIT . " pair of duplicates out of " . $total
       );
 
@@ -111,12 +111,12 @@ class CRM_Contact_Page_DedupeMerge extends CRM_Core_Page {
 
     // Setup the Runner
     $urlQry['context'] = "conflicts";
-    $runner = new CRM_Queue_Runner(array(
+    $runner = new CRM_Queue_Runner([
       'title'     => ts('Merging Duplicates..'),
       'queue'     => $queue,
       'errorMode' => CRM_Queue_Runner::ERROR_ABORT,
       'onEndUrl'  => CRM_Utils_System::url('civicrm/contact/dedupefind', $urlQry, TRUE, NULL, FALSE),
-    ));
+    ]);
 
     return $runner;
   }

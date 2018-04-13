@@ -71,7 +71,7 @@ class WebTest_Event_MultipleEventRegistrationbyCartTest extends CiviSeleniumTest
     $multipleRegistrations = TRUE;
     $this->_testAddOnlineRegistration($registerIntro, $multipleRegistrations);
 
-    $eventInfoStrings1 = array($eventTitle1, $eventDescription1, $streetAddress1);
+    $eventInfoStrings1 = [$eventTitle1, $eventDescription1, $streetAddress1];
     $this->_AddEventToCart($eventTitle1, $eventInfoStrings1);
 
     //event 2
@@ -92,7 +92,7 @@ class WebTest_Event_MultipleEventRegistrationbyCartTest extends CiviSeleniumTest
     $multipleRegistrations = TRUE;
     $this->_testAddOnlineRegistration($registerIntro, $multipleRegistrations);
 
-    $eventInfoStrings2 = array($eventTitle2, $eventDescription2, $streetAddress2);
+    $eventInfoStrings2 = [$eventTitle2, $eventDescription2, $streetAddress2];
     $this->_AddEventToCart($eventTitle2, $eventInfoStrings2);
 
     //event 3
@@ -113,18 +113,18 @@ class WebTest_Event_MultipleEventRegistrationbyCartTest extends CiviSeleniumTest
     $multipleRegistrations = TRUE;
     $this->_testAddOnlineRegistration($registerIntro, $multipleRegistrations);
 
-    $eventInfoStrings3 = array($eventTitle3, $eventDescription3, $streetAddress3);
+    $eventInfoStrings3 = [$eventTitle3, $eventDescription3, $streetAddress3];
     $this->_AddEventToCart($eventTitle3, $eventInfoStrings3);
 
     //Checkout
     $value = $this->_testCheckOut();
 
     //three event names
-    $events = array(
+    $events = [
       1 => $eventTitle1,
       2 => $eventTitle2,
       3 => $eventTitle3,
-    );
+    ];
     //check the existence of the contacts who were registered and the one who did the contribution
 
     $this->_checkContributionsandEventRegistration($value[0], $value[1], $events);
@@ -163,7 +163,7 @@ class WebTest_Event_MultipleEventRegistrationbyCartTest extends CiviSeleniumTest
     $multipleRegistrations = TRUE;
     $this->_testAddOnlineRegistration($registerIntro, $multipleRegistrations);
 
-    $eventInfoStrings1 = array($eventTitle1, $eventDescription1, $streetAddress1);
+    $eventInfoStrings1 = [$eventTitle1, $eventDescription1, $streetAddress1];
     $registerUrl1 = $this->_testVerifyEventInfo($eventTitle1, $eventInfoStrings1);
 
     //event 2
@@ -184,7 +184,7 @@ class WebTest_Event_MultipleEventRegistrationbyCartTest extends CiviSeleniumTest
     $multipleRegistrations = TRUE;
     $this->_testAddOnlineRegistration($registerIntro, $multipleRegistrations);
 
-    $eventInfoStrings2 = array($eventTitle2, $eventDescription2, $streetAddress2);
+    $eventInfoStrings2 = [$eventTitle2, $eventDescription2, $streetAddress2];
     $registerUrl2 = $this->_testVerifyEventInfo($eventTitle2, $eventInfoStrings2);
 
     //event 3
@@ -205,7 +205,7 @@ class WebTest_Event_MultipleEventRegistrationbyCartTest extends CiviSeleniumTest
     $multipleRegistrations = TRUE;
     $this->_testAddOnlineRegistration($registerIntro, $multipleRegistrations);
 
-    $eventInfoStrings3 = array($eventTitle3, $eventDescription3, $streetAddress3);
+    $eventInfoStrings3 = [$eventTitle3, $eventDescription3, $streetAddress3];
     $registerUrl3 = $this->_testVerifyEventInfo($eventTitle3, $eventInfoStrings3);
 
     //Enable shopping cart style
@@ -226,11 +226,11 @@ class WebTest_Event_MultipleEventRegistrationbyCartTest extends CiviSeleniumTest
     $this->openCiviPage("dashboard", "reset=1");
 
     //three event names
-    $events = array(
+    $events = [
       1 => $eventTitle1,
       2 => $eventTitle2,
       3 => $eventTitle3,
-    );
+    ];
     //check the existence of the contacts who were registered and the one who did the contribution
 
     $this->_checkContributionsandEventRegistration($value[0], $value[1], $events);
@@ -452,7 +452,7 @@ class WebTest_Event_MultipleEventRegistrationbyCartTest extends CiviSeleniumTest
     $this->waitForPageToLoad($this->getTimeoutMsec());
 
     $this->assertTrue($this->isTextPresent("This is your receipt of payment made for the following event registration."));
-    return array($firstName, $lastName);
+    return [$firstName, $lastName];
   }
 
   /**

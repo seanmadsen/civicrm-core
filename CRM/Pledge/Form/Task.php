@@ -78,7 +78,7 @@ class CRM_Pledge_Form_Task extends CRM_Core_Form {
    * @param bool $useTable
    */
   public static function preProcessCommon(&$form, $useTable = FALSE) {
-    $form->_pledgeIds = array();
+    $form->_pledgeIds = [];
 
     $values = $form->controller->exportValues('Search');
 
@@ -86,7 +86,7 @@ class CRM_Pledge_Form_Task extends CRM_Core_Form {
     $pledgeTasks = CRM_Pledge_Task::tasks();
     $form->assign('taskName', $pledgeTasks[$form->_task]);
 
-    $ids = array();
+    $ids = [];
     if ($values['radio_ts'] == 'ts_sel') {
       foreach ($values as $name => $value) {
         if (substr($name, 0, CRM_Core_Form::CB_PREFIX_LEN) == CRM_Core_Form::CB_PREFIX) {
@@ -151,17 +151,17 @@ class CRM_Pledge_Form_Task extends CRM_Core_Form {
    * @param bool $submitOnce
    */
   public function addDefaultButtons($title, $nextType = 'next', $backType = 'back', $submitOnce = FALSE) {
-    $this->addButtons(array(
-        array(
+    $this->addButtons([
+        [
           'type' => $nextType,
           'name' => $title,
           'isDefault' => TRUE,
-        ),
-        array(
+        ],
+        [
           'type' => $backType,
           'name' => ts('Cancel'),
-        ),
-      )
+        ],
+      ]
     );
   }
 

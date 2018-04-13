@@ -55,7 +55,7 @@ class WebTest_Event_AdditionalPaymentTest extends CiviSeleniumTestCase {
     $this->select2('event_id', "Rain-forest Cup Youth Soccer Tournament");
 
     // Select role
-    $this->multiselect2('role_id', array('Volunteer'));
+    $this->multiselect2('role_id', ['Volunteer']);
 
     // Choose Registration Date.
     // Using helper webtestFillDate function.
@@ -117,12 +117,12 @@ class WebTest_Event_AdditionalPaymentTest extends CiviSeleniumTestCase {
     $this->waitForElementPresent("xpath=//button//span[contains(text(),'Done')]");
 
     $this->webtestVerifyTabularData(
-      array(
+      [
         'Event' => 'Rain-forest Cup Youth Soccer Tournament',
         'Participant Role' => 'Volunteer',
         'Status' => 'Partially paid',
         'Event Source' => 'Event Partially Paid Webtest',
-      )
+      ]
     );
 
     // check the fee amount and contribution amount
@@ -134,14 +134,14 @@ class WebTest_Event_AdditionalPaymentTest extends CiviSeleniumTestCase {
     $this->waitForElementPresent("xpath=//button//span[contains(text(),'Done')]");
 
     $this->webtestVerifyTabularData(
-      array(
+      [
         'From' => $displayName,
         'Financial Type' => 'Event Fee',
         'Total Amount' => '$ 800.00',
         'Contribution Status' => 'Partially paid',
         'Payment Method' => 'Check',
         'Check Number' => '1044',
-      )
+      ]
     );
 
     $this->clickAjaxLink("xpath=//button//span[contains(text(),'Done')]");
@@ -170,12 +170,12 @@ class WebTest_Event_AdditionalPaymentTest extends CiviSeleniumTestCase {
     $this->click("xpath=//*[contains(@class, 'CRM_Event_Form_Search')]//table[@class='selector row-highlight']/tbody/tr[1]/td[8]/span/a[text()='View']");
     $this->waitForElementPresent("xpath=//button//span[contains(text(),'Done')]");
     $this->webtestVerifyTabularData(
-      array(
+      [
         'Event' => 'Rain-forest Cup Youth Soccer Tournament',
         'Participant Role' => 'Volunteer',
         'Status' => 'Registered',
         'Event Source' => 'Event Partially Paid Webtest',
-      )
+      ]
     );
     // check the fee amount and contribution amount
     $this->_checkPaymentInfoTable(800.00, 800.00);
@@ -186,14 +186,14 @@ class WebTest_Event_AdditionalPaymentTest extends CiviSeleniumTestCase {
     $this->clickAjaxLink("xpath=id('ParticipantView')/div[2]/table[@class='selector row-highlight']/tbody/tr[1]/td[8]/span/a[text()='View']");
 
     $this->webtestVerifyTabularData(
-      array(
+      [
         'From' => $displayName,
         'Financial Type' => 'Event Fee',
         'Total Amount' => '$ 800.00',
         'Contribution Status' => 'Completed',
         'Payment Method' => 'Check',
         'Check Number' => '1044',
-      )
+      ]
     );
     $this->click("xpath=//button//span[contains(text(),'Done')]");
 

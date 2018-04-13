@@ -47,11 +47,11 @@ class api_v3_OpenIDTest extends CiviUnitTestCase {
 
     $this->_entity = 'OpenID';
     $this->_contactID = $this->organizationCreate();
-    $this->params = array(
+    $this->params = [
       'contact_id' => $this->_contactID,
       'openid' => 'My OpenID handle',
       'location_type_id' => 1,
-    );
+    ];
   }
 
   public function testCreateOpenID() {
@@ -66,22 +66,22 @@ class api_v3_OpenIDTest extends CiviUnitTestCase {
     $result = $this->callAPIAndDocument($this->_entity, 'get', $this->params, __FUNCTION__, __FILE__);
     $this->assertEquals(1, $result['count'], 'In line ' . __LINE__);
     $this->assertNotNull($result['values'][$result['id']]['id'], 'In line ' . __LINE__);
-    $this->callAPISuccess($this->_entity, 'delete', array('id' => $result['id']));
+    $this->callAPISuccess($this->_entity, 'delete', ['id' => $result['id']]);
   }
 
   public function testDeleteOpenID() {
     $result = $this->callAPISuccess($this->_entity, 'create', $this->params);
-    $deleteParams = array('id' => $result['id']);
+    $deleteParams = ['id' => $result['id']];
     $result = $this->callAPIAndDocument($this->_entity, 'delete', $deleteParams, __FUNCTION__, __FILE__);
-    $checkDeleted = $this->callAPISuccess($this->_entity, 'get', array());
+    $checkDeleted = $this->callAPISuccess($this->_entity, 'get', []);
     $this->assertEquals(0, $checkDeleted['count'], 'In line ' . __LINE__);
   }
 
   public function testDeleteOpenIDInvalid() {
     $result = $this->callAPISuccess($this->_entity, 'create', $this->params);
-    $deleteParams = array('id' => 600);
+    $deleteParams = ['id' => 600];
     $result = $this->callAPIFailure($this->_entity, 'delete', $deleteParams);
-    $checkDeleted = $this->callAPISuccess($this->_entity, 'get', array());
+    $checkDeleted = $this->callAPISuccess($this->_entity, 'get', []);
     $this->assertEquals(1, $checkDeleted['count'], 'In line ' . __LINE__);
   }
 

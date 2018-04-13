@@ -98,13 +98,13 @@ class WebTest_Member_OfflineAutoRenewMembershipTest extends CiviSeleniumTestCase
     $this->clickAjaxLink("xpath=//div[@id='memberSearch']/table/tbody/tr[1]/td[11]/span/a[text()='View']", "_qf_MembershipView_cancel-bottom");
 
     // View Membership Record
-    $verifyData = array(
+    $verifyData = [
       'Member' => "$firstName $lastName",
       'Membership Type' => $memTypeParams['membership_type'],
       'Source' => 'Online Membership: Admin Interface',
       'Status' => 'Pending',
       'Auto-renew' => 'Yes',
-    );
+    ];
     foreach ($verifyData as $label => $value) {
       $this->verifyText("xpath=//form[@id='MembershipView']//table/tbody/tr/td[text()='{$label}']/following-sibling::td",
         preg_quote($value)

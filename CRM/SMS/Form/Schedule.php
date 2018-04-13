@@ -48,7 +48,7 @@ class CRM_SMS_Form_Schedule extends CRM_Core_Form {
    * Set default values for the form.
    */
   public function setDefaultValues() {
-    $defaults = array();
+    $defaults = [];
 
     $count = $this->get('count');
 
@@ -61,33 +61,33 @@ class CRM_SMS_Form_Schedule extends CRM_Core_Form {
    * Build the form object for the last step of the sms wizard.
    */
   public function buildQuickform() {
-    $this->addDateTime('start_date', ts('Schedule SMS'), FALSE, array('formatType' => 'mailing'));
+    $this->addDateTime('start_date', ts('Schedule SMS'), FALSE, ['formatType' => 'mailing']);
 
     $this->addElement('checkbox', 'now', ts('Send Immediately'));
 
-    $this->addFormRule(array('CRM_SMS_Form_Schedule', 'formRule'), $this);
+    $this->addFormRule(['CRM_SMS_Form_Schedule', 'formRule'], $this);
 
-    $buttons = array(
-      array(
+    $buttons = [
+      [
         'type' => 'back',
         'name' => ts('Previous'),
-      ),
-      array(
+      ],
+      [
         'type' => 'next',
         'name' => ts('Submit Mass SMS'),
         'spacing' => '&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;',
         'isDefault' => TRUE,
-        'js' => array('onclick' => "return submitOnce(this,'" . $this->_name . "','" . ts('Processing') . "');"),
-      ),
-      array(
+        'js' => ['onclick' => "return submitOnce(this,'" . $this->_name . "','" . ts('Processing') . "');"],
+      ],
+      [
         'type' => 'cancel',
         'name' => ts('Continue Later'),
-      ),
-    );
+      ],
+    ];
 
     $this->addButtons($buttons);
 
-    $preview = array();
+    $preview = [];
     $preview['type'] = CRM_Core_DAO::getFieldValue('CRM_Mailing_DAO_Mailing', $this->_mailingID, 'body_html') ? 'html' : 'text';
     $preview['viewURL'] = CRM_Utils_System::url('civicrm/mailing/view', "reset=1&id={$this->_mailingID}");
     $this->assign_by_ref('preview', $preview);
@@ -125,9 +125,9 @@ class CRM_SMS_Form_Schedule extends CRM_Core_Form {
         $params['start_date_time']
       )) < CRM_Utils_Date::format(date('YmdHi00'))
     ) {
-      return array(
+      return [
         'start_date' => ts('Start date cannot be earlier than the current time.'),
-      );
+      ];
     }
     return TRUE;
   }
@@ -136,7 +136,7 @@ class CRM_SMS_Form_Schedule extends CRM_Core_Form {
    * Process the posted form values.  Create and schedule a Mass SMS.
    */
   public function postProcess() {
-    $params = array();
+    $params = [];
 
     $params['mailing_id'] = $ids['mailing_id'] = $this->_mailingID;
 
@@ -144,7 +144,7 @@ class CRM_SMS_Form_Schedule extends CRM_Core_Form {
       CRM_Core_Error::fatal(ts('Could not find a mailing id'));
     }
 
-    foreach (array('now', 'start_date', 'start_date_time') as $parameter) {
+    foreach (['now', 'start_date', 'start_date_time'] as $parameter) {
       $params[$parameter] = $this->controller->exportValue($this->_name, $parameter);
     }
 

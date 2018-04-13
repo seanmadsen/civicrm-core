@@ -15,7 +15,7 @@ class ExampleTransactionalTest extends \PHPUnit_Framework_TestCase implements He
    * @var array
    *   Array(int $id).
    */
-  static $contactIds = array();
+  static $contactIds = [];
 
   public function setUpHeadless() {
     return \Civi\Test::headless()->apply();
@@ -23,9 +23,9 @@ class ExampleTransactionalTest extends \PHPUnit_Framework_TestCase implements He
 
   protected function setUp() {
     /** @var \CRM_Contact_DAO_Contact $contact */
-    $contact = \CRM_Core_DAO::createTestObject('CRM_Contact_DAO_Contact', array(
+    $contact = \CRM_Core_DAO::createTestObject('CRM_Contact_DAO_Contact', [
       'contact_type' => 'Individual',
-    ));
+    ]);
     self::$contactIds[$this->getName()] = $contact->id;
   }
 

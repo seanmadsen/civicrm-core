@@ -55,11 +55,11 @@ class CRM_Utils_Hook_WordPress extends CRM_Utils_Hook {
   /**
    * @var array(string)
    */
-  private $hooksThatReturn = array(
+  private $hooksThatReturn = [
     'civicrm_upgrade',
     'civicrm_caseSummary',
     'civicrm_dashboard',
-  );
+  ];
 
   /**
    * Invoke hooks.
@@ -109,7 +109,7 @@ class CRM_Utils_Hook_WordPress extends CRM_Utils_Hook {
 
       // only pass the arguments that have values
       $args = array_slice(
-        array(&$arg1, &$arg2, &$arg3, &$arg4, &$arg5, &$arg6),
+        [&$arg1, &$arg2, &$arg3, &$arg4, &$arg5, &$arg6],
         0,
         $numParams
       );
@@ -183,7 +183,7 @@ class CRM_Utils_Hook_WordPress extends CRM_Utils_Hook {
         }
 
         // initialise with the pre-existing 'wordpress' prefix
-        $this->wordpressModules = array('wordpress');
+        $this->wordpressModules = ['wordpress'];
 
         // Use WordPress Plugin API to build list
         // a plugin simply needs to declare its "unique_plugin_code" thus:
@@ -197,7 +197,7 @@ class CRM_Utils_Hook_WordPress extends CRM_Utils_Hook {
       }
 
       if ($this->civiModules === NULL) {
-        $this->civiModules = array();
+        $this->civiModules = [];
         $this->requireCiviModules($this->civiModules);
       }
 

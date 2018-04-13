@@ -45,7 +45,7 @@ class WebTest_Campaign_PetitionUsageScenarioTest extends CiviSeleniumTestCase {
     // handle permissions early
 
     // let's give permission 'sign CiviCRM Petition' to anonymous user.
-    $permissions = array(
+    $permissions = [
       // give profile related permision
       "edit-1-sign-civicrm-petition",
       "edit-1-profile-create",
@@ -60,7 +60,7 @@ class WebTest_Campaign_PetitionUsageScenarioTest extends CiviSeleniumTestCase {
       "edit-2-release-campaign-contacts",
       "edit-2-reserve-campaign-contacts",
       "edit-2-sign-civicrm-petition",
-    );
+    ];
     $this->changePermissions($permissions);
 
     // Log in as normal user
@@ -166,13 +166,13 @@ class WebTest_Campaign_PetitionUsageScenarioTest extends CiviSeleniumTestCase {
     $this->waitForPageToLoad($this->getTimeoutMsec());
 
     // verify tabular data
-    $expected = array(
+    $expected = [
       2 => 'Petition',
       3 => "$title Petition",
       4 => "$lastName, $firstName",
       5 => "$lastName, $firstName",
       8 => 'Scheduled',
-    );
+    ];
 
     foreach ($expected as $column => $value) {
       $this->verifyText("xpath=//div[@class='crm-search-results']/table/tbody/tr[2]/td[$column]/", preg_quote($value));
@@ -259,13 +259,13 @@ class WebTest_Campaign_PetitionUsageScenarioTest extends CiviSeleniumTestCase {
     $this->waitForPageToLoad($this->getTimeoutMsec());
 
     // verify tabular data
-    $expected = array(
+    $expected = [
       2 => 'Petition',
       3 => "$title Petition",
       4 => "$lastName, $firstName",
       5 => "$lastName, $firstName",
       8 => 'Completed',
-    );
+    ];
 
     foreach ($expected as $column => $value) {
       $this->verifyText("xpath=//div[@class='crm-search-results']/table/tbody/tr[2]/td[$column]/", preg_quote($value));

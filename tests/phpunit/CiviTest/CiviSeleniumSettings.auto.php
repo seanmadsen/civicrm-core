@@ -19,8 +19,8 @@ class CiviSeleniumSettings {
   public $cookies;
 
   public function __construct() {
-    $required = array();
-    foreach (array('CMS_URL', 'ADMIN_USER', 'ADMIN_PASS', 'DEMO_USER', 'DEMO_PASS') as $key) {
+    $required = [];
+    foreach (['CMS_URL', 'ADMIN_USER', 'ADMIN_PASS', 'DEMO_USER', 'DEMO_PASS'] as $key) {
       if (empty($GLOBALS['_CV'][$key])) {
         $required[] = $key;
       }
@@ -40,7 +40,7 @@ class CiviSeleniumSettings {
     $this->password = $GLOBALS['_CV']['DEMO_PASS'];
     $this->siteKey = CIVICRM_SITE_KEY;
     $this->adminApiKey = md5('apikeyadmin' . $GLOBALS['_CV']['CMS_DB_DSN'] . CIVICRM_SITE_KEY);
-    $this->cookies = array();
+    $this->cookies = [];
   }
 
   //  /**

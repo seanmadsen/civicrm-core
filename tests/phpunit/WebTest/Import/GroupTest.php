@@ -48,13 +48,13 @@ class WebTest_Import_GroupTest extends ImportCiviSeleniumTestCase {
     $groupName = substr(sha1(rand()), 0, 7);
 
     // Import and check Individual Contacts in Skip mode and Add them in Group
-    $other = array(
+    $other = [
       'createGroup' => TRUE,
       'createGroupName' => $groupName,
-    );
+    ];
 
     // Create New Group And Import Contacts In Group
-    $this->importContacts($headers, $rows, 'Individual', 'Skip', array(), $other);
+    $this->importContacts($headers, $rows, 'Individual', 'Skip', [], $other);
 
     $count = count($rows);
 
@@ -70,13 +70,13 @@ class WebTest_Import_GroupTest extends ImportCiviSeleniumTestCase {
     $this->assertTrue($this->isTextPresent("{$count} Contacts"), "Contacts Not Found");
 
     // To Add New Contacts In Already Existing Group
-    $other = array('selectGroup' => $groupName);
+    $other = ['selectGroup' => $groupName];
 
     // Create New Individual Record
     list($headers, $rows) = $this->_individualGroupCSVData();
 
     // Import Contacts In Existing Group
-    $this->importContacts($headers, $rows, 'Individual', 'Skip', array(), $other);
+    $this->importContacts($headers, $rows, 'Individual', 'Skip', [], $other);
     $count += count($rows);
 
     // Direct URL To Search
@@ -97,7 +97,7 @@ class WebTest_Import_GroupTest extends ImportCiviSeleniumTestCase {
    * @return array
    */
   public function _individualGroupCSVData() {
-    $headers = array(
+    $headers = [
       'first_name' => 'First Name',
       'middle_name' => 'Middle Name',
       'last_name' => 'Last Name',
@@ -108,10 +108,10 @@ class WebTest_Import_GroupTest extends ImportCiviSeleniumTestCase {
       'city' => 'City',
       'state' => 'State',
       'country' => 'Country',
-    );
+    ];
 
-    $rows = array(
-      array(
+    $rows = [
+      [
         'first_name' => substr(sha1(rand()), 0, 7),
         'middle_name' => substr(sha1(rand()), 0, 7),
         'last_name' => 'Anderson',
@@ -122,8 +122,8 @@ class WebTest_Import_GroupTest extends ImportCiviSeleniumTestCase {
         'city' => 'Watson',
         'state' => 'NY',
         'country' => 'UNITED STATES',
-      ),
-      array(
+      ],
+      [
         'first_name' => substr(sha1(rand()), 0, 7),
         'middle_name' => substr(sha1(rand()), 0, 7),
         'last_name' => 'Summerson',
@@ -134,9 +134,9 @@ class WebTest_Import_GroupTest extends ImportCiviSeleniumTestCase {
         'city' => 'Watson',
         'state' => 'NY',
         'country' => 'UNITED STATES',
-      ),
-    );
-    return array($headers, $rows);
+      ],
+    ];
+    return [$headers, $rows];
   }
 
 }

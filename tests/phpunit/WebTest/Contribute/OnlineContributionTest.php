@@ -63,7 +63,7 @@ class WebTest_Contribute_OnlineContributionTest extends CiviSeleniumTestCase {
     $pageId = $this->webtestAddContributionPage($hash,
       $rand,
       $pageTitle,
-      array($processorName => $processorType),
+      [$processorName => $processorType],
       $amountSection,
       $payLater,
       $onBehalf,
@@ -137,7 +137,7 @@ class WebTest_Contribute_OnlineContributionTest extends CiviSeleniumTestCase {
 
     $stateText = CRM_Core_PseudoConstant::stateProvinceAbbreviation(1004);
     $countryText = CRM_Core_PseudoConstant::countryIsoCode(1228);
-    $billingDetails = array('15 Main St.', 'San Jose', '94129', $stateText, $countryText);
+    $billingDetails = ['15 Main St.', 'San Jose', '94129', $stateText, $countryText];
     foreach ($billingDetails as $field) {
       $this->assertElementContainsText("xpath=//div[@class='crm-group billing_name_address-group']//div[@class='crm-section no-label billing_address-section']", $field);
     }
@@ -162,12 +162,12 @@ class WebTest_Contribute_OnlineContributionTest extends CiviSeleniumTestCase {
     $this->clickLink("xpath=//table[@class='selector row-highlight']/tbody/tr[1]/td[10]/span//a[text()='View']", "_qf_ContributionView_cancel-bottom", FALSE);
 
     //View Contribution Record and verify data
-    $expected = array(
+    $expected = [
       'From' => "{$firstName} {$lastName}",
       'Financial Type' => 'Donation',
       'Total Amount' => '100.00',
       'Contribution Status' => 'Completed',
-    );
+    ];
     $this->webtestVerifyTabularData($expected);
     //View Soft Credit record of type 'Honor of'
     $this->waitForTextPresent($honorDisplayName);
@@ -223,7 +223,7 @@ class WebTest_Contribute_OnlineContributionTest extends CiviSeleniumTestCase {
     $pageId = $this->webtestAddContributionPage($hash,
       $rand,
       $pageTitle,
-      array($processorName => $processorType),
+      [$processorName => $processorType],
       $amountSection,
       $payLater,
       $onBehalf,
@@ -325,12 +325,12 @@ class WebTest_Contribute_OnlineContributionTest extends CiviSeleniumTestCase {
     $this->clickLink("xpath=//table[@class='selector row-highlight']/tbody/tr[1]/td[10]/span//a[text()='View']", "_qf_ContributionView_cancel-bottom", FALSE);
 
     //View Contribution Record and verify data
-    $expected = array(
+    $expected = [
       'From' => "{$firstName} {$lastName}",
       'Financial Type' => 'Donation',
       $amountLabel => $amountValue,
       'Contribution Status' => 'Completed',
-    );
+    ];
     $this->webtestVerifyTabularData($expected);
   }
 
@@ -384,12 +384,12 @@ class WebTest_Contribute_OnlineContributionTest extends CiviSeleniumTestCase {
     $this->clickLink("xpath=//div[@id='contributionSearch']//table[@class='selector row-highlight']//tbody/tr[1]/td[10]/span/a[text()='View']", "_qf_ContributionView_cancel-bottom", FALSE);
 
     //View Contribution Record and verify data
-    $expected = array(
+    $expected = [
       'From' => "{$firstName} {$lastName}",
       'Financial Type' => 'Donation',
       'Total Amount' => $contributionAmt,
       'Contribution Status' => 'Completed',
-    );
+    ];
     $this->webtestVerifyTabularData($expected);
   }
 
@@ -422,7 +422,7 @@ class WebTest_Contribute_OnlineContributionTest extends CiviSeleniumTestCase {
     $pageId = $this->webtestAddContributionPage($hash,
       $rand,
       $pageTitle,
-      array($processorName => $processorType),
+      [$processorName => $processorType],
       $amountSection,
       $payLater,
       $onBehalf,
@@ -494,7 +494,7 @@ class WebTest_Contribute_OnlineContributionTest extends CiviSeleniumTestCase {
     $this->openCiviPage("contribute/search", "reset=1", "contribution_date_low");
     $this->click("xpath=//tr/td[1]/label[contains(text(), 'Contribution is a Test?')]/../../td[2]/label[contains(text(), 'Yes')]/preceding-sibling::input[1]");
     $this->type("sort_name", "$lastName $firstName");
-    $this->multiselect2('contribution_product_id', array('Coffee Mug'));
+    $this->multiselect2('contribution_product_id', ['Coffee Mug']);
     $this->click("_qf_Search_refresh");
     $this->waitForAjaxContent();
     $this->waitForElementPresent("xpath=//table[@class='selector row-highlight']/tbody//tr/td[10]/span//a[text()='View']");
@@ -502,13 +502,13 @@ class WebTest_Contribute_OnlineContributionTest extends CiviSeleniumTestCase {
     $this->waitForElementPresent("xpath=//button//span[contains(text(),'Done')]");
 
     //View Contribution Record and verify data
-    $expected = array(
+    $expected = [
       'From' => "{$firstName} {$lastName}",
       'Financial Type' => 'Donation',
       'Total Amount' => '100.00',
       'Contribution Status' => 'Completed',
       'Premium' => 'Coffee Mug',
-    );
+    ];
     $this->webtestVerifyTabularData($expected);
   }
 
@@ -532,13 +532,13 @@ class WebTest_Contribute_OnlineContributionTest extends CiviSeleniumTestCase {
     $this->_testAddSet($setTitle, $usedFor, $setHelp, $financialType);
     $sid = $this->urlArg('sid');
 
-    $validateStrings = array();
-    $fields = array(
+    $validateStrings = [];
+    $fields = [
       'Full Conference' => 'Text',
       'Meal Choice' => 'Select',
       'Pre-conference Meetup?' => 'Radio',
       'Evening Sessions' => 'CheckBox',
-    );
+    ];
 
     $this->_testAddPriceFields($fields, $validateStrings, $financialType);
 
@@ -590,15 +590,15 @@ class WebTest_Contribute_OnlineContributionTest extends CiviSeleniumTestCase {
     $this->click('css=li#tab_contribute a');
     $this->waitForElementPresent('link=Record Contribution (Check, Cash, EFT ...)');
 
-    $amountValues = array(
+    $amountValues = [
       1 => '$ 588.50',
       2 => '$ 98.50',
-    );
+    ];
     foreach ($amountValues as $row => $amount) {
       $this->clickLink("xpath=//table[@class='selector row-highlight']/tbody/tr[{$row}]/td[8]/span//a[text()='View']", "_qf_ContributionView_cancel-bottom", FALSE);
 
       // View Contribution Record and test for expected values
-      $expected = array(
+      $expected = [
         'From' => "{$firstName} {$lastName}",
         'Financial Type' => $financialType,
         'Fee Amount' => '$ 1.50',
@@ -606,7 +606,7 @@ class WebTest_Contribute_OnlineContributionTest extends CiviSeleniumTestCase {
         'Received Into' => 'Payment Processor Account',
         'Payment Method' => 'Credit Card (Test Processor)',
         'Contribution Status' => 'Completed',
-      );
+      ];
       $this->webtestVerifyTabularData($expected);
 
       $this->clickAjaxLink("xpath=//span[text()='Done']");

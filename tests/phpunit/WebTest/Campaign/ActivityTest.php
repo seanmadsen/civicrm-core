@@ -40,10 +40,10 @@ class WebTest_Campaign_ActivityTest extends CiviSeleniumTestCase {
     $this->webtestLogin('admin');
 
     // Enable CiviCampaign module if necessary
-    $this->enableComponents(array('CiviCampaign'));
+    $this->enableComponents(['CiviCampaign']);
 
     // add the required Drupal permission
-    $permissions = array('edit-2-administer-civicampaign');
+    $permissions = ['edit-2-administer-civicampaign'];
     $this->changePermissions($permissions);
 
     // Log in as normal user
@@ -93,7 +93,7 @@ class WebTest_Campaign_ActivityTest extends CiviSeleniumTestCase {
     $this->type("description", "This is a test campaign");
 
     // include groups for the campaign
-    $this->multiselect2("includeGroups", array("$groupName", "Advisory Board"));
+    $this->multiselect2("includeGroups", ["$groupName", "Advisory Board"]);
 
     // fill the end date for campaign
     $this->webtestFillDate("end_date", "+1 year");

@@ -73,7 +73,7 @@ class WebTest_Contribute_ConfirmOptionalTest extends CiviSeleniumTestCase {
       $hash,
       $rand = NULL,
       $pageTitle = "Test Confirm ($hash)",
-      $processor = array("Dummy ($hash)" => 'Dummy'),
+      $processor = ["Dummy ($hash)" => 'Dummy'],
       $amountSection = TRUE,
       $payLater = FALSE,
       $onBehalf = FALSE,

@@ -51,10 +51,10 @@ class WebTest_Member_OfflineMembershipAddPricesetTest extends CiviSeleniumTestCa
     $sid = $this->urlArg('sid');
     $this->assertType('numeric', $sid);
 
-    $fields = array(
+    $fields = [
       "National Membership $title" => 'Radio',
       "Local Chapter $title" => 'CheckBox',
-    );
+    ];
 
     list($memTypeTitle1, $memTypeTitle2) = $this->_testAddPriceFields($fields, $validateStrings, FALSE, $title, $sid, $contributionType);
 
@@ -65,11 +65,11 @@ class WebTest_Member_OfflineMembershipAddPricesetTest extends CiviSeleniumTestCa
     $firstName = 'John_' . substr(sha1(rand()), 0, 7);
     $lastName = 'Anderson_' . substr(sha1(rand()), 0, 7);
     $email = "{$firstName}.{$lastName}@example.com";
-    $contactParams = array(
+    $contactParams = [
       'first_name' => $firstName,
       'last_name' => $lastName,
       'email-5' => $email,
-    );
+    ];
 
     // Add a contact from the quick add block
     $this->webtestAddContact($firstName, $lastName, $email);
@@ -100,32 +100,32 @@ class WebTest_Member_OfflineMembershipAddPricesetTest extends CiviSeleniumTestCa
     $sid = $this->urlArg('sid');
     $this->assertType('numeric', $sid);
 
-    $fields = array("National Membership $title", "Radio");
+    $fields = ["National Membership $title", "Radio"];
     $this->openCiviPage("admin/price/field", "reset=1&action=add&sid={$sid}");
 
     $validateStrings[] = $fields[0];
     $this->type('label', $fields[0]);
     $this->select('html_type', "value={$fields[1]}");
-    $options = array(
-      1 => array(
+    $options = [
+      1 => [
         'label' => $memTypeTitle1 . "_1",
         'membership_type_id' => $memTypeId1,
         'amount' => 50.00,
         'membership_num_terms' => 1,
-      ),
-      2 => array(
+      ],
+      2 => [
         'label' => $memTypeTitle1 . "_2",
         'membership_type_id' => $memTypeId1,
         'amount' => 90.00,
         'membership_num_terms' => 2,
-      ),
-      3 => array(
+      ],
+      3 => [
         'label' => $memTypeTitle1 . "_3",
         'membership_type_id' => $memTypeId1,
         'amount' => 120.00,
         'membership_num_terms' => 3,
-      ),
-    );
+      ],
+    ];
     $i = 2;
     foreach ($options as $index => $values) {
       $this->select("membership_type_id_{$index}", "value={$values['membership_type_id']}");
@@ -154,11 +154,11 @@ class WebTest_Member_OfflineMembershipAddPricesetTest extends CiviSeleniumTestCa
     $lastName = 'Anderson_' . substr(sha1(rand()), 0, 7);
     $email = "{$firstName}.{$lastName}@example.com";
 
-    $contactParams = array(
+    $contactParams = [
       'first_name' => $firstName,
       'last_name' => $lastName,
       'email-5' => $email,
-    );
+    ];
     $this->webtestAddContact($firstName, $lastName, $email);
     //membership with number of terms as 3
     $this->_testMultilpeTermsMembershipRegistration($sid, $contactParams, $memTypeTitle1, 3);
@@ -229,34 +229,34 @@ class WebTest_Member_OfflineMembershipAddPricesetTest extends CiviSeleniumTestCa
 
       switch ($type) {
         case 'Radio':
-          $options = array(
-            1 => array(
+          $options = [
+            1 => [
               'label' => "$memTypeTitle1",
               'membership_type_id' => $memTypeId1,
               'amount' => 100.00,
-            ),
-            2 => array(
+            ],
+            2 => [
               'label' => "$memTypeTitle2",
               'membership_type_id' => $memTypeId2,
               'amount' => 50.00,
-            ),
-          );
+            ],
+          ];
           $this->addMultipleChoiceOptions($options, $validateStrings);
           break;
 
         case 'CheckBox':
-          $options = array(
-            1 => array(
+          $options = [
+            1 => [
               'label' => "$memTypeTitle1",
               'membership_type_id' => $memTypeId1,
               'amount' => 100.00,
-            ),
-            2 => array(
+            ],
+            2 => [
               'label' => "$memTypeTitle2",
               'membership_type_id' => $memTypeId2,
               'amount' => 50.00,
-            ),
-          );
+            ],
+          ];
           $this->addMultipleChoiceOptions($options, $validateStrings);
           break;
 
@@ -268,7 +268,7 @@ class WebTest_Member_OfflineMembershipAddPricesetTest extends CiviSeleniumTestCa
       $this->waitForPageToLoad($this->getTimeoutMsec());
       $this->waitForText('crm-notification-container', "Price Field '{$label}' has been saved.");
     }
-    return array($memTypeTitle1, $memTypeTitle2);
+    return [$memTypeTitle1, $memTypeTitle2];
   }
 
   /**
@@ -309,11 +309,11 @@ class WebTest_Member_OfflineMembershipAddPricesetTest extends CiviSeleniumTestCa
     $joinDate = date('Y-m-d', mktime(0, 0, 0, $currentMonth, date('d'), $currentYear));
     $startDate = date('Y-m-d', mktime(0, 0, 0, $currentMonth, date('d'), $currentYear));
     $endDate = date('Y-m-d', mktime(0, 0, 0, $currentMonth, $previousDay, $endYear));
-    foreach (array(
+    foreach ([
                'joinDate',
                'startDate',
                'endDate',
-             ) as $date) {
+             ] as $date) {
       $$date = CRM_Utils_Date::customFormat($$date, $this->webtestGetSetting('dateformatFull'));
     }
 
@@ -355,13 +355,13 @@ class WebTest_Member_OfflineMembershipAddPricesetTest extends CiviSeleniumTestCa
     $this->waitForElementPresent("xpath=//div[@class='ui-dialog-buttonset']/button[3]");
 
     //View Membership Record
-    $verifyData = array(
+    $verifyData = [
       'Membership Type' => "{$memTypeTitle1}",
       'Status' => 'New',
       'Member Since' => $joinDate,
       'Start date' => $startDate,
       'End date' => $endDate,
-    );
+    ];
     $this->webtestVerifyTabularData($verifyData);
 
     $this->click("xpath=//div[@class='ui-dialog-buttonset']/button[3]/span[2]");
@@ -370,13 +370,13 @@ class WebTest_Member_OfflineMembershipAddPricesetTest extends CiviSeleniumTestCa
     $this->waitForElementPresent("xpath=//div[@class='ui-dialog-buttonset']/button[3]");
 
     //View Membership Record
-    $verifyData = array(
+    $verifyData = [
       'Membership Type' => "{$memTypeTitle2}",
       'Status' => 'New',
       'Member Since' => $joinDate,
       'Start date' => $startDate,
       'End date' => $endDate,
-    );
+    ];
     $this->webtestVerifyTabularData($verifyData);
 
     $this->click("xpath=//div[@class='ui-dialog-buttonset']/button[3]/span[2]");
@@ -401,11 +401,11 @@ class WebTest_Member_OfflineMembershipAddPricesetTest extends CiviSeleniumTestCa
     $joinDate = date('Y-m-d', mktime(0, 0, 0, $currentMonth, date('d'), $currentYear));
     $startDate = date('Y-m-d', mktime(0, 0, 0, $currentMonth, date('d'), $currentYear));
     $endDate = date('Y-m-d', mktime(0, 0, 0, $currentMonth, $previousDay, $endYear));
-    foreach (array(
+    foreach ([
                'joinDate',
                'startDate',
                'endDate',
-             ) as $date) {
+             ] as $date) {
       $$date = CRM_Utils_Date::customFormat($$date, $this->webtestGetSetting('dateformatFull'));
     }
 
@@ -434,13 +434,13 @@ class WebTest_Member_OfflineMembershipAddPricesetTest extends CiviSeleniumTestCa
     $this->click("xpath=//table[@class='display dataTable no-footer']/tbody//tr/td[4][text()='{$endDate}']/../td[9]/span[1]/a[1]");
     $this->waitForElementPresent("xpath=//div[@class='ui-dialog-buttonset']/button[3]/span[2]");
     //View Membership Record
-    $verifyData = array(
+    $verifyData = [
       'Membership Type' => "$memTypeTitle1",
       'Status' => 'New',
       'Member Since' => $joinDate,
       'Start date' => $startDate,
       'End date' => $endDate,
-    );
+    ];
     $this->webtestVerifyTabularData($verifyData);
 
     //check if the membership amount is correct

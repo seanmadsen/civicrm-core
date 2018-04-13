@@ -60,11 +60,11 @@ class WebTest_Member_BatchUpdateViaProfileTest extends CiviSeleniumTestCase {
     $this->waitForElementPresent("_qf_MembershipView_cancel-bottom");
 
     // Verify End date
-    $verifyData = array(
+    $verifyData = [
       'Membership Type' => $memTypeParams['membership_type'],
       'Status' => 'New',
       'End date' => $endDate,
-    );
+    ];
     $this->webtestVerifyTabularData($verifyData);
 
     // Add new individual using Quick Add block on the main page
@@ -83,11 +83,11 @@ class WebTest_Member_BatchUpdateViaProfileTest extends CiviSeleniumTestCase {
     $this->waitForElementPresent("_qf_MembershipView_cancel-bottom");
 
     // Verify End date
-    $verifyData = array(
+    $verifyData = [
       'Membership Type' => $memTypeParams['membership_type'],
       'Status' => 'New',
       'End date' => $endDate,
-    );
+    ];
     $this->webtestVerifyTabularData($verifyData);
 
     $profileTitle = 'Profile_' . substr(sha1(rand()), 0, 4);
@@ -127,11 +127,11 @@ class WebTest_Member_BatchUpdateViaProfileTest extends CiviSeleniumTestCase {
     $this->waitForElementPresent('_qf_MembershipView_cancel-bottom');
 
     // Verify End date
-    $verifyData = array(
+    $verifyData = [
       'Membership Type' => $memTypeParams['membership_type'],
       'Status' => 'Current',
       'End date' => $endDate,
-    );
+    ];
     $this->webtestVerifyTabularData($verifyData);
 
     $this->click('_qf_MembershipView_cancel-bottom');
@@ -141,11 +141,11 @@ class WebTest_Member_BatchUpdateViaProfileTest extends CiviSeleniumTestCase {
     $this->waitForElementPresent('_qf_MembershipView_cancel-bottom');
 
     // Verify End date
-    $verifyData = array(
+    $verifyData = [
       'Membership Type' => $memTypeParams['membership_type'],
       'Status' => 'Grace',
       'End date' => $endDate,
-    );
+    ];
     $this->webtestVerifyTabularData($verifyData);
   }
 
@@ -203,11 +203,11 @@ class WebTest_Member_BatchUpdateViaProfileTest extends CiviSeleniumTestCase {
     $this->waitForText('crm-notification-container', "Your CiviCRM Profile '{$profileTitle}' has been added. You can add fields to this profile now.");
     $gid = $this->urlArg('gid');
 
-    $this->openCiviPage('admin/uf/group/field/add', array(
+    $this->openCiviPage('admin/uf/group/field/add', [
         'action' => 'add',
         'reset' => 1,
         'gid' => $gid,
-      ), 'field_name[0]');
+    ], 'field_name[0]');
 
     $this->select('field_name[0]', "value=Membership");
     $this->select('field_name[1]', "label={$customDataParams[0]} :: {$customDataParams[1]}");
@@ -272,7 +272,7 @@ class WebTest_Member_BatchUpdateViaProfileTest extends CiviSeleniumTestCase {
     //Is custom field created
     $this->waitForText('crm-notification-container', "Custom field '$textFieldLabel' has been saved.");
 
-    return array($textFieldLabel, $customGroupTitle);
+    return [$textFieldLabel, $customGroupTitle];
   }
 
 }

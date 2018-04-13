@@ -45,7 +45,7 @@ class WebTest_Import_AddressImportTest extends ImportCiviSeleniumTestCase {
     // Get sample import data.
     list($headers, $rows) = $this->_individualCustomCSVData($customDataParams, $firstName1);
 
-    $this->importContacts($headers, $rows, 'Individual', 'Skip', array());
+    $this->importContacts($headers, $rows, 'Individual', 'Skip', []);
 
     // Type search name in autocomplete.
     $this->click('sort_name_navigation');
@@ -75,7 +75,7 @@ class WebTest_Import_AddressImportTest extends ImportCiviSeleniumTestCase {
    */
   public function _individualCustomCSVData($customDataParams, $firstName1) {
 
-    $headers = array(
+    $headers = [
       'first_name' => 'First Name',
       'last_name' => 'Last Name',
       'address_1' => 'Additional Address 1',
@@ -83,13 +83,13 @@ class WebTest_Import_AddressImportTest extends ImportCiviSeleniumTestCase {
       'city' => 'City',
       'state' => 'State',
       'country' => 'Country',
-    );
+    ];
     foreach ($customDataParams['headers'] as $key => $value) {
       $headers[$key] = $value;
     }
 
-    $rows = array(
-      0 => array(
+    $rows = [
+      0 => [
         'first_name' => $firstName1,
         'last_name' => 'Anderson',
         'address_1' => 'Add 1',
@@ -97,12 +97,12 @@ class WebTest_Import_AddressImportTest extends ImportCiviSeleniumTestCase {
         'city' => 'Watson',
         'state' => 'NY',
         'country' => 'UNITED STATES',
-      ),
-    );
+      ],
+    ];
     foreach ($customDataParams['rows'][0] as $key => $values) {
       $rows[0][$key] = $values;
     }
-    return array($headers, $rows);
+    return [$headers, $rows];
   }
 
   /**
@@ -246,8 +246,8 @@ class WebTest_Import_AddressImportTest extends ImportCiviSeleniumTestCase {
     $customFieldId10 = explode('&id=', $this->getAttribute("xpath=//div[@id='field_page']//table/tbody//tr/td/div[text()='$customField10']/../../td[8]/span/a@href"));
     $customFieldId10 = $customFieldId10[1];
 
-    return array(
-      'headers' => array(
+    return [
+      'headers' => [
         "custom_{$customFieldId}" => "$customField :: $customGroupTitle",
         "custom_{$customFieldId3}" => "$customField3 :: $customGroupTitle",
         "custom_{$customFieldId4}" => "$customField4 :: $customGroupTitle",
@@ -259,9 +259,9 @@ class WebTest_Import_AddressImportTest extends ImportCiviSeleniumTestCase {
         "custom_{$customFieldId2}" => "$customField2 :: $customGroupTitle",
         "custom_{$customFieldId9}" => "$customField9 :: $customGroupTitle",
         "custom_{$customFieldId10}" => "$customField10 :: $customGroupTitle",
-      ),
-      'rows' => array(
-        0 => array(
+      ],
+      'rows' => [
+        0 => [
           "custom_{$customFieldId}" => "This is a test field",
           "custom_{$customFieldId3}" => "label1",
           "custom_{$customFieldId4}" => "label1",
@@ -273,9 +273,9 @@ class WebTest_Import_AddressImportTest extends ImportCiviSeleniumTestCase {
           "custom_{$customFieldId2}" => 12345,
           "custom_{$customFieldId9}" => 123456,
           "custom_{$customFieldId10}" => "2009-12-31",
-        ),
-      ),
-      'customFields' => array(
+        ],
+      ],
+      'customFields' => [
         $customField => 'This is a test field',
         $customField3 => 'label1',
         $customField4 => 'label1',
@@ -288,8 +288,8 @@ class WebTest_Import_AddressImportTest extends ImportCiviSeleniumTestCase {
         $customField9 => '123,456.00',
         //CRM-16068 -- changing assertion to match the date format selected during custom field creation.
         $customField10 => '2009-12-31',
-      ),
-    );
+      ],
+    ];
   }
 
   /**

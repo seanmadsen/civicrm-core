@@ -46,23 +46,23 @@ class WebTest_Contact_InlineFieldsEditTest extends CiviSeleniumTestCase {
     $this->waitForElementPresent('css=.crm-inline-edit-container.crm-edit-ready');
 
     // Set Communication Prefs
-    $this->inlineEdit('crm-communication-pref-content', array(
+    $this->inlineEdit('crm-communication-pref-content', [
       'email_greeting_id' => TRUE,
       'privacy_do_not_email' => 1,
       'preferred_communication_method_1' => 1,
       'preferred_communication_method_2' => 1,
-    ), 'keep_open');
+    ], 'keep_open');
     $this->waitForElementPresent('css=.icon.privacy-flag.do-not-email');
-    $this->inlineEdit('crm-communication-pref-content', array(
+    $this->inlineEdit('crm-communication-pref-content', [
       'privacy_do_not_phone' => 1,
       'privacy_do_not_email' => 0,
       'preferred_communication_method_1' => 0,
       'preferred_communication_method_2' => 0,
-    ), 'keep_open');
+    ], 'keep_open');
     $this->waitForElementPresent('css=.icon.privacy-flag.do-not-phone');
-    $this->inlineEdit('crm-communication-pref-content', array(
+    $this->inlineEdit('crm-communication-pref-content', [
       'email_greeting_custom' => 'Hey You!',
-    ), 'no_open');
+    ], 'no_open');
     $this->assertElementNotPresent('css=.icon.privacy-flag.do-not-email');
 
     // Custom data
@@ -70,49 +70,49 @@ class WebTest_Contact_InlineFieldsEditTest extends CiviSeleniumTestCase {
     $this->waitForAjaxContent();
     $this->openInlineForm('custom-set-content-1');
     $dateFieldId = $this->getAttribute("xpath=//table[@class='form-layout-compressed']/tbody/tr[3]/td[@class='html-adjust']/span/input@id");
-    $this->inlineEdit('custom-set-content-1', array(
+    $this->inlineEdit('custom-set-content-1', [
       'CIVICRM_QFID_Edu_2' => 1,
-      "//table[@class='form-layout-compressed']/tbody/tr[2]/td[@class='html-adjust']/select" => array('Single'),
+      "//table[@class='form-layout-compressed']/tbody/tr[2]/td[@class='html-adjust']/select" => ['Single'],
       $dateFieldId => 'date: now - 10 years',
-    ));
+    ]);
 
     // Edit contact info
-    $params = array(
+    $params = [
       'job_title' => 'jobtest123',
       'nick_name' => 'nicktest123',
       'contact_source' => 'sourcetest123',
-    );
+    ];
     $this->inlineEdit('crm-contactinfo-content', $params, 'keep_open');
     // Clear fields and verify they are deleted
-    $this->inlineEdit('crm-contactinfo-content', array(
+    $this->inlineEdit('crm-contactinfo-content', [
       'job_title' => '',
       'nick_name' => '',
       'contact_source' => '',
-    ), 'no_open');
+    ], 'no_open');
     foreach ($params as $str) {
       $this->assertElementNotContainsText('crm-contactinfo-content', $str);
     }
 
     // Add a phone
-    $this->inlineEdit('crm-phone-content', array(
+    $this->inlineEdit('crm-phone-content', [
       'phone_1_phone' => '123-456-7890',
       'phone_1_phone_ext' => '101',
-      'phone_1_location_type_id' => array('Work'),
-      'phone_1_phone_type_id' => array('Mobile'),
-    ));
+      'phone_1_location_type_id' => ['Work'],
+      'phone_1_phone_type_id' => ['Mobile'],
+    ]);
 
     // Add im
-    $this->inlineEdit('crm-im-content', array(
+    $this->inlineEdit('crm-im-content', [
       'im_1_name' => 'testmeout',
-      'im_1_location_type_id' => array('Work'),
-      'im_1_provider_id' => array('Jabber'),
-    ));
+      'im_1_location_type_id' => ['Work'],
+      'im_1_provider_id' => ['Jabber'],
+    ]);
 
     // Add an address - should default to home
-    $this->inlineEdit('address-block-1', array(
+    $this->inlineEdit('address-block-1', [
       'address_1_street_address' => '123 St',
       'address_1_city' => 'San Somewhere',
-    ), 'keep_open');
+    ], 'keep_open');
     // Try to uncheck is_primary, we should get an error and it should stay checked
     $this->click('address[1][is_primary]');
     $this->waitForElementPresent('css=#crm-notification-container .error.ui-notify-message');
@@ -122,18 +122,18 @@ class WebTest_Contact_InlineFieldsEditTest extends CiviSeleniumTestCase {
     $this->openInlineForm('address-block-2', FALSE);
     $this->assertElementNotPresent('css#address-block-2.form');
     // Update address
-    $this->inlineEdit('address-block-1', array(
+    $this->inlineEdit('address-block-1', [
       'address_1_street_address' => '321 Other St',
       'address_1_city' => 'Sans Nowhere',
       'address_1_postal_code' => '99999',
       'address_1_postal_code_suffix' => '99',
-    ), 'no_open');
+    ], 'no_open');
     // Another address with same location type as first - should give an error
-    $this->inlineEdit('address-block-2', array(
+    $this->inlineEdit('address-block-2', [
       'address_2_street_address' => '123 Foo',
       'address_2_city' => 'San Anywhere',
-      'address_2_location_type_id' => array('Home'),
-    ), 'error');
+      'address_2_location_type_id' => ['Home'],
+    ], 'error');
     $this->waitForTextPresent('required');
     // Share address with a new org
     $this->click('address[2][use_shared_address]');
@@ -150,73 +150,73 @@ class WebTest_Contact_InlineFieldsEditTest extends CiviSeleniumTestCase {
     $this->type('city-1', 'Test Org City');
     $this->clickLink('_qf_Edit_next', 'selected_shared_address-2', FALSE);
     $this->waitForTextPresent('Test Org Street');
-    $this->inlineEdit('address-block-2', array(
-      'address_2_location_type_id' => array('Work'),
-    ), 'no_open');
+    $this->inlineEdit('address-block-2', [
+      'address_2_location_type_id' => ['Work'],
+    ], 'no_open');
     $this->waitForElementPresent('css=.crm-content.crm-contact-current_employer');
     $this->assertElementContainsText('crm-contactinfo-content', $orgName);
     $this->assertElementContainsText('address-block-2', $orgName);
     $this->assertElementContainsText('address-block-2', 'Work Address');
 
     // Edit demographics
-    $this->inlineEdit('crm-demographic-content', array(
+    $this->inlineEdit('crm-demographic-content', [
       "xpath=//div[@class='crm-clear']/div[1]/div[@class='crm-content']/label[text()='Female']" => TRUE,
       'is_deceased' => 1,
       'birth_date' => 'date: Jan 1 1970',
-    ), 'no_open');
+    ], 'no_open');
     $this->assertElementContainsText('crm-demographic-content', 'Female');
     $this->assertElementContainsText('crm-demographic-content', 'Contact is Deceased');
-    $this->inlineEdit('crm-demographic-content', array(
+    $this->inlineEdit('crm-demographic-content', [
       'is_deceased' => 0,
-    ), 'no_open');
+    ], 'no_open');
     $age = date('Y') - 1970;
     $this->assertElementContainsText('crm-demographic-content', "$age years");
 
     // Add emails
-    $this->inlineEdit('crm-email-content', array(
+    $this->inlineEdit('crm-email-content', [
       'css=#crm-email-content a.add-more-inline' => TRUE,
       'email_1_email' => 'test1@monkey.com',
       'email_2_email' => 'test2@monkey.com',
-    ), 'keep_open');
+    ], 'keep_open');
 
     // Try an invalid email
-    $this->inlineEdit('crm-email-content', array(
+    $this->inlineEdit('crm-email-content', [
       'email_2_email' => 'invalid@monkey,com',
-    ), 'errorJs');
+    ], 'errorJs');
 
     // Delete email
-    $this->inlineEdit('crm-email-content', array(
+    $this->inlineEdit('crm-email-content', [
       'css=#Email_Block_2 a.crm-delete-inline' => TRUE,
-    ));
+    ]);
     $this->assertElementNotContainsText('crm-email-content', 'test2@monkey.com');
 
     // Add website with invalid url
-    $this->inlineEdit('crm-website-content', array(
+    $this->inlineEdit('crm-website-content', [
       'css=#crm-website-content a.add-more-inline' => TRUE,
       'website_1_url' => 'http://example.com',
       'website_2_url' => 'something.wrong',
-    ), 'errorJs');
+    ], 'errorJs');
 
     // Correct invalid url and add a third website
-    $this->inlineEdit('crm-website-content', array(
+    $this->inlineEdit('crm-website-content', [
       'css=#crm-website-content a.add-more-inline' => TRUE,
       'website_2_url' => 'http://example.net',
-      'website_2_website_type_id' => array('Work'),
+      'website_2_website_type_id' => ['Work'],
       'website_3_url' => 'http://example.biz',
-      'website_3_website_type_id' => array('Main'),
-    ), 'keep_open');
+      'website_3_website_type_id' => ['Main'],
+    ], 'keep_open');
 
     // Delete website
-    $this->inlineEdit('crm-website-content', array(
+    $this->inlineEdit('crm-website-content', [
       'css=#Website_Block_2 a.crm-delete-inline' => TRUE,
-    ));
+    ]);
     $this->assertElementNotContainsText('crm-website-content', 'http://example.net');
 
     // Change contact name
-    $this->inlineEdit('crm-contactname-content', array(
+    $this->inlineEdit('crm-contactname-content', [
       'first_name' => 'NewName',
-      'prefix_id' => array('Mr.'),
-    ));
+      'prefix_id' => ['Mr.'],
+    ]);
     $this->assertElementContainsText('css=div.crm-summary-display_name', "Mr. NewName $lastName");
     // Page title should be updated with new name on reload
     $this->openCiviPage('contact/view', "reset=1&cid=$contactId", "crm-record-log");

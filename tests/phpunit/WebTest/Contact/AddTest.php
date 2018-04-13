@@ -209,7 +209,7 @@ class WebTest_Contact_AddTest extends CiviSeleniumTestCase {
     $this->select("phone_1_phone_type_id", "value=" . $this->webtestGetFirstValueForOptionGroup('phone_type'));
 
     //fill in IM
-    foreach (array('Yahoo', 'MSN', 'AIM', 'GTalk', 'Jabber', 'Skype') as $option) {
+    foreach (['Yahoo', 'MSN', 'AIM', 'GTalk', 'Jabber', 'Skype'] as $option) {
       $this->assertSelectHasOption('im_1_provider_id', $option);
     }
     $this->type("im_1_name", "testSkype");
@@ -527,7 +527,7 @@ class WebTest_Contact_AddTest extends CiviSeleniumTestCase {
     //Edit Contact
     $cid = $this->urlArg('cid');
     $dname = $fname . ' ' . $lname . ' (deceased)';
-    foreach (array('', 'deceased') as $val) {
+    foreach (['', 'deceased'] as $val) {
       $this->openCiviPage("contact/add", "reset=1&action=update&cid={$cid}");
       if ($val) {
         $this->assertElementContainsText('page-title', 'Edit ' . $dname);
@@ -546,7 +546,7 @@ class WebTest_Contact_AddTest extends CiviSeleniumTestCase {
         $this->assertTrue(($this->getText('css=div.crm-summary-display_name') != $dname));
       }
     }
-    foreach (array('', 'deceased') as $val) {
+    foreach (['', 'deceased'] as $val) {
       $this->mouseDown('crm-demographic-content');
       $this->mouseUp('crm-demographic-content');
       $this->waitForElementPresent("css=#crm-demographic-content .crm-container-snippet form");

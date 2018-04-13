@@ -9,7 +9,7 @@ class CRM_Case_BAO_CaseTest extends CiviUnitTestCase {
   public function setUp() {
     parent::setUp();
 
-    $this->tablesToTruncate = array(
+    $this->tablesToTruncate = [
       'civicrm_activity',
       'civicrm_contact',
       'civicrm_custom_group',
@@ -22,7 +22,7 @@ class CRM_Case_BAO_CaseTest extends CiviUnitTestCase {
       'civicrm_managed',
       'civicrm_relationship',
       'civicrm_relationship_type',
-    );
+    ];
 
     $this->quickCleanup($this->tablesToTruncate);
 
@@ -37,10 +37,10 @@ class CRM_Case_BAO_CaseTest extends CiviUnitTestCase {
   }
 
   public function testAddCaseToContact() {
-    $params = array(
+    $params = [
       'case_id' => 1,
       'contact_id' => 17,
-    );
+    ];
     CRM_Case_BAO_CaseContact::create($params);
 
     $recent = CRM_Utils_Recent::get();
@@ -54,7 +54,7 @@ class CRM_Case_BAO_CaseTest extends CiviUnitTestCase {
 
   public function testRetrieveCaseIdsByContactId() {
     $caseIds = CRM_Case_BAO_Case::retrieveCaseIdsByContactId(3, FALSE, 'housing_support');
-    $this->assertEquals(array(1), $caseIds);
+    $this->assertEquals([1], $caseIds);
   }
 
   /**

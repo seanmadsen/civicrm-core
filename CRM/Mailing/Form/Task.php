@@ -76,7 +76,7 @@ class CRM_Mailing_Form_Task extends CRM_Core_Form {
     $form->assign('taskName', CRM_Utils_Array::value('task', $values));
 
     // ids are mailing event queue ids
-    $ids = array();
+    $ids = [];
     if ($values['radio_ts'] == 'ts_sel') {
       foreach ($values as $name => $value) {
         if (substr($name, 0, CRM_Core_Form::CB_PREFIX_LEN) == CRM_Core_Form::CB_PREFIX) {
@@ -136,17 +136,17 @@ class CRM_Mailing_Form_Task extends CRM_Core_Form {
    * @param bool $submitOnce
    */
   public function addDefaultButtons($title, $nextType = 'next', $backType = 'back', $submitOnce = FALSE) {
-    $this->addButtons(array(
-        array(
+    $this->addButtons([
+        [
           'type' => $nextType,
           'name' => $title,
           'isDefault' => TRUE,
-        ),
-        array(
+        ],
+        [
           'type' => $backType,
           'name' => ts('Cancel'),
-        ),
-      )
+        ],
+      ]
     );
   }
 

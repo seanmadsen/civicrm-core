@@ -130,7 +130,7 @@ class WebTest_Contact_CreateCmsUserFromContactTest extends CiviSeleniumTestCase 
 
     $this->assertElementContainsText("xpath=//span[@class = 'crm-error']", "already taken", "CiviCRM Message does not indicate the username is in user");
     //check the uf match table that no contact has been created
-    $results = $this->webtest_civicrm_api("UFMatch", "get", array('contact_id' => $cid));
+    $results = $this->webtest_civicrm_api("UFMatch", "get", ['contact_id' => $cid]);
     $this->assertTrue($results['count'] == 0);
   }
 
@@ -156,7 +156,7 @@ class WebTest_Contact_CreateCmsUserFromContactTest extends CiviSeleniumTestCase 
     $this->assertElementContainsText("xpath=//table[@class='form-layout-compressed']/tbody/tr[3]/td/span[@class='crm-error']", "Password mismatch", "No form error given on password missmatch");
 
     //check that no user was created;
-    $results = $this->webtest_civicrm_api("UFMatch", "get", array('contact_id' => $cid));
+    $results = $this->webtest_civicrm_api("UFMatch", "get", ['contact_id' => $cid]);
     $this->assertTrue($results['count'] == 0);
   }
 
@@ -184,7 +184,7 @@ class WebTest_Contact_CreateCmsUserFromContactTest extends CiviSeleniumTestCase 
     $this->assertElementContainsText("xpath=//table[@class='form-layout-compressed']/tbody/tr[3]/td/span[@class='crm-error']", "Password is required", "The CiviCRM messae does not indicate that the password is required");
 
     //check that no user was created;
-    $results = $this->webtest_civicrm_api("UFMatch", "get", array('contact_id' => $cid));
+    $results = $this->webtest_civicrm_api("UFMatch", "get", ['contact_id' => $cid]);
     $this->assertTrue($results['count'] == 0);
   }
 
@@ -213,7 +213,7 @@ class WebTest_Contact_CreateCmsUserFromContactTest extends CiviSeleniumTestCase 
     $this->assertTrue($this->isTextPresent("User ID"));
 
     //Assert that a user was actually created AND that they are tied to the record
-    $results = $this->webtest_civicrm_api("UFMatch", "get", array('contact_id' => $cid));
+    $results = $this->webtest_civicrm_api("UFMatch", "get", ['contact_id' => $cid]);
     $this->assertTrue($results['count'] == 1);
   }
 
@@ -242,7 +242,7 @@ class WebTest_Contact_CreateCmsUserFromContactTest extends CiviSeleniumTestCase 
     //got to the new cms user form
     $this->openCiviPage('contact/view/useradd', "reset=1&action=add&cid={$cid}");
 
-    return array($cid, $firstName, $lastName, $email);
+    return [$cid, $firstName, $lastName, $email];
   }
 
 }

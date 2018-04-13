@@ -50,13 +50,13 @@ class CRM_Activity_Tokens extends \Civi\Token\AbstractTokenSubscriber {
    */
   public function __construct() {
     parent::__construct('activity', array_merge(
-      array(
+      [
         'activity_id' => ts('Activity ID'),
         'activity_type' => ts('Activity Type'),
         'subject' => ts('Activity Subject'),
         'details' => ts('Activity Details'),
         'activity_date_time' => ts('Activity Date-Time'),
-      ),
+      ],
       CRM_Utils_Token::getCustomFieldTokens('Activity')
     ));
   }
@@ -104,7 +104,7 @@ class CRM_Activity_Tokens extends \Civi\Token\AbstractTokenSubscriber {
   public function evaluateToken(\Civi\Token\TokenRow $row, $entity, $field, $prefetch = NULL) {
     $actionSearchResult = $row->context['actionSearchResult'];
 
-    if (in_array($field, array('activity_date_time'))) {
+    if (in_array($field, ['activity_date_time'])) {
       $row->tokens($entity, $field, \CRM_Utils_Date::customFormat($actionSearchResult->$field));
     }
     elseif (isset($actionSearchResult->$field)) {

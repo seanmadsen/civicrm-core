@@ -43,11 +43,11 @@ class WebTest_Profile_MultiRecordProfileAddTest extends CiviSeleniumTestCase {
 
   public function testUserAddNewProfile() {
     //add the required permission
-    $permissions = array(
+    $permissions = [
       'edit-2-profile-listings-and-forms',
       'edit-2-access-all-custom-data',
       'edit-2-access-civicrm',
-    );
+    ];
     $this->changePermissions($permissions);
     list($id, $profileTitle) = $this->_addNewProfile(TRUE, FALSE, TRUE);
     $this->_deleteProfile($id, $profileTitle);
@@ -117,11 +117,11 @@ class WebTest_Profile_MultiRecordProfileAddTest extends CiviSeleniumTestCase {
 
     $gid = $this->urlArg('gid');
 
-    $this->openCiviPage('admin/uf/group/field/add', array(
+    $this->openCiviPage('admin/uf/group/field/add', [
         'action' => 'add',
         'reset' => 1,
         'gid' => $gid,
-      ), 'field_name[0]');
+    ], 'field_name[0]');
 
     //Add field to profile
     $this->click('field_name[0]');
@@ -216,7 +216,7 @@ class WebTest_Profile_MultiRecordProfileAddTest extends CiviSeleniumTestCase {
     $this->openCiviPage('profile/edit', "reset=1&id=$id&gid=$gid", NULL);
     if (!$checkMultiRecord) {
       $this->assertElementContainsText('crm-container', 'No records');
-      return array($gid, $profileTitle);
+      return [$gid, $profileTitle];
     }
     $this->waitForElementPresent("//a/span[contains(text(), 'Add New Record')]");
     $this->click("//a/span[contains(text(), 'Add New Record')]");
@@ -265,7 +265,7 @@ class WebTest_Profile_MultiRecordProfileAddTest extends CiviSeleniumTestCase {
     $this->assertElementContainsText("css=.ui-dialog-content.crm-ajax-container", $params['textFieldLabel']);
     if ($checkSearchable) {
       $this->verifyElementNotPresent("//div[@id='profile-dialog']/div/div/div/div/div[1]/div[2]/a");
-      return array($gid, $profileTitle);
+      return [$gid, $profileTitle];
     }
 
     // Check Search Functionality
@@ -282,7 +282,7 @@ class WebTest_Profile_MultiRecordProfileAddTest extends CiviSeleniumTestCase {
       $this->verifyText("//form[@id='Search']/div[2]/div[2]/div[2]/table/tbody/tr[2]/td[3]", preg_quote($record1['text']));
       $this->verifyText("//form[@id='Search']/div[2]/div[2]/div[2]/table/tbody/tr[3]/td[3]", preg_quote($record2['text']));
     }
-    return array($gid, $profileTitle);
+    return [$gid, $profileTitle];
   }
 
   /**

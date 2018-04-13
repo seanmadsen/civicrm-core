@@ -180,123 +180,123 @@ class WebTest_Report_LoggingReportTest extends CiviSeleniumTestCase {
     $this->click("_qf_LoggingSummary_submit");
     $this->waitForPageToLoad($this->getTimeoutMsec());
 
-    $data = array(
+    $data = [
       //contact data check
-      array("log_type" => "Contact", "altered_contact" => "{$firstName} {$lastName}", "action" => "Update"),
-      array("log_type" => "Contact", "altered_contact" => "{$firstName} {$lastName}", "action" => "Insert"),
+      ["log_type" => "Contact", "altered_contact" => "{$firstName} {$lastName}", "action" => "Update"],
+      ["log_type" => "Contact", "altered_contact" => "{$firstName} {$lastName}", "action" => "Insert"],
       //relationship data check
-      array(
+      [
         "log_type" => "Relationship",
         "altered_contact" => "{$firstName} {$lastName} [Employee of]",
         "action" => "Update",
-      ),
-      array(
+      ],
+      [
         "log_type" => "Relationship",
         "altered_contact" => "{$firstName} {$lastName} [Employee of]",
         "action" => "Insert",
-      ),
-      array(
+      ],
+      [
         "log_type" => "Relationship",
         "altered_contact" => "{$firstName} {$lastName} [Employee of]",
         "action" => "Delete",
-      ),
+      ],
       //group data check
-      array(
+      [
         "log_type" => "Group",
         "altered_contact" => "{$firstName} {$lastName} [Case Resources]",
         "action" => "Added",
-      ),
-      array(
+      ],
+      [
         "log_type" => "Group",
         "altered_contact" => "{$firstName} {$lastName} [Case Resources]",
         "action" => "Removed",
-      ),
+      ],
       //note data check
-      array("log_type" => "Note", "altered_contact" => "{$firstName} {$lastName}", "action" => "Update"),
-      array("log_type" => "Note", "altered_contact" => "{$firstName} {$lastName}", "action" => "Insert"),
-      array("log_type" => "Note", "altered_contact" => "{$firstName} {$lastName}", "action" => "Delete"),
+      ["log_type" => "Note", "altered_contact" => "{$firstName} {$lastName}", "action" => "Update"],
+      ["log_type" => "Note", "altered_contact" => "{$firstName} {$lastName}", "action" => "Insert"],
+      ["log_type" => "Note", "altered_contact" => "{$firstName} {$lastName}", "action" => "Delete"],
       //tags data check
-      array("log_type" => "Tag", "altered_contact" => "{$firstName} {$lastName} [Company]", "action" => "Insert"),
-      array(
+      ["log_type" => "Tag", "altered_contact" => "{$firstName} {$lastName} [Company]", "action" => "Insert"],
+      [
         "log_type" => "Tag",
         "altered_contact" => "{$firstName} {$lastName} [Government Entity]",
         "action" => "Insert",
-      ),
-      array("log_type" => "Tag", "altered_contact" => "{$firstName} {$lastName} [Company]", "action" => "Delete"),
+      ],
+      ["log_type" => "Tag", "altered_contact" => "{$firstName} {$lastName} [Company]", "action" => "Delete"],
       //case data check
-      array(
+      [
         "log_type" => "Case",
         "altered_contact" => "{$firstName} {$lastName} [Housing Support]",
         "action" => "Update",
-      ),
-      array(
+      ],
+      [
         "log_type" => "Case",
         "altered_contact" => "{$firstName} {$lastName} [Housing Support]",
         "action" => "Insert",
-      ),
+      ],
       //case activity check
-      array(
+      [
         "log_type" => "Activity",
         "altered_contact" => "{$firstName} {$lastName} [Interview]",
         "action" => "Update",
-      ),
-      array(
+      ],
+      [
         "log_type" => "Activity",
         "altered_contact" => "{$firstName} {$lastName} [Interview]",
         "action" => "Insert",
-      ),
-    );
+      ],
+    ];
     $this->verifyReportData($data);
 
     //update link (logging details report check)
-    $contactInfo = array();
-    $contactInfo['data'] = array(
-      array(
+    $contactInfo = [];
+    $contactInfo['data'] = [
+      [
         'field' => 'Sort Name',
         'changed_from' => "{$lastName}, {$originalFirstName}",
         'changed_to' => "{$lastName}, {$firstName}",
-      ),
-      array(
+      ],
+      [
         'field' => 'Display Name',
         'changed_from' => "{$originalFirstName} {$lastName}",
         'changed_to' => "{$firstName} {$lastName}",
-      ),
-      array('field' => 'First Name', 'changed_from' => $originalFirstName, 'changed_to' => $firstName),
+      ],
+      ['field' => 'First Name', 'changed_from' => $originalFirstName, 'changed_to' => $firstName],
       // array('field' => 'Email Greeting', 'changed_from' => "Dear {$originalFirstName}", 'changed_to' => "Dear {$firstName}"),
       // array('field' => 'Postal Greeting', 'changed_from' => "Dear {$originalFirstName}", 'changed_to' => "Dear {$firstName}"),
       // array('field' => 'Addressee', 'changed_from' => "{$originalFirstName} {$lastName}", 'changed_to' => "{$firstName} {$lastName}"),
-    );
+    ];
     $contactInfo = array_merge($contactInfo, $data[0]);
 
-    $relationshipInfo = array();
-    $relationshipInfo['data'] = array(
-      array('field' => 'Relationship Is Active', 'changed_from' => 'true', 'changed_to' => 'false'),
-    );
+    $relationshipInfo = [];
+    $relationshipInfo['data'] = [
+      ['field' => 'Relationship Is Active', 'changed_from' => 'true', 'changed_to' => 'false'],
+    ];
     $relationshipInfo = array_merge($relationshipInfo, $data[2]);
 
-    $noteInfo = array();
-    $noteInfo['data'] = array(
-      array('field' => 'Note', 'changed_from' => $noteText, 'changed_to' => "{$noteText}_edited"),
-      array('field' => 'Subject', 'changed_from' => $noteSubject, 'changed_to' => "{$noteSubject}_edited"),
-    );
+    $noteInfo = [];
+    $noteInfo['data'] = [
+      ['field' => 'Note', 'changed_from' => $noteText, 'changed_to' => "{$noteText}_edited"],
+      ['field' => 'Subject', 'changed_from' => $noteSubject, 'changed_to' => "{$noteSubject}_edited"],
+    ];
     $noteInfo = array_merge($noteInfo, $data[7]);
 
-    $caseInfo = array();
-    $caseInfo['data'] = array(
-      array('field' => 'Case Status Id', 'changed_from' => 'Ongoing', 'changed_to' => "Resolved"),
-    );
+    $caseInfo = [];
+    $caseInfo['data'] = [
+      ['field' => 'Case Status Id', 'changed_from' => 'Ongoing', 'changed_to' => "Resolved"],
+    ];
     $caseInfo = array_merge($caseInfo, $data[13]);
 
-    $activityInfo = array();
-    $activityInfo['data'] = array(
-      array('field' => 'Activity Status Id', 'changed_from' => 'Scheduled', 'changed_to' => 'Completed'),
-    );
+    $activityInfo = [];
+    $activityInfo['data'] = [
+      ['field' => 'Activity Status Id', 'changed_from' => 'Scheduled', 'changed_to' => 'Completed'],
+    ];
     $activityInfo = array_merge($activityInfo, $data[15]);
 
-    $dataForReportDetail = array($contactInfo, $relationshipInfo, $noteInfo, $caseInfo, $activityInfo);
-    $filters = array(
-      'text' => array('altered_contact_value' => "{$firstName} {$lastName}"),
-    );
+    $dataForReportDetail = [$contactInfo, $relationshipInfo, $noteInfo, $caseInfo, $activityInfo];
+    $filters = [
+      'text' => ['altered_contact_value' => "{$firstName} {$lastName}"],
+    ];
     $this->detailReportCheck($dataForReportDetail, $filters);
 
     //delete contact check
@@ -308,13 +308,13 @@ class WebTest_Report_LoggingReportTest extends CiviSeleniumTestCase {
     $this->click("_qf_LoggingSummary_submit");
     $this->waitForPageToLoad($this->getTimeoutMsec());
 
-    $contactDataDelete = array(
-      array(
+    $contactDataDelete = [
+      [
         "log_type" => "Contact",
         "altered_contact" => "{$firstName} {$lastName}",
         "action" => "Delete (to trash)",
-      ),
-    );
+      ],
+    ];
     $this->verifyReportData($contactDataDelete);
 
     //disable the logging
@@ -346,7 +346,7 @@ class WebTest_Report_LoggingReportTest extends CiviSeleniumTestCase {
    * @param $dataForReportDetail
    * @param array $filters
    */
-  public function detailReportCheck($dataForReportDetail, $filters = array()) {
+  public function detailReportCheck($dataForReportDetail, $filters = []) {
     foreach ($dataForReportDetail as $value) {
       $this->waitForElementPresent("xpath=//table/tbody//tr/td[2][contains(text(), '{$value['log_type']}')]/../td[4]/a[contains(text(), '{$value['altered_contact']}')]/../../td[1]/a[2]");
       $this->click("xpath=//table/tbody//tr/td[2][contains(text(), '{$value['log_type']}')]/../td[4]/a[contains(text(), '{$value['altered_contact']}')]/../../td[1]/a[2]");

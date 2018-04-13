@@ -39,7 +39,7 @@ class CRM_Member_BAO_MembershipType extends CRM_Member_DAO_MembershipType {
    */
   static $_defaultMembershipType = NULL;
 
-  static $_membershipTypeInfo = array();
+  static $_membershipTypeInfo = [];
 
   /**
    * Class constructor.
@@ -94,7 +94,7 @@ class CRM_Member_BAO_MembershipType extends CRM_Member_DAO_MembershipType {
    *
    * @return object
    */
-  public static function add(&$params, $ids = array()) {
+  public static function add(&$params, $ids = []) {
     $id = CRM_Utils_Array::value('id', $params, CRM_Utils_Array::value('membershipType', $ids));
     if (!$id) {
       if (!isset($params['is_active'])) {
@@ -121,7 +121,7 @@ class CRM_Member_BAO_MembershipType extends CRM_Member_DAO_MembershipType {
     if ($id) {
       // on update we may need to retrieve some details for the price field function - otherwise we get e-notices on attempts to retrieve
       // name etc - the presence of previous id tells us this is an update
-      $params = array_merge(civicrm_api3('membership_type', 'getsingle', array('id' => $membershipType->id)), $params);
+      $params = array_merge(civicrm_api3('membership_type', 'getsingle', ['id' => $membershipType->id]), $params);
     }
     self::createMembershipPriceField($params, $previousID, $membershipType->id);
     // update all price field value for quick config when membership type is set CRM-11718
@@ -139,8 +139,8 @@ class CRM_Member_BAO_MembershipType extends CRM_Member_DAO_MembershipType {
    */
   public static function flush() {
     CRM_Member_PseudoConstant::membershipType(NULL, TRUE);
-    civicrm_api3('membership', 'getfields', array('cache_clear' => 1, 'fieldname' => 'membership_type_id'));
-    civicrm_api3('profile', 'getfields', array('action' => 'submit', 'cache_clear' => 1));
+    civicrm_api3('membership', 'getfields', ['cache_clear' => 1, 'fieldname' => 'membership_type_id']);
+    civicrm_api3('profile', 'getfields', ['action' => 'submit', 'cache_clear' => 1]);
   }
 
   /**
@@ -154,11 +154,11 @@ class CRM_Member_BAO_MembershipType extends CRM_Member_DAO_MembershipType {
   public static function del($membershipTypeId) {
     // Check dependencies.
     $check = FALSE;
-    $status = array();
-    $dependency = array(
+    $status = [];
+    $dependency = [
       'Membership' => 'membership_type_id',
       'MembershipBlock' => 'membership_type_default',
-    );
+    ];
 
     foreach ($dependency as $name => $field) {
       $baoString = 'CRM_Member_BAO_' . $name;
@@ -176,20 +176,20 @@ class CRM_Member_BAO_MembershipType extends CRM_Member_DAO_MembershipType {
       if (in_array('Membership', $status)) {
         $findMembersURL = CRM_Utils_System::url('civicrm/member/search', 'reset=1');
         $deleteURL = CRM_Utils_System::url('civicrm/contact/search/advanced', 'reset=1');
-        $message .= '<br/>' . ts('%3. There are some contacts who have this membership type assigned to them. Search for contacts with this membership type from <a href=\'%1\'>Find Members</a>. If you are still getting this message after deleting these memberships, there may be contacts in the Trash (deleted) with this membership type. Try using <a href="%2">Advanced Search</a> and checking "Search in Trash".', array(
+        $message .= '<br/>' . ts('%3. There are some contacts who have this membership type assigned to them. Search for contacts with this membership type from <a href=\'%1\'>Find Members</a>. If you are still getting this message after deleting these memberships, there may be contacts in the Trash (deleted) with this membership type. Try using <a href="%2">Advanced Search</a> and checking "Search in Trash".', [
           1 => $findMembersURL,
           2 => $deleteURL,
           3 => $cnt,
-        ));
+          ]);
         $cnt++;
       }
 
       if (in_array('MembershipBlock', $status)) {
         $deleteURL = CRM_Utils_System::url('civicrm/admin/contribute', 'reset=1');
-        $message .= ts('%2. This Membership Type is used in an <a href=\'%1\'>Online Contribution page</a>. Uncheck this membership type in the Memberships tab.', array(
+        $message .= ts('%2. This Membership Type is used in an <a href=\'%1\'>Online Contribution page</a>. Uncheck this membership type in the Memberships tab.', [
           1 => $deleteURL,
           2 => $cnt,
-        ));
+        ]);
         throw new CRM_Core_Exception($message);
       }
     }
@@ -214,17 +214,17 @@ class CRM_Member_BAO_MembershipType extends CRM_Member_DAO_MembershipType {
    *   An array of membershipType-details.
    */
   public static function convertDayFormat(&$membershipType) {
-    $periodDays = array(
+    $periodDays = [
       'fixed_period_start_day',
       'fixed_period_rollover_day',
-    );
+    ];
     foreach ($membershipType as $id => $details) {
       foreach ($periodDays as $pDay) {
         if (!empty($details[$pDay])) {
           if ($details[$pDay] > 31) {
             $month = substr($details[$pDay], 0, strlen($details[$pDay]) - 2);
             $day = substr($details[$pDay], -2);
-            $monthMap = array(
+            $monthMap = [
               '1' => 'Jan',
               '2' => 'Feb',
               '3' => 'Mar',
@@ -237,7 +237,7 @@ class CRM_Member_BAO_MembershipType extends CRM_Member_DAO_MembershipType {
               '10' => 'Oct',
               '11' => 'Nov',
               '12' => 'Dec',
-            );
+            ];
             $membershipType[$id][$pDay] = $monthMap[$month] . ' ' . $day;
           }
           else {
@@ -256,7 +256,7 @@ class CRM_Member_BAO_MembershipType extends CRM_Member_DAO_MembershipType {
    * @return array
    */
   public static function getMembershipTypes($public = TRUE) {
-    $membershipTypes = array();
+    $membershipTypes = [];
     $membershipType = new CRM_Member_DAO_MembershipType();
     $membershipType->is_active = 1;
     if ($public) {
@@ -279,7 +279,7 @@ class CRM_Member_BAO_MembershipType extends CRM_Member_DAO_MembershipType {
    * @return array|null
    */
   public static function getMembershipTypeDetails($membershipTypeId) {
-    $membershipTypeDetails = array();
+    $membershipTypeDetails = [];
 
     $membershipType = new CRM_Member_DAO_MembershipType();
     $membershipType->is_active = 1;
@@ -314,11 +314,11 @@ class CRM_Member_BAO_MembershipType extends CRM_Member_DAO_MembershipType {
     $membershipTypeDetails = self::getMembershipTypeDetails($membershipTypeId);
 
     // Convert all dates to 'Y-m-d' format.
-    foreach (array(
+    foreach ([
       'joinDate',
       'startDate',
       'endDate',
-    ) as $dateParam) {
+             ] as $dateParam) {
       if (!empty($$dateParam)) {
         $$dateParam = CRM_Utils_Date::processDate($$dateParam, NULL, FALSE, 'Y-m-d');
       }
@@ -426,11 +426,11 @@ class CRM_Member_BAO_MembershipType extends CRM_Member_DAO_MembershipType {
       }
     }
 
-    $membershipDates = array(
+    $membershipDates = [
       'start_date' => CRM_Utils_Date::customFormat($startDate, '%Y%m%d'),
       'end_date' => CRM_Utils_Date::customFormat($endDate, '%Y%m%d'),
       'join_date' => CRM_Utils_Date::customFormat($joinDate, '%Y%m%d'),
-    );
+    ];
 
     return $membershipDates;
   }
@@ -504,11 +504,11 @@ class CRM_Member_BAO_MembershipType extends CRM_Member_DAO_MembershipType {
    *   array fo the start date, end date and join date of the membership
    */
   public static function getRenewalDatesForMembershipType($membershipId, $changeToday = NULL, $membershipTypeID = NULL, $numRenewTerms = 1) {
-    $params = array('id' => $membershipId);
+    $params = ['id' => $membershipId];
     $membershipDetails = CRM_Member_BAO_Membership::getValues($params, $values);
     $membershipDetails = $membershipDetails[$membershipId];
     $statusID = $membershipDetails->status_id;
-    $membershipDates = array();
+    $membershipDates = [];
     if (!empty($membershipDetails->join_date)) {
       $membershipDates['join_date'] = CRM_Utils_Date::customFormat($membershipDetails->join_date, '%Y%m%d');
     }
@@ -622,14 +622,14 @@ class CRM_Member_BAO_MembershipType extends CRM_Member_DAO_MembershipType {
    *   array of the details of membership types
    */
   public static function getMembershipTypesByOrg($orgID) {
-    Civi::log()->warning('Deprecated function getMembershipTypesByOrg, please user membership_type api', array('civi.tag' => 'deprecated'));
-    $memberTypesSameParentOrg = civicrm_api3('MembershipType', 'get', array(
+    Civi::log()->warning('Deprecated function getMembershipTypesByOrg, please user membership_type api', ['civi.tag' => 'deprecated']);
+    $memberTypesSameParentOrg = civicrm_api3('MembershipType', 'get', [
       'member_of_contact_id' => $orgID,
-      'options' => array(
+      'options' => [
         'limit' => 0,
-      ),
-    ));
-    return CRM_Utils_Array::value('values', $memberTypesSameParentOrg, array());
+      ],
+    ]);
+    return CRM_Utils_Array::value('values', $memberTypesSameParentOrg, []);
   }
 
   /**
@@ -641,7 +641,7 @@ class CRM_Member_BAO_MembershipType extends CRM_Member_DAO_MembershipType {
    *   array of the details of membership types with Member of Contact id
    */
   public static function getMemberOfContactByMemTypes($membershipTypes) {
-    $memTypeOrganizations = array();
+    $memTypeOrganizations = [];
     if (empty($membershipTypes)) {
       return $memTypeOrganizations;
     }
@@ -662,7 +662,7 @@ class CRM_Member_BAO_MembershipType extends CRM_Member_DAO_MembershipType {
    * @return array
    */
   public static function getMembershipTypeOrganization($membershipTypeId = NULL) {
-    $allMembershipTypes = array();
+    $allMembershipTypes = [];
 
     $membershipType = new CRM_Member_DAO_MembershipType();
 
@@ -687,7 +687,7 @@ class CRM_Member_BAO_MembershipType extends CRM_Member_DAO_MembershipType {
    */
   public static function getMembershipTypeInfo() {
     if (!self::$_membershipTypeInfo) {
-      $orgs = $types = array();
+      $orgs = $types = [];
 
       $query = 'SELECT memType.id, memType.name, memType.member_of_contact_id, c.sort_name
         FROM civicrm_membership_type memType INNER JOIN civicrm_contact c ON c.id = memType.member_of_contact_id
@@ -698,7 +698,7 @@ class CRM_Member_BAO_MembershipType extends CRM_Member_DAO_MembershipType {
         $types[$dao->member_of_contact_id][$dao->id] = $dao->name;
       }
 
-      self::$_membershipTypeInfo = array($orgs, $types);
+      self::$_membershipTypeInfo = [$orgs, $types];
     }
     return self::$_membershipTypeInfo;
   }
@@ -721,14 +721,14 @@ class CRM_Member_BAO_MembershipType extends CRM_Member_DAO_MembershipType {
     }
     $fieldLabel = 'Membership Amount';
     $optionsIds = NULL;
-    $fieldParams = array(
+    $fieldParams = [
       'price_set_id ' => $priceSetId,
       'name' => $fieldName,
-    );
-    $results = array();
+    ];
+    $results = [];
     CRM_Price_BAO_PriceField::retrieve($fieldParams, $results);
     if (empty($results)) {
-      $fieldParams = array();
+      $fieldParams = [];
       $fieldParams['label'] = $fieldLabel;
       $fieldParams['name'] = $fieldName;
       $fieldParams['price_set_id'] = $priceSetId;
@@ -750,11 +750,11 @@ class CRM_Member_BAO_MembershipType extends CRM_Member_DAO_MembershipType {
     }
     else {
       $fieldID = $results['id'];
-      $fieldValueParams = array(
+      $fieldValueParams = [
         'price_field_id' => $fieldID,
         'membership_type_id' => $membershipTypeId,
-      );
-      $results = array();
+      ];
+      $results = [];
       CRM_Price_BAO_PriceFieldValue::retrieve($fieldValueParams, $results);
       if (!empty($results)) {
         $results['label'] = $results['name'] = $params['name'];
@@ -762,14 +762,14 @@ class CRM_Member_BAO_MembershipType extends CRM_Member_DAO_MembershipType {
         $optionsIds['id'] = $results['id'];
       }
       else {
-        $results = array(
+        $results = [
           'price_field_id' => $fieldID,
           'name' => $params['name'],
           'label' => $params['name'],
           'amount' => empty($params['minimum_fee']) ? 0 : $params['minimum_fee'],
           'membership_type_id' => $membershipTypeId,
           'is_active' => 1,
-        );
+        ];
       }
 
       if ($previousID) {
@@ -793,7 +793,7 @@ class CRM_Member_BAO_MembershipType extends CRM_Member_DAO_MembershipType {
    * @param array $params
    */
   public static function updateAllPriceFieldValue($membershipTypeId, $params) {
-    $updateFields = array();
+    $updateFields = [];
     if (!empty($params['minimum_fee'])) {
       $amount = $params['minimum_fee'];
     }
@@ -801,14 +801,14 @@ class CRM_Member_BAO_MembershipType extends CRM_Member_DAO_MembershipType {
       $amount = 0;
     }
 
-    $updateValues = array(
-      2 => array('financial_type_id', 'financial_type_id', 'Integer'),
-      3 => array('label', 'name', 'String'),
-      4 => array('amount', 'minimum_fee', 'Float'),
-      5 => array('description', 'description', 'String'),
-    );
+    $updateValues = [
+      2 => ['financial_type_id', 'financial_type_id', 'Integer'],
+      3 => ['label', 'name', 'String'],
+      4 => ['amount', 'minimum_fee', 'Float'],
+      5 => ['description', 'description', 'String'],
+    ];
 
-    $queryParams = array(1 => array($membershipTypeId, 'Integer'));
+    $queryParams = [1 => [$membershipTypeId, 'Integer']];
     foreach ($updateValues as $key => $value) {
       if (array_key_exists($value[1], $params)) {
         $updateFields[] = "cpfv." . $value[0] . " = %$key";
@@ -818,7 +818,7 @@ class CRM_Member_BAO_MembershipType extends CRM_Member_DAO_MembershipType {
         else {
           $fieldValue = $params[$value[1]];
         }
-        $queryParams[$key] = array($fieldValue, $value[2]);
+        $queryParams[$key] = [$fieldValue, $value[2]];
       }
     }
 

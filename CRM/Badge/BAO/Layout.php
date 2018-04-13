@@ -142,7 +142,7 @@ class CRM_Badge_BAO_Layout extends CRM_Core_DAO_PrintLabel {
     $printLabel = new CRM_Core_DAO_PrintLabel();
     $printLabel->find();
 
-    $labels = array();
+    $labels = [];
     while ($printLabel->fetch()) {
       $labels[$printLabel->id] = $printLabel->title;
     }
@@ -159,7 +159,7 @@ class CRM_Badge_BAO_Layout extends CRM_Core_DAO_PrintLabel {
    *   array formatted array
    */
   public static function buildLayout(&$params) {
-    $layoutParams = array('id' => $params['badge_id']);
+    $layoutParams = ['id' => $params['badge_id']];
     CRM_Badge_BAO_Layout::retrieve($layoutParams, $layoutInfo);
 
     $formatProperties = CRM_Core_OptionGroup::getValue('name_badge', $layoutInfo['label_format_name'], 'name');

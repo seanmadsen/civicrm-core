@@ -50,14 +50,14 @@ class WebTest_Event_AddPricesetTest extends CiviSeleniumTestCase {
     $sid = $this->urlArg('sid');
     $this->assertType('numeric', $sid);
 
-    $validateStrings = array();
+    $validateStrings = [];
 
-    $fields = array(
+    $fields = [
       'Full Conference' => 'Text',
       'Meal Choice' => 'Select',
       'Pre-conference Meetup?' => 'Radio',
       'Evening Sessions' => 'CheckBox',
-    );
+    ];
     $this->_testAddPriceFields($fields, $validateStrings);
 
     // load the Price Set Preview and check for expected values
@@ -117,18 +117,18 @@ class WebTest_Event_AddPricesetTest extends CiviSeleniumTestCase {
           break;
 
         case 'Select':
-          $options = array(
-            1 => array(
+          $options = [
+            1 => [
               'label' => 'Chicken',
               'amount' => '30.00',
               'financial_type_id' => 'Donation',
-            ),
-            2 => array(
+            ],
+            2 => [
               'label' => 'Vegetarian',
               'amount' => '25.00',
               'financial_type_id' => 'Donation',
-            ),
-          );
+            ],
+          ];
           $this->addMultipleChoiceOptions($options, $validateStrings);
           if ($dateSpecificFields == TRUE) {
             $this->webtestFillDateTime('expire_on', '-1 week');
@@ -136,19 +136,19 @@ class WebTest_Event_AddPricesetTest extends CiviSeleniumTestCase {
           break;
 
         case 'Radio':
-          $options = array(
-            1 => array(
+          $options = [
+            1 => [
               'label' => 'Yes',
               'amount' => '50.00',
               'financial_type_id' => 'Donation',
 
-            ),
-            2 => array(
+            ],
+            2 => [
               'label' => 'No',
               'amount' => '0',
               'financial_type_id' => 'Donation',
-            ),
-          );
+            ],
+          ];
           $this->addMultipleChoiceOptions($options, $validateStrings);
           $this->click('is_required');
           if ($dateSpecificFields == TRUE) {
@@ -157,18 +157,18 @@ class WebTest_Event_AddPricesetTest extends CiviSeleniumTestCase {
           break;
 
         case 'CheckBox':
-          $options = array(
-            1 => array(
+          $options = [
+            1 => [
               'label' => 'First Night',
               'amount' => '15.00',
               'financial_type_id' => 'Donation',
-            ),
-            2 => array(
+            ],
+            2 => [
               'label' => 'Second Night',
               'amount' => '15.00',
               'financial_type_id' => 'Donation',
-            ),
-          );
+            ],
+          ];
           $this->addMultipleChoiceOptions($options, $validateStrings);
           if ($dateSpecificFields == TRUE) {
             $this->webtestFillDateTime('expire_on', '+1 week');
@@ -216,12 +216,12 @@ class WebTest_Event_AddPricesetTest extends CiviSeleniumTestCase {
     $sid = $this->urlArg('sid');
     $this->assertType('numeric', $sid);
 
-    $validStrings = array();
-    $fields = array(
+    $validStrings = [];
+    $fields = [
       'Full Conference' => 'Text',
       'Pre-conference Meetup?' => 'Radio',
       'Evening Sessions' => 'CheckBox',
-    );
+    ];
     $this->_testAddPriceFields($fields, $validateStrings);
 
     // load the Price Set Preview and check for expected values
@@ -298,7 +298,7 @@ class WebTest_Event_AddPricesetTest extends CiviSeleniumTestCase {
     $this->waitForPageToLoad($this->getTimeoutMsec());
     $eventInfoUrl = $this->getLocation();
 
-    $permissions = array("edit-1-register-for-events");
+    $permissions = ["edit-1-register-for-events"];
     $this->changePermissions($permissions);
     $this->webtestLogout();
     $this->open($eventInfoUrl);
@@ -328,11 +328,11 @@ class WebTest_Event_AddPricesetTest extends CiviSeleniumTestCase {
     $this->type('billing_postal_code-5', '94129');
 
     $this->clickLink('_qf_Register_upload-bottom', '_qf_Confirm_next-bottom');
-    $confirmStrings = array('Event Fee(s)', 'Billing Name and Address', 'Credit Card Information');
+    $confirmStrings = ['Event Fee(s)', 'Billing Name and Address', 'Credit Card Information'];
     $this->assertStringsPresent($confirmStrings);
     $this->click('_qf_Confirm_next-bottom');
     $this->waitForPageToLoad($this->getTimeoutMsec());
-    $thankStrings = array('Thank You for Registering', 'Event Total', 'Transaction Date');
+    $thankStrings = ['Thank You for Registering', 'Event Total', 'Transaction Date'];
     $this->assertStringsPresent($thankStrings);
 
     // Log in using webtestLogin() method
@@ -346,11 +346,11 @@ class WebTest_Event_AddPricesetTest extends CiviSeleniumTestCase {
     $this->click("xpath=id('participantSearch')/table/tbody/tr/td[11]/span/a[text()='View']");
     $this->waitForElementPresent('_qf_ParticipantView_cancel-bottom');
 
-    $expected = array(
+    $expected = [
       2 => 'Full Conference',
       3 => 'Pre-conference Meetup? - Yes',
       4 => 'Evening Sessions - First Night',
-    );
+    ];
     foreach ($expected as $value => $label) {
       $this->verifyText("xpath=id('ParticipantView')/div[2]/table[1]/tbody/tr[8]/td[2]/table/tbody/tr[$value]/td", $label);
     }
@@ -374,12 +374,12 @@ class WebTest_Event_AddPricesetTest extends CiviSeleniumTestCase {
     $sid = $this->urlArg('sid');
     $this->assertType('numeric', $sid);
 
-    $validStrings = array();
-    $fields = array(
+    $validStrings = [];
+    $fields = [
       'Full Conference' => 'Text',
       'Pre-conference Meetup?' => 'Radio',
       'Evening Sessions' => 'CheckBox',
-    );
+    ];
     $this->_testAddPriceFields($fields, $validateStrings, TRUE);
 
     // load the Price Set Preview and check for expected values
@@ -471,7 +471,7 @@ class WebTest_Event_AddPricesetTest extends CiviSeleniumTestCase {
     // Select event. Based on label for now.
     $this->select2('event_id', "$eventTitle");
     // Select role
-    $this->multiselect2('role_id', array('Volunteer'));
+    $this->multiselect2('role_id', ['Volunteer']);
 
     $this->waitForElementPresent("xpath=//input[@class='crm-form-radio']");
     $this->click("xpath=//input[@class='crm-form-radio']");
@@ -526,12 +526,12 @@ class WebTest_Event_AddPricesetTest extends CiviSeleniumTestCase {
     $sid = $this->urlArg('sid');
     $this->assertType('numeric', $sid);
 
-    $validStrings = array();
-    $fields = array(
+    $validStrings = [];
+    $fields = [
       'Full Conference' => 'Text',
       'Pre-conference Meetup?' => 'Radio',
       'Evening Sessions' => 'CheckBox',
-    );
+    ];
     $this->_testAddPriceFields($fields, $validateStrings);
 
     // load the Price Set Preview and check for expected values
@@ -584,7 +584,7 @@ class WebTest_Event_AddPricesetTest extends CiviSeleniumTestCase {
     $this->webtestFillAutocomplete($firstName);
     $this->select2('event_id', $eventTitle);
     // Select role
-    $this->multiselect2('role_id', array('Volunteer'));
+    $this->multiselect2('role_id', ['Volunteer']);
 
     // Choose Registration Date.
     // Using helper webtestFillDate function.
@@ -625,40 +625,40 @@ class WebTest_Event_AddPricesetTest extends CiviSeleniumTestCase {
     $this->waitForElementPresent('_qf_ParticipantView_cancel-bottom');
 
     $this->webtestVerifyTabularData(
-      array(
+      [
         'Event' => $eventTitle,
         'Participant Role' => 'Attendee',
         'Status' => 'Registered',
         'Event Source' => 'Event StandaloneAddTest Webtest',
-      )
+      ]
     );
     $this->waitForElementPresent("xpath=//table/tbody/tr/td[text()='Fees']/following-sibling::td");
     $this->verifyText("xpath=//table/tbody/tr/td[text()='Fees']/following-sibling::td/table/tbody/tr[2]/td", preg_quote('$ 2,705.00'));
-    $expectedLineItems = array(
-      2 => array(
+    $expectedLineItems = [
+      2 => [
         1 => 'Full Conference ',
         2 => '5',
         3 => '$ 525.00',
         4 => '$ 2,625.00',
-      ),
-      3 => array(
+      ],
+      3 => [
         2 => '1',
         3 => '$ 50.00',
         4 => '$ 50.00',
-      ),
-      4 => array(
+      ],
+      4 => [
         1 => 'Evening Sessions - First Night ',
         2 => '1',
         3 => '$ 15.00',
         4 => '$ 15.00',
-      ),
-      5 => array(
+      ],
+      5 => [
         1 => 'Evening Sessions - Second Night ',
         2 => '1',
         3 => '$ 15.00',
         4 => '$ 15.00',
-      ),
-    );
+      ],
+    ];
     $this->_checkLineItems($expectedLineItems);
     // check contribution record as well
     // click through to the contribution view screen
@@ -666,14 +666,14 @@ class WebTest_Event_AddPricesetTest extends CiviSeleniumTestCase {
     $this->waitForElementPresent('_qf_ContributionView_cancel-bottom');
 
     $this->webtestVerifyTabularData(
-      array(
+      [
         'From' => $displayName,
         'Financial Type' => 'Event Fee',
         'Contribution Status' => 'Completed',
         'Payment Method' => 'Check',
         'Check Number' => '1044',
         'Received Into' => 'Deposit Bank Account',
-      )
+      ]
     );
     $this->verifyText("xpath=//td[text()='Contribution Amount']/following-sibling::td//div/div", preg_quote('Contribution Total: $ 2,705.00'));
 
@@ -712,10 +712,10 @@ class WebTest_Event_AddPricesetTest extends CiviSeleniumTestCase {
     $sid = $this->urlArg('sid');
     $this->assertType('numeric', $sid);
 
-    $validStrings = array();
-    $fields = array(
+    $validStrings = [];
+    $fields = [
       'Test Field' => 'Text',
-    );
+    ];
     $this->_testAddPriceFields($fields, $validateStrings);
 
     // load the Price Set Preview and check for expected values

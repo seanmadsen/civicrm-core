@@ -34,10 +34,10 @@ require_once '../civicrm.config.php';
 require_once 'CRM/Core/Config.php';
 
 $server = new SoapServer(NULL,
-  array(
+  [
     'uri' => 'urn:civicrm',
     'soap_version' => SOAP_1_2,
-  )
+  ]
 );
 
 

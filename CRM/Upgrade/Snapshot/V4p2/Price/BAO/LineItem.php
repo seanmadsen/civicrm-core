@@ -133,23 +133,23 @@ WHERE     %2.id = %1";
       $fromClause .= " LEFT JOIN civicrm_price_set cps on cps.id = pf.price_set_id ";
       $whereClause .= " and cps.is_quick_config = 0";
     }
-    $lineItems = array();
+    $lineItems = [];
 
     if (!$entityId || !$entity || !$fromClause) {
       return $lineItems;
     }
 
-    $params = array(
-      1 => array($entityId, 'Integer'),
-      2 => array($entity, 'Text'),
-    );
+    $params = [
+      1 => [$entityId, 'Integer'],
+      2 => [$entity, 'Text'],
+    ];
 
     $dao = CRM_Core_DAO::executeQuery("$selectClause $fromClause $whereClause", $params);
     while ($dao->fetch()) {
       if (!$dao->id) {
         continue;
       }
-      $lineItems[$dao->id] = array(
+      $lineItems[$dao->id] = [
         'qty' => $dao->qty,
         'label' => $dao->label,
         'unit_price' => $dao->unit_price,
@@ -162,7 +162,7 @@ WHERE     %2.id = %1";
         'description' => $dao->description,
         'entity_id' => $entityId,
         'membership_type_id' => $dao->membership_type_id,
-      );
+      ];
     }
     return $lineItems;
   }
@@ -191,7 +191,7 @@ WHERE     %2.id = %1";
 
     //lets first check in fun parameter,
     //since user might modified w/ hooks.
-    $options = array();
+    $options = [];
     if (array_key_exists('options', $fields)) {
       $options = $fields['options'];
     }
@@ -212,7 +212,7 @@ WHERE     %2.id = %1";
 
       $participantsPerField = CRM_Utils_Array::value('count', $options[$oid], 0);
 
-      $values[$oid] = array(
+      $values[$oid] = [
         'price_field_id' => $fid,
         'price_field_value_id' => $oid,
         'label' => CRM_Utils_Array::value('label', $options[$oid]),
@@ -226,7 +226,7 @@ WHERE     %2.id = %1";
         'membership_type_id' => CRM_Utils_Array::value('membership_type_id', $options[$oid]),
         'auto_renew' => CRM_Utils_Array::value('auto_renew', $options[$oid]),
         'html_type' => $fields['html_type'],
-      );
+      ];
     }
   }
 
@@ -245,7 +245,7 @@ WHERE     %2.id = %1";
     }
 
     if ($entityId && !is_array($entityId)) {
-      $entityId = array($entityId);
+      $entityId = [$entityId];
     }
 
     $query = "DELETE FROM civicrm_line_item where entity_id IN ('" . implode("','", $entityId) . "') AND entity_table = '$entityTable'";
@@ -274,16 +274,16 @@ LEFT JOIN   civicrm_price_set ps ON ps.id = pf.price_set_id ";
     $where = " li.entity_id = %1 AND
                li.entity_table = %2 ";
 
-    $params = array(
-      1 => array($entityId, 'Integer'),
-      2 => array($entityTable, 'String'),
-      3 => array($amount, 'Float'),
-    );
+    $params = [
+      1 => [$entityId, 'Integer'],
+      2 => [$entityTable, 'String'],
+      3 => [$amount, 'Float'],
+    ];
 
     if ($entityTable == 'civicrm_contribution') {
       $entityName = 'default_contribution_amount';
       $where .= " AND ps.name = %4 ";
-      $params[4] = array($entityName, 'String');
+      $params[4] = [$entityName, 'String'];
     }
     elseif ($entityTable == 'civicrm_participant') {
       $from .= "
@@ -293,10 +293,10 @@ LEFT JOIN civicrm_price_field_value cpfv ON cpfv.price_field_id = pf.id and cpfv
                 li.price_field_value_id = cpfv.id ";
       $where .= " AND cpse.entity_table = 'civicrm_event' AND cpse.entity_id = %5 ";
       $amount = empty($amount) ? 0 : $amount;
-      $params += array(
-        4 => array($otherParams['fee_label'], 'String'),
-        5 => array($otherParams['event_id'], 'String'),
-      );
+      $params += [
+        4 => [$otherParams['fee_label'], 'String'],
+        5 => [$otherParams['event_id'], 'String'],
+      ];
     }
 
     $query = "

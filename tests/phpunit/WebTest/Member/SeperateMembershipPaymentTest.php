@@ -117,12 +117,12 @@ class WebTest_Member_SeperateMembershipPaymentTest extends CiviSeleniumTestCase 
     $this->waitForElementPresent("_qf_MembershipView_cancel-bottom");
 
     //View Membership Record
-    $verifyData = array(
+    $verifyData = [
       'Member' => $firstName1 . ' ' . $lastName1,
       'Membership Type' => $memTypeTitle1,
       'Status' => 'Pending',
       'Source' => 'Online Contribution:' . ' ' . $contributionTitle,
-    );
+    ];
 
     $this->webtestVerifyTabularData($verifyData);
 
@@ -133,10 +133,10 @@ class WebTest_Member_SeperateMembershipPaymentTest extends CiviSeleniumTestCase 
     $this->waitForElementPresent("xpath=//div[@class='ui-dialog-buttonset']/button[3]/span[2]");
 
     //View Contribution Record
-    $verifyData = array(
+    $verifyData = [
       'From' => $firstName1 . ' ' . $lastName1,
       'Total Amount' => '$ 100.00',
-    );
+    ];
     $this->webtestVerifyTabularData($verifyData);
 
     $this->click("_qf_ContributionView_cancel-bottom");
@@ -150,7 +150,7 @@ class WebTest_Member_SeperateMembershipPaymentTest extends CiviSeleniumTestCase 
    */
   public function _testOnlineMembershipSignup($pageId, $memTypeId, $cid = NULL) {
     //Open Live Contribution Page
-    $args = array('reset' => 1, 'id' => $pageId);
+    $args = ['reset' => 1, 'id' => $pageId];
     if ($cid) {
       $args['cid'] = $cid;
     }

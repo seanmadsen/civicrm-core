@@ -43,15 +43,15 @@ class WebTest_Contact_SearchBuilderTest extends CiviSeleniumTestCase {
     // Open the search builder
     $this->openCiviPage('contact/search/builder', 'reset=1');
 
-    $this->enterValues(1, 1, 'Contacts', 'Group(s)', NULL, '=', array($groupName));
-    $this->enterValues(1, 2, 'Contacts', 'Country', NULL, '=', array('UNITED STATES'));
-    $this->enterValues(1, 3, 'Individual', 'Gender', NULL, '=', array('Male'));
+    $this->enterValues(1, 1, 'Contacts', 'Group(s)', NULL, '=', [$groupName]);
+    $this->enterValues(1, 2, 'Contacts', 'Country', NULL, '=', ['UNITED STATES']);
+    $this->enterValues(1, 3, 'Individual', 'Gender', NULL, '=', ['Male']);
     $this->click('_qf_Builder_refresh');
     $this->waitForPageToLoad();
 
     // We should get no results. But check the options are all still set
     $this->waitForTextPresent('No matches found for:');
-    foreach (array($groupName, 'UNITED STATES', 'Male') as $i => $label) {
+    foreach ([$groupName, 'UNITED STATES', 'Male'] as $i => $label) {
       $this->waitForElementPresent("//span[@id='crm_search_value_1_$i']/select/option[2]");
       $this->assertSelectedLabel("//span[@id='crm_search_value_1_$i']/select", $label);
     }
@@ -84,7 +84,7 @@ class WebTest_Contact_SearchBuilderTest extends CiviSeleniumTestCase {
     // create contact type Individual with subtype
     // with most of values to required to search
     $Subtype = "Student";
-    $this->openCiviPage('contact/add', array('reset' => 1, 'ct' => 'Individual'), '_qf_Contact_cancel');
+    $this->openCiviPage('contact/add', ['reset' => 1, 'ct' => 'Individual'], '_qf_Contact_cancel');
 
     // --- fill few values in Contact Detail block
     $this->type("first_name", "$firstName");
@@ -167,11 +167,11 @@ class WebTest_Contact_SearchBuilderTest extends CiviSeleniumTestCase {
     $this->click("_qf_Contact_upload_view");
     $this->waitForPageToLoad($this->getTimeoutMsec());
     $this->_searchBuilder('Email', NULL, NULL, 'IS NULL');
-    $names = array(
+    $names = [
       1 => $firstName1,
       2 => $firstName2,
       3 => $firstName3,
-    );
+    ];
     foreach ($names as $key => $value) {
       $this->assertTrue($this->isTextPresent($value));
     }
@@ -342,7 +342,7 @@ class WebTest_Contact_SearchBuilderTest extends CiviSeleniumTestCase {
    * @param null $postalCode
    */
   public function _createContact($contactType, $name, $email, $streetName = NULL, $postalCode = NULL) {
-    $this->openCiviPage('contact/add', array('reset' => 1, 'ct' => $contactType), '_qf_Contact_cancel');
+    $this->openCiviPage('contact/add', ['reset' => 1, 'ct' => $contactType], '_qf_Contact_cancel');
 
     if ($contactType == 'Individual') {
       $this->type("first_name", "$name");
@@ -384,11 +384,11 @@ class WebTest_Contact_SearchBuilderTest extends CiviSeleniumTestCase {
     // add financial type
     $financialTypeName1 = 'Financial Type' . substr(sha1(rand()), 0, 5);;
     $financialTypeName2 = 'Financial Type' . substr(sha1(rand()), 0, 5);;
-    $financialType = array(
+    $financialType = [
       'name' => $financialTypeName1,
       'is_reserved' => FALSE,
       'is_deductible' => FALSE,
-    );
+    ];
     $this->addeditFinancialType($financialType);
     $financialType['name'] = $financialTypeName2;
     $this->addeditFinancialType($financialType);
@@ -409,22 +409,22 @@ class WebTest_Contact_SearchBuilderTest extends CiviSeleniumTestCase {
     }
     $this->openCiviPage("contact/search/builder", "reset=1", "_qf_Builder_refresh");
 
-    $this->enterValues(1, 1, 'Contribution', 'Financial Type', NULL, '=', array($financialTypeName1));
+    $this->enterValues(1, 1, 'Contribution', 'Financial Type', NULL, '=', [$financialTypeName1]);
     $this->clickLink('_qf_Builder_refresh');
 
     $this->assertTrue($this->isTextPresent('3 Contacts'), 'Missing text: ' . '3 Contacts');
 
     $this->click("xpath=//div[@class='crm-accordion-header crm-master-accordion-header']");
-    $this->enterValues(1, 1, 'Contribution', 'Financial Type', NULL, '=', array($financialTypeName2));
+    $this->enterValues(1, 1, 'Contribution', 'Financial Type', NULL, '=', [$financialTypeName2]);
     $this->clickLink('_qf_Builder_refresh');
 
     $this->assertTrue($this->isTextPresent('3 Contacts'), 'Missing text: ' . '3 Contacts');
 
     $this->click("xpath=//div[@class='crm-accordion-header crm-master-accordion-header']");
-    $this->enterValues(1, 1, 'Contribution', 'Financial Type', NULL, 'IN', array(
+    $this->enterValues(1, 1, 'Contribution', 'Financial Type', NULL, 'IN', [
       $financialTypeName1,
       $financialTypeName2,
-    ));
+    ]);
     $this->clickLink('_qf_Builder_refresh');
 
     $this->assertTrue($this->isTextPresent('6 Contacts'), 'Missing text: ' . '6 Contacts');
@@ -494,19 +494,19 @@ class WebTest_Contact_SearchBuilderTest extends CiviSeleniumTestCase {
 
     // Open the search builder
     $this->openCiviPage('contact/search/builder', 'reset=1');
-    $this->enterValues(1, 1, 'Membership', 'Membership Type', NULL, '=', array($membershipTypes['membership_type']));
+    $this->enterValues(1, 1, 'Membership', 'Membership Type', NULL, '=', [$membershipTypes['membership_type']]);
 
     $this->clickLink('_qf_Builder_refresh');
     $this->waitForAjaxContent();
     $this->assertElementContainsText("xpath=//div[@id='search-status']/table/tbody/tr[1]/td", "2 Contacts");
 
     $this->click("xpath=//div[@class='crm-accordion-header crm-master-accordion-header']");
-    $this->enterValues(1, 2, 'Membership', 'Membership Status', NULL, '=', array('New'));
+    $this->enterValues(1, 2, 'Membership', 'Membership Status', NULL, '=', ['New']);
     $this->clickLink('_qf_Builder_refresh');
     $this->waitForAjaxContent();
     $this->assertElementContainsText("xpath=//div[@id='search-status']/table/tbody/tr[1]/td", "1 Contact");
 
-    $this->enterValues(1, 2, 'Membership', 'Membership Status', NULL, '=', array('Grace'));
+    $this->enterValues(1, 2, 'Membership', 'Membership Status', NULL, '=', ['Grace']);
     $this->clickLink('_qf_Builder_refresh');
     $this->waitForAjaxContent();
     $this->assertElementContainsText("xpath=//div[@id='search-status']/table/tbody/tr[1]/td", "1 Contact");
@@ -514,7 +514,7 @@ class WebTest_Contact_SearchBuilderTest extends CiviSeleniumTestCase {
     $this->click("xpath=//div[@class='crm-accordion-header crm-master-accordion-header']");
     $this->waitForElementPresent("xpath=//div[@id='map-field']/div[1]/table/tbody/tr[2]/td/a");
     $this->click("xpath=//div[@id='map-field']/div[1]/table/tbody/tr[2]/td/a");
-    $this->enterValues(1, 2, 'Membership', 'Membership Status', NULL, 'IN', array('New', 'Grace'));
+    $this->enterValues(1, 2, 'Membership', 'Membership Status', NULL, 'IN', ['New', 'Grace']);
     $this->clickLink('_qf_Builder_refresh');
     $this->waitForAjaxContent();
     $this->assertElementContainsText("xpath=//div[@id='search-status']/table/tbody/tr[1]/td", "2 Contacts");
@@ -522,7 +522,7 @@ class WebTest_Contact_SearchBuilderTest extends CiviSeleniumTestCase {
     $this->click("xpath=//div[@class='crm-accordion-header crm-master-accordion-header']");
     $this->waitForElementPresent("xpath=//div[@id='map-field']/div[1]/table/tbody/tr[2]/td/a");
     $this->click("xpath=//div[@id='map-field']/div[1]/table/tbody/tr[2]/td/a");
-    $this->enterValues(1, 2, 'Membership', 'Membership Status', NULL, 'IN', array('Current', 'Expired'));
+    $this->enterValues(1, 2, 'Membership', 'Membership Status', NULL, 'IN', ['Current', 'Expired']);
     $this->clickLink('_qf_Builder_refresh');
     $this->waitForText("xpath=//form[@id='Builder']/div[3]/div/div", "No matches found for");
 
@@ -533,7 +533,7 @@ class WebTest_Contact_SearchBuilderTest extends CiviSeleniumTestCase {
     $this->assertElementContainsText("xpath=//div[@id='search-status']/table/tbody/tr[1]/td[1]", "2 Result");
 
     $this->click("xpath=//div[@class='crm-accordion-header crm-master-accordion-header']");
-    $this->multiselect2("membership_status_id", array("New", "Grace"));
+    $this->multiselect2("membership_status_id", ["New", "Grace"]);
     $this->clickLink('_qf_Search_refresh');
     $this->waitForAjaxContent();
     $this->assertElementContainsText("xpath=//div[@id='search-status']/table/tbody/tr[1]/td", "2 Results");
@@ -542,7 +542,7 @@ class WebTest_Contact_SearchBuilderTest extends CiviSeleniumTestCase {
     $this->waitForAjaxContent();
     $this->click("xpath=//div[@class='crm-accordion-header crm-master-accordion-header']");
     $this->select2('membership_type_id', $membershipTypes['membership_type'], TRUE);
-    $this->multiselect2("membership_status_id", array("New"));
+    $this->multiselect2("membership_status_id", ["New"]);
     $this->click('_qf_Search_refresh');
     $this->waitForAjaxContent();
     $this->assertElementContainsText("xpath=//div[@id='search-status']/table/tbody/tr[1]/td", "1 Result");

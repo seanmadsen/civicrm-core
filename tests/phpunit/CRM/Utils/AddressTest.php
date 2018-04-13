@@ -11,12 +11,12 @@ class CRM_Utils_AddressTest extends CiviUnitTestCase {
   }
 
   public function testAddressFormat() {
-    $contact = $this->callAPISuccess('contact', 'create', array(
+    $contact = $this->callAPISuccess('contact', 'create', [
       'first_name' => 'Micky',
       'last_name' => 'mouse',
       'contact_type' => 'Individual',
-    ));
-    $address = $this->callAPISuccess('address', 'create', array(
+    ]);
+    $address = $this->callAPISuccess('address', 'create', [
       'street_address' => '1 Happy Place',
       'city' => 'Miami',
       'state_province' => 'Flordia',
@@ -25,7 +25,7 @@ class CRM_Utils_AddressTest extends CiviUnitTestCase {
       'contact_id' => $contact['id'],
       'location_type_id' => 5,
       'is_primary' => 1,
-    ));
+    ]);
     $addressDetails = $address['values'][$address['id']];
     $countries = CRM_Core_PseudoConstant::country();
     $addressDetails['country'] = $countries[$addressDetails['country_id']];

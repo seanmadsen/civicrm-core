@@ -176,7 +176,7 @@ class CRM_Utils_Date {
    *
    */
   public static function getAbbrWeekdayNames() {
-    static $days = array();
+    static $days = [];
     if (!$days) {
       // First day of the week
       $firstDay = Civi::settings()->get('weekBegins');
@@ -205,7 +205,7 @@ class CRM_Utils_Date {
    *
    */
   public static function getFullWeekdayNames() {
-    static $days = array();
+    static $days = [];
     if (!$days) {
       // First day of the week
       $firstDay = Civi::settings()->get('weekBegins');
@@ -322,13 +322,13 @@ class CRM_Utils_Date {
       $config = CRM_Core_Config::singleton();
 
       if ($dateParts) {
-        if (array_intersect(array('h', 'H'), $dateParts)) {
+        if (array_intersect(['h', 'H'], $dateParts)) {
           $format = $config->dateformatDatetime;
         }
-        elseif (array_intersect(array('d', 'j'), $dateParts)) {
+        elseif (array_intersect(['d', 'j'], $dateParts)) {
           $format = $config->dateformatFull;
         }
-        elseif (array_intersect(array('m', 'M'), $dateParts)) {
+        elseif (array_intersect(['m', 'M'], $dateParts)) {
           $format = $config->dateformatPartial;
         }
         else {
@@ -410,7 +410,7 @@ class CRM_Utils_Date {
         $type = 'PM';
       }
 
-      $date = array(
+      $date = [
         '%b' => CRM_Utils_Array::value($month, $abbrMonths),
         '%B' => CRM_Utils_Array::value($month, $fullMonths),
         '%d' => $day > 9 ? $day : '0' . $day,
@@ -429,7 +429,7 @@ class CRM_Utils_Date {
         '%P' => $type,
         '%A' => $type,
         '%Y' => $year,
-      );
+      ];
 
       return strtr($format, $date);
     }
@@ -491,7 +491,7 @@ class CRM_Utils_Date {
    *   date/datetime in MySQL format
    */
   public static function isoToMysql($iso) {
-    $dropArray = array('-' => '', ':' => '', ' ' => '');
+    $dropArray = ['-' => '', ':' => '', ' ' => ''];
     return strtr($iso, $dropArray);
   }
 
@@ -812,7 +812,7 @@ class CRM_Utils_Date {
     $from = self::processDate($from);
     $to = self::processDate($to, '235959');
 
-    return array($from, $to);
+    return [$from, $to];
   }
 
   /**
@@ -825,7 +825,7 @@ class CRM_Utils_Date {
    *   array $results contains years or months
    */
   static public function calculateAge($birthDate) {
-    $results = array();
+    $results = [];
     $formatedBirthDate = CRM_Utils_Date::customFormat($birthDate, '%Y-%m-%d');
 
     $bDate = explode('-', $formatedBirthDate);
@@ -926,7 +926,7 @@ class CRM_Utils_Date {
 
     $scheduleDate = explode("-", date("n-j-Y-H-i-s", $date));
 
-    $date = array();
+    $date = [];
     $date['M'] = $scheduleDate[0];
     $date['d'] = $scheduleDate[1];
     $date['Y'] = $scheduleDate[2];
@@ -954,14 +954,14 @@ class CRM_Utils_Date {
    *   according to the available parts at the smarty layer.
    */
   public static function getDateFieldViewFormat($format) {
-    $supportableFormats = array(
+    $supportableFormats = [
       'mm/dd' => '%B %E%f',
       'dd-mm' => '%E%f %B',
       'yy-mm' => '%Y %B',
       'M yy' => '%b %Y',
       'yy' => '%Y',
       'dd/mm/yy' => '%E%f %B %Y',
-    );
+    ];
 
     return array_key_exists($format, $supportableFormats) ? $supportableFormats[$format] : self::pickBestSmartyFormat($format);
   }
@@ -994,7 +994,7 @@ class CRM_Utils_Date {
    * @return array
    */
   public static function datePluginToPHPFormats() {
-    $dateInputFormats = array(
+    $dateInputFormats = [
       "mm/dd/yy" => 'm/d/Y',
       "dd/mm/yy" => 'd/m/Y',
       "yy-mm-dd" => 'Y-m-d',
@@ -1012,7 +1012,7 @@ class CRM_Utils_Date {
       "M yy" => 'M Y',
       "M Y" => 'M Y',
       "yy" => 'Y',
-    );
+    ];
     return $dateInputFormats;
   }
 
@@ -1029,7 +1029,7 @@ class CRM_Utils_Date {
    */
   public static function relativeToAbsolute($relativeTerm, $unit) {
     $now = getdate();
-    $from = $to = $dateRange = array();
+    $from = $to = $dateRange = [];
     $from['H'] = $from['i'] = $from['s'] = 0;
 
     switch ($unit) {
@@ -1713,10 +1713,10 @@ class CRM_Utils_Date {
         break;
     }
 
-    foreach (array(
+    foreach ([
                'from',
                'to',
-             ) as $item) {
+             ] as $item) {
       if (!empty($$item)) {
         $dateRange[$item] = self::format($$item);
       }
@@ -1826,7 +1826,7 @@ class CRM_Utils_Date {
    * @return array
    */
   public static function getDatePickerExtra($field) {
-    $extra = array();
+    $extra = [];
     if (isset($field['date_format'])) {
       $extra['date'] = $field['date_format'];
       $extra['time'] = $field['time_format'];
@@ -1851,12 +1851,12 @@ class CRM_Utils_Date {
    *   Array ready to pass to $this->addForm('datepicker' as attributes.
    */
   public static function getDatePickerAttributes(&$field) {
-    $attributes = array();
-    $dateAttributes = array(
+    $attributes = [];
+    $dateAttributes = [
       'start_date_years' => 'minYear',
       'end_date_years' => 'maxYear',
       'date_format' => 'format',
-    );
+    ];
     foreach ($dateAttributes as $dateAttribute => $mapTo) {
       if (isset($field[$dateAttribute])) {
         $attributes[$mapTo] = $field[$dateAttribute];
@@ -1887,8 +1887,8 @@ class CRM_Utils_Date {
     $config = CRM_Core_Config::singleton();
     if ($formatType) {
       // get actual format
-      $params = array('name' => $formatType);
-      $values = array();
+      $params = ['name' => $formatType];
+      $values = [];
       CRM_Core_DAO::commonRetrieve('CRM_Core_DAO_PreferencesDate', $params, $values);
 
       if ($values['date_format']) {
@@ -1934,7 +1934,7 @@ class CRM_Utils_Date {
       $time = '0' . $time;
     }
 
-    return array($date, $time);
+    return [$date, $time];
   }
 
   /**
@@ -1978,13 +1978,13 @@ class CRM_Utils_Date {
     // 4. If date and time then convert to default date time format.
 
     $dateKey = 'date';
-    $dateParams = array($dateKey => $date);
+    $dateParams = [$dateKey => $date];
 
     if (CRM_Utils_Date::convertToDefaultDate($dateParams, $dateType, $dateKey)) {
       $dateVal = $dateParams[$dateKey];
       $ruleName = 'date';
       if ($dateType == 1) {
-        $matches = array();
+        $matches = [];
         if (preg_match("/(\s(([01]\d)|[2][0-3]):([0-5]\d))$/", $date, $matches)) {
           $ruleName = 'dateTime';
           if (strpos($date, '-') !== FALSE) {
@@ -2016,7 +2016,7 @@ class CRM_Utils_Date {
    * @return array
    */
   public static function getCalendarDayOfMonth() {
-    $month = array();
+    $month = [];
     for ($i = 1; $i <= 31; $i++) {
       $month[$i] = $i;
       if ($i == 31) {

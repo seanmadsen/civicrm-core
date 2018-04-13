@@ -61,30 +61,30 @@ class CRM_Admin_Page_PaymentProcessor extends CRM_Core_Page_Basic {
    */
   public function &links() {
     if (!(self::$_links)) {
-      self::$_links = array(
-        CRM_Core_Action::UPDATE => array(
+      self::$_links = [
+        CRM_Core_Action::UPDATE => [
           'name' => ts('Edit'),
           'url' => 'civicrm/admin/paymentProcessor',
           'qs' => 'action=update&id=%%id%%&reset=1',
           'title' => ts('Edit Payment Processor'),
-        ),
-        CRM_Core_Action::DISABLE => array(
+        ],
+        CRM_Core_Action::DISABLE => [
           'name' => ts('Disable'),
           'ref' => 'crm-enable-disable',
           'title' => ts('Disable Payment Processor'),
-        ),
-        CRM_Core_Action::ENABLE => array(
+        ],
+        CRM_Core_Action::ENABLE => [
           'name' => ts('Enable'),
           'ref' => 'crm-enable-disable',
           'title' => ts('Enable Payment Processor'),
-        ),
-        CRM_Core_Action::DELETE => array(
+        ],
+        CRM_Core_Action::DELETE => [
           'name' => ts('Delete'),
           'url' => 'civicrm/admin/paymentProcessor',
           'qs' => 'action=delete&id=%%id%%',
           'title' => ts('Delete Payment Processor'),
-        ),
-      );
+        ],
+      ];
     }
     return self::$_links;
   }
@@ -100,19 +100,19 @@ class CRM_Admin_Page_PaymentProcessor extends CRM_Core_Page_Basic {
     // set title and breadcrumb
     CRM_Utils_System::setTitle(ts('Settings - Payment Processor'));
     //CRM-15546
-    $paymentProcessorTypes = CRM_Core_PseudoConstant::get('CRM_Financial_DAO_PaymentProcessor', 'payment_processor_type_id', array(
+    $paymentProcessorTypes = CRM_Core_PseudoConstant::get('CRM_Financial_DAO_PaymentProcessor', 'payment_processor_type_id', [
         'labelColumn' => 'name',
         'flip' => 1,
-      ));
+    ]);
     $this->assign('defaultPaymentProcessorType', $paymentProcessorTypes['PayPal']);
-    $breadCrumb = array(
-      array(
+    $breadCrumb = [
+      [
         'title' => ts('Administration'),
         'url' => CRM_Utils_System::url('civicrm/admin',
           'reset=1'
         ),
-      ),
-    );
+      ],
+    ];
     CRM_Utils_System::appendBreadCrumb($breadCrumb);
     return parent::run();
   }
@@ -124,7 +124,7 @@ class CRM_Admin_Page_PaymentProcessor extends CRM_Core_Page_Basic {
    */
   public function browse($action = NULL) {
     // get all custom groups sorted by weight
-    $paymentProcessor = array();
+    $paymentProcessor = [];
     $dao = new CRM_Financial_DAO_PaymentProcessor();
     $dao->is_test = 0;
     $dao->domain_id = CRM_Core_Config::domainID();
@@ -132,7 +132,7 @@ class CRM_Admin_Page_PaymentProcessor extends CRM_Core_Page_Basic {
     $dao->find();
 
     while ($dao->fetch()) {
-      $paymentProcessor[$dao->id] = array();
+      $paymentProcessor[$dao->id] = [];
       CRM_Core_DAO::storeValues($dao, $paymentProcessor[$dao->id]);
       $paymentProcessor[$dao->id]['payment_processor_type'] = CRM_Core_DAO::getFieldValue('CRM_Financial_DAO_PaymentProcessorType',
         $paymentProcessor[$dao->id]['payment_processor_type_id']);
@@ -149,7 +149,7 @@ class CRM_Admin_Page_PaymentProcessor extends CRM_Core_Page_Basic {
       }
 
       $paymentProcessor[$dao->id]['action'] = CRM_Core_Action::formLink(self::links(), $action,
-        array('id' => $dao->id),
+        ['id' => $dao->id],
         ts('more'),
         FALSE,
         'paymentProcessor.manage.action',

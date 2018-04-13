@@ -32,7 +32,7 @@ require_once 'CiviTest/CiviSeleniumTestCase.php';
 class WebTest_Contribute_VerifySSLContributionTest extends CiviSeleniumTestCase {
 
   protected $initialized = FALSE;
-  protected $names = array();
+  protected $names = [];
   protected $pageId = 0;
 
   protected function setUp() {
@@ -62,7 +62,7 @@ class WebTest_Contribute_VerifySSLContributionTest extends CiviSeleniumTestCase 
       $this->names['AuthNet'] = "AuthNet ($hash)";
       //$this->names['PayPal_Standard'] = "PayPal Standard ($hash)";
 
-      $processors = array();
+      $processors = [];
       foreach ($this->names as $key => $val) {
         $processors[$val] = $key;
       }

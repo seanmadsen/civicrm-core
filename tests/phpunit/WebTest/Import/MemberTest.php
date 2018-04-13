@@ -96,31 +96,31 @@ class WebTest_Import_MemberTest extends ImportCiviSeleniumTestCase {
     $year = date('Y') - 1;
     $startDate2 = date('Y-m-d', mktime(0, 0, 0, 9, 10, $year));
 
-    $headers = array(
+    $headers = [
       'email' => 'Email',
       'membership_type_id' => 'Membership Type',
       'membership_start_date' => 'Membership Start Date',
-    );
+    ];
 
-    $rows = array(
-      array(
+    $rows = [
+      [
         'email' => $email1,
         'membership_type_id' => $memTypeParams['membership_type'],
         'membership_start_date' => $startDate1,
-      ),
-      array(
+      ],
+      [
         'email' => $email2,
         'membership_type_id' => $memTypeParams['membership_type'],
         'membership_start_date' => $startDate2,
-      ),
-    );
+      ],
+    ];
 
-    $fieldMapper = array(
+    $fieldMapper = [
       'mapper[0][0]' => 'email',
       'mapper[1][0]' => 'membership_type_id',
       'mapper[2][0]' => 'membership_start_date',
-    );
-    return array($headers, $rows, $fieldMapper);
+    ];
+    return [$headers, $rows, $fieldMapper];
   }
 
   /**
@@ -140,31 +140,31 @@ class WebTest_Import_MemberTest extends ImportCiviSeleniumTestCase {
     $year = date('Y') - 1;
     $startDate2 = date('Y-m-d', mktime(0, 0, 0, 12, 31, $year));
 
-    $headers = array(
+    $headers = [
       'household_name' => 'Household Name',
       'membership_type_id' => 'Membership Type',
       'membership_start_date' => 'Membership Start Date',
-    );
+    ];
 
-    $rows = array(
-      array(
+    $rows = [
+      [
         'household_name' => $household1,
         'membership_type_id' => $memTypeParams['membership_type'],
         'membership_start_date' => $startDate1,
-      ),
-      array(
+      ],
+      [
         'household_name' => $household2,
         'membership_type_id' => $memTypeParams['membership_type'],
         'membership_start_date' => $startDate2,
-      ),
-    );
+      ],
+    ];
 
-    $fieldMapper = array(
+    $fieldMapper = [
       'mapper[0][0]' => 'household_name',
       'mapper[1][0]' => 'membership_type_id',
       'mapper[2][0]' => 'membership_start_date',
-    );
-    return array($headers, $rows, $fieldMapper);
+    ];
+    return [$headers, $rows, $fieldMapper];
   }
 
   /**
@@ -184,31 +184,31 @@ class WebTest_Import_MemberTest extends ImportCiviSeleniumTestCase {
     $year = date('Y') - 1;
     $startDate2 = date('Y-m-d', mktime(0, 0, 0, 12, 31, $year));
 
-    $headers = array(
+    $headers = [
       'organization_name' => 'Organization Name',
       'membership_type_id' => 'Membership Type',
       'membership_start_date' => 'Membership Start Date',
-    );
+    ];
 
-    $rows = array(
-      array(
+    $rows = [
+      [
         'organization_name' => $organization1,
         'membership_type_id' => $memTypeParams['membership_type'],
         'membership_start_date' => $startDate1,
-      ),
-      array(
+      ],
+      [
         'organization_name' => $organization2,
         'membership_type_id' => $memTypeParams['membership_type'],
         'membership_start_date' => $startDate2,
-      ),
-    );
+      ],
+    ];
 
-    $fieldMapper = array(
+    $fieldMapper = [
       'mapper[0][0]' => 'organization_name',
       'mapper[1][0]' => 'membership_type_id',
       'mapper[2][0]' => 'membership_start_date',
-    );
-    return array($headers, $rows, $fieldMapper);
+    ];
+    return [$headers, $rows, $fieldMapper];
   }
 
 }

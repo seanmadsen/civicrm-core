@@ -98,7 +98,7 @@ class CRM_Admin_Form_Preferences extends CRM_Core_Form {
    * @return array
    */
   public function setDefaultValues() {
-    $defaults = array();
+    $defaults = [];
 
     foreach ($this->_varNames as $groupName => $settings) {
       foreach ($settings as $settingName => $settingDetails) {
@@ -124,7 +124,7 @@ class CRM_Admin_Form_Preferences extends CRM_Core_Form {
               substr($this->_config->$settingName, 1, -1)
             );
             if (!empty($value)) {
-              $defaults[$settingName] = array();
+              $defaults[$settingName] = [];
               foreach ($value as $n => $v) {
                 $defaults[$settingName][$v] = 1;
               }
@@ -145,7 +145,7 @@ class CRM_Admin_Form_Preferences extends CRM_Core_Form {
       foreach ($this->_varNames as $groupName => $groupValues) {
         $formName = CRM_Utils_String::titleToVar($groupName);
         $this->assign('formName', $formName);
-        $fields = array();
+        $fields = [];
         foreach ($groupValues as $fieldName => $fieldValue) {
           $fields[$fieldName] = $fieldValue;
 
@@ -154,10 +154,10 @@ class CRM_Admin_Form_Preferences extends CRM_Core_Form {
               $this->addElement('text',
                 $fieldName,
                 $fieldValue['title'],
-                array(
+                [
                   'maxlength' => 64,
                   'size' => 32,
-                )
+                ]
               );
               break;
 
@@ -175,12 +175,12 @@ class CRM_Admin_Form_Preferences extends CRM_Core_Form {
               break;
 
             case 'YesNo':
-              $this->addRadio($fieldName, $fieldValue['title'], array(0 => 'No', 1 => 'Yes'), NULL, '&nbsp;&nbsp;');
+              $this->addRadio($fieldName, $fieldValue['title'], [0 => 'No', 1 => 'Yes'], NULL, '&nbsp;&nbsp;');
               break;
 
             case 'checkboxes':
               $options = array_flip(CRM_Core_OptionGroup::values($fieldName, FALSE, FALSE, TRUE));
-              $newOptions = array();
+              $newOptions = [];
               foreach ($options as $key => $val) {
                 $newOptions[$key] = $val;
               }
@@ -188,7 +188,7 @@ class CRM_Admin_Form_Preferences extends CRM_Core_Form {
                 $fieldValue['title'],
                 $newOptions,
                 NULL, NULL, NULL, NULL,
-                array('&nbsp;&nbsp;', '&nbsp;&nbsp;', '<br/>')
+                ['&nbsp;&nbsp;', '&nbsp;&nbsp;', '<br/>']
               );
               break;
 
@@ -206,7 +206,7 @@ class CRM_Admin_Form_Preferences extends CRM_Core_Form {
               break;
 
             case 'entity_reference':
-              $this->addEntityRef($fieldName, $fieldValue['title'], CRM_Utils_Array::value('options', $fieldValue, array()));
+              $this->addEntityRef($fieldName, $fieldValue['title'], CRM_Utils_Array::value('options', $fieldValue, []));
           }
         }
 
@@ -215,17 +215,17 @@ class CRM_Admin_Form_Preferences extends CRM_Core_Form {
       }
     }
 
-    $this->addButtons(array(
-        array(
+    $this->addButtons([
+        [
           'type' => 'next',
           'name' => ts('Save'),
           'isDefault' => TRUE,
-        ),
-        array(
+        ],
+        [
           'type' => 'cancel',
           'name' => ts('Cancel'),
-        ),
-      )
+        ],
+      ]
     );
 
     if ($this->_action == CRM_Core_Action::VIEW) {
@@ -283,7 +283,7 @@ class CRM_Admin_Form_Preferences extends CRM_Core_Form {
             $value = CRM_Utils_Array::value($settingName, $this->_params);
             if ($value) {
               $value = trim($value);
-              $value = str_replace(array("\r\n", "\r"), "\n", $value);
+              $value = str_replace(["\r\n", "\r"], "\n", $value);
             }
             $this->_config->$settingName = $value;
             break;

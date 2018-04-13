@@ -71,7 +71,7 @@ class WebTest_Financial_FinancialAccountTest extends CiviSeleniumTestCase {
 
     $this->clickLink("xpath=//table/tbody//tr/td[1]/div[text()='{$financialAccountTitle}']/../../td[9]/span/a[text()='Edit']", '_qf_FinancialAccount_cancel-botttom', FALSE);
     //Varify Data after Adding new Financial Account
-    $verifyData = array(
+    $verifyData = [
       'name' => $financialAccountTitle,
       'description' => $financialAccountDescription,
       'accounting_code' => $accountingCode,
@@ -79,12 +79,12 @@ class WebTest_Financial_FinancialAccountTest extends CiviSeleniumTestCase {
       'is_tax' => 'on',
       'is_deductible' => 'off',
       'is_default' => 'off',
-    );
+    ];
 
     $this->assertEquals($orgName, $this->getText("xpath=//*[@id='s2id_contact_id']/a/span[1]"));
 
     $this->_assertFinancialAccount($verifyData);
-    $verifySelectFieldData = array('financial_account_type_id' => $financialAccountType);
+    $verifySelectFieldData = ['financial_account_type_id' => $financialAccountType];
     $this->_assertSelectVerify($verifySelectFieldData);
     $this->click('_qf_FinancialAccount_cancel-botttom');
 
@@ -119,7 +119,7 @@ class WebTest_Financial_FinancialAccountTest extends CiviSeleniumTestCase {
     $this->waitForElementPresent("xpath=//table/tbody//tr/td[1]/div[text()='{$financialAccountTitle}']/../../td[9]/span/a[text()='Edit']");
     $this->clickLink("xpath=//table/tbody//tr/td[1]/div[text()='{$financialAccountTitle}']/../../td[9]/span/a[text()='Edit']", '_qf_FinancialAccount_cancel-botttom', FALSE);
 
-    $verifyData = array(
+    $verifyData = [
       'name' => $financialAccountTitle,
       'description' => $financialAccountDescription,
       'accounting_code' => $accountingCode,
@@ -127,12 +127,12 @@ class WebTest_Financial_FinancialAccountTest extends CiviSeleniumTestCase {
       'is_tax' => 'on',
       'is_deductible' => 'off',
       'is_default' => 'off',
-    );
+    ];
 
     $this->assertEquals($orgName, $this->getText("xpath=//*[@id='s2id_contact_id']/a/span[1]"));
 
     $this->_assertFinancialAccount($verifyData);
-    $verifySelectFieldData = array('financial_account_type_id' => $financialAccountType);
+    $verifySelectFieldData = ['financial_account_type_id' => $financialAccountType];
     $this->_assertSelectVerify($verifySelectFieldData);
     $this->click('_qf_FinancialAccount_cancel-botttom');
     $this->waitForElementPresent("xpath=//table/tbody//tr/td[1]/div[text()='{$financialAccountTitle}']/../../td[9]/span/a[text()='Delete']");

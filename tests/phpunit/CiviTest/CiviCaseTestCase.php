@@ -50,26 +50,26 @@ class CiviCaseTestCase extends CiviUnitTestCase {
     //. Using XML was causing breakage as id numbers were changing over time
     // & was really hard to troubleshoot as involved truncating option_value table to mitigate this & not leaving DB in a
     // state where tests could run afterwards without re-loading.
-    $this->caseStatusGroup = $this->callAPISuccess('option_group', 'get', array(
+    $this->caseStatusGroup = $this->callAPISuccess('option_group', 'get', [
         'name' => 'case_status',
         'format.only_id' => 1,
-      )
+      ]
     );
-    $optionValues = array(
+    $optionValues = [
       'Medical evaluation' => 'Medical evaluation',
       'Mental health evaluation' => "Mental health evaluation",
       'Secure temporary housing' => 'Secure temporary housing',
       'Long-term housing plan' => 'Long-term housing plan',
       'ADC referral' => 'ADC referral',
       'Income and benefits stabilization' => 'Income and benefits stabilization',
-    );
+    ];
     foreach ($optionValues as $name => $label) {
-      $activityTypes = $this->callAPISuccess('option_value', 'Create', array(
+      $activityTypes = $this->callAPISuccess('option_value', 'Create', [
         'option_group_id' => 2,
         'name' => $name,
         'label' => $label,
         'component_id' => 7,
-      ));
+      ]);
       // store for cleanup
       $this->optionValues[] = $activityTypes['id'];
     }
@@ -78,7 +78,7 @@ class CiviCaseTestCase extends CiviUnitTestCase {
     // Now, the rule is simply: use the "name" from "civicrm_case_type.name".
     $this->caseType = 'housing_support';
     $this->caseTypeId = 1;
-    $this->tablesToTruncate = array(
+    $this->tablesToTruncate = [
       'civicrm_activity',
       'civicrm_contact',
       'civicrm_custom_group',
@@ -92,14 +92,14 @@ class CiviCaseTestCase extends CiviUnitTestCase {
       'civicrm_relationship',
       'civicrm_relationship_type',
       'civicrm_uf_match',
-    );
+    ];
 
     $this->quickCleanup($this->tablesToTruncate);
 
     $this->loadAllFixtures();
 
     // enable the default custom templates for the case type xml files
-    $this->customDirectories(array('template_path' => TRUE));
+    $this->customDirectories(['template_path' => TRUE]);
 
     // case is not enabled by default
     $enableResult = CRM_Core_BAO_ConfigSetting::enableComponent('CiviCase');
@@ -107,7 +107,7 @@ class CiviCaseTestCase extends CiviUnitTestCase {
 
     /** @var $hooks \CRM_Utils_Hook_UnitTests */
     $hooks = \CRM_Utils_Hook::singleton();
-    $hooks->setHook('civicrm_caseTypes', array($this, 'hook_caseTypes'));
+    $hooks->setHook('civicrm_caseTypes', [$this, 'hook_caseTypes']);
     \CRM_Case_XMLRepository::singleton(TRUE);
     \CRM_Case_XMLProcessor::flushStaticCaches();
 
@@ -127,7 +127,7 @@ class CiviCaseTestCase extends CiviUnitTestCase {
    */
   public function tearDown() {
     $this->quickCleanup($this->tablesToTruncate, TRUE);
-    $this->customDirectories(array('template_path' => FALSE));
+    $this->customDirectories(['template_path' => FALSE]);
     CRM_Case_XMLRepository::singleton(TRUE);
   }
 

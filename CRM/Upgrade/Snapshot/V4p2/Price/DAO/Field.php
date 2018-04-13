@@ -196,9 +196,9 @@ class CRM_Upgrade_Snapshot_V4p2_Price_DAO_Field extends CRM_Core_DAO {
    */
   public function links() {
     if (!(self::$_links)) {
-      self::$_links = array(
+      self::$_links = [
         'price_set_id' => 'civicrm_price_set:id',
-      );
+      ];
     }
     return self::$_links;
   }
@@ -210,111 +210,111 @@ class CRM_Upgrade_Snapshot_V4p2_Price_DAO_Field extends CRM_Core_DAO {
    */
   public static function &fields() {
     if (!(self::$_fields)) {
-      self::$_fields = array(
-        'id' => array(
+      self::$_fields = [
+        'id' => [
           'name' => 'id',
           'type' => CRM_Utils_Type::T_INT,
           'required' => TRUE,
-        ),
-        'price_set_id' => array(
+        ],
+        'price_set_id' => [
           'name' => 'price_set_id',
           'type' => CRM_Utils_Type::T_INT,
           'required' => TRUE,
           'FKClassName' => 'Snapshot_v4p2_Price_DAO_Set',
-        ),
-        'name' => array(
+        ],
+        'name' => [
           'name' => 'name',
           'type' => CRM_Utils_Type::T_STRING,
           'title' => ts('Name'),
           'required' => TRUE,
           'maxlength' => 255,
           'size' => CRM_Utils_Type::HUGE,
-        ),
-        'label' => array(
+        ],
+        'label' => [
           'name' => 'label',
           'type' => CRM_Utils_Type::T_STRING,
           'title' => ts('Label'),
           'required' => TRUE,
           'maxlength' => 255,
           'size' => CRM_Utils_Type::HUGE,
-        ),
-        'html_type' => array(
+        ],
+        'html_type' => [
           'name' => 'html_type',
           'type' => CRM_Utils_Type::T_ENUM,
           'title' => ts('Html Type'),
           'required' => TRUE,
           'enumValues' => 'Text, Select, Radio, CheckBox',
-        ),
-        'is_enter_qty' => array(
+        ],
+        'is_enter_qty' => [
           'name' => 'is_enter_qty',
           'type' => CRM_Utils_Type::T_BOOLEAN,
-        ),
-        'help_pre' => array(
+        ],
+        'help_pre' => [
           'name' => 'help_pre',
           'type' => CRM_Utils_Type::T_TEXT,
           'title' => ts('Help Pre'),
           'rows' => 4,
           'cols' => 80,
-        ),
-        'help_post' => array(
+        ],
+        'help_post' => [
           'name' => 'help_post',
           'type' => CRM_Utils_Type::T_TEXT,
           'title' => ts('Help Post'),
           'rows' => 4,
           'cols' => 80,
-        ),
-        'weight' => array(
+        ],
+        'weight' => [
           'name' => 'weight',
           'type' => CRM_Utils_Type::T_INT,
           'title' => ts('Weight'),
           'default' => '',
-        ),
-        'is_display_amounts' => array(
+        ],
+        'is_display_amounts' => [
           'name' => 'is_display_amounts',
           'type' => CRM_Utils_Type::T_BOOLEAN,
           'default' => '',
-        ),
-        'options_per_line' => array(
+        ],
+        'options_per_line' => [
           'name' => 'options_per_line',
           'type' => CRM_Utils_Type::T_INT,
           'title' => ts('Options Per Line'),
           'default' => '',
-        ),
-        'is_active' => array(
+        ],
+        'is_active' => [
           'name' => 'is_active',
           'type' => CRM_Utils_Type::T_BOOLEAN,
           'default' => '',
-        ),
-        'is_required' => array(
+        ],
+        'is_required' => [
           'name' => 'is_required',
           'type' => CRM_Utils_Type::T_BOOLEAN,
           'default' => '',
-        ),
-        'active_on' => array(
+        ],
+        'active_on' => [
           'name' => 'active_on',
           'type' => CRM_Utils_Type::T_DATE + CRM_Utils_Type::T_TIME,
           'title' => ts('Active On'),
           'default' => 'UL',
-        ),
-        'expire_on' => array(
+        ],
+        'expire_on' => [
           'name' => 'expire_on',
           'type' => CRM_Utils_Type::T_DATE + CRM_Utils_Type::T_TIME,
           'title' => ts('Expire On'),
           'default' => 'UL',
-        ),
-        'javascript' => array(
+        ],
+        'javascript' => [
           'name' => 'javascript',
           'type' => CRM_Utils_Type::T_STRING,
           'title' => ts('Javascript'),
           'maxlength' => 255,
           'size' => CRM_Utils_Type::HUGE,
-        ),
-        'visibility_id' => array(
+        ],
+        'visibility_id' => [
           'name' => 'visibility_id',
           'type' => CRM_Utils_Type::T_INT,
           'default' => '',
-        ),
-      );
+        ],
+      ];
     }
     return self::$_fields;
   }
@@ -346,7 +346,7 @@ class CRM_Upgrade_Snapshot_V4p2_Price_DAO_Field extends CRM_Core_DAO {
    */
   public static function &import($prefix = FALSE) {
     if (!(self::$_import)) {
-      self::$_import = array();
+      self::$_import = [];
       $fields = self::fields();
       foreach ($fields as $name => $field) {
         if (!empty($field['import'])) {
@@ -371,7 +371,7 @@ class CRM_Upgrade_Snapshot_V4p2_Price_DAO_Field extends CRM_Core_DAO {
    */
   public static function &export($prefix = FALSE) {
     if (!(self::$_export)) {
-      self::$_export = array();
+      self::$_export = [];
       $fields = self::fields();
       foreach ($fields as $name => $field) {
         if (!empty($field['export'])) {
@@ -394,9 +394,9 @@ class CRM_Upgrade_Snapshot_V4p2_Price_DAO_Field extends CRM_Core_DAO {
    *   (reference)  the array of enum fields
    */
   public static function &getEnums() {
-    static $enums = array(
+    static $enums = [
       'html_type',
-    );
+    ];
     return $enums;
   }
 
@@ -414,14 +414,14 @@ class CRM_Upgrade_Snapshot_V4p2_Price_DAO_Field extends CRM_Core_DAO {
   public static function tsEnum($field, $value) {
     static $translations = NULL;
     if (!$translations) {
-      $translations = array(
-        'html_type' => array(
+      $translations = [
+        'html_type' => [
           'Text' => ts('Text'),
           'Select' => ts('Select'),
           'Radio' => ts('Radio'),
           'CheckBox' => ts('CheckBox'),
-        ),
-      );
+        ],
+      ];
     }
     return $translations[$field][$value];
   }

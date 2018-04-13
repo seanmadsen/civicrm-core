@@ -49,66 +49,66 @@ class WebTest_Event_PricesetMaxCountTest extends CiviSeleniumTestCase {
     $this->_testAddSet($priceset, $financialType);
 
     // create price fields
-    $fields = array(
-      'Full Conference' => array(
+    $fields = [
+      'Full Conference' => [
         'type' => 'Text',
         'amount' => '525.00',
         'max_count' => 2,
         'is_required' => TRUE,
         'financial_type_id' => 1,
-      ),
-      'Meal Choice' => array(
+      ],
+      'Meal Choice' => [
         'type' => 'Select',
-        'options' => array(
-          1 => array(
+        'options' => [
+          1 => [
             'label' => 'Chicken',
             'amount' => '525.00',
             'max_count' => 1,
             'financial_type_id' => 1,
-          ),
-          2 => array(
+          ],
+          2 => [
             'label' => 'Vegetarian',
             'amount' => '200.00',
             'max_count' => 5,
             'financial_type_id' => 1,
-          ),
-        ),
-      ),
-      'Pre-conference Meetup?' => array(
+          ],
+        ],
+      ],
+      'Pre-conference Meetup?' => [
         'type' => 'Radio',
-        'options' => array(
-          1 => array(
+        'options' => [
+          1 => [
             'label' => 'Yes',
             'amount' => '50.00',
             'max_count' => 1,
             'financial_type_id' => 1,
-          ),
-          2 => array(
+          ],
+          2 => [
             'label' => 'No',
             'amount' => '10',
             'max_count' => 5,
             'financial_type_id' => 1,
-          ),
-        ),
-      ),
-      'Evening Sessions' => array(
+          ],
+        ],
+      ],
+      'Evening Sessions' => [
         'type' => 'CheckBox',
-        'options' => array(
-          1 => array(
+        'options' => [
+          1 => [
             'label' => 'First Five',
             'amount' => '100.00',
             'max_count' => 2,
             'financial_type_id' => 1,
-          ),
-          2 => array(
+          ],
+          2 => [
             'label' => 'Second Four',
             'amount' => '50.00',
             'max_count' => 4,
             'financial_type_id' => 1,
-          ),
-        ),
-      ),
-    );
+          ],
+        ],
+      ],
+    ];
 
     // add price fields
     $this->_testAddPriceFields($fields);
@@ -142,13 +142,13 @@ class WebTest_Event_PricesetMaxCountTest extends CiviSeleniumTestCase {
 
     // create event.
     $eventTitle = 'Meeting - ' . substr(sha1(rand()), 0, 7);
-    $paramsEvent = array(
+    $paramsEvent = [
       'title' => $eventTitle,
       'template_id' => 6,
       'event_type_id' => 4,
       'payment_processor' => $processorName,
       'price_set' => $priceset,
-    );
+    ];
 
     $infoEvent = $this->_testAddEvent($paramsEvent);
 
@@ -177,7 +177,7 @@ class WebTest_Event_PricesetMaxCountTest extends CiviSeleniumTestCase {
     // fill billing related info
     $this->_fillRegisterWithBillingInfo();
 
-    $this->assertStringsPresent(array('Sorry, currently only 2 spaces are available for this option.'));
+    $this->assertStringsPresent(['Sorry, currently only 2 spaces are available for this option.']);
 
     // fill correct value for text field
     $this->type("xpath=//input[@id='price_{$textFieldId}']", '1');
@@ -205,7 +205,7 @@ class WebTest_Event_PricesetMaxCountTest extends CiviSeleniumTestCase {
     // fill billing related info and register
     $this->_fillRegisterWithBillingInfo();
 
-    $this->assertStringsPresent(array('Sorry, currently only a single space is available for this option.'));
+    $this->assertStringsPresent(['Sorry, currently only a single space is available for this option.']);
 
     // fill correct value for test field
     $this->type("xpath=//input[@id='price_{$textFieldId}']", '1');
@@ -237,73 +237,73 @@ class WebTest_Event_PricesetMaxCountTest extends CiviSeleniumTestCase {
     $this->_testAddSet($priceset, $financialType);
 
     // create price fields
-    $fields = array(
-      'Full Conference' => array(
+    $fields = [
+      'Full Conference' => [
         'type' => 'Text',
         'amount' => '525.00',
         'max_count' => 4,
         'count' => 2,
         'is_required' => TRUE,
         'financial_type_id' => 1,
-      ),
-      'Meal Choice' => array(
+      ],
+      'Meal Choice' => [
         'type' => 'Select',
-        'options' => array(
-          1 => array(
+        'options' => [
+          1 => [
             'label' => 'Chicken',
             'amount' => '525.00',
             'max_count' => 2,
             'count' => 2,
             'financial_type_id' => 1,
-          ),
-          2 => array(
+          ],
+          2 => [
             'label' => 'Vegetarian',
             'amount' => '200.00',
             'max_count' => 10,
             'count' => 5,
             'financial_type_id' => 1,
-          ),
-        ),
-      ),
-      'Pre-conference Meetup?' => array(
+          ],
+        ],
+      ],
+      'Pre-conference Meetup?' => [
         'type' => 'Radio',
-        'options' => array(
-          1 => array(
+        'options' => [
+          1 => [
             'label' => 'Yes',
             'amount' => '50.00',
             'max_count' => 2,
             'count' => 1,
             'financial_type_id' => 1,
-          ),
-          2 => array(
+          ],
+          2 => [
             'label' => 'No',
             'amount' => '10',
             'max_count' => 10,
             'count' => 5,
             'financial_type_id' => 1,
-          ),
-        ),
-      ),
-      'Evening Sessions' => array(
+          ],
+        ],
+      ],
+      'Evening Sessions' => [
         'type' => 'CheckBox',
-        'options' => array(
-          1 => array(
+        'options' => [
+          1 => [
             'label' => 'First Five',
             'amount' => '100.00',
             'max_count' => 4,
             'count' => 2,
             'financial_type_id' => 1,
-          ),
-          2 => array(
+          ],
+          2 => [
             'label' => 'Second Four',
             'amount' => '50.00',
             'max_count' => 8,
             'count' => 4,
             'financial_type_id' => 1,
-          ),
-        ),
-      ),
-    );
+          ],
+        ],
+      ],
+    ];
 
     // add price fields
     $this->_testAddPriceFields($fields);
@@ -337,13 +337,13 @@ class WebTest_Event_PricesetMaxCountTest extends CiviSeleniumTestCase {
 
     // create event.
     $eventTitle = 'Meeting - ' . substr(sha1(rand()), 0, 7);
-    $paramsEvent = array(
+    $paramsEvent = [
       'title' => $eventTitle,
       'template_id' => 6,
       'event_type_id' => 4,
       'payment_processor' => $processorName,
       'price_set' => $priceset,
-    );
+    ];
 
     $infoEvent = $this->_testAddEvent($paramsEvent);
 
@@ -370,7 +370,7 @@ class WebTest_Event_PricesetMaxCountTest extends CiviSeleniumTestCase {
     // fill billing related info
     $this->_fillRegisterWithBillingInfo();
 
-    $this->assertStringsPresent(array('Sorry, currently only 4 spaces are available for this option.'));
+    $this->assertStringsPresent(['Sorry, currently only 4 spaces are available for this option.']);
 
     $this->select("price_{$selectFieldId}", "value={$selectFieldOp1}");
 
@@ -400,7 +400,7 @@ class WebTest_Event_PricesetMaxCountTest extends CiviSeleniumTestCase {
     // fill billing related info and register
     $this->_fillRegisterWithBillingInfo();
 
-    $this->assertStringsPresent(array('Sorry, currently only 2 spaces are available for this option.'));
+    $this->assertStringsPresent(['Sorry, currently only 2 spaces are available for this option.']);
 
     // fill correct value and register
     $this->type("xpath=//input[@id='price_{$textFieldId}']", '1');
@@ -431,66 +431,66 @@ class WebTest_Event_PricesetMaxCountTest extends CiviSeleniumTestCase {
     $this->_testAddSet($priceset, $financialType);
 
     // create price fields
-    $fields = array(
-      'Full Conference' => array(
+    $fields = [
+      'Full Conference' => [
         'type' => 'Text',
         'amount' => '525.00',
         'max_count' => 6,
         'is_required' => TRUE,
         'financial_type_id' => 1,
-      ),
-      'Meal Choice' => array(
+      ],
+      'Meal Choice' => [
         'type' => 'Select',
-        'options' => array(
-          1 => array(
+        'options' => [
+          1 => [
             'label' => 'Chicken',
             'amount' => '525.00',
             'max_count' => 3,
             'financial_type_id' => 1,
-          ),
-          2 => array(
+          ],
+          2 => [
             'label' => 'Vegetarian',
             'amount' => '200.00',
             'max_count' => 2,
             'financial_type_id' => 1,
-          ),
-        ),
-      ),
-      'Pre-conference Meetup?' => array(
+          ],
+        ],
+      ],
+      'Pre-conference Meetup?' => [
         'type' => 'Radio',
-        'options' => array(
-          1 => array(
+        'options' => [
+          1 => [
             'label' => 'Yes',
             'amount' => '50.00',
             'max_count' => 4,
             'financial_type_id' => 1,
-          ),
-          2 => array(
+          ],
+          2 => [
             'label' => 'No',
             'amount' => '10',
             'max_count' => 5,
             'financial_type_id' => 1,
-          ),
-        ),
-      ),
-      'Evening Sessions' => array(
+          ],
+        ],
+      ],
+      'Evening Sessions' => [
         'type' => 'CheckBox',
-        'options' => array(
-          1 => array(
+        'options' => [
+          1 => [
             'label' => 'First Five',
             'amount' => '100.00',
             'max_count' => 6,
             'financial_type_id' => 1,
-          ),
-          2 => array(
+          ],
+          2 => [
             'label' => 'Second Four',
             'amount' => '50.00',
             'max_count' => 4,
             'financial_type_id' => 1,
-          ),
-        ),
-      ),
-    );
+          ],
+        ],
+      ],
+    ];
 
     // add price fields
     $this->_testAddPriceFields($fields);
@@ -524,14 +524,14 @@ class WebTest_Event_PricesetMaxCountTest extends CiviSeleniumTestCase {
 
     // create event.
     $eventTitle = 'Meeting - ' . substr(sha1(rand()), 0, 7);
-    $paramsEvent = array(
+    $paramsEvent = [
       'title' => $eventTitle,
       'template_id' => 6,
       'event_type_id' => 4,
       'payment_processor' => $processorName,
       'price_set' => $priceset,
       'is_multiple_registrations' => TRUE,
-    );
+    ];
 
     $infoEvent = $this->_testAddEvent($paramsEvent);
 
@@ -563,7 +563,7 @@ class WebTest_Event_PricesetMaxCountTest extends CiviSeleniumTestCase {
     // fill billing related info
     $this->_fillRegisterWithBillingInfo();
 
-    $this->assertStringsPresent(array('Sorry, currently only 6 spaces are available for this option.'));
+    $this->assertStringsPresent(['Sorry, currently only 6 spaces are available for this option.']);
 
     // fill correct value for text field
     $this->type("xpath=//input[@id='price_{$textFieldId}']", '1');
@@ -584,7 +584,7 @@ class WebTest_Event_PricesetMaxCountTest extends CiviSeleniumTestCase {
     $this->click('_qf_Participant_1_next-Array');
     $this->waitForPageToLoad($this->getTimeoutMsec());
 
-    $this->assertStringsPresent(array('Sorry, currently only 6 spaces are available for this option.'));
+    $this->assertStringsPresent(['Sorry, currently only 6 spaces are available for this option.']);
 
     // fill correct value for text field
     $this->type("xpath=//input[@id='price_{$textFieldId}']", '3');
@@ -605,7 +605,7 @@ class WebTest_Event_PricesetMaxCountTest extends CiviSeleniumTestCase {
     $this->click('_qf_Participant_2_next-Array');
     $this->waitForPageToLoad($this->getTimeoutMsec());
 
-    $this->assertStringsPresent(array('Sorry, currently only 6 spaces are available for this option.'));
+    $this->assertStringsPresent(['Sorry, currently only 6 spaces are available for this option.']);
 
     // fill correct value for text field
     $this->type("xpath=//input[@id='price_{$textFieldId}']", '1');
@@ -644,7 +644,7 @@ class WebTest_Event_PricesetMaxCountTest extends CiviSeleniumTestCase {
     // fill billing related info
     $this->_fillRegisterWithBillingInfo();
 
-    $this->assertStringsPresent(array('Sorry, currently only 2 spaces are available for this option.'));
+    $this->assertStringsPresent(['Sorry, currently only 2 spaces are available for this option.']);
 
     // fill correct value for text field
     $this->type("xpath=//input[@id='price_{$textFieldId}']", '1');
@@ -670,7 +670,7 @@ class WebTest_Event_PricesetMaxCountTest extends CiviSeleniumTestCase {
     $this->click('_qf_Participant_1_next-Array');
     $this->waitForPageToLoad($this->getTimeoutMsec());
 
-    $this->assertStringsPresent(array('Sorry, currently only 2 spaces are available for this option.'));
+    $this->assertStringsPresent(['Sorry, currently only 2 spaces are available for this option.']);
 
     // fill correct value for text field
     $this->type("xpath=//input[@id='price_{$textFieldId}']", '1');
@@ -701,73 +701,73 @@ class WebTest_Event_PricesetMaxCountTest extends CiviSeleniumTestCase {
     $this->_testAddSet($priceset, $financialType);
 
     // create price fields
-    $fields = array(
-      'Full Conference' => array(
+    $fields = [
+      'Full Conference' => [
         'type' => 'Text',
         'amount' => '525.00',
         'count' => 2,
         'max_count' => 12,
         'is_required' => TRUE,
         'financial_type_id' => 1,
-      ),
-      'Meal Choice' => array(
+      ],
+      'Meal Choice' => [
         'type' => 'Select',
-        'options' => array(
-          1 => array(
+        'options' => [
+          1 => [
             'label' => 'Chicken',
             'amount' => '525.00',
             'count' => 1,
             'max_count' => 3,
             'financial_type_id' => 1,
-          ),
-          2 => array(
+          ],
+          2 => [
             'label' => 'Vegetarian',
             'amount' => '200.00',
             'count' => 2,
             'max_count' => 4,
             'financial_type_id' => 1,
-          ),
-        ),
-      ),
-      'Pre-conference Meetup?' => array(
+          ],
+        ],
+      ],
+      'Pre-conference Meetup?' => [
         'type' => 'Radio',
-        'options' => array(
-          1 => array(
+        'options' => [
+          1 => [
             'label' => 'Yes',
             'amount' => '50.00',
             'count' => 2,
             'max_count' => 8,
             'financial_type_id' => 1,
-          ),
-          2 => array(
+          ],
+          2 => [
             'label' => 'No',
             'amount' => '10',
             'count' => 5,
             'max_count' => 25,
             'financial_type_id' => 1,
-          ),
-        ),
-      ),
-      'Evening Sessions' => array(
+          ],
+        ],
+      ],
+      'Evening Sessions' => [
         'type' => 'CheckBox',
-        'options' => array(
-          1 => array(
+        'options' => [
+          1 => [
             'label' => 'First Five',
             'amount' => '100.00',
             'count' => 2,
             'max_count' => 16,
             'financial_type_id' => 1,
-          ),
-          2 => array(
+          ],
+          2 => [
             'label' => 'Second Four',
             'amount' => '50.00',
             'count' => 1,
             'max_count' => 4,
             'financial_type_id' => 1,
-          ),
-        ),
-      ),
-    );
+          ],
+        ],
+      ],
+    ];
 
     // add price fields
     $this->_testAddPriceFields($fields);
@@ -801,14 +801,14 @@ class WebTest_Event_PricesetMaxCountTest extends CiviSeleniumTestCase {
 
     // create event.
     $eventTitle = 'Meeting - ' . substr(sha1(rand()), 0, 7);
-    $paramsEvent = array(
+    $paramsEvent = [
       'title' => $eventTitle,
       'template_id' => 6,
       'event_type_id' => 4,
       'payment_processor' => $processorName,
       'price_set' => $priceset,
       'is_multiple_registrations' => TRUE,
-    );
+    ];
 
     $infoEvent = $this->_testAddEvent($paramsEvent);
 
@@ -840,7 +840,7 @@ class WebTest_Event_PricesetMaxCountTest extends CiviSeleniumTestCase {
     // fill billing related info
     $this->_fillRegisterWithBillingInfo();
 
-    $this->assertStringsPresent(array('Sorry, currently only 12 spaces are available for this option.'));
+    $this->assertStringsPresent(['Sorry, currently only 12 spaces are available for this option.']);
 
     // fill correct value for text field
     $this->type("xpath=//input[@id='price_{$textFieldId}']", '1');
@@ -861,7 +861,7 @@ class WebTest_Event_PricesetMaxCountTest extends CiviSeleniumTestCase {
     $this->click('_qf_Participant_1_next-Array');
     $this->waitForPageToLoad($this->getTimeoutMsec());
 
-    $this->assertStringsPresent(array('Sorry, currently only 12 spaces are available for this option.'));
+    $this->assertStringsPresent(['Sorry, currently only 12 spaces are available for this option.']);
 
     // fill correct value for text field
     $this->type("xpath=//input[@id='price_{$textFieldId}']", '3');
@@ -882,7 +882,7 @@ class WebTest_Event_PricesetMaxCountTest extends CiviSeleniumTestCase {
     $this->click('_qf_Participant_2_next-Array');
     $this->waitForPageToLoad($this->getTimeoutMsec());
 
-    $this->assertStringsPresent(array('Sorry, currently only 12 spaces are available for this option.'));
+    $this->assertStringsPresent(['Sorry, currently only 12 spaces are available for this option.']);
 
     // fill correct value for text field
     $this->type("xpath=//input[@id='price_{$textFieldId}']", '1');
@@ -921,7 +921,7 @@ class WebTest_Event_PricesetMaxCountTest extends CiviSeleniumTestCase {
     // fill billing related info
     $this->_fillRegisterWithBillingInfo();
 
-    $this->assertStringsPresent(array('Sorry, currently only 4 spaces are available for this option.'));
+    $this->assertStringsPresent(['Sorry, currently only 4 spaces are available for this option.']);
 
     // fill correct value for text field
     $this->type("xpath=//input[@id='price_{$textFieldId}']", '1');
@@ -947,7 +947,7 @@ class WebTest_Event_PricesetMaxCountTest extends CiviSeleniumTestCase {
     $this->click('_qf_Participant_1_next-Array');
     $this->waitForPageToLoad($this->getTimeoutMsec());
 
-    $this->assertStringsPresent(array('Sorry, currently only 4 spaces are available for this option.'));
+    $this->assertStringsPresent(['Sorry, currently only 4 spaces are available for this option.']);
 
     // fill correct value for text field
     $this->type("xpath=//input[@id='price_{$textFieldId}']", '1');
@@ -1180,12 +1180,12 @@ class WebTest_Event_PricesetMaxCountTest extends CiviSeleniumTestCase {
   }
 
   public function _checkConfirmationAndRegister() {
-    $confirmStrings = array('Event Fee(s)', 'Billing Name and Address', 'Credit Card Information');
+    $confirmStrings = ['Event Fee(s)', 'Billing Name and Address', 'Credit Card Information'];
     $this->assertStringsPresent($confirmStrings);
     $this->waitForElementPresent("_qf_Confirm_next-bottom");
     $this->click('_qf_Confirm_next-bottom');
     $this->waitForPageToLoad($this->getTimeoutMsec());
-    $thankStrings = array('Thank You for Registering', 'Event Total', 'Transaction Date');
+    $thankStrings = ['Thank You for Registering', 'Event Total', 'Transaction Date'];
     $this->assertStringsPresent($thankStrings);
   }
 

@@ -58,13 +58,13 @@ class WebTest_Import_CustomDataTest extends ImportCiviSeleniumTestCase {
     );
 
     // Import and check Individual contacts in Skip mode.
-    $other = array(
+    $other = [
       'saveMapping' => TRUE,
       'createGroup' => TRUE,
       'createTag' => TRUE,
-    );
+    ];
 
-    $this->importContacts($headers, $rows, 'Individual', 'Skip', array(), $other);
+    $this->importContacts($headers, $rows, 'Individual', 'Skip', [], $other);
 
     // Find the contact
     $this->openCiviPage("contact/search", "reset=1", '_qf_Basic_refresh');
@@ -116,28 +116,28 @@ class WebTest_Import_CustomDataTest extends ImportCiviSeleniumTestCase {
   public function _individualCustomCSVData($customGroupTitle, $firstName1, $firstName2, $id1, $id2) {
     list($customDataParams, $customDataVerify) = $this->_addCustomData($customGroupTitle, $id1, $id2);
 
-    $headers = array(
+    $headers = [
       'first_name' => 'First Name',
       'last_name' => 'Last Name',
       'email' => 'Email',
-    );
+    ];
 
     foreach ($customDataParams['headers'] as $key => $values) {
       $headers[$key] = $values;
     }
 
-    $rows = array(
-      array(
+    $rows = [
+      [
         'first_name' => $firstName1,
         'last_name' => 'Anderson',
         'email' => substr(sha1(rand()), 0, 7) . '@example.com',
-      ),
-      array(
+      ],
+      [
         'first_name' => $firstName2,
         'last_name' => 'Summerson',
         'email' => substr(sha1(rand()), 0, 7) . '@example.com',
-      ),
-    );
+      ],
+    ];
 
     for ($cnt = 0; $cnt < 2; $cnt++) {
       foreach ($customDataParams['rows'][$cnt] as $key => $values) {
@@ -145,7 +145,7 @@ class WebTest_Import_CustomDataTest extends ImportCiviSeleniumTestCase {
       }
     }
 
-    return array($headers, $rows, $customDataVerify);
+    return [$headers, $rows, $customDataVerify];
   }
 
   /**
@@ -321,28 +321,28 @@ class WebTest_Import_CustomDataTest extends ImportCiviSeleniumTestCase {
     $contactReferenceFieldId = explode('&id=', $this->getAttribute("xpath=//div[@id='field_page']//table/tbody//tr/td/div[text()='$contactReferenceLabel']/parent::td/parent::tr/td[8]/span/a@href"));
     $contactReferenceFieldId = $contactReferenceFieldId[1];
 
-    $customDataParams = array(
-      'headers' => array(
+    $customDataParams = [
+      'headers' => [
         "custom_{$dateFieldId}" => "$dateFieldLabel :: $customGroupTitle",
         "custom_{$radioFieldId}" => "$radioFieldLabel :: $customGroupTitle",
         "custom_{$multiSelectFieldId}" => "$multiSelectLabel :: $customGroupTitle",
         "custom_{$contactReferenceFieldId}" => "$contactReferenceLabel :: $customGroupTitle",
-      ),
-      'rows' => array(
-        0 => array(
+      ],
+      'rows' => [
+        0 => [
           "custom_{$dateFieldId}" => date('Y-m-d'),
           "custom_{$radioFieldId}" => '2',
           "custom_{$multiSelectFieldId}" => '3',
           "custom_{$contactReferenceFieldId}" => $id1,
-        ),
-        1 => array(
+        ],
+        1 => [
           "custom_{$dateFieldId}" => date('Y-m-d', mktime(0, 0, 0, 4, 5, date('Y'))),
           "custom_{$radioFieldId}" => '1',
           "custom_{$multiSelectFieldId}" => '2',
           "custom_{$contactReferenceFieldId}" => $id2,
-        ),
-      ),
-    );
+        ],
+      ],
+    ];
 
     $customDataVerify = $customDataParams;
     $customDataVerify['rows'][0]["custom_{$radioFieldId}"] = $radioOptionLabel2;
@@ -350,7 +350,7 @@ class WebTest_Import_CustomDataTest extends ImportCiviSeleniumTestCase {
     $customDataVerify['rows'][0]["custom_{$multiSelectFieldId}"] = $multiSelectOptionLabel3;
     $customDataVerify['rows'][1]["custom_{$multiSelectFieldId}"] = $multiSelectOptionLabel2;
 
-    return array($customDataParams, $customDataVerify);
+    return [$customDataParams, $customDataVerify];
   }
 
 }

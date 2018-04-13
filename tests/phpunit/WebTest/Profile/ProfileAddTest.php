@@ -123,7 +123,7 @@ class WebTest_Profile_ProfileAddTest extends CiviSeleniumTestCase {
   public function testProfileAddContactstoGroup() {
     $this->webtestLogin();
 
-    $permissions = array("edit-1-profile-listings-and-forms");
+    $permissions = ["edit-1-profile-listings-and-forms"];
     $this->changePermissions($permissions);
     // take group name and create group
     $groupName = 'group_' . substr(sha1(rand()), 0, 7);
@@ -154,11 +154,11 @@ class WebTest_Profile_ProfileAddTest extends CiviSeleniumTestCase {
     $this->waitForText('crm-notification-container', "Your CiviCRM Profile '{$profileTitle}' has been added. You can add fields to this profile now.");
 
     //Add fields to profile
-    $fields = array(
+    $fields = [
       'first_name' => 'Individual',
       'last_name' => 'Individual',
       'email' => 'Contact',
-    );
+    ];
     $this->waitForElementPresent("field_name_0");
     foreach ($fields as $field => $type) {
       $this->click('field_name_0');
@@ -197,10 +197,10 @@ class WebTest_Profile_ProfileAddTest extends CiviSeleniumTestCase {
     $this->click('title');
     $this->waitForElementPresent("xpath=//div[text() = '$groupName']/parent::td/following-sibling::td[@class='crm-group-group_links']/span/a");
     $this->clickLink("xpath=//div[text() = '$groupName']/parent::td/following-sibling::td[@class='crm-group-group_links']/span/a");
-    $contactEmails = array(
+    $contactEmails = [
       1 => "$lastName1, $firstName1",
       2 => "$lastName2, $firstName2",
-    );
+    ];
     foreach ($contactEmails as $row => $name) {
       $this->assertTrue($this->isElementPresent("xpath=//div[@class='crm-search-results']/table/tbody/tr[$row]/td[4]/a[contains(text(), '$name')]"));
     }

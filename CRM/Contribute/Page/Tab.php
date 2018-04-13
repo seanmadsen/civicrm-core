@@ -57,25 +57,25 @@ class CRM_Contribute_Page_Tab extends CRM_Core_Page {
    */
   public static function &recurLinks($recurID = FALSE, $context = 'contribution') {
     if (!(self::$_links)) {
-      self::$_links = array(
-        CRM_Core_Action::VIEW => array(
+      self::$_links = [
+        CRM_Core_Action::VIEW => [
           'name' => ts('View'),
           'title' => ts('View Recurring Payment'),
           'url' => 'civicrm/contact/view/contributionrecur',
           'qs' => "reset=1&id=%%crid%%&cid=%%cid%%&context={$context}",
-        ),
-        CRM_Core_Action::UPDATE => array(
+        ],
+        CRM_Core_Action::UPDATE => [
           'name' => ts('Edit'),
           'title' => ts('Edit Recurring Payment'),
           'url' => 'civicrm/contribute/updaterecur',
           'qs' => "reset=1&action=update&crid=%%crid%%&cid=%%cid%%&context={$context}",
-        ),
-        CRM_Core_Action::DISABLE => array(
+        ],
+        CRM_Core_Action::DISABLE => [
           'name' => ts('Cancel'),
           'title' => ts('Cancel'),
           'ref' => 'crm-enable-disable',
-        ),
-      );
+        ],
+      ];
     }
 
     if ($recurID) {
@@ -88,12 +88,12 @@ class CRM_Contribute_Page_Tab extends CRM_Core_Page {
       }
 
       if (is_object($paymentProcessorObj) && $paymentProcessorObj->isSupported('updateSubscriptionBillingInfo')) {
-        $links[CRM_Core_Action::RENEW] = array(
+        $links[CRM_Core_Action::RENEW] = [
           'name' => ts('Change Billing Details'),
           'title' => ts('Change Billing Details'),
           'url' => 'civicrm/contribute/updatebilling',
           'qs' => "reset=1&crid=%%crid%%&cid=%%cid%%&context={$context}",
-        );
+        ];
       }
       return $links;
     }
@@ -107,7 +107,7 @@ class CRM_Contribute_Page_Tab extends CRM_Core_Page {
    */
   public function browse() {
     // add annual contribution
-    $annual = array();
+    $annual = [];
     list($annual['count'],
       $annual['amount'],
       $annual['avg']
@@ -142,7 +142,7 @@ class CRM_Contribute_Page_Tab extends CRM_Core_Page {
     $softCreditList = CRM_Contribute_BAO_ContributionSoft::getSoftContributionList($this->_contactId, NULL, $isTest);
 
     if (!empty($softCreditList)) {
-      $softCreditTotals = array();
+      $softCreditTotals = [];
 
       list($softCreditTotals['amount'],
         $softCreditTotals['avg'],
@@ -167,10 +167,10 @@ class CRM_Contribute_Page_Tab extends CRM_Core_Page {
    */
   private function addRecurringContributionsBlock() {
     try {
-      $contributionRecurResult = civicrm_api3('ContributionRecur', 'get', array(
+      $contributionRecurResult = civicrm_api3('ContributionRecur', 'get', [
         'contact_id' => $this->_contactId,
-        'options' => array('limit' => 0, 'sort' => 'start_date ASC'),
-      ));
+        'options' => ['limit' => 0, 'sort' => 'start_date ASC'],
+      ]);
       $recurContributions = CRM_Utils_Array::value('values', $contributionRecurResult);
     }
     catch (Exception $e) {
@@ -201,11 +201,11 @@ class CRM_Contribute_Page_Tab extends CRM_Core_Page {
           }
 
           $recurContributions[$recurId]['action'] = CRM_Core_Action::formLink(self::recurLinks($recurId), $action,
-            array(
+            [
               'cid' => $this->_contactId,
               'crid' => $recurId,
               'cxt' => 'contribution',
-            ),
+            ],
             ts('more'),
             FALSE,
             'contribution.selector.recurring',
@@ -276,10 +276,10 @@ class CRM_Contribute_Page_Tab extends CRM_Core_Page {
     else {
       $this->_contactId = CRM_Utils_Request::retrieve('cid', 'Positive', $this, empty($this->_id));
       if (empty($this->_contactId)) {
-        $this->_contactId = civicrm_api3('contribution', 'getvalue', array(
+        $this->_contactId = civicrm_api3('contribution', 'getvalue', [
             'id' => $this->_id,
             'return' => 'contact_id',
-          ));
+        ]);
       }
       $this->assign('contactId', $this->_contactId);
 

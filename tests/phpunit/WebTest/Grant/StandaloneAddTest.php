@@ -43,7 +43,7 @@ class WebTest_Grant_StandaloneAddTest extends CiviSeleniumTestCase {
     $this->enableComponents("CiviGrant");
 
     // let's give full CiviGrant permissions to demo user (registered user).
-    $permission = array('edit-2-access-civigrant', 'edit-2-edit-grants', 'edit-2-delete-in-civigrant');
+    $permission = ['edit-2-access-civigrant', 'edit-2-edit-grants', 'edit-2-delete-in-civigrant'];
     $this->changePermissions($permission);
 
     // Log in as normal user
@@ -95,13 +95,13 @@ class WebTest_Grant_StandaloneAddTest extends CiviSeleniumTestCase {
 
     $this->waitForElementPresent("_qf_GrantView_cancel-bottom");
 
-    $expected = array(
+    $expected = [
       'Grant Status' => 'Submitted',
       'Grant Type' => 'Emergency',
       'Amount Requested' => '$ 100.00',
       'Amount Granted' => '$ 90.00',
       'Notes' => 'Grant Note',
-    );
+    ];
 
     $this->webtestVerifyTabularData($expected);
   }

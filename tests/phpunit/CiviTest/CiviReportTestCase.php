@@ -81,7 +81,7 @@ class CiviReportTestCase extends CiviUnitTestCase {
     $reportName = array_pop($tmpReportVal);
     $reportObj =& $controller->_pages[$reportName];
 
-    $tmpGlobals = array();
+    $tmpGlobals = [];
     $tmpGlobals['_REQUEST']['force'] = 1;
     $tmpGlobals['_GET'][$config->userFrameworkURLVar] = 'civicrm/placeholder';
     $tmpGlobals['_SERVER']['QUERY_STRING'] = '';
@@ -122,7 +122,7 @@ class CiviReportTestCase extends CiviUnitTestCase {
    * @return array
    */
   public function getArrayFromCsv($csvFile) {
-    $arrFile = array();
+    $arrFile = [];
     if (($handle = fopen($csvFile, "r")) !== FALSE) {
       while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
         $arrFile[] = $data;
@@ -153,10 +153,10 @@ class CiviReportTestCase extends CiviUnitTestCase {
     );
 
     foreach ($actualCsvArray as $intKey => $strVal) {
-      $rowData = var_export(array(
+      $rowData = var_export([
         'expected' => $expectedCsvArray[$intKey],
         'actual' => $actualCsvArray[$intKey],
-      ), TRUE);
+      ], TRUE);
       $this->assertNotNull($expectedCsvArray[$intKey]);
       $this->assertEquals(
         count($actualCsvArray[$intKey]),

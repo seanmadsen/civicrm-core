@@ -41,14 +41,14 @@ class CRM_Admin_Form_Preferences_Multisite extends CRM_Admin_Form_Preferences {
   public function preProcess() {
     $msDoc = CRM_Utils_System::docURL2('Multi Site Installation', NULL, NULL, NULL, NULL, "wiki");
     CRM_Utils_System::setTitle(ts('Multi Site Settings'));
-    $this->_varNames = array(
-      CRM_Core_BAO_Setting::MULTISITE_PREFERENCES_NAME => array(
-        'is_enabled' => array(
+    $this->_varNames = [
+      CRM_Core_BAO_Setting::MULTISITE_PREFERENCES_NAME => [
+        'is_enabled' => [
           'html_type' => 'checkbox',
           'title' => ts('Enable Multi Site Configuration'),
           'weight' => 1,
           'description' => ts('Make CiviCRM aware of multiple domains. You should configure a domain group if enabled') . ' ' . $msDoc,
-        ),
+        ],
         /** Remove this checkbox until some one knows what this setting does
          * 'uniq_email_per_site' => array(
          * 'html_type' => 'checkbox',
@@ -57,13 +57,13 @@ class CRM_Admin_Form_Preferences_Multisite extends CRM_Admin_Form_Preferences {
          * 'description' => NULL,
          * ),
          */
-        'domain_group_id' => array(
+        'domain_group_id' => [
           'html_type' => 'entity_reference',
           'title' => ts('Domain Group'),
           'weight' => 3,
-          'options' => array('entity' => 'group', 'select' => array('minimumInputLength' => 0)),
+          'options' => ['entity' => 'group', 'select' => ['minimumInputLength' => 0]],
           'description' => ts('Contacts created on this site are added to this group'),
-        ),
+        ],
         /** Remove this checkbox until some one knows what this setting does
          * 'event_price_set_domain_id' => array(
          * 'html_type' => 'text',
@@ -72,8 +72,8 @@ class CRM_Admin_Form_Preferences_Multisite extends CRM_Admin_Form_Preferences {
          * 'description' => NULL,
          * ),
          */
-      ),
-    );
+      ],
+    ];
 
     parent::preProcess();
   }

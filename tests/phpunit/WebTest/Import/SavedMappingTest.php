@@ -49,13 +49,13 @@ class WebTest_Import_SavedMappingTest extends ImportCiviSeleniumTestCase {
     // Create New Mapping Name
     $mappingName = 'contactimport_' . substr(sha1(rand()), 0, 7);
 
-    $other = array(
+    $other = [
       'saveMapping' => TRUE,
       'saveMappingName' => $mappingName,
-    );
+    ];
 
     // Map Fields
-    $fieldMapper = array(
+    $fieldMapper = [
       'mapper[0][0]' => 'prefix_id',
       'mapper[4][0]' => 'suffix_id',
       'mapper[6][0]' => 'phone',
@@ -72,7 +72,7 @@ class WebTest_Import_SavedMappingTest extends ImportCiviSeleniumTestCase {
       'mapper[11][1]' => '5',
       'mapper[12][0]' => 'country',
       'mapper[12][1]' => '5',
-    );
+    ];
 
     // Import and check Individual contacts in Skip mode.
     $this->importContacts($headers, $rows, 'Individual', 'Skip', $fieldMapper, $other);
@@ -80,8 +80,8 @@ class WebTest_Import_SavedMappingTest extends ImportCiviSeleniumTestCase {
     list($headers, $rows) = $this->_individualCSVData();
 
     // Sending Mapped Name for Re-use
-    $other = array('useMappingName' => $mappingName);
-    $this->importContacts($headers, $rows, 'Individual', 'Skip', array(), $other);
+    $other = ['useMappingName' => $mappingName];
+    $this->importContacts($headers, $rows, 'Individual', 'Skip', [], $other);
   }
 
   /**
@@ -90,7 +90,7 @@ class WebTest_Import_SavedMappingTest extends ImportCiviSeleniumTestCase {
    * @return array
    */
   public function _individualCSVData() {
-    $headers = array(
+    $headers = [
       'individual_prefix' => 'Individual Prefix',
       'first_name' => 'First Name',
       'middle_name' => 'Middle Name',
@@ -103,10 +103,10 @@ class WebTest_Import_SavedMappingTest extends ImportCiviSeleniumTestCase {
       'city' => 'City',
       'state' => 'State',
       'country' => 'Country',
-    );
+    ];
 
-    $rows = array(
-      array(
+    $rows = [
+      [
         'individual_prefix' => 'Mr.',
         'first_name' => substr(sha1(rand()), 0, 7),
         'middle_name' => substr(sha1(rand()), 0, 7),
@@ -119,8 +119,8 @@ class WebTest_Import_SavedMappingTest extends ImportCiviSeleniumTestCase {
         'city' => 'Watson',
         'state' => 'NY',
         'country' => 'UNITED STATES',
-      ),
-      array(
+      ],
+      [
         'individual_prefix' => 'Mr.',
         'first_name' => substr(sha1(rand()), 0, 7),
         'middle_name' => substr(sha1(rand()), 0, 7),
@@ -133,10 +133,10 @@ class WebTest_Import_SavedMappingTest extends ImportCiviSeleniumTestCase {
         'city' => 'Watson',
         'state' => 'NY',
         'country' => 'UNITED STATES',
-      ),
-    );
+      ],
+    ];
 
-    return array($headers, $rows);
+    return [$headers, $rows];
   }
 
 }

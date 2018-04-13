@@ -97,8 +97,8 @@ class CRM_Contact_Form_Task extends CRM_Core_Form {
    * @param bool $useTable
    */
   public static function preProcessCommon(&$form, $useTable = FALSE) {
-    $form->_contactIds = array();
-    $form->_contactTypes = array();
+    $form->_contactIds = [];
+    $form->_contactTypes = [];
 
     $isStandAlone = in_array('task', $form->urlPath) || in_array('standalone', $form->urlPath);
     if ($isStandAlone) {
@@ -175,10 +175,10 @@ class CRM_Contact_Form_Task extends CRM_Core_Form {
         $allCids[$cacheKey] = $form->getContactIds();
       }
 
-      $form->_contactIds = array();
+      $form->_contactIds = [];
       if ($useTable) {
         $count = 0;
-        $insertString = array();
+        $insertString = [];
         foreach ($allCids[$cacheKey] as $cid => $ignore) {
           $count++;
           $insertString[] = " ( {$cid} ) ";
@@ -186,7 +186,7 @@ class CRM_Contact_Form_Task extends CRM_Core_Form {
             $string = implode(',', $insertString);
             $sql = "REPLACE INTO {$form->_componentTable} ( contact_id ) VALUES $string";
             CRM_Core_DAO::executeQuery($sql);
-            $insertString = array();
+            $insertString = [];
           }
         }
         if (!empty($insertString)) {
@@ -210,7 +210,7 @@ class CRM_Contact_Form_Task extends CRM_Core_Form {
     elseif (CRM_Utils_Array::value('radio_ts', self::$_searchFormValues) == 'ts_sel') {
       // selected contacts only
       // need to perform action on only selected contacts
-      $insertString = array();
+      $insertString = [];
 
       // refire sql in case of custom search
       if ($form->_action == CRM_Core_Action::COPY) {
@@ -310,7 +310,7 @@ class CRM_Contact_Form_Task extends CRM_Core_Form {
     // fix for CRM-5165
     $sortByCharacter = $this->get('sortByCharacter');
     if ($sortByCharacter && $sortByCharacter != 1) {
-      $params[] = array('sortByCharacter', '=', $sortByCharacter, 0, 0);
+      $params[] = ['sortByCharacter', '=', $sortByCharacter, 0, 0];
     }
     $queryOperator = $this->get('queryOperator');
     if (!$queryOperator) {
@@ -321,7 +321,7 @@ class CRM_Contact_Form_Task extends CRM_Core_Form {
       $queryOperator
     );
 
-    $contactIds = array();
+    $contactIds = [];
     while ($dao->fetch()) {
       $contactIds[$dao->contact_id] = $dao->contact_id;
     }
@@ -338,7 +338,7 @@ class CRM_Contact_Form_Task extends CRM_Core_Form {
    * @return array
    */
   public function setDefaultValues() {
-    $defaults = array();
+    $defaults = [];
     return $defaults;
   }
 
@@ -374,18 +374,18 @@ class CRM_Contact_Form_Task extends CRM_Core_Form {
    * @param bool $submitOnce
    */
   public function addDefaultButtons($title, $nextType = 'next', $backType = 'back', $submitOnce = FALSE) {
-    $this->addButtons(array(
-        array(
+    $this->addButtons([
+        [
           'type' => $nextType,
           'name' => $title,
           'isDefault' => TRUE,
-        ),
-        array(
+        ],
+        [
           'type' => $backType,
           'name' => ts('Cancel'),
           'icon' => 'fa-times',
-        ),
-      )
+        ],
+      ]
     );
   }
 
@@ -412,10 +412,10 @@ class CRM_Contact_Form_Task extends CRM_Core_Form {
     // Get Head of Household & Household Member relationships
     $relationKeyMOH = CRM_Utils_Array::key('Household Member of', $contactRelationshipTypes);
     $relationKeyHOH = CRM_Utils_Array::key('Head of Household for', $contactRelationshipTypes);
-    $householdRelationshipTypes = array(
+    $householdRelationshipTypes = [
       $relationKeyMOH => $contactRelationshipTypes[$relationKeyMOH],
       $relationKeyHOH => $contactRelationshipTypes[$relationKeyHOH],
-    );
+    ];
 
     $relID = implode(',', $this->_contactIds);
 
@@ -457,14 +457,14 @@ class CRM_Contact_Form_Task extends CRM_Core_Form {
     // If contact list has changed, households will probably be at the end of
     // the list. Sort it again by sort_name.
     if (implode(',', $this->_contactIds) != $relID) {
-      $result = civicrm_api3('Contact', 'get', array(
-        'return' => array('id'),
-        'id' => array('IN' => $this->_contactIds),
-        'options' => array(
+      $result = civicrm_api3('Contact', 'get', [
+        'return' => ['id'],
+        'id' => ['IN' => $this->_contactIds],
+        'options' => [
           'limit' => 0,
           'sort' => "sort_name",
-        ),
-      ));
+        ],
+      ]);
       $this->_contactIds = array_keys($result['values']);
     }
   }
@@ -486,12 +486,12 @@ class CRM_Contact_Form_Task extends CRM_Core_Form {
       $grpID = CRM_Core_DAO::getFieldValue('CRM_Contact_DAO_Group', $grpTitle, 'id', 'title');
 
       if (!$grpID) {
-        $groupParams = array(
+        $groupParams = [
           'title' => $grpTitle,
           'is_active' => 1,
           'is_hidden' => 1,
-          'group_type' => array('2' => 1),
-        );
+          'group_type' => ['2' => 1],
+        ];
 
         $group = CRM_Contact_BAO_Group::create($groupParams);
         $grpID = $group->id;
@@ -499,31 +499,31 @@ class CRM_Contact_Form_Task extends CRM_Core_Form {
         CRM_Contact_BAO_GroupContact::addContactsToGroup($this->_contactIds, $group->id);
 
         $newGroupTitle = "Hidden Group {$grpID}";
-        $groupParams = array(
+        $groupParams = [
           'id' => $grpID,
           'name' => CRM_Utils_String::titleToVar($newGroupTitle),
           'title' => $newGroupTitle,
-          'group_type' => array('2' => 1),
-        );
+          'group_type' => ['2' => 1],
+        ];
         CRM_Contact_BAO_Group::create($groupParams);
       }
 
       // note at this point its a static group
-      return array($grpID, NULL);
+      return [$grpID, NULL];
     }
     else {
       // Create a smart group.
       $ssId = $this->get('ssID');
-      $hiddenSmartParams = array(
-        'group_type' => array('2' => 1),
+      $hiddenSmartParams = [
+        'group_type' => ['2' => 1],
         'form_values' => $this->get('formValues'),
         'saved_search_id' => $ssId,
         'search_custom_id' => $this->get('customSearchID'),
         'search_context' => $this->get('context'),
-      );
+      ];
 
       list($smartGroupId, $savedSearchId) = CRM_Contact_BAO_Group::createHiddenSmartGroup($hiddenSmartParams);
-      return array($smartGroupId, $savedSearchId);
+      return [$smartGroupId, $savedSearchId];
     }
 
   }

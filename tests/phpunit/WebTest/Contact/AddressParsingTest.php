@@ -49,7 +49,7 @@ class WebTest_Contact_AddressParsingTest extends CiviSeleniumTestCase {
     }
 
     // Go to the URL to create an Individual contact.
-    $this->openCiviPage('contact/add', array('reset' => 1, 'ct' => "Individual"));
+    $this->openCiviPage('contact/add', ['reset' => 1, 'ct' => "Individual"]);
 
     //contact details section
     $firstName = "John" . substr(sha1(rand()), 0, 7);
@@ -114,7 +114,7 @@ class WebTest_Contact_AddressParsingTest extends CiviSeleniumTestCase {
     $contactId = $this->urlArg('cid');
 
     //Go to the url of edit contact
-    $this->openCiviPage('contact/add', array('reset' => 1, 'action' => 'update', 'cid' => $contactId), 'addressBlock');
+    $this->openCiviPage('contact/add', ['reset' => 1, 'action' => 'update', 'cid' => $contactId], 'addressBlock');
     $this->click("addressBlock");
     $this->click("//div[@id='addressBlockId']/div[1]");
 
@@ -129,28 +129,28 @@ class WebTest_Contact_AddressParsingTest extends CiviSeleniumTestCase {
     }
 
     //verify all the address fields were parsed correctly
-    $verifyData = array(
-      1 => array(
+    $verifyData = [
+      1 => [
         'street_number' => '121A',
         'street_name' => 'Sherman St.',
         'street_unit' => 'Apt. 12',
-      ),
-      2 => array(
+      ],
+      2 => [
         'street_number' => '121',
         'street_name' => 'Sherman Street',
         'street_unit' => '#15',
-      ),
-      3 => array(
+      ],
+      3 => [
         'street_number' => '121',
         'street_name' => 'Sherman Rd',
         'street_unit' => 'Unit 155',
-      ),
-      4 => array(
+      ],
+      4 => [
         'street_number' => '121',
         'street_name' => 'SW Sherman Way',
         'street_unit' => 'Suite 15',
-      ),
-    );
+      ],
+    ];
     foreach ($verifyData as $loc => $values) {
       $num = $address[$loc];
       foreach ($values as $key => $expectedvalue) {

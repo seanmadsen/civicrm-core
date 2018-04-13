@@ -36,8 +36,8 @@
  * Settings metadata file
  */
 
-return array(
-  'tag_unconfirmed' => array(
+return [
+  'tag_unconfirmed' => [
     'group_name' => 'Campaign Preferences',
     'group' => 'campaign',
     'name' => 'tag_unconfirmed',
@@ -50,8 +50,8 @@ return array(
     'is_contact' => 0,
     'description' => NULL,
     'help_text' => 'If set, new contacts that are created when signing a petition are assigned a tag of this name.',
-  ),
-  'petition_contacts' => array(
+  ],
+  'petition_contacts' => [
     'group_name' => 'Campaign Preferences',
     'group' => 'campaign',
     'name' => 'petition_contacts',
@@ -64,6 +64,6 @@ return array(
     'is_contact' => 0,
     'description' => NULL,
     'help_text' => 'If set, new contacts that are created when signing a petition are assigned a tag of this name.',
-  ),
+  ],
 
-);
+];

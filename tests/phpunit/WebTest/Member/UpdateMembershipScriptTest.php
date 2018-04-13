@@ -74,13 +74,13 @@ class WebTest_Member_UpdateMembershipScriptTest extends CiviSeleniumTestCase {
     $this->waitForElementPresent("_qf_MembershipView_cancel-bottom");
 
     $this->webtestVerifyTabularData(
-      array(
+      [
         'Membership Type' => "{$memTypeParams['membership_type']}",
         'Status' => 'Current',
         'Member Since' => 'March 1st, 2008',
         'Start date' => 'March 1st, 2008',
         'End date' => 'February 28th, 2009',
-      )
+      ]
     );
   }
 
@@ -93,12 +93,12 @@ class WebTest_Member_UpdateMembershipScriptTest extends CiviSeleniumTestCase {
     $this->webtestAddOrganization($membershipOrg, TRUE);
 
     $title = "Membership Type " . substr(sha1(rand()), 0, 7);
-    $memTypeParams = array(
+    $memTypeParams = [
       'membership_type' => $title,
       'member_of_contact' => $membershipOrg,
       'financial_type' => 2,
       'relationship_type' => '4_b_a',
-    );
+    ];
 
     $this->openCiviPage('admin/member/membershipType', 'reset=1&action=browse');
 

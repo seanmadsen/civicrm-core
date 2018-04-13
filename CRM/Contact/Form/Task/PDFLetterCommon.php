@@ -43,13 +43,13 @@ class CRM_Contact_Form_Task_PDFLetterCommon {
    *   Array(string $machineName => string $label).
    */
   public static function getLoggingOptions() {
-    return array(
+    return [
       'none' => ts('Do not record'),
       'multiple' => ts('Multiple activities (one per contact)'),
       'combined' => ts('One combined activity'),
       'combined-attached' => ts('One combined activity plus one file attachment'),
       // 'multiple-attached' <== not worth the work
-    );
+    ];
   }
 
   /**
@@ -59,8 +59,8 @@ class CRM_Contact_Form_Task_PDFLetterCommon {
    */
   public static function preProcess(&$form) {
     CRM_Contact_Form_Task_EmailCommon::preProcessFromAddress($form);
-    $messageText = array();
-    $messageSubject = array();
+    $messageText = [];
+    $messageSubject = [];
     $dao = new CRM_Core_BAO_MessageTemplate();
     $dao->is_active = 1;
     $dao->find();
@@ -82,7 +82,7 @@ class CRM_Contact_Form_Task_PDFLetterCommon {
     $form->_contactIds = explode(',', $cid);
     // put contact display name in title for single contact mode
     if (count($form->_contactIds) === 1) {
-      CRM_Utils_System::setTitle(ts('Print/Merge Document for %1', array(1 => CRM_Core_DAO::getFieldValue('CRM_Contact_DAO_Contact', $cid, 'display_name'))));
+      CRM_Utils_System::setTitle(ts('Print/Merge Document for %1', [1 => CRM_Core_DAO::getFieldValue('CRM_Contact_DAO_Contact', $cid, 'display_name')]));
     }
   }
 
@@ -101,25 +101,25 @@ class CRM_Contact_Form_Task_PDFLetterCommon {
       'text',
       'subject',
       ts('Activity Subject'),
-      array('size' => 45, 'maxlength' => 255),
+      ['size' => 45, 'maxlength' => 255],
       FALSE
     );
 
-    $form->add('static', 'pdf_format_header', NULL, ts('Page Format: %1', array(1 => '<span class="pdf-format-header-label"></span>')));
-    $form->addSelect('format_id', array(
+    $form->add('static', 'pdf_format_header', NULL, ts('Page Format: %1', [1 => '<span class="pdf-format-header-label"></span>']));
+    $form->addSelect('format_id', [
       'label' => ts('Select Format'),
       'placeholder' => ts('Default'),
       'entity' => 'message_template',
       'field' => 'pdf_format_id',
       'option_url' => 'civicrm/admin/pdfFormats',
-    ));
+    ]);
     $form->add(
       'select',
       'paper_size',
       ts('Paper Size'),
-      array(0 => ts('- default -')) + CRM_Core_BAO_PaperSize::getList(TRUE),
+      [0 => ts('- default -')] + CRM_Core_BAO_PaperSize::getList(TRUE),
       FALSE,
-      array('onChange' => "selectPaper( this.value ); showUpdateFormatChkBox();")
+      ['onChange' => "selectPaper( this.value ); showUpdateFormatChkBox();"]
     );
     $form->add('static', 'paper_dimensions', NULL, ts('Width x Height'));
     $form->add(
@@ -128,7 +128,7 @@ class CRM_Contact_Form_Task_PDFLetterCommon {
       ts('Orientation'),
       CRM_Core_BAO_PdfFormat::getPageOrientations(),
       FALSE,
-      array('onChange' => "updatePaperDimensions(); showUpdateFormatChkBox();")
+      ['onChange' => "updatePaperDimensions(); showUpdateFormatChkBox();"]
     );
     $form->add(
       'select',
@@ -136,34 +136,34 @@ class CRM_Contact_Form_Task_PDFLetterCommon {
       ts('Unit of Measure'),
       CRM_Core_BAO_PdfFormat::getUnits(),
       FALSE,
-      array('onChange' => "selectMetric( this.value );")
+      ['onChange' => "selectMetric( this.value );"]
     );
     $form->add(
       'text',
       'margin_left',
       ts('Left Margin'),
-      array('size' => 8, 'maxlength' => 8, 'onkeyup' => "showUpdateFormatChkBox();"),
+      ['size' => 8, 'maxlength' => 8, 'onkeyup' => "showUpdateFormatChkBox();"],
       TRUE
     );
     $form->add(
       'text',
       'margin_right',
       ts('Right Margin'),
-      array('size' => 8, 'maxlength' => 8, 'onkeyup' => "showUpdateFormatChkBox();"),
+      ['size' => 8, 'maxlength' => 8, 'onkeyup' => "showUpdateFormatChkBox();"],
       TRUE
     );
     $form->add(
       'text',
       'margin_top',
       ts('Top Margin'),
-      array('size' => 8, 'maxlength' => 8, 'onkeyup' => "showUpdateFormatChkBox();"),
+      ['size' => 8, 'maxlength' => 8, 'onkeyup' => "showUpdateFormatChkBox();"],
       TRUE
     );
     $form->add(
       'text',
       'margin_bottom',
       ts('Bottom Margin'),
-      array('size' => 8, 'maxlength' => 8, 'onkeyup' => "showUpdateFormatChkBox();"),
+      ['size' => 8, 'maxlength' => 8, 'onkeyup' => "showUpdateFormatChkBox();"],
       TRUE
     );
 
@@ -194,29 +194,29 @@ class CRM_Contact_Form_Task_PDFLetterCommon {
 
     CRM_Mailing_BAO_Mailing::commonCompose($form);
 
-    $buttons = array();
+    $buttons = [];
     if ($form->get('action') != CRM_Core_Action::VIEW) {
-      $buttons[] = array(
+      $buttons[] = [
         'type' => 'upload',
         'name' => ts('Download Document'),
         'isDefault' => TRUE,
         'icon' => 'fa-download',
-      );
-      $buttons[] = array(
+      ];
+      $buttons[] = [
         'type' => 'submit',
         'name' => ts('Preview'),
         'subName' => 'preview',
         'icon' => 'fa-search',
         'isDefault' => FALSE,
-      );
+      ];
     }
-    $buttons[] = array(
+    $buttons[] = [
       'type' => 'cancel',
       'name' => $form->get('action') == CRM_Core_Action::VIEW ? ts('Done') : ts('Cancel'),
-    );
+    ];
     $form->addButtons($buttons);
 
-    $form->addFormRule(array('CRM_Contact_Form_Task_PDFLetterCommon', 'formRule'), $form);
+    $form->addFormRule(['CRM_Contact_Form_Task_PDFLetterCommon', 'formRule'], $form);
   }
 
   /**
@@ -241,7 +241,7 @@ class CRM_Contact_Form_Task_PDFLetterCommon {
    *   TRUE if no errors, else array of errors.
    */
   public static function formRule($fields, $files, $self) {
-    $errors = array();
+    $errors = [];
     $template = CRM_Core_Smarty::singleton();
 
     // If user uploads non-document file other than odt/docx
@@ -284,12 +284,12 @@ class CRM_Contact_Form_Task_PDFLetterCommon {
 
     // process message template
     if (!empty($formValues['saveTemplate']) || !empty($formValues['updateTemplate'])) {
-      $messageTemplate = array(
+      $messageTemplate = [
         'msg_text' => NULL,
         'msg_html' => $formValues['html_message'],
         'msg_subject' => NULL,
         'is_active' => TRUE,
-      );
+      ];
 
       $messageTemplate['pdf_format_id'] = 'null';
       if (!empty($formValues['bind_format']) && $formValues['format_id']) {
@@ -341,14 +341,14 @@ class CRM_Contact_Form_Task_PDFLetterCommon {
 
     $messageToken = CRM_Utils_Token::getTokens($html_message);
 
-    $returnProperties = array();
+    $returnProperties = [];
     if (isset($messageToken['contact'])) {
       foreach ($messageToken['contact'] as $key => $value) {
         $returnProperties[$value] = 1;
       }
     }
 
-    return array($formValues, $categories, $html_message, $messageToken, $returnProperties);
+    return [$formValues, $categories, $html_message, $messageToken, $returnProperties];
   }
 
   /**
@@ -364,7 +364,7 @@ class CRM_Contact_Form_Task_PDFLetterCommon {
     $buttonName = $form->controller->getButtonName();
     $skipOnHold = isset($form->skipOnHold) ? $form->skipOnHold : FALSE;
     $skipDeceased = isset($form->skipDeceased) ? $form->skipDeceased : TRUE;
-    $html = $activityIds = array();
+    $html = $activityIds = [];
 
     // CRM-21255 - Hrm, CiviCase 4+5 seem to report buttons differently...
     $c = $form->controller->container();
@@ -381,7 +381,7 @@ class CRM_Contact_Form_Task_PDFLetterCommon {
 
     foreach ($form->_contactIds as $item => $contactId) {
       $caseId = NULL;
-      $params = array('contact_id' => $contactId);
+      $params = ['contact_id' => $contactId];
 
       list($contact) = CRM_Utils_Token::getTokenDetails($params,
         $returnProperties,
@@ -451,15 +451,15 @@ class CRM_Contact_Form_Task_PDFLetterCommon {
         throw new \CRM_Core_Exception("Failed to capture document content (type=$type)!");
       }
       foreach ($activityIds as $activityId) {
-        civicrm_api3('Attachment', 'create', array(
+        civicrm_api3('Attachment', 'create', [
           'entity_table' => 'civicrm_activity',
           'entity_id' => $activityId,
           'name' => $fileName,
           'mime_type' => $mimeType,
-          'options' => array(
+          'options' => [
             'move-file' => $tee->getFileName(),
-          ),
-        ));
+          ],
+        ]);
       }
     }
 
@@ -483,31 +483,31 @@ class CRM_Contact_Form_Task_PDFLetterCommon {
    *
    * @throws CRM_Core_Exception
    */
-  public static function createActivities($form, $html_message, $contactIds, $subject, $campaign_id, $perContactHtml = array()) {
+  public static function createActivities($form, $html_message, $contactIds, $subject, $campaign_id, $perContactHtml = []) {
 
-    $activityParams = array(
+    $activityParams = [
       'subject' => $subject,
       'campaign_id' => $campaign_id,
       'source_contact_id' => CRM_Core_Session::singleton()->getLoggedInContactID(),
       'activity_type_id' => CRM_Core_PseudoConstant::getKey('CRM_Activity_BAO_Activity', 'activity_type_id', 'Print PDF Letter'),
       'activity_date_time' => date('YmdHis'),
       'details' => $html_message,
-    );
+    ];
     if (!empty($form->_activityId)) {
-      $activityParams += array('id' => $form->_activityId);
+      $activityParams += ['id' => $form->_activityId];
     }
 
-    $activityIds = array();
+    $activityIds = [];
     switch (Civi::settings()->get('recordGeneratedLetters')) {
       case 'none':
-        return array();
+        return [];
 
       case 'multiple':
         // One activity per contact.
         foreach ($contactIds as $i => $contactId) {
-          $fullParams = array(
+          $fullParams = [
             'target_contact_id' => $contactId,
-          ) + $activityParams;
+            ] + $activityParams;
           if (!empty($form->_caseId)) {
             $fullParams['case_id'] = $form->_caseId;
           }
@@ -527,9 +527,9 @@ class CRM_Contact_Form_Task_PDFLetterCommon {
       case 'combined':
       case 'combined-attached':
         // One activity with all contacts.
-        $fullParams = array(
+        $fullParams = [
           'target_contact_id' => $contactIds,
-        ) + $activityParams;
+          ] + $activityParams;
         if (!empty($form->_caseId)) {
           $fullParams['case_id'] = $form->_caseId;
         }
@@ -551,23 +551,23 @@ class CRM_Contact_Form_Task_PDFLetterCommon {
    * @param $message
    */
   public static function formatMessage(&$message) {
-    $newLineOperators = array(
-      'p' => array(
+    $newLineOperators = [
+      'p' => [
         'oper' => '<p>',
         'pattern' => '/<(\s+)?p(\s+)?>/m',
-      ),
-      'br' => array(
+      ],
+      'br' => [
         'oper' => '<br />',
         'pattern' => '/<(\s+)?br(\s+)?\/>/m',
-      ),
-    );
+      ],
+    ];
 
     $htmlMsg = preg_split($newLineOperators['p']['pattern'], $message);
     foreach ($htmlMsg as $k => & $m) {
       $messages = preg_split($newLineOperators['br']['pattern'], $m);
       foreach ($messages as $key => & $msg) {
         $msg = trim($msg);
-        $matches = array();
+        $matches = [];
         if (preg_match('/^(&nbsp;)+/', $msg, $matches)) {
           $spaceLen = strlen($matches[0]) / 6;
           $trimMsg = ltrim($msg, '&nbsp; ');
@@ -598,12 +598,12 @@ class CRM_Contact_Form_Task_PDFLetterCommon {
    * @throws \CRM_Core_Exception
    */
   private static function getMimeType($type) {
-    $mimeTypes = array(
+    $mimeTypes = [
       'pdf' => 'application/pdf',
       'docx' => 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
       'odt' => 'application/vnd.oasis.opendocument.text',
       'html' => 'text/html',
-    );
+    ];
     if (isset($mimeTypes[$type])) {
       return $mimeTypes[$type];
     }
@@ -619,7 +619,7 @@ class CRM_Contact_Form_Task_PDFLetterCommon {
    */
   protected static function getTokenCategories() {
     if (!isset(Civi::$statics[__CLASS__]['token_categories'])) {
-      $tokens = array();
+      $tokens = [];
       CRM_Utils_Hook::tokens($tokens);
       Civi::$statics[__CLASS__]['token_categories'] = array_keys($tokens);
     }

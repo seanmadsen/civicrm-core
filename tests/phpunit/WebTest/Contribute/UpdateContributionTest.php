@@ -66,25 +66,25 @@ class WebTest_Contribute_UpdateContributionTest extends CiviSeleniumTestCase {
     $this->waitForText('crm-notification-container', "The contribution record has been saved.");
 
     //For Contribution
-    $searchParams = array('id' => $contriIDOff);
-    $compareParams = array('total_amount' => '90.00');
+    $searchParams = ['id' => $contriIDOff];
+    $compareParams = ['total_amount' => '90.00'];
     //For LineItem
-    $lineItemSearchParams = array('entity_id' => $contriIDOff);
-    $lineItemCompareParams = array('line_total' => '90.00');
+    $lineItemSearchParams = ['entity_id' => $contriIDOff];
+    $lineItemCompareParams = ['line_total' => '90.00'];
 
     $this->assertDBCompareValues('CRM_Contribute_DAO_Contribution', $searchParams, $compareParams);
     $this->assertDBCompareValues('CRM_Price_DAO_LineItem', $lineItemSearchParams, $lineItemCompareParams);
 
     $total = $this->_getTotalContributedAmount($contriIDOff);
-    $compare = array('total_amount' => $total);
+    $compare = ['total_amount' => $total];
     $this->assertDBCompareValues('CRM_Contribute_DAO_Contribution', $searchParams, $compare);
 
     $amount = $this->_getFinancialItemAmount($contriIDOff);
-    $compare = array('total_amount' => $amount);
+    $compare = ['total_amount' => $amount];
     $this->assertDBCompareValues('CRM_Contribute_DAO_Contribution', $searchParams, $compare);
 
     $financialTrxnAmount = $this->_getFinancialTrxnAmount($contriIDOff);
-    $compare = array('total_amount' => $financialTrxnAmount);
+    $compare = ['total_amount' => $financialTrxnAmount];
     $this->assertDBCompareValues('CRM_Contribute_DAO_Contribution', $searchParams, $compare);
   }
 
@@ -101,13 +101,13 @@ class WebTest_Contribute_UpdateContributionTest extends CiviSeleniumTestCase {
     $this->checkCRMAlert("The contribution record has been saved.");
 
     //Assertions
-    $search = array('id' => $contId);
-    $compare = array('contribution_status_id' => 1);
+    $search = ['id' => $contId];
+    $compare = ['contribution_status_id' => 1];
     $this->assertDBCompareValues('CRM_Contribute_DAO_Contribution', $search, $compare);
 
     $lineItem = key(CRM_Price_BAO_LineItem::getLineItems($contId, 'contribution'));
-    $search = array('entity_id' => $lineItem);
-    $compare = array('status_id' => 1);
+    $search = ['entity_id' => $lineItem];
+    $compare = ['status_id' => 1];
     $this->assertDBCompareValues("CRM_Financial_DAO_FinancialItem", $search, $compare);
 
     $status = $this->_getPremiumActualCost($contId, 'Accounts Receivable', 'Payment Processor Account', NULL, "'civicrm_contribution'", "ft.status_id as status");
@@ -118,11 +118,11 @@ class WebTest_Contribute_UpdateContributionTest extends CiviSeleniumTestCase {
     $this->webtestLogin();
     $from = 'Premiums';
     $to = 'Premiums inventory';
-    $financialType = array(
+    $financialType = [
       'name' => 'Test Financial' . substr(sha1(rand()), 0, 7),
       'is_reserved' => 1,
       'is_deductible' => 1,
-    );
+    ];
     $this->addeditFinancialType($financialType);
     $this->waitForElementPresent("xpath=//div[@id='ltype']/div/table/tbody//tr/td/div[text()='" . $financialType['name'] . "']/../../td[7]/span/a[text()='Accounts']");
     $this->click("xpath=//div[@id='ltype']/div/table/tbody//tr/td/div[text()='" . $financialType['name'] . "']/../../td[7]/span/a[text()='Accounts']");
@@ -189,11 +189,11 @@ class WebTest_Contribute_UpdateContributionTest extends CiviSeleniumTestCase {
     $this->webtestLogin();
     $from = 'Premiums';
     $to = 'Premiums inventory';
-    $financialType = array(
+    $financialType = [
       'name' => 'Test Financial' . substr(sha1(rand()), 0, 7),
       'is_reserved' => 1,
       'is_deductible' => 1,
-    );
+    ];
     $this->addeditFinancialType($financialType);
     $this->waitForElementPresent("xpath=//div[@id='ltype']/div/table/tbody//tr/td/div[text()='" . $financialType['name'] . "']/../../td[7]/span/a[text()='Accounts']");
     $this->click("xpath=//div[@id='ltype']/div/table/tbody//tr/td/div[text()='" . $financialType['name'] . "']/../../td[7]/span/a[text()='Accounts']");
@@ -287,11 +287,11 @@ class WebTest_Contribute_UpdateContributionTest extends CiviSeleniumTestCase {
 
     //Assertions
     $lineItem = key(CRM_Price_BAO_LineItem::getLineItems($contId, 'contribution'));
-    $search = array('entity_id' => $lineItem);
-    $compare = array(
+    $search = ['entity_id' => $lineItem];
+    $compare = [
       'amount' => '100.00',
       'status_id' => 1,
-    );
+    ];
     $this->assertDBCompareValues("CRM_Financial_DAO_FinancialItem", $search, $compare);
     $amount = $this->_getPremiumActualCost($contId, NULL, 'Payment Processor Account', -100.00, "'civicrm_contribution'");
     $this->assertEquals($amount, '-100.00', 'Verify Financial Trxn Amount.');
@@ -312,15 +312,15 @@ class WebTest_Contribute_UpdateContributionTest extends CiviSeleniumTestCase {
     $this->waitForText('crm-notification-container', "The contribution record has been saved.");
 
     //Assertions
-    $search = array('id' => $contId);
-    $compare = array('contribution_status_id' => 3);
+    $search = ['id' => $contId];
+    $compare = ['contribution_status_id' => 3];
     $this->assertDBCompareValues('CRM_Contribute_DAO_Contribution', $search, $compare);
     $lineItem = key(CRM_Price_BAO_LineItem::getLineItems($contId, 'contribution'));
-    $itemParams = array(
+    $itemParams = [
       'amount' => '-100.00',
       'entity_id' => $lineItem,
-    );
-    $defaults = array();
+    ];
+    $defaults = [];
     $items = CRM_Financial_BAO_FinancialItem::retrieve($itemParams, $defaults);
     $this->assertEquals($items->amount, $itemParams['amount'], 'Verify Amount for financial Item');
     // CRM-17183 - check Financial Trxn in $to_financial_account_id
@@ -345,16 +345,16 @@ class WebTest_Contribute_UpdateContributionTest extends CiviSeleniumTestCase {
     $this->waitForText('crm-notification-container', "The contribution record has been saved.");
 
     //Assertions
-    $search = array('id' => $contId);
-    $compare = array('financial_type_id' => 3);
+    $search = ['id' => $contId];
+    $compare = ['financial_type_id' => 3];
     $this->assertDBCompareValues('CRM_Contribute_DAO_Contribution', $search, $compare);
 
     $lineItem = key(CRM_Price_BAO_LineItem::getLineItems($contId, 'contribution'));
-    $itemParams = array(
+    $itemParams = [
       'amount' => '-100.00',
       'entity_id' => $lineItem,
-    );
-    $item1 = $item2 = array();
+    ];
+    $item1 = $item2 = [];
     CRM_Financial_BAO_FinancialItem::retrieve($itemParams, $item1);
     $this->assertEquals($item1['amount'], "-100.00", "Verify Amount for New Financial Item");
     $itemParams['amount'] = '100.00';
@@ -494,11 +494,11 @@ class WebTest_Contribute_UpdateContributionTest extends CiviSeleniumTestCase {
     //click through to the Membership view screen
     $this->click("xpath=//table[@class='selector row-highlight']/tbody/tr[1]/td[8]/span/a[text()='View']");
 
-    $expected = array(
+    $expected = [
       'Financial Type' => 'Donation',
       'Total Amount' => '100.00',
       'Contribution Status' => $status,
-    );
+    ];
     $this->webtestVerifyTabularData($expected);
     $this->click("_qf_ContributionView_cancel-bottom");
 

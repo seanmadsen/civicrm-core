@@ -61,12 +61,12 @@ class WebTest_Case_CaseCustomFieldsTest extends CiviSeleniumTestCase {
     $cusId_3 = 'custom_' . $customId[2] . '_-1';
 
     // let's give full CiviCase permissions.
-    $permission = array(
+    $permission = [
       'edit-2-access-all-cases-and-activities',
       'edit-2-access-my-cases-and-activities',
       'edit-2-administer-civicase',
       'edit-2-delete-in-civicase',
-    );
+    ];
     $this->changePermissions($permission);
 
     // Log in as normal user
@@ -122,7 +122,7 @@ class WebTest_Case_CaseCustomFieldsTest extends CiviSeleniumTestCase {
     $this->openCiviPage('case', 'reset=1', "xpath=//table[@class='caseSelector']/tbody//tr/td[2]/a[text()='{$client['sort_name']}']/../../td[8]/a[text()='Open Case']");
     $this->clickPopupLink("xpath=//table[@class='caseSelector']/tbody//tr/td[2]/a[text()='{$client['sort_name']}']/../../td[8]/a[text()='Open Case']");
 
-    $openCaseData = array(
+    $openCaseData = [
       "Client" => $client['display_name'],
       "Activity Type" => "Open Case",
       "Subject" => $subject,
@@ -133,7 +133,7 @@ class WebTest_Case_CaseCustomFieldsTest extends CiviSeleniumTestCase {
       "Date and Time" => $today,
       "Status" => "Completed",
       "Priority" => "Normal",
-    );
+    ];
     $this->webtestVerifyTabularData($openCaseData);
     $this->waitForElementPresent("xpath=//span[@class='ui-button-icon-primary ui-icon fa-times']");
     $this->click("xpath=//span[@class='ui-button-icon-primary ui-icon fa-times']");
@@ -160,7 +160,7 @@ class WebTest_Case_CaseCustomFieldsTest extends CiviSeleniumTestCase {
     $this->openCiviPage('case', 'reset=1');
     $this->clickAjaxLink("xpath=//table[@class='caseSelector']/tbody//tr/td[2]/a[text()='{$client['sort_name']}']/../../td[8]/a[text()='Change Custom Data']");
 
-    $openCaseChangeData = array(
+    $openCaseChangeData = [
       "Client" => $client['display_name'],
       "Activity Type" => "Change Custom Data",
       "Subject" => $customGrp1 . " : change data",
@@ -169,7 +169,7 @@ class WebTest_Case_CaseCustomFieldsTest extends CiviSeleniumTestCase {
       "Date and Time" => $today,
       "Status" => "Completed",
       "Priority" => "Normal",
-    );
+    ];
     $this->webtestVerifyTabularData($openCaseChangeData);
     $this->_testAdvansearchCaseData($customId, $custFname, $custMname, $custLname);
     $this->_testDeleteCustomData($customGrpId1, $customId);
@@ -182,8 +182,8 @@ class WebTest_Case_CaseCustomFieldsTest extends CiviSeleniumTestCase {
    * @return array
    */
   public function _testGetCustomFieldId($customGrpId1, $noteRichEditor = FALSE) {
-    $customId = array();
-    $this->openCiviPage('admin/custom/group/field/add', array('reset' => 1, 'action' => 'add', 'gid' => $customGrpId1));
+    $customId = [];
+    $this->openCiviPage('admin/custom/group/field/add', ['reset' => 1, 'action' => 'add', 'gid' => $customGrpId1]);
 
     if ($noteRichEditor) {
       // Create a custom data to add in profile
@@ -205,11 +205,11 @@ class WebTest_Case_CaseCustomFieldsTest extends CiviSeleniumTestCase {
       $this->clickLink("_qf_Field_next_new-bottom");
 
       // get id of custom fields
-      $this->openCiviPage("admin/custom/group/field", array(
+      $this->openCiviPage("admin/custom/group/field", [
           'reset' => 1,
           'action' => 'browse',
           'gid' => $customGrpId1,
-        ));
+      ]);
       $custom1 = explode('&id=', $this->getAttribute("xpath=//div[@id='field_page']//table/tbody//tr[1]/td[8]/span/a[text()='Edit Field']/@href"));
       $custom1 = $custom1[1];
       array_push($customId, $custom1);
@@ -237,11 +237,11 @@ class WebTest_Case_CaseCustomFieldsTest extends CiviSeleniumTestCase {
       $this->clickLink("_qf_Field_done-bottom");
 
       // get id of custom fields
-      $this->openCiviPage("admin/custom/group/field", array(
+      $this->openCiviPage("admin/custom/group/field", [
           'reset' => 1,
           'action' => 'browse',
           'gid' => $customGrpId1,
-        ));
+      ]);
       $custom1 = explode('&id=', $this->getAttribute("xpath=//div[@id='field_page']//table/tbody//tr[1]/td[8]/span/a[text()='Edit Field']/@href"));
       $custom1 = $custom1[1];
       array_push($customId, $custom1);
@@ -263,12 +263,12 @@ class WebTest_Case_CaseCustomFieldsTest extends CiviSeleniumTestCase {
   public function _testDeleteCustomData($customGrpId1, $customId) {
     // delete all custom data
     foreach ($customId as $cKey => $cValue) {
-      $this->openCiviPage("admin/custom/group/field", array(
+      $this->openCiviPage("admin/custom/group/field", [
           'action' => 'delete',
           'reset' => '1',
           'gid' => $customGrpId1,
           'id' => $cValue,
-        ));
+      ]);
       $this->clickLink("_qf_DeleteField_next-bottom");
     }
 
@@ -309,12 +309,12 @@ class WebTest_Case_CaseCustomFieldsTest extends CiviSeleniumTestCase {
     $cusId_2 = 'custom_' . $customId[1] . '_-1';
 
     // let's give full CiviCase permissions.
-    $permission = array(
+    $permission = [
       'edit-2-access-all-cases-and-activities',
       'edit-2-access-my-cases-and-activities',
       'edit-2-administer-civicase',
       'edit-2-delete-in-civicase',
-    );
+    ];
     $this->changePermissions($permission);
 
     // Log in as normal user
@@ -370,7 +370,7 @@ class WebTest_Case_CaseCustomFieldsTest extends CiviSeleniumTestCase {
 
     $this->click("xpath=//table[@class='caseSelector']/tbody//tr/td[2]/a[text()='{$client['sort_name']}']/../../td[8]/a[text()='Open Case']");
 
-    $openCaseData = array(
+    $openCaseData = [
       "Client" => $client['display_name'],
       "Activity Type" => "Open Case",
       "Subject" => $subject,
@@ -381,7 +381,7 @@ class WebTest_Case_CaseCustomFieldsTest extends CiviSeleniumTestCase {
       "Date and Time" => $today,
       "Status" => "Completed",
       "Priority" => "Normal",
-    );
+    ];
     // wait for elements to load
     foreach ($openCaseData as $label => $value) {
       $this->waitForElementPresent("xpath=//table/tbody/tr/td[text()='{$label}']/following-sibling::td");

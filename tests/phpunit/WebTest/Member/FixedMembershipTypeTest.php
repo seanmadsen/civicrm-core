@@ -136,11 +136,11 @@ class WebTest_Member_FixedMembershipTypeTest extends CiviSeleniumTestCase {
     // expected calc'd end date
     $endDate = date('Y-m-d', mktime(0, 0, 0, 3, 31, $nextYear));
 
-    foreach (array(
+    foreach ([
                'joinDate',
                'startDate',
                'endDate',
-             ) as $date) {
+             ] as $date) {
       $$date = CRM_Utils_Date::customFormat($$date, $this->webtestGetSetting('dateformatFull'));
     }
 
@@ -182,14 +182,14 @@ SELECT end_event_adjust_interval
     $this->waitForElementPresent("_qf_MembershipView_cancel-bottom");
 
     $this->webtestVerifyTabularData(
-      array(
+      [
         'Membership Type' => "Membership Type $title",
         'Status' => $status,
         'Source' => $sourceText,
         'Member Since' => $joinDate,
         'Start date' => $startDate,
         'End date' => $endDate,
-      )
+      ]
     );
   }
 
@@ -294,11 +294,11 @@ SELECT end_event_adjust_interval
 
     // expected calc'd end date
     $endDate = date('Y-m-d', mktime(0, 0, 0, 8, 31, $currentYear + 2));
-    foreach (array(
+    foreach ([
                'joinDate',
                'startDate',
                'endDate',
-             ) as $date) {
+             ] as $date) {
       $$date = CRM_Utils_Date::customFormat($$date, $this->webtestGetSetting('dateformatFull'));
     }
 
@@ -340,14 +340,14 @@ SELECT end_event_adjust_interval
     $this->waitForElementPresent("_qf_MembershipView_cancel-bottom");
 
     $this->webtestVerifyTabularData(
-      array(
+      [
         'Membership Type' => "Membership Type {$title}",
         'Status' => $status,
         'Source' => $sourceText,
         'Member Since' => $joinDate,
         'Start date' => $startDate,
         'End date' => $endDate,
-      )
+      ]
     );
   }
 
@@ -445,11 +445,11 @@ SELECT end_event_adjust_interval
     $joinDate = date('Y-m-d', mktime(0, 0, 0, 11, 15, $currentYear));
     $startDate = date('Y-m-d', mktime(0, 0, 0, 1, 1, $currentYear));
     $endDate = date('Y-m-d', mktime(0, 0, 0, 12, 31, $nextYear));
-    foreach (array(
+    foreach ([
                'joinDate',
                'startDate',
                'endDate',
-             ) as $date) {
+             ] as $date) {
       $$date = CRM_Utils_Date::customFormat($$date, $this->webtestGetSetting('dateformatFull'));
     }
 
@@ -491,14 +491,14 @@ SELECT end_event_adjust_interval
     $this->waitForElementPresent("_qf_MembershipView_cancel-bottom");
 
     $this->webtestVerifyTabularData(
-      array(
+      [
         'Membership Type' => "Membership Type {$title}",
         'Status' => $status,
         'Source' => $sourceText,
         'Member Since' => $joinDate,
         'Start date' => $startDate,
         'End date' => $endDate,
-      )
+      ]
     );
   }
 
@@ -598,11 +598,11 @@ SELECT end_event_adjust_interval
     // expected calc'd start and end dates
     $startDate = date('Y-m-d', mktime(0, 0, 0, 1, 1, $currentYear));
     $endDate = date('Y-m-d', mktime(0, 0, 0, 12, 31, $currentYear));
-    foreach (array(
+    foreach ([
                'joinDate',
                'startDate',
                'endDate',
-             ) as $date) {
+             ] as $date) {
       $$date = CRM_Utils_Date::customFormat($$date, $this->webtestGetSetting('dateformatFull'));
     }
 
@@ -644,14 +644,14 @@ SELECT end_event_adjust_interval
     $this->waitForElementPresent("_qf_MembershipView_cancel-bottom");
 
     $this->webtestVerifyTabularData(
-      array(
+      [
         'Membership Type' => "Membership Type $title",
         'Status' => $status,
         'Source' => $sourceText,
         'Member Since' => $joinDate,
         'Start date' => $startDate,
         'End date' => $endDate,
-      )
+      ]
     );
   }
 

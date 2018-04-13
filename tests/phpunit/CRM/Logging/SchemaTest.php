@@ -56,7 +56,7 @@ class CRM_Logging_SchemaTest extends CiviUnitTestCase {
     $this->assertTrue(empty($diffs['ADD']));
     $this->assertTrue(empty($diffs['OBSOLETE']));
     CRM_Core_DAO::executeQuery("ALTER TABLE civicrm_test_table ADD COLUMN test_varchar varchar(255) DEFAULT NULL");
-    \Civi::$statics['CRM_Logging_Schema']['columnSpecs'] = array();
+    \Civi::$statics['CRM_Logging_Schema']['columnSpecs'] = [];
     // Check that it still picks up new columns added.
     $diffs = $schema->columnsWithDiffSpecs("civicrm_test_table", "log_civicrm_test_table");
     $this->assertTrue(!empty($diffs['ADD']));
@@ -65,7 +65,7 @@ class CRM_Logging_SchemaTest extends CiviUnitTestCase {
     $schema->fixSchemaDifferences();
     CRM_Core_DAO::executeQuery("ALTER TABLE civicrm_test_table CHANGE COLUMN test_varchar test_varchar varchar(400) DEFAULT NULL");
     // Check that it properly picks up modifications to columns.
-    \Civi::$statics['CRM_Logging_Schema']['columnSpecs'] = array();
+    \Civi::$statics['CRM_Logging_Schema']['columnSpecs'] = [];
     $diffs = $schema->columnsWithDiffSpecs("civicrm_test_table", "log_civicrm_test_table");
     $this->assertTrue(!empty($diffs['MODIFY']));
     $this->assertTrue(empty($diffs['ADD']));
@@ -73,7 +73,7 @@ class CRM_Logging_SchemaTest extends CiviUnitTestCase {
     $schema->fixSchemaDifferences();
     CRM_Core_DAO::executeQuery("ALTER TABLE civicrm_test_table CHANGE COLUMN test_varchar test_varchar varchar(300) DEFAULT NULL");
     // Check that when we reduce the size of column that the log table doesn't shrink as well.
-    \Civi::$statics['CRM_Logging_Schema']['columnSpecs'] = array();
+    \Civi::$statics['CRM_Logging_Schema']['columnSpecs'] = [];
     $diffs = $schema->columnsWithDiffSpecs("civicrm_test_table", "log_civicrm_test_table");
     $this->assertTrue(empty($diffs['MODIFY']));
     $this->assertTrue(empty($diffs['ADD']));

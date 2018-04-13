@@ -71,7 +71,7 @@ class WebTest_Campaign_OfflineContributionTest extends CiviSeleniumTestCase {
     $this->waitForElementPresent('link=Remove');
 
     // Enable CiviCampaign module if necessary
-    $this->enableComponents(array('CiviCampaign'));
+    $this->enableComponents(['CiviCampaign']);
 
     // add the required permission
     $this->changePermissions('edit-2-administer-civicampaign');
@@ -96,7 +96,7 @@ class WebTest_Campaign_OfflineContributionTest extends CiviSeleniumTestCase {
     $this->type("description", "This is a test campaign");
 
     // include groups for the campaign
-    $this->multiselect2("includeGroups", array("$groupName", "Advisory Board"));
+    $this->multiselect2("includeGroups", ["$groupName", "Advisory Board"]);
 
     // fill the end date for campaign
     $this->webtestFillDate("end_date", "+1 year");
@@ -204,7 +204,7 @@ class WebTest_Campaign_OfflineContributionTest extends CiviSeleniumTestCase {
     $this->waitForElementPresent('_qf_ContributionView_cancel-bottom');
 
     // verify Contribution created
-    $this->webtestVerifyTabularData(array('Campaign' => $campaignTitle));
+    $this->webtestVerifyTabularData(['Campaign' => $campaignTitle]);
 
     if ($past) {
       // when campaign component is disabled
@@ -244,7 +244,7 @@ class WebTest_Campaign_OfflineContributionTest extends CiviSeleniumTestCase {
     $this->type("description", "This is a test for past campaign");
 
     // include groups for the campaign
-    $this->multiselect2("includeGroups", array("$groupName", "Advisory Board"));
+    $this->multiselect2("includeGroups", ["$groupName", "Advisory Board"]);
 
     // fill the start date for campaign
     $this->webtestFillDate("start_date", "1 January " . (date('Y') - 1));

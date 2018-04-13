@@ -94,7 +94,7 @@ class ExportCiviSeleniumTestCase extends CiviSeleniumTestCase {
    * @param array $settings
    *   Used for override settings.
    */
-  public function reviewCSV($file, $checkColumns = array(), $checkRows = array(), $rowCount = 0, $settings = array()) {
+  public function reviewCSV($file, $checkColumns = [], $checkRows = [], $rowCount = 0, $settings = []) {
     // Check file exists before proceed.
     $this->assertTrue(($file && file_exists($file)), "Not able to locate {$file}.");
 
@@ -107,7 +107,7 @@ class ExportCiviSeleniumTestCase extends CiviSeleniumTestCase {
     // Default seperator ','.
     $fieldSeparator = !empty($settings['fieldSeparator']) ? $settings['fieldSeparator'] : ',';
 
-    $allRows = array();
+    $allRows = [];
 
     // Read header row.
     $headerRow = fgetcsv($fd, 0, $fieldSeparator);

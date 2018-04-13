@@ -148,7 +148,7 @@ class CRM_Utils_Type {
    *   An array of type in the form 'type name' => 'int representing type'
    */
   public static function getValidTypes() {
-    return array(
+    return [
       'Int' => self::T_INT,
       'String' => self::T_STRING,
       'Enum' => self::T_ENUM,
@@ -162,7 +162,7 @@ class CRM_Utils_Type {
       'Money' => self::T_MONEY,
       'Email' => self::T_EMAIL,
       'Mediumblob' => self::T_MEDIUMBLOB,
-    );
+    ];
   }
 
   /**
@@ -361,7 +361,7 @@ class CRM_Utils_Type {
 
             }
             // Normal clause.
-            $part = preg_replace_callback('/^(?:(?:((?:`[\w-]{1,64}`|[\w-]{1,64}))(?:\.))?(`[\w-]{1,64}`|[\w-]{1,64})(?: (asc|desc))?)$/i', array('CRM_Utils_Type', 'mysqlOrderByCallback'), trim($part));
+            $part = preg_replace_callback('/^(?:(?:((?:`[\w-]{1,64}`|[\w-]{1,64}))(?:\.))?(`[\w-]{1,64}`|[\w-]{1,64})(?: (asc|desc))?)$/i', ['CRM_Utils_Type', 'mysqlOrderByCallback'], trim($part));
           }
           return implode(', ', $parts);
         }
@@ -403,7 +403,7 @@ class CRM_Utils_Type {
    */
   public static function validate($data, $type, $abort = TRUE, $name = 'One of parameters ', $isThrowException = FALSE) {
 
-    $possibleTypes = array(
+    $possibleTypes = [
       'Integer',
       'Int',
       'Positive',
@@ -423,7 +423,7 @@ class CRM_Utils_Type {
       'MysqlOrderBy',
       'ExtensionKey',
       'Json',
-    );
+    ];
     if (!in_array($type, $possibleTypes)) {
       if ($isThrowException) {
         throw new CRM_Core_Exception(ts('Invalid type, must be one of : ' . implode($possibleTypes)));
@@ -594,7 +594,7 @@ class CRM_Utils_Type {
    * @return array
    */
   public static function dataTypes() {
-    $types = array(
+    $types = [
       'Integer',
       'String',
       'Date',
@@ -602,7 +602,7 @@ class CRM_Utils_Type {
       'Timestamp',
       'Money',
       'Email',
-    );
+    ];
     return array_combine($types, $types);
   }
 

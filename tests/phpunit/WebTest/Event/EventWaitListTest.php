@@ -134,10 +134,10 @@ class WebTest_Event_EventWaitListTest extends CiviSeleniumTestCase {
     $this->waitForElementPresent("_qf_Registration_upload-bottom");
     $this->waitForTextPresent("'Online Registration' information has been saved.");
 
-    $eventInfoStrings = array($eventTitle, $eventDescription, $streetAddress);
+    $eventInfoStrings = [$eventTitle, $eventDescription, $streetAddress];
     $this->_testVerifyEventInfo($eventTitle, $eventInfoStrings);
 
-    $registerStrings = array("250.00", "Member", "325.00", "Non-member");
+    $registerStrings = ["250.00", "Member", "325.00", "Non-member"];
     $registerUrl = $this->_testVerifyRegisterPage($registerStrings);
 
     $numberRegistrations = 2;
@@ -226,11 +226,11 @@ class WebTest_Event_EventWaitListTest extends CiviSeleniumTestCase {
     }
     $this->waitForPageToLoad($this->getTimeoutMsec());
     $this->waitForElementPresent("_qf_Confirm_next-bottom");
-    $confirmStrings = array("Event Fee(s)", "Billing Name and Address", "Credit Card Information");
+    $confirmStrings = ["Event Fee(s)", "Billing Name and Address", "Credit Card Information"];
     $this->assertStringsPresent($confirmStrings);
     $this->click("_qf_Confirm_next-bottom");
     $this->waitForPageToLoad($this->getTimeoutMsec());
-    $thankStrings = array("Thank You for Registering", "Event Total", "Transaction Date");
+    $thankStrings = ["Thank You for Registering", "Event Total", "Transaction Date"];
     $this->assertStringsPresent($thankStrings);
 
     if ($anonymous) {

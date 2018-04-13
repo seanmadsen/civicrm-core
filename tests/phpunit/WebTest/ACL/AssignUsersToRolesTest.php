@@ -108,7 +108,7 @@ class WebTest_ACL_AssignUsersToRolesTest extends CiviSeleniumTestCase {
     $this->type("last_name", $lastName);
     $this->click("edit-submit");
     $this->waitForPageToLoad($this->getTimeoutMsec());
-    $permissions = array("edit-{$roleId}-access-civicrm");
+    $permissions = ["edit-{$roleId}-access-civicrm"];
     $this->changePermissions($permissions);
 
     //Create group and add your user's contact to that group
@@ -265,7 +265,7 @@ class WebTest_ACL_AssignUsersToRolesTest extends CiviSeleniumTestCase {
     $this->click("edit-submit");
     $this->waitForPageToLoad($this->getTimeoutMsec());
 
-    $permissions = array("edit-{$roleId}-access-civicrm", "edit-{$roleId}-edit-all-events", "edit-{$roleId}-manage-event-profiles");
+    $permissions = ["edit-{$roleId}-access-civicrm", "edit-{$roleId}-edit-all-events", "edit-{$roleId}-manage-event-profiles"];
     $this->changePermissions($permissions);
     $this->webtestLogout();
     $this->webtestLogin($name, 'Test12345');
@@ -322,10 +322,10 @@ class WebTest_ACL_AssignUsersToRolesTest extends CiviSeleniumTestCase {
     $this->open($this->sboxPath . "admin/people/permissions/roles");
     $this->waitForElementPresent("xpath=//table[@id='user-roles']/tbody//tr/td[1][text()='{$ACLrole1}']");
     $roleId = explode("people/permissions/", $this->getAttribute("xpath=//table[@id='user-roles']/tbody//tr/td[1][text()='{$ACLrole1}']/../td[4]/a[text()='edit permissions']/@href"));
-    $permissions = array(
+    $permissions = [
       "edit-{$roleId[1]}-access-civicrm",
       "edit-{$roleId[1]}-access-civievent",
-    );
+    ];
     $this->changePermissions($permissions);
 
     //Create ACLUser1

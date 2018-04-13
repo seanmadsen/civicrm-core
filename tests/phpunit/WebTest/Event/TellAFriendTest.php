@@ -67,7 +67,7 @@ class WebTest_Event_TellAFriendTest extends CiviSeleniumTestCase {
     $registerUrl = $this->getLocation();
 
     // give permissions for event registration
-    $permission = array('edit-1-register-for-events');
+    $permission = ['edit-1-register-for-events'];
     $this->changePermissions($permission);
 
     // register as an anonymous user

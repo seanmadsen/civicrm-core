@@ -50,7 +50,7 @@ class CRM_Utils_Cache_Arraycache implements CRM_Utils_Cache_Interface {
    * @return \CRM_Utils_Cache_Arraycache
    */
   public function __construct($config) {
-    $this->_cache = array();
+    $this->_cache = [];
   }
 
   /**
@@ -79,7 +79,7 @@ class CRM_Utils_Cache_Arraycache implements CRM_Utils_Cache_Interface {
 
   public function flush() {
     unset($this->_cache);
-    $this->_cache = array();
+    $this->_cache = [];
   }
 
 }

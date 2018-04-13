@@ -61,8 +61,8 @@ class ImportCiviSeleniumTestCase extends CiviSeleniumTestCase {
     $rows,
     $contactType = 'Individual',
     $mode = 'Skip',
-    $fieldMapper = array(),
-    $other = array()
+    $fieldMapper = [],
+    $other = []
   ) {
 
     // Go to contact import page.
@@ -94,14 +94,14 @@ class ImportCiviSeleniumTestCase extends CiviSeleniumTestCase {
     // Date format, default: yyyy-mm-dd OR yyyymmdd
     if (isset($other['dateFormat'])) {
       // default
-      $dateFormatMapper = array(
+      $dateFormatMapper = [
         'yyyy-mm-dd OR yyyymmdd' => "CIVICRM_QFID_1_14",
         'mm/dd/yy OR mm-dd-yy' => "CIVICRM_QFID_2_16",
         'mm/dd/yyyy OR mm-dd-yyyy' => "CIVICRM_QFID_4_18",
         'Month dd, yyyy' => "CIVICRM_QFID_8_20",
         'dd-mon-yy OR dd/mm/yy' => "CIVICRM_QFID_16_22",
         'dd/mm/yyyy' => "CIVICRM_QFID_32_24",
-      );
+      ];
       $this->click($dateFormatMapper[$other['dateFormat']]);
     }
 
@@ -127,7 +127,7 @@ class ImportCiviSeleniumTestCase extends CiviSeleniumTestCase {
     $this->_checkImportMapperData($headers,
       $rows,
       $existingMapping,
-      isset($other['checkMapperHeaders']) ? $other['checkMapperHeaders'] : array()
+      isset($other['checkMapperHeaders']) ? $other['checkMapperHeaders'] : []
     );
 
     // Save mapping
@@ -144,7 +144,7 @@ class ImportCiviSeleniumTestCase extends CiviSeleniumTestCase {
     $this->waitForElementPresent('_qf_Preview_next-bottom');
 
     // Check mapping data.
-    $this->_checkImportMapperData($headers, $rows, $existingMapping, isset($other['checkMapperHeaders']) ? $other['checkMapperHeaders'] : array());
+    $this->_checkImportMapperData($headers, $rows, $existingMapping, isset($other['checkMapperHeaders']) ? $other['checkMapperHeaders'] : []);
 
     // Submit form.
     $this->clickLink('_qf_Preview_next-bottom', "_qf_Summary_next");
@@ -154,10 +154,10 @@ class ImportCiviSeleniumTestCase extends CiviSeleniumTestCase {
 
     // Check summary Details.
     $importedRecords = count($rows);
-    $checkSummary = array(
+    $checkSummary = [
       'Total Rows' => $importedRecords,
       'Records Imported' => $importedRecords,
-    );
+    ];
 
     foreach ($checkSummary as $label => $value) {
       $this->verifyText("xpath=//table[@id='summary-counts']/tbody/tr/td[text()='{$label}']/following-sibling::td", preg_quote($value));
@@ -197,7 +197,7 @@ class ImportCiviSeleniumTestCase extends CiviSeleniumTestCase {
    *   Import type (csv/sql).
    * @todo:currently only supports csv, need to work on sql import
    */
-  public function importContacts($headers, $rows, $contactType = 'Individual', $mode = 'Skip', $fieldMapper = array(), $other = array(), $type = 'csv') {
+  public function importContacts($headers, $rows, $contactType = 'Individual', $mode = 'Skip', $fieldMapper = [], $other = [], $type = 'csv') {
 
     // Go to contact import page.
     $this->openCiviPage("import/contact", "reset=1", "uploadFile");
@@ -257,14 +257,14 @@ class ImportCiviSeleniumTestCase extends CiviSeleniumTestCase {
     // Date format, default: yyyy-mm-dd OR yyyymmdd
     if (isset($other['dateFormat'])) {
       // default
-      $dateFormatMapper = array(
+      $dateFormatMapper = [
         'yyyy-mm-dd OR yyyymmdd' => "CIVICRM_QFID_1_16",
         'mm/dd/yy OR mm-dd-yy' => "CIVICRM_QFID_2_18",
         'mm/dd/yyyy OR mm-dd-yyyy' => "CIVICRM_QFID_4_20",
         'Month dd, yyyy' => "CIVICRM_QFID_8_22",
         'dd-mon-yy OR dd/mm/yy' => "CIVICRM_QFID_16_24",
         'dd/mm/yyyy' => "CIVICRM_QFID_32_26",
-      );
+      ];
       $this->click($dateFormatMapper[$other['dateFormat']]);
     }
 
@@ -275,12 +275,12 @@ class ImportCiviSeleniumTestCase extends CiviSeleniumTestCase {
       $checkMapperHeaders = $other['checkMapperHeaders'];
     }
     else {
-      $checkMapperHeaders = array(
+      $checkMapperHeaders = [
         1 => 'Column Names',
         2 => 'Import Data (row 1)',
         3 => 'Import Data (row 2)',
         4 => 'Matching CiviCRM Field',
-      );
+      ];
     }
 
     // Check mapping data.
@@ -310,7 +310,7 @@ class ImportCiviSeleniumTestCase extends CiviSeleniumTestCase {
 
     // Add imported contacts in new group.
     $groupName = NULL;
-    $existingGroups = array();
+    $existingGroups = [];
     if (isset($other['createGroup'])) {
       $groupName = isset($other['createGroupName']) ? $other['createGroupName'] : 'ContactImport_' . substr(sha1(rand()), 0, 7);
 
@@ -334,7 +334,7 @@ class ImportCiviSeleniumTestCase extends CiviSeleniumTestCase {
 
     // Assign new tag to the imported contacts.
     $tagName = NULL;
-    $existingTags = array();
+    $existingTags = [];
     if (isset($other['createTag'])) {
       $tagName = isset($other['createTagName']) ? $other['createTagName'] : "{$contactType}_" . substr(sha1(rand()), 0, 7);
 
@@ -384,10 +384,10 @@ class ImportCiviSeleniumTestCase extends CiviSeleniumTestCase {
 
     $importedContactsCount = ($importedContacts == 1) ? 'One contact' : "$importedContacts contacts";
     $taggedContactsCount = ($importedContacts == 1) ? 'One contact is' : "$importedContacts contacts are";
-    $checkSummary = array(
+    $checkSummary = [
       'Total Rows' => $totalRows,
       'Total Contacts' => $importedContacts,
-    );
+    ];
 
     if ($groupName) {
       $checkSummary['Import to Groups'] = "{$groupName}: {$importedContactsCount} added to this new group.";
@@ -415,10 +415,10 @@ class ImportCiviSeleniumTestCase extends CiviSeleniumTestCase {
       }
     }
 
-    if (!empty($other['callbackImportSummary']) && is_callable(array(
+    if (!empty($other['callbackImportSummary']) && is_callable([
         $this,
         $other['callbackImportSummary'],
-      ))
+      ])
     ) {
       $callbackImportSummary = $other['callbackImportSummary'];
       $this->$callbackImportSummary($originalHeaders, $originalRows, $checkSummary);
@@ -439,12 +439,12 @@ class ImportCiviSeleniumTestCase extends CiviSeleniumTestCase {
    *   import url
    */
   private function _getImportComponentUrl($component) {
-    $importComponentUrl = array(
+    $importComponentUrl = [
       'Event' => 'event/import',
       'Contribution' => 'contribute/import',
       'Membership' => 'member/import',
       'Activity' => 'import/activity',
-    );
+    ];
 
     return $importComponentUrl[$component];
   }
@@ -456,23 +456,23 @@ class ImportCiviSeleniumTestCase extends CiviSeleniumTestCase {
    * @return string
    */
   public function _getImportComponentContactType($component, $contactType) {
-    $importComponentMode = array(
-      'Event' => array(
+    $importComponentMode = [
+      'Event' => [
         'Individual' => 'CIVICRM_QFID_1_20',
         'Household' => 'CIVICRM_QFID_2_22',
         'Organization' => 'CIVICRM_QFID_4_24',
-      ),
-      'Contribution' => array(
+      ],
+      'Contribution' => [
         'Individual' => 'CIVICRM_QFID_1_18',
         'Household' => 'CIVICRM_QFID_2_20',
         'Organization' => 'CIVICRM_QFID_4_22',
-      ),
-      'Membership' => array(
+      ],
+      'Membership' => [
         'Individual' => 'CIVICRM_QFID_1_18',
         'Household' => 'CIVICRM_QFID_2_20',
         'Organization' => 'CIVICRM_QFID_4_22',
-      ),
-    );
+      ],
+    ];
 
     return $importComponentMode[$component][$contactType];
   }
@@ -485,15 +485,15 @@ class ImportCiviSeleniumTestCase extends CiviSeleniumTestCase {
    * @param array $checkMapperHeaders
    * @param string $headerSelector
    */
-  public function _checkImportMapperData($headers, $rows, $existingMapping = NULL, $checkMapperHeaders = array(), $headerSelector = 'th') {
+  public function _checkImportMapperData($headers, $rows, $existingMapping = NULL, $checkMapperHeaders = [], $headerSelector = 'th') {
 
     if (empty($checkMapperHeaders)) {
-      $checkMapperHeaders = array(
+      $checkMapperHeaders = [
         1 => 'Column Headers',
         2 => 'Import Data (row 2)',
         3 => 'Import Data (row 3)',
         4 => 'Matching CiviCRM Field',
-      );
+      ];
     }
 
     $rowNumber = 1;
@@ -528,7 +528,7 @@ class ImportCiviSeleniumTestCase extends CiviSeleniumTestCase {
    *   imported contact ids
    */
   public function _getImportedContactIds($rows, $contactType = 'Individual') {
-    $contactIds = array();
+    $contactIds = [];
 
     foreach ($rows as $row) {
       $searchName = '';

@@ -37,7 +37,7 @@ class WebTest_Member_OnlineMembershipCreateTest extends CiviSeleniumTestCase {
 
   public function testOnlineMembershipCreate() {
     //check for online contribution and profile listings permissions
-    $permissions = array("edit-1-make-online-contributions", "edit-1-profile-listings-and-forms");
+    $permissions = ["edit-1-make-online-contributions", "edit-1-profile-listings-and-forms"];
     $this->changePermissions($permissions);
 
     // Log in as normal user
@@ -70,7 +70,7 @@ class WebTest_Member_OnlineMembershipCreateTest extends CiviSeleniumTestCase {
     $pageId = $this->webtestAddContributionPage($hash,
       $rand,
       $contributionTitle,
-      array($processorName => 'Dummy'),
+      [$processorName => 'Dummy'],
       $amountSection,
       $payLater,
       $onBehalf,
@@ -131,12 +131,12 @@ class WebTest_Member_OnlineMembershipCreateTest extends CiviSeleniumTestCase {
     $this->waitForElementPresent("_qf_MembershipView_cancel-bottom");
 
     //View Membership Record
-    $verifyData = array(
+    $verifyData = [
       'Member' => $firstName . ' ' . $lastName,
       'Membership Type' => $memTypeTitle1,
       'Source' => 'Online Contribution:' . ' ' . $contributionTitle,
       'Status' => 'Pending',
-    );
+    ];
     $this->webtestVerifyTabularData($verifyData);
 
     // Click View action link on associated contribution record
@@ -144,11 +144,11 @@ class WebTest_Member_OnlineMembershipCreateTest extends CiviSeleniumTestCase {
     $this->click("xpath=//table[@class='selector row-highlight']/tbody/tr[1]/td[8]/span/a[1][text()='View']");
     $this->waitForElementPresent("_qf_ContributionView_cancel-bottom");
     //View Contribution Record
-    $verifyData = array(
+    $verifyData = [
       'From' => $firstName . ' ' . $lastName,
       'Total Amount' => '$ 100.00',
       'Contribution Status' => 'Pending : Pay Later',
-    );
+    ];
     $this->webtestVerifyTabularData($verifyData);
 
     //CRM-15735 - verify membership dates gets changed w.r.t receive_date of contribution.
@@ -158,12 +158,12 @@ class WebTest_Member_OnlineMembershipCreateTest extends CiviSeleniumTestCase {
     $this->select('contribution_status_id', 'Completed');
     $this->webtestFillDate('receive_date', '-1 month');
     $this->clickAjaxLink("xpath=//button//span[contains(text(),'Save')]", "xpath=//div[@class='ui-dialog-buttonset']/button[3]/span[2]");
-    $updatedData = array(
+    $updatedData = [
       'Status' => 'New',
       'Member Since' => $receiveDate,
       'Start date' => $receiveDate,
       'End date' => $endDate,
-    );
+    ];
     $this->webtestVerifyTabularData($updatedData);
 
     // CRM-8141 signup for membership 2 with same anonymous user info (should create 2 separate membership records because membership orgs are different)
@@ -199,7 +199,7 @@ class WebTest_Member_OnlineMembershipCreateTest extends CiviSeleniumTestCase {
    * @param bool $amountSection
    * @param bool $freeMembership
    */
-  public function _testOnlineMembershipSignup($pageId, $memTypeId, $firstName, $lastName, $payLater, $hash, $otherAmount = FALSE, $amountSection = TRUE, $freeMembership = FALSE, $onBehalf = FALSE, $onBehalfParams = array()) {
+  public function _testOnlineMembershipSignup($pageId, $memTypeId, $firstName, $lastName, $payLater, $hash, $otherAmount = FALSE, $amountSection = TRUE, $freeMembership = FALSE, $onBehalf = FALSE, $onBehalfParams = []) {
     //Open Live Contribution Page
     $this->openCiviPage("contribute/transact", "reset=1&id=$pageId&action=preview", "_qf_Main_upload-bottom");
     // Select membership type 1
@@ -285,7 +285,7 @@ class WebTest_Member_OnlineMembershipCreateTest extends CiviSeleniumTestCase {
 
   public function testOnlineMembershipCreateWithContribution() {
     //login with admin credentials & make sure we do have required permissions.
-    $permissions = array("edit-1-make-online-contributions", "edit-1-profile-listings-and-forms");
+    $permissions = ["edit-1-make-online-contributions", "edit-1-profile-listings-and-forms"];
     $this->changePermissions($permissions);
 
     $hash = substr(sha1(rand()), 0, 7);
@@ -313,7 +313,7 @@ class WebTest_Member_OnlineMembershipCreateTest extends CiviSeleniumTestCase {
     $pageId = $this->webtestAddContributionPage($hash,
       $rand,
       $contributionTitle,
-      array($processorName => 'Dummy'),
+      [$processorName => 'Dummy'],
       $amountSection,
       $payLater,
       $onBehalf,
@@ -359,18 +359,18 @@ class WebTest_Member_OnlineMembershipCreateTest extends CiviSeleniumTestCase {
     $this->waitForElementPresent("xpath=//tr/td[@class='crm-contribution-amount']/a[@title='view payments']");
     $this->click("xpath=//tr/td[@class='crm-contribution-amount']/a[@title='view payments']");
     $this->waitForAjaxContent();
-    $verifyFinancialData = array(
+    $verifyFinancialData = [
       1 => '50.00',
       2 => 'Donation',
       6 => 'Completed',
-    );
+    ];
     foreach ($verifyFinancialData as $col => $data) {
       $this->verifyText("xpath=//tr[@class='crm-child-row']/td/div/table/tbody/tr[2]/td[{$col}]", $data);
     }
     $this->clickLink("xpath=//div[@id='contributionSearch']//table//tbody/tr[1]/td[10]/span/a[text()='View']", "_qf_ContributionView_cancel-bottom", FALSE);
 
     //View Contribution Record and verify data
-    $expected = array(
+    $expected = [
       'From' => "{$firstName} {$lastName}",
       'Financial Type' => 'Donation',
       'Total Amount' => '50.00',
@@ -378,7 +378,7 @@ class WebTest_Member_OnlineMembershipCreateTest extends CiviSeleniumTestCase {
       'Received Into' => 'Deposit Bank Account',
       'Source' => "Online Contribution: $contributionTitle",
       'Online Contribution Page' => $contributionTitle,
-    );
+    ];
     $this->webtestVerifyTabularData($expected);
   }
 
@@ -388,7 +388,7 @@ class WebTest_Member_OnlineMembershipCreateTest extends CiviSeleniumTestCase {
    */
   public function testOnlineMembershipCreateWithZeroContribution() {
     //login with admin credentials & make sure we do have required permissions.
-    $permissions = array("edit-1-make-online-contributions", "edit-1-profile-listings-and-forms");
+    $permissions = ["edit-1-make-online-contributions", "edit-1-profile-listings-and-forms"];
     $this->changePermissions($permissions);
 
     $hash = substr(sha1(rand()), 0, 7);
@@ -440,12 +440,12 @@ class WebTest_Member_OnlineMembershipCreateTest extends CiviSeleniumTestCase {
     $text = "'MembershipBlock' information has been saved.";
     $this->waitForText('crm-notification-container', $text);
 
-    $processors = array(
+    $processors = [
       'Test Processor',
       'AuthNet',
       'PayPal',
       'PayPal_Standard',
-    );
+    ];
     foreach ($processors as $processor) {
       if ($processor == 'Test Processor') {
         $processorName = $processor;
@@ -481,26 +481,26 @@ class WebTest_Member_OnlineMembershipCreateTest extends CiviSeleniumTestCase {
       $this->waitForElementPresent("xpath=//tr/td[@class='crm-contribution-amount']/a[@title='view payments']");
       $this->click("xpath=//tr/td[@class='crm-contribution-amount']/a[@title='view payments']");
       $this->waitForAjaxContent();
-      $verifyFinancialData = array(
+      $verifyFinancialData = [
         1 => '0.00',
         2 => 'Member Dues',
         3 => 'Credit Card',
         6 => 'Completed',
-      );
+      ];
       foreach ($verifyFinancialData as $col => $data) {
         $this->verifyText("xpath=//tr[@class='crm-child-row']/td/div/table/tbody/tr[2]/td[{$col}]", $data);
       }
       $this->clickLink("xpath=//div[@id='contributionSearch']//table//tbody/tr[1]/td[10]/span/a[text()='View']", "_qf_ContributionView_cancel-bottom", FALSE);
 
       //View Contribution Record and verify data
-      $expected = array(
+      $expected = [
         'From' => "{$firstName} {$lastName}",
         'Financial Type' => 'Member Dues (test) ',
         'Total Amount' => '0.00',
         'Contribution Status' => 'Completed',
         'Source' => "Online Contribution: $contributionTitle",
         'Online Contribution Page' => $contributionTitle,
-      );
+      ];
       $this->webtestVerifyTabularData($expected);
 
       //Find Member
@@ -513,12 +513,12 @@ class WebTest_Member_OnlineMembershipCreateTest extends CiviSeleniumTestCase {
       $this->waitForElementPresent("_qf_MembershipView_cancel-bottom");
 
       //View Membership Record
-      $verifyData = array(
+      $verifyData = [
         'Member' => $firstName . ' ' . $lastName,
         'Membership Type' => $memTypeTitle,
         'Source' => 'Online Contribution:' . ' ' . $contributionTitle,
         'Status' => 'New',
-      );
+      ];
 
       $this->webtestVerifyTabularData($verifyData);
     }
@@ -548,7 +548,7 @@ class WebTest_Member_OnlineMembershipCreateTest extends CiviSeleniumTestCase {
     $this->webtestLogout();
 
     //login with admin credentials & make sure we do have required permissions.
-    $permissions = array("edit-1-make-online-contributions", "edit-1-profile-listings-and-forms");
+    $permissions = ["edit-1-make-online-contributions", "edit-1-profile-listings-and-forms"];
     $this->changePermissions($permissions);
 
     $hash = substr(sha1(rand()), 0, 7);
@@ -605,13 +605,13 @@ class WebTest_Member_OnlineMembershipCreateTest extends CiviSeleniumTestCase {
     $firstName = 'Ma' . substr(sha1(rand()), 0, 4);
     $lastName = 'An' . substr(sha1(rand()), 0, 7);
 
-    $onBehalfParams = array(
+    $onBehalfParams = [
       'org_name' => 'Test Org Dedupe', // Same Org Name.
       'org_phone' => '123-456-789',
       'org_email' => 'testorgdedupe@test.com', // Same Email address.
       'org_postal_code' => 'ABC 123',
       'mode' => 'optional',
-    );
+    ];
 
     $this->_testOnlineMembershipSignup($pageId, $memTypeTitle, $firstName, $lastName, $payLater, $hash, $allowOtherAmount, $amountSection, TRUE, TRUE, $onBehalfParams);
     $onBehalfParams['org_postal_code'] = 'XYZ 123';

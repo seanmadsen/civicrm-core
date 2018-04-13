@@ -92,7 +92,7 @@ class WebTest_Pledge_ContactContextAddTest extends CiviSeleniumTestCase {
     $this->waitForElementPresent("_qf_PledgeView_next-bottom");
     $pledgeDate = date('F jS, Y', strtotime('now'));
 
-    $verifyData = array(
+    $verifyData = [
       'Pledge By' => $firstName . ' ' . $lastName,
       'Total Pledge Amount' => '$ 100.00',
       'To be paid in' => '10 installments of $ 10.00 every 1 week(s)',
@@ -103,7 +103,7 @@ class WebTest_Pledge_ContactContextAddTest extends CiviSeleniumTestCase {
       'Initial Reminder Day' => '4 days prior to schedule date',
       'Maximum Reminders Send' => 2,
       'Send additional reminders' => '4 days after the last one sent',
-    );
+    ];
 
     foreach ($verifyData as $label => $value) {
       $this->verifyText("xpath=//form[@id='PledgeView']//table/tbody/tr/td[text()='{$label}']/following-sibling::td", preg_quote($value));

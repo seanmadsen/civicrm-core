@@ -40,13 +40,13 @@ class WebTest_Campaign_PledgeTest extends CiviSeleniumTestCase {
     $this->webtestLogin('admin');
 
     // Enable CiviCampaign module and CiviPledge module if necessary
-    $this->enableComponents(array("CiviCampaign", "CiviPledge"));
+    $this->enableComponents(["CiviCampaign", "CiviPledge"]);
 
     // add the required Drupal permission
-    $permissions = array(
+    $permissions = [
       'edit-2-access-civipledge',
       'edit-2-edit-pledges',
-    );
+    ];
     $this->changePermissions($permissions);
 
     // Fixme: testing a theory that this test was failing due to permissions
@@ -96,7 +96,7 @@ class WebTest_Campaign_PledgeTest extends CiviSeleniumTestCase {
     $this->type("description", "This is a test campaign");
 
     // include groups for the campaign
-    $this->multiselect2("includeGroups", array("$groupName", "Advisory Board"));
+    $this->multiselect2("includeGroups", ["$groupName", "Advisory Board"]);
 
     // fill the end date for campaign
     $this->webtestFillDate("end_date", "+1 year");

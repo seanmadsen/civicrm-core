@@ -46,14 +46,14 @@ class api_v3_NoteTest extends CiviUnitTestCase {
 
     $this->_contactID = $this->organizationCreate(NULL);
 
-    $this->_params = array(
+    $this->_params = [
       'entity_table' => 'civicrm_contact',
       'entity_id' => $this->_contactID,
       'note' => 'Hello!!! m testing Note',
       'contact_id' => $this->_contactID,
       'modified_date' => '2011-01-31',
       'subject' => 'Test Note',
-    );
+    ];
     $this->_note = $this->noteCreate($this->_contactID);
     $this->_noteID = $this->_note['id'];
   }
@@ -66,7 +66,7 @@ class api_v3_NoteTest extends CiviUnitTestCase {
    * Error expected
    */
   public function testGetWithEmptyParams() {
-    $this->callAPISuccess('note', 'get', array());
+    $this->callAPISuccess('note', 'get', []);
   }
 
   /**
@@ -75,9 +75,9 @@ class api_v3_NoteTest extends CiviUnitTestCase {
    * Error expected
    */
   public function testGetWithoutEntityId() {
-    $params = array(
+    $params = [
       'entity_table' => 'civicrm_contact',
-    );
+    ];
     $this->callAPISuccess('note', 'get', $params);
   }
 
@@ -86,10 +86,10 @@ class api_v3_NoteTest extends CiviUnitTestCase {
    */
   public function testGet() {
     $entityId = $this->_noteID;
-    $params = array(
+    $params = [
       'entity_table' => 'civicrm_contact',
       'entity_id' => $entityId,
-    );
+    ];
     $this->callAPIAndDocument('note', 'get', $params, __FUNCTION__, __FILE__);
   }
 
@@ -140,7 +140,7 @@ class api_v3_NoteTest extends CiviUnitTestCase {
   }
 
   public function testCreateWithApostropheInString() {
-    $params = array(
+    $params = [
       'entity_table' => 'civicrm_contact',
       'entity_id' => $this->_contactID,
       'note' => "Hello!!! ' testing Note",
@@ -148,7 +148,7 @@ class api_v3_NoteTest extends CiviUnitTestCase {
       'modified_date' => '2011-01-31',
       'subject' => "With a '",
       'sequential' => 1,
-    );
+    ];
     $result = $this->callAPISuccess('Note', 'Create', $params);
     $this->assertAPISuccess($result);
     $this->assertEquals($result['values'][0]['note'], "Hello!!! ' testing Note");
@@ -173,7 +173,7 @@ class api_v3_NoteTest extends CiviUnitTestCase {
    * better to put time into the function on Syntax Conformance class that tests this
    */
   public function testUpdateWithEmptyParams() {
-    $this->callAPIFailure('note', 'create', array());
+    $this->callAPIFailure('note', 'create', []);
   }
 
   /**
@@ -182,10 +182,10 @@ class api_v3_NoteTest extends CiviUnitTestCase {
    * Error expected
    */
   public function testUpdateWithoutContactId() {
-    $params = array(
+    $params = [
       'entity_id' => $this->_contactID,
       'entity_table' => 'civicrm_contact',
-    );
+    ];
     $this->callAPIFailure('note', 'create', $params,
       'Mandatory key(s) missing from params array: note'
     );
@@ -195,16 +195,16 @@ class api_v3_NoteTest extends CiviUnitTestCase {
    * Check civicrm_note update.
    */
   public function testUpdate() {
-    $params = array(
+    $params = [
       'id' => $this->_noteID,
       'contact_id' => $this->_contactID,
       'note' => 'Note1',
       'subject' => 'Hello World',
-    );
+    ];
 
     // Update Note.
     $this->callAPISuccess('note', 'create', $params);
-    $note = $this->callAPISuccess('Note', 'Get', array());
+    $note = $this->callAPISuccess('Note', 'Get', []);
     $this->assertEquals($note['id'], $this->_noteID);
     $this->assertEquals($note['values'][$this->_noteID]['entity_id'], $this->_contactID);
     $this->assertEquals($note['values'][$this->_noteID]['entity_table'], 'civicrm_contact');
@@ -218,7 +218,7 @@ class api_v3_NoteTest extends CiviUnitTestCase {
    * Error expected.
    */
   public function testDeleteWithEmptyParams() {
-    $this->callAPIFailure('note', 'delete', array(), 'Mandatory key(s) missing from params array: id');
+    $this->callAPIFailure('note', 'delete', [], 'Mandatory key(s) missing from params array: id');
   }
 
   /**
@@ -227,9 +227,9 @@ class api_v3_NoteTest extends CiviUnitTestCase {
    * Error expected
    */
   public function testDeleteWithWrongID() {
-    $params = array(
+    $params = [
       'id' => 99999,
-    );
+    ];
     $this->callAPIFailure('note', 'delete', $params, 'Error while deleting Note');
   }
 
@@ -239,36 +239,36 @@ class api_v3_NoteTest extends CiviUnitTestCase {
   public function testDelete() {
     $additionalNote = $this->noteCreate($this->_contactID);
 
-    $params = array(
+    $params = [
       'id' => $additionalNote['id'],
-    );
+    ];
 
     $this->callAPIAndDocument('note', 'delete', $params, __FUNCTION__, __FILE__);
   }
 
   public function testNoteJoin() {
-    $org = $this->callAPISuccess('Contact', 'create', array(
+    $org = $this->callAPISuccess('Contact', 'create', [
       'contact_type' => 'Organization',
       'organization_name' => 'Org123',
-      'api.Note.create' => array(
+      'api.Note.create' => [
         'note' => 'Hello join',
-      ),
-    ));
+      ],
+    ]);
     // Fetch contact info via join
-    $result = $this->callAPISuccessGetSingle('Note', array(
-      'return' => array("entity_id.organization_name", "note"),
+    $result = $this->callAPISuccessGetSingle('Note', [
+      'return' => ["entity_id.organization_name", "note"],
       'entity_id' => $org['id'],
       'entity_table' => "civicrm_contact",
-    ));
+    ]);
     $this->assertEquals('Org123', $result['entity_id.organization_name']);
     $this->assertEquals('Hello join', $result['note']);
     // This should return no results by restricting contact_type
-    $result = $this->callAPISuccess('Note', 'get', array(
-      'return' => array("entity_id.organization_name"),
+    $result = $this->callAPISuccess('Note', 'get', [
+      'return' => ["entity_id.organization_name"],
       'entity_id' => $org['id'],
       'entity_table' => "civicrm_contact",
       'entity_id.contact_type' => "Individual",
-    ));
+    ]);
     $this->assertEquals(0, $result['count']);
   }
 

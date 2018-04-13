@@ -71,14 +71,14 @@ class WebTest_Campaign_OnlineContributionTest extends CiviSeleniumTestCase {
     $this->waitForElementPresent('link=Remove');
 
     // Enable CiviCampaign module if necessary
-    $this->enableComponents(array('CiviCampaign'));
+    $this->enableComponents(['CiviCampaign']);
 
     // add the required permission
-    $permissions = array(
+    $permissions = [
       'edit-2-administer-civicampaign',
       'edit-1-make-online-contributions',
       'edit-1-profile-listings-and-forms',
-    );
+    ];
     $this->changePermissions($permissions);
 
     // Log in as normal user
@@ -95,7 +95,7 @@ class WebTest_Campaign_OnlineContributionTest extends CiviSeleniumTestCase {
     $this->type("description", "This is a test campaign");
 
     // include groups for the campaign
-    $this->multiselect2("includeGroups", array("$groupName", "Advisory Board"));
+    $this->multiselect2("includeGroups", ["$groupName", "Advisory Board"]);
 
     // fill the end date for campaign
     $this->webtestFillDate("end_date", "+1 year");

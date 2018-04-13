@@ -62,7 +62,7 @@ class WebTest_Pledge_StandaloneAddDeleteTest extends CiviSeleniumTestCase {
     $this->waitForElementPresent('_qf_PledgeView_next-bottom');
     $pledgeDate = date('F jS, Y', strtotime('now'));
 
-    $this->webtestVerifyTabularData(array(
+    $this->webtestVerifyTabularData([
         'Pledge By' => $contact['display_name'],
         'Total Pledge Amount' => '$ 2,400.00',
         'To be paid in' => '10 installments of $ 240.00 every 1 month(s)',
@@ -70,7 +70,7 @@ class WebTest_Pledge_StandaloneAddDeleteTest extends CiviSeleniumTestCase {
         'Pledge Made' => $pledgeDate,
         'Financial Type' => 'Donation',
         'Pledge Status' => 'Pending',
-      )
+      ]
     );
     $this->click('_qf_PledgeView_next-bottom');
     $this->waitForElementPresent("xpath=//div[@class='view-content']//table[@class='selector row-highlight']//tbody/tr[1]/td[1]/a");

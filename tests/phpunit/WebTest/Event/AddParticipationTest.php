@@ -52,7 +52,7 @@ class WebTest_Event_AddParticipationTest extends CiviSeleniumTestCase {
     $this->select2('event_id', "Rain-forest Cup Youth Soccer Tournament");
 
     // Select role
-    $this->multiselect2('role_id', array('Volunteer'));
+    $this->multiselect2('role_id', ['Volunteer']);
 
     // Choose Registration Date.
     // Using helper webtestFillDate function.
@@ -98,27 +98,27 @@ class WebTest_Event_AddParticipationTest extends CiviSeleniumTestCase {
     $this->clickAjaxLink("xpath=//*[@id='Search']/table/tbody/tr[1]/td[8]/span/a[text()='View']", '_qf_ParticipantView_cancel-bottom');
 
     $this->webtestVerifyTabularData(
-      array(
+      [
         'Event' => 'Rain-forest Cup Youth Soccer Tournament',
         'Participant Role' => 'Attendee',
         'Status' => 'Registered',
         'Event Source' => 'Event StandaloneAddTest Webtest',
         'Fees' => '$ 800.00',
-      )
+      ]
     );
     // check contribution record as well
     //click through to the contribution view screen
     $this->clickAjaxLink("xpath=id('ParticipantView')/div[2]/table[@class='selector row-highlight']/tbody/tr[1]/td[8]/span/a[text()='View']", '_qf_ContributionView_cancel-bottom');
 
     $this->webtestVerifyTabularData(
-      array(
+      [
         'From' => $displayName,
         'Financial Type' => 'Event Fee',
         'Total Amount' => '$ 800.00',
         'Contribution Status' => 'Completed',
         'Payment Method' => 'Check',
         'Check Number' => '1044',
-      )
+      ]
     );
   }
 
@@ -238,7 +238,7 @@ class WebTest_Event_AddParticipationTest extends CiviSeleniumTestCase {
     $this->select2('event_id', "Rain-forest Cup Youth Soccer Tournament");
 
     // Select roles
-    $this->multiselect2('role_id', array('Volunteer', 'Host'));
+    $this->multiselect2('role_id', ['Volunteer', 'Host']);
 
     $this->waitForElementPresent("xpath=//div[@class='custom-group custom-group-$customGroupTitle crm-accordion-wrapper collapsed']");
     $this->click("xpath=//div[@class='custom-group custom-group-$customGroupTitle crm-accordion-wrapper collapsed']//div[1]");
@@ -285,13 +285,13 @@ class WebTest_Event_AddParticipationTest extends CiviSeleniumTestCase {
     $this->clickAjaxLink("xpath=//form[@class='CRM_Event_Form_Search crm-search-form']/table/tbody/tr[1]/td[8]/span/a[text()='View']", '_qf_ParticipantView_cancel-bottom');
 
     $this->webtestVerifyTabularData(
-      array(
+      [
         'Event' => 'Rain-forest Cup Youth Soccer Tournament',
         'Participant Role' => 'Attendee, Volunteer, Host',
         'Status' => 'Registered',
         'Event Source' => 'Event StandaloneAddTest Webtest',
         'Fees' => '$ 800.00',
-      )
+      ]
     );
 
     $this->assertTrue($this->isTextPresent("$customGroupTitle"));
@@ -303,13 +303,13 @@ class WebTest_Event_AddParticipationTest extends CiviSeleniumTestCase {
     $this->clickAjaxLink("xpath=id('ParticipantView')/div[2]/table[@class='selector row-highlight']/tbody/tr[1]/td[8]/span/a[text()='View']", '_qf_ContributionView_cancel-bottom');
 
     $this->webtestVerifyTabularData(
-      array(
+      [
         'From' => $displayName,
         'Financial Type' => 'Event Fee',
         'Contribution Status' => 'Completed',
         'Payment Method' => 'Check',
         'Check Number' => '1044',
-      )
+      ]
     );
     $this->verifyText("xpath=//table/tbody/tr/td[text()='Total Amount']/following-sibling::td/strong", preg_quote('$ 800.00'));
   }
@@ -321,7 +321,7 @@ class WebTest_Event_AddParticipationTest extends CiviSeleniumTestCase {
 
     $this->openCiviPage("participant/add", "reset=1&action=add&context=standalone&mode=test&eid=3");
 
-    $contacts = array();
+    $contacts = [];
 
     $this->assertTrue($this->isTextPresent("New Event Registration"), "Page title 'New Event Registration' missing");
     $this->assertTrue($this->isTextPresent("A TEST transaction will be submitted"), "test mode status 'A TEST transaction will be submitted' missing");
@@ -354,25 +354,25 @@ class WebTest_Event_AddParticipationTest extends CiviSeleniumTestCase {
     $this->markTestSkipped('Skipping for now as it works fine locally.');
     $this->webtestLogin();
 
-    $customSets = array(
-      array(
+    $customSets = [
+      [
         'entity' => 'ParticipantEventName',
         'subEntity' => 'Fall Fundraiser Dinner',
-        'triggerElement' => array(
+        'triggerElement' => [
           'name' => "event_id",
           'type' => "select2",
-        ),
-      ),
-      array(
+        ],
+      ],
+      [
         'entity' => 'ParticipantRole',
         'subEntity' => 'Attendee',
-        'triggerElement' => array(
+        'triggerElement' => [
           'name' => 'role_id',
           'type' => "select",
-        ),
-      ),
-    );
-    $pageUrl = array('url' => "participant/add", 'args' => "reset=1&action=add&context=standalone");
+        ],
+      ],
+    ];
+    $pageUrl = ['url' => "participant/add", 'args' => "reset=1&action=add&context=standalone"];
     $this->customFieldSetLoadOnTheFlyCheck($customSets, $pageUrl, TRUE);
   }
 
@@ -382,46 +382,46 @@ class WebTest_Event_AddParticipationTest extends CiviSeleniumTestCase {
   public function testCheckDuplicateCustomDataLoad() {
     $this->webtestLogin();
 
-    $customSets = array(
-      array(
+    $customSets = [
+      [
         'entity' => 'ParticipantEventType',
         'subEntity' => '- Any -',
-        'triggerElement' => array(
+        'triggerElement' => [
           'name' => "event_id",
           'type' => "select",
-        ),
-      ),
-      array(
+        ],
+      ],
+      [
         'entity' => 'ParticipantEventName',
         'subEntity' => '- Any -',
-        'triggerElement' => array(
+        'triggerElement' => [
           'name' => "event_id",
           'type' => "select",
-        ),
-      ),
-      array(
+        ],
+      ],
+      [
         'entity' => 'ParticipantEventName',
         'subEntity' => 'Rain-forest Cup Youth Soccer Tournament',
-        'triggerElement' => array(
+        'triggerElement' => [
           'name' => "event_id",
           'type' => "select",
-        ),
-      ),
-      array(
+        ],
+      ],
+      [
         'entity' => 'ParticipantRole',
         'subEntity' => '- Any -',
-        'triggerElement' => array(
+        'triggerElement' => [
           'type' => "checkbox",
-        ),
-      ),
-      array(
+        ],
+      ],
+      [
         'entity' => 'ParticipantRole',
         'subEntity' => 'Volunteer',
-        'triggerElement' => array(
+        'triggerElement' => [
           'type' => "checkbox",
-        ),
-      ),
-    );
+        ],
+      ],
+    ];
 
     $return = $this->addCustomGroupField($customSets);
 
@@ -431,7 +431,7 @@ class WebTest_Event_AddParticipationTest extends CiviSeleniumTestCase {
     $this->select2('event_id', "Rain-forest Cup Youth Soccer Tournament");
 
     // Select role.
-    $this->multiselect2('role_id', array('Volunteer'));
+    $this->multiselect2('role_id', ['Volunteer']);
 
     foreach ($return as $values) {
       foreach ($values as $entityType => $customData) {

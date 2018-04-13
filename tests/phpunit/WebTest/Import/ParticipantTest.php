@@ -46,12 +46,12 @@ class WebTest_Import_ParticipantTest extends ImportCiviSeleniumTestCase {
     list($headers, $rows) = $this->_participantIndividualCSVData();
 
     // Create and import csv from provided data and check imported data.
-    $fieldMapper = array(
+    $fieldMapper = [
       'mapper[0][0]' => 'email',
       'mapper[1][0]' => 'event_id',
       'mapper[2][0]' => 'participant_fee_level',
       'mapper[4][0]' => 'participant_status_id',
-    );
+    ];
 
     $this->importCSVComponent('Event', $headers, $rows, 'Individual', 'Skip', $fieldMapper);
   }
@@ -67,12 +67,12 @@ class WebTest_Import_ParticipantTest extends ImportCiviSeleniumTestCase {
     list($headers, $rows) = $this->_participantOrganizationCSVData();
 
     // Create and import csv from provided data and check imported data.
-    $fieldMapper = array(
+    $fieldMapper = [
       'mapper[0][0]' => 'organization_name',
       'mapper[1][0]' => 'event_id',
       'mapper[2][0]' => 'participant_fee_level',
       'mapper[4][0]' => 'participant_status_id',
-    );
+    ];
 
     $this->importCSVComponent('Event', $headers, $rows, 'Organization', 'Skip', $fieldMapper);
   }
@@ -88,12 +88,12 @@ class WebTest_Import_ParticipantTest extends ImportCiviSeleniumTestCase {
     list($headers, $rows) = $this->_participantHouseholdCSVData();
 
     // Create and import csv from provided data and check imported data.
-    $fieldMapper = array(
+    $fieldMapper = [
       'mapper[0][0]' => 'household_name',
       'mapper[1][0]' => 'event_id',
       'mapper[2][0]' => 'participant_fee_level',
       'mapper[4][0]' => 'participant_status_id',
-    );
+    ];
 
     $this->importCSVComponent('Event', $headers, $rows, 'Household', 'Skip', $fieldMapper);
   }
@@ -114,35 +114,35 @@ class WebTest_Import_ParticipantTest extends ImportCiviSeleniumTestCase {
     $email2 = 'mail_' . substr(sha1(rand()), 0, 7) . '@example.com';
     $this->webtestAddContact($firstName2, 'Anderson', $email2);
 
-    $headers = array(
+    $headers = [
       'email' => 'Email',
       'event_id' => 'Event Id',
       'fee_level' => 'Fee Level',
       'role' => 'Participant Role',
       'status' => 'Participant Status',
       'register_date' => 'Register date',
-    );
+    ];
 
-    $rows = array(
-      array(
+    $rows = [
+      [
         'email' => $email1,
         'event_id' => $eventInfo['event_id'],
         'fee_level' => 'Member',
         'role' => 1,
         'status' => 1,
         'register_date' => '2011-03-30',
-      ),
-      array(
+      ],
+      [
         'email' => $email2,
         'event_id' => $eventInfo['event_id'],
         'fee_level' => 'Non-Member',
         'role' => 1,
         'status' => 1,
         'register_date' => '2011-03-30',
-      ),
-    );
+      ],
+    ];
 
-    return array($headers, $rows);
+    return [$headers, $rows];
   }
 
   /**
@@ -159,35 +159,35 @@ class WebTest_Import_ParticipantTest extends ImportCiviSeleniumTestCase {
     $household2 = substr(sha1(rand()), 0, 7) . ' home';
     $this->webtestAddHousehold($household2, TRUE);
 
-    $headers = array(
+    $headers = [
       'household' => 'Household Name',
       'event_id' => 'Event Id',
       'fee_level' => 'Fee Level',
       'role' => 'Participant Role',
       'status' => 'Participant Status',
       'register_date' => 'Register date',
-    );
+    ];
 
-    $rows = array(
-      array(
+    $rows = [
+      [
         'household' => $household1,
         'event_id' => $eventInfo['event_id'],
         'fee_level' => 'Member',
         'role' => 1,
         'status' => 1,
         'register_date' => '2011-03-30',
-      ),
-      array(
+      ],
+      [
         'household' => $household2,
         'event_id' => $eventInfo['event_id'],
         'fee_level' => 'Non-Member',
         'role' => 1,
         'status' => 1,
         'register_date' => '2011-03-30',
-      ),
-    );
+      ],
+    ];
 
-    return array($headers, $rows);
+    return [$headers, $rows];
   }
 
   /**
@@ -203,35 +203,35 @@ class WebTest_Import_ParticipantTest extends ImportCiviSeleniumTestCase {
     $organization2 = substr(sha1(rand()), 0, 7) . ' org';
     $this->webtestAddOrganization($organization2, TRUE);
 
-    $headers = array(
+    $headers = [
       'organization' => 'Organization Name',
       'event_id' => 'Event Id',
       'fee_level' => 'Fee Level',
       'role' => 'Participant Role',
       'status' => 'Participant Status',
       'register_date' => 'Register date',
-    );
+    ];
 
-    $rows = array(
-      array(
+    $rows = [
+      [
         'organization' => $organization1,
         'event_id' => $eventInfo['event_id'],
         'fee_level' => 'Member',
         'role' => 1,
         'status' => 1,
         'register_date' => '2011-03-30',
-      ),
-      array(
+      ],
+      [
         'organization' => $organization2,
         'event_id' => $eventInfo['event_id'],
         'fee_level' => 'Non-Member',
         'role' => 1,
         'status' => 1,
         'register_date' => '2011-03-30',
-      ),
-    );
+      ],
+    ];
 
-    return array($headers, $rows);
+    return [$headers, $rows];
   }
 
   /**
@@ -243,7 +243,7 @@ class WebTest_Import_ParticipantTest extends ImportCiviSeleniumTestCase {
    * @return array
    *   event details of newly created event
    */
-  public function _addNewEvent($params = array()) {
+  public function _addNewEvent($params = []) {
 
     if (empty($params)) {
 
@@ -253,16 +253,16 @@ class WebTest_Import_ParticipantTest extends ImportCiviSeleniumTestCase {
 
       // create an event
       $eventTitle = 'My Conference - ' . substr(sha1(rand()), 0, 7);
-      $params = array(
+      $params = [
         'title' => $eventTitle,
         'template_id' => 6,
         'event_type_id' => 4,
         'payment_processor' => $processorName,
-        'fee_level' => array(
+        'fee_level' => [
           'Member' => "250.00",
           'Non-Member' => "325.00",
-        ),
-      );
+        ],
+      ];
     }
 
     $this->openCiviPage('event/add', 'reset=1&action=add', '_qf_EventInfo_upload-bottom');

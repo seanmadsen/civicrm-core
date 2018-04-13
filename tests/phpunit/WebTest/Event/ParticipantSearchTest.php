@@ -51,7 +51,7 @@ class WebTest_Event_ParticipantSearchTest extends CiviSeleniumTestCase {
     // visit event search page
     $this->openCiviPage("event/search", "reset=1");
 
-    $stringsToCheck = array(
+    $stringsToCheck = [
       'Participant Name',
       'Event Name',
       'Event Dates',
@@ -64,7 +64,7 @@ class WebTest_Event_ParticipantSearchTest extends CiviSeleniumTestCase {
       // check that the custom data is also there
       'Food Preference',
       'Soup Selection',
-    );
+    ];
     $this->_checkStrings($stringsToCheck);
   }
 
@@ -90,11 +90,11 @@ class WebTest_Event_ParticipantSearchTest extends CiviSeleniumTestCase {
 
     $this->clickLink("_qf_Search_refresh");
 
-    $stringsToCheck = array(
+    $stringsToCheck = [
       'No matches found for',
       'Name or Email LIKE',
       $crypticName,
-    );
+    ];
 
     $this->_checkStrings($stringsToCheck);
   }
@@ -113,11 +113,11 @@ class WebTest_Event_ParticipantSearchTest extends CiviSeleniumTestCase {
     $this->click("_qf_Search_refresh");
     $this->waitForPageToLoad($this->getTimeoutMsec());
 
-    $stringsToCheck = array(
+    $stringsToCheck = [
       "Event = $eventName",
       'Select Records:',
       'Edit Search Criteria',
-    );
+    ];
     $this->_checkStrings($stringsToCheck);
   }
 
@@ -134,13 +134,13 @@ class WebTest_Event_ParticipantSearchTest extends CiviSeleniumTestCase {
 
     $this->clickLink("_qf_Search_refresh");
 
-    $stringsToCheck = array(
+    $stringsToCheck = [
       "Start Date - greater than or equal to",
       '...AND...',
       "End Date - less than or equal to",
       'Select Records:',
       'Edit Search Criteria',
-    );
+    ];
 
     $this->_checkStrings($stringsToCheck);
   }
@@ -164,14 +164,14 @@ class WebTest_Event_ParticipantSearchTest extends CiviSeleniumTestCase {
     $this->waitForPageToLoad($this->getTimeoutMsec());
     $this->waitForElementPresent("xpath=//form[@id='Search']/div[3]/div/div[1]/div");
 
-    $stringsToCheck = array(
+    $stringsToCheck = [
       "Start Date - greater than or equal to",
       '...AND...',
       "End Date - less than or equal to",
       "Event Type = $eventTypeName",
       'Select Records:',
       'Edit Search Criteria',
-    );
+    ];
 
     $this->_checkStrings($stringsToCheck);
   }
@@ -190,14 +190,14 @@ class WebTest_Event_ParticipantSearchTest extends CiviSeleniumTestCase {
     // note since this is generated data
     // we are not sure if someone has this selection, so
     // we are not testing for an empty record set
-    $stringsToCheck = array("Soup Selection In Chicken Combo");
+    $stringsToCheck = ["Soup Selection In Chicken Combo"];
 
     $this->_checkStrings($stringsToCheck);
 
     $this->select("css=select[data-crm-custom='Food_Preference:Soup_Selection']", 'Salmon Stew');
     $this->clickLink("_qf_Search_refresh");
 
-    $stringsToCheck = array("Soup Selection In Salmon Stew");
+    $stringsToCheck = ["Soup Selection In Salmon Stew"];
 
     $this->_checkStrings($stringsToCheck);
   }
@@ -218,11 +218,11 @@ class WebTest_Event_ParticipantSearchTest extends CiviSeleniumTestCase {
     $this->waitForTextPresent("View Event Registration");
 
     // ensure we get to particpant view
-    $stringsToCheck = array(
+    $stringsToCheck = [
       "Name",
       "Event",
       "Participant Role",
-    );
+    ];
 
     $this->_checkStrings($stringsToCheck);
   }
@@ -243,11 +243,11 @@ class WebTest_Event_ParticipantSearchTest extends CiviSeleniumTestCase {
     $this->waitForElementPresent("xpath=//button//span[contains(text(),'Save')]");
 
     // ensure we get to particpant view
-    $stringsToCheck = array(
+    $stringsToCheck = [
       "Participant",
       "Event",
       "Participant Role",
-    );
+    ];
 
     $this->_checkStrings($stringsToCheck);
   }

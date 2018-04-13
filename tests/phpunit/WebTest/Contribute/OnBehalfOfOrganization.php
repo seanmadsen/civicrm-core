@@ -43,11 +43,11 @@ class WebTest_Contribute_OnBehalfOfOrganization extends CiviSeleniumTestCase {
     $firstName = 'John_' . substr(sha1(rand()), 0, 7);
     $lastName = 'Anderson_' . substr(sha1(rand()), 0, 7);
     $email = "{$firstName}.{$lastName}@example.com";
-    $contactParams = array(
+    $contactParams = [
       'first_name' => $firstName,
       'last_name' => $lastName,
       'email-5' => $email,
-    );
+    ];
     $streetAddress = "100 Main Street";
 
     //adding contact for membership sign up
@@ -83,7 +83,7 @@ class WebTest_Contribute_OnBehalfOfOrganization extends CiviSeleniumTestCase {
     $pageId = $this->webtestAddContributionPage($hash,
       $rand,
       $pageTitle,
-      array($processorName => $processorType),
+      [$processorName => $processorType],
       $amountSection,
       $payLater,
       $onBehalf,
@@ -116,7 +116,7 @@ class WebTest_Contribute_OnBehalfOfOrganization extends CiviSeleniumTestCase {
     $this->webtestLogin();
 
     // Create three new individual
-    $individuals = $organizations = array();
+    $individuals = $organizations = [];
     for ($i = 0; $i < 3; $i++) {
       $firstName = 'John_x_' . substr(sha1(rand()), 0, 7);
       $individuals[] = $firstName;
@@ -127,7 +127,7 @@ class WebTest_Contribute_OnBehalfOfOrganization extends CiviSeleniumTestCase {
     for ($i = 0; $i < 2; $i++) {
       $orgName1 = "Org WebAccess" . substr(sha1(rand()), 0, 7);
       $orgEmail1 = substr(sha1(rand()), 0, 7) . "@web.com";
-      $organizations[] = array('name' => $orgName1, 'email' => $orgEmail1);
+      $organizations[] = ['name' => $orgName1, 'email' => $orgEmail1];
       $this->webtestAddOrganization($orgName1, $orgEmail1);
     }
 
@@ -180,7 +180,7 @@ class WebTest_Contribute_OnBehalfOfOrganization extends CiviSeleniumTestCase {
     $onBehalf = 'optional';
     $pledges = FALSE;
     $recurring = FALSE;
-    $memberships = array(array('id' => $memTypeId, 'name' => $title, 'default' => 1));
+    $memberships = [['id' => $memTypeId, 'name' => $title, 'default' => 1]];
     $memPriceSetId = NULL;
     $friend = TRUE;
     $profilePreId = NULL;
@@ -198,7 +198,7 @@ class WebTest_Contribute_OnBehalfOfOrganization extends CiviSeleniumTestCase {
     $pageId = $this->webtestAddContributionPage($hash,
       $rand,
       $pageTitle,
-      array($processorName => $processorType),
+      [$processorName => $processorType],
       $amountSection,
       $payLater,
       $onBehalf,
@@ -222,7 +222,7 @@ class WebTest_Contribute_OnBehalfOfOrganization extends CiviSeleniumTestCase {
 
     //Check if all three of the individuals has inherited membership
     $this->openCiviPage("member/search", "reset=1");
-    $this->multiselect2("membership_type_id", array($title));
+    $this->multiselect2("membership_type_id", [$title]);
     $this->click("CIVICRM_QFID_0_member_is_primary");
     $this->click('_qf_Search_refresh');
     // It suppose to be 3 but since we are registring contribution onBehalf of anonymous contact(email-5)
@@ -615,7 +615,7 @@ class WebTest_Contribute_OnBehalfOfOrganization extends CiviSeleniumTestCase {
     $this->enableComponents("CiviCampaign");
 
     // add the required permission
-    $permission = array('edit-2-administer-civicampaign');
+    $permission = ['edit-2-administer-civicampaign'];
     $this->changePermissions($permission);
 
     // Log in as normal user
@@ -760,12 +760,12 @@ class WebTest_Contribute_OnBehalfOfOrganization extends CiviSeleniumTestCase {
     $this->clickLink("xpath=//div[@id='contributionSearch']//table//tbody/tr[1]/td[11]/span/a[text()='View']", "_qf_ContributionView_cancel-bottom");
 
     // verify contrb created
-    $expected = array(
+    $expected = [
       1 => $orgName1,
       2 => 'Donation',
       10 => $title,
       11 => $pageTitle,
-    );
+    ];
     foreach ($expected as $value => $label) {
       $this->verifyText("xpath=id( 'ContributionView' )/div[2]/table[1]/tbody/tr[$value]/td[2]", preg_quote($label));
     }
@@ -865,7 +865,7 @@ class WebTest_Contribute_OnBehalfOfOrganization extends CiviSeleniumTestCase {
     $this->enableComponents("CiviCampaign");
 
     // add the required permission
-    $permission = array('edit-2-administer-civicampaign');
+    $permission = ['edit-2-administer-civicampaign'];
     $this->changePermissions($permission);
 
     // Log in as normal user
@@ -1106,11 +1106,11 @@ class WebTest_Contribute_OnBehalfOfOrganization extends CiviSeleniumTestCase {
     $this->clickLink("xpath=//div[@id='memberSearch']//table//tbody/tr[1]/td[11]/span/a[text()='View']", "_qf_MembershipView_cancel-bottom");
 
     //verify contrb created
-    $expected = array(
+    $expected = [
       1 => $orgName1,
       2 => $title1,
       3 => 'New',
-    );
+    ];
     foreach ($expected as $value => $label) {
       $this->verifyText("xpath=//form[@id='MembershipView']/div[2]/div/table/tbody/tr[$value]/td[2]", preg_quote($label));
     }
@@ -1123,10 +1123,10 @@ class WebTest_Contribute_OnBehalfOfOrganization extends CiviSeleniumTestCase {
     $this->waitForPageToLoad($this->getTimeoutMsec());
 
     //verify contrb created
-    $expected = array(
+    $expected = [
       3 => $title1,
       4 => 'New',
-    );
+    ];
     foreach ($expected as $value => $label) {
       $this->verifyText("xpath=//form[@id='MembershipView']/div[2]/div/table/tbody/tr[$value]/td[2]", preg_quote($label));
     }
@@ -1232,7 +1232,7 @@ class WebTest_Contribute_OnBehalfOfOrganization extends CiviSeleniumTestCase {
     $pageId = $this->webtestAddContributionPage($hash,
       $rand,
       $pageTitle,
-      array($processorName => $processorType),
+      [$processorName => $processorType],
       $amountSection,
       $payLater,
       $onBehalf,

@@ -112,7 +112,7 @@ class WebTest_Contact_PrivacyOptionSearchTest extends CiviSeleniumTestCase {
     $this->select("group", "label={$groupName}");
     $this->waitForTextPresent($groupName);
 
-    $this->multiselect2('privacy_options', array('Do not phone', 'Do not email'));
+    $this->multiselect2('privacy_options', ['Do not phone', 'Do not email']);
 
     $this->click("_qf_Advanced_refresh");
     $this->waitForPageToLoad(2 * $this->getTimeoutMsec());
@@ -127,7 +127,7 @@ class WebTest_Contact_PrivacyOptionSearchTest extends CiviSeleniumTestCase {
 
     $this->click("CIVICRM_QFID_2_privacy_toggle");
 
-    $this->multiselect2('privacy_options', array('Do not phone', 'Do not email'));
+    $this->multiselect2('privacy_options', ['Do not phone', 'Do not email']);
 
     $this->click("_qf_Advanced_refresh");
     $this->waitForPageToLoad(2 * $this->getTimeoutMsec());
@@ -143,7 +143,7 @@ class WebTest_Contact_PrivacyOptionSearchTest extends CiviSeleniumTestCase {
 
     $this->click("CIVICRM_QFID_2_privacy_toggle");
 
-    $this->multiselect2('privacy_options', array('Do not phone', 'Do not trade'));
+    $this->multiselect2('privacy_options', ['Do not phone', 'Do not trade']);
 
     $this->select('privacy_operator', 'value=AND');
 

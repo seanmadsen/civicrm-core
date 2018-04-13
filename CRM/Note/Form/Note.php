@@ -94,7 +94,7 @@ class CRM_Note_Form_Note extends CRM_Core_Form {
    * @return void
    */
   public function setDefaultValues() {
-    $defaults = array();
+    $defaults = [];
 
     if ($this->_action & CRM_Core_Action::UPDATE) {
       if (isset($this->_id)) {
@@ -119,22 +119,22 @@ class CRM_Note_Form_Note extends CRM_Core_Form {
    */
   public function buildQuickForm() {
     if ($this->_action & CRM_Core_Action::DELETE) {
-      $this->addButtons(array(
-          array(
+      $this->addButtons([
+          [
             'type' => 'next',
             'name' => ts('Delete'),
             'isDefault' => TRUE,
-          ),
-          array(
+          ],
+          [
             'type' => 'cancel',
             'name' => ts('Cancel'),
-          ),
-        )
+          ],
+        ]
       );
       return;
     }
 
-    $this->add('text', 'subject', ts('Subject:'), array('size' => 20));
+    $this->add('text', 'subject', ts('Subject:'), ['size' => 20]);
     $this->add('textarea', 'note', ts('Note:'), CRM_Core_DAO::getAttribute('CRM_Core_DAO_Note', 'note'), TRUE);
     $this->add('select', 'privacy', ts('Privacy:'), CRM_Core_OptionGroup::values('note_privacy'));
 
@@ -143,17 +143,17 @@ class CRM_Note_Form_Note extends CRM_Core_Form {
     // add attachments part
     CRM_Core_BAO_File::buildAttachment($this, 'civicrm_note', $this->_id, NULL, TRUE);
 
-    $this->addButtons(array(
-        array(
+    $this->addButtons([
+        [
           'type' => 'upload',
           'name' => ts('Save'),
           'isDefault' => TRUE,
-        ),
-        array(
+        ],
+        [
           'type' => 'cancel',
           'name' => ts('Cancel'),
-        ),
-      )
+        ],
+      ]
     );
   }
 
@@ -190,7 +190,7 @@ class CRM_Note_Form_Note extends CRM_Core_Form {
     // add attachments as needed
     CRM_Core_BAO_File::formatAttachment($params, $params, 'civicrm_note', $params['id']);
 
-    $ids = array();
+    $ids = [];
     $note = CRM_Core_BAO_Note::add($params, $ids);
 
     CRM_Core_Session::setStatus(ts('Your Note has been saved.'), ts('Saved'), 'success');

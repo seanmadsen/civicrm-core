@@ -62,7 +62,7 @@ class WebTest_Pledge_AddCancelPaymentTest extends CiviSeleniumTestCase {
     $this->waitForElementPresent('_qf_PledgeView_next-bottom');
     $pledgeDate = date('F jS, Y', strtotime('now'));
 
-    $this->webtestVerifyTabularData(array(
+    $this->webtestVerifyTabularData([
         'Pledge By' => $contact['display_name'],
         'Total Pledge Amount' => '$ 1,200.00',
         'To be paid in' => '12 installments of $ 100.00 every 1 month(s)',
@@ -70,7 +70,7 @@ class WebTest_Pledge_AddCancelPaymentTest extends CiviSeleniumTestCase {
         'Pledge Made' => $pledgeDate,
         'Financial Type' => 'Donation',
         'Pledge Status' => 'Pending',
-      )
+      ]
     );
     //Edit and add the first payment for 300.00
     $this->click('_qf_PledgeView_next-bottom');

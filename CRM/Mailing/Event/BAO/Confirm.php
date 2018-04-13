@@ -91,7 +91,7 @@ class CRM_Mailing_Event_BAO_Confirm extends CRM_Mailing_Event_DAO_Confirm {
     $ce->save();
 
     CRM_Contact_BAO_GroupContact::addContactsToGroup(
-      array($contact_id),
+      [$contact_id],
       $se->group_id,
       'Email',
       'Added',
@@ -140,7 +140,7 @@ class CRM_Mailing_Event_BAO_Confirm extends CRM_Mailing_Event_DAO_Confirm {
     $text = CRM_Utils_Token::replaceDomainTokens($text, $domain, FALSE, $tokens['text']);
     $text = CRM_Utils_Token::replaceWelcomeTokens($text, $group->title, FALSE);
 
-    $mailParams = array(
+    $mailParams = [
       'groupName' => 'Mailing Event ' . $component->component_type,
       'subject' => $component->subject,
       'from' => "\"$domainEmailName\" <do-not-reply@$emailDomain>",
@@ -150,7 +150,7 @@ class CRM_Mailing_Event_BAO_Confirm extends CRM_Mailing_Event_DAO_Confirm {
       'returnPath' => "do-not-reply@$emailDomain",
       'html' => $html,
       'text' => $text,
-    );
+    ];
     // send - ignore errors because the desired status change has already been successful
     $unused_result = CRM_Utils_Mail::send($mailParams);
 

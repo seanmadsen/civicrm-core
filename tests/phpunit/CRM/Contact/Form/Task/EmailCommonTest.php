@@ -32,14 +32,14 @@ class CRM_Contact_Form_Task_EmailCommonTest extends CiviUnitTestCase {
 
   protected function setUp() {
     parent::setUp();
-    $this->_contactIds = array(
-      $this->individualCreate(array('first_name' => 'Antonia', 'last_name' => 'D`souza')),
-      $this->individualCreate(array('first_name' => 'Anthony', 'last_name' => 'Collins')),
-    );
-    $this->_optionValue = $this->callApiSuccess('optionValue', 'create', array(
+    $this->_contactIds = [
+      $this->individualCreate(['first_name' => 'Antonia', 'last_name' => 'D`souza']),
+      $this->individualCreate(['first_name' => 'Anthony', 'last_name' => 'Collins']),
+    ];
+    $this->_optionValue = $this->callApiSuccess('optionValue', 'create', [
       'label' => '"Seamus Lee" <seamus@example.com>',
       'option_group_id' => 'from_email_address',
-    ));
+    ]);
   }
 
   /**
@@ -48,9 +48,9 @@ class CRM_Contact_Form_Task_EmailCommonTest extends CiviUnitTestCase {
   public function testDomainEmailGeneration() {
     $emails = CRM_Core_BAO_Email::domainEmails();
     $this->assertNotEmpty($emails);
-    $optionValue = $this->callAPISuccess('OptionValue', 'Get', array(
+    $optionValue = $this->callAPISuccess('OptionValue', 'Get', [
       'id' => $this->_optionValue['id'],
-    ));
+    ]);
     $this->assertTrue(array_key_exists('"Seamus Lee" <seamus@example.com>', $emails));
     $this->assertEquals('"Seamus Lee" <seamus@example.com>', $optionValue['values'][$this->_optionValue['id']]['label']);
   }
@@ -63,20 +63,20 @@ class CRM_Contact_Form_Task_EmailCommonTest extends CiviUnitTestCase {
 
     for ($i = 0; $i < 27; $i++) {
       $email = 'spy' . $i . '@secretsquirrels.com';
-      $contactID = $this->individualCreate(array('email' => $email));
+      $contactID = $this->individualCreate(['email' => $email]);
       $form->_contactIds[$contactID] = $contactID;
-      $form->_toContactEmails[$this->callAPISuccessGetValue('Email', array('return' => 'id', 'email' => $email))] = $email;
+      $form->_toContactEmails[$this->callAPISuccessGetValue('Email', ['return' => 'id', 'email' => $email])] = $email;
     }
     $form->_allContactIds = $form->_toContactIds = $form->_contactIds;
-    $form->_emails = array(1 => 'mickey@mouse.com');
-    $form->_fromEmails = array(1 => 'mickey@mouse.com');
+    $form->_emails = [1 => 'mickey@mouse.com'];
+    $form->_fromEmails = [1 => 'mickey@mouse.com'];
 
     CRM_Contact_Form_Task_EmailCommon::buildQuickForm($form);
 
-    CRM_Contact_Form_Task_EmailCommon::submit($form, array(
+    CRM_Contact_Form_Task_EmailCommon::submit($form, [
       'fromEmailAddress' => 1,
       'subject' => 'Really interesting stuff',
-    ));
+    ]);
   }
 
 }

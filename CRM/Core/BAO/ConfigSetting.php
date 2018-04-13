@@ -108,7 +108,7 @@ class CRM_Core_BAO_ConfigSetting {
     if ($domain->config_backend) {
       $defaults = unserialize($domain->config_backend);
       if ($defaults === FALSE || !is_array($defaults)) {
-        $defaults = array();
+        $defaults = [];
         return FALSE;
       }
 
@@ -143,7 +143,7 @@ class CRM_Core_BAO_ConfigSetting {
 
     // on multi-lang sites based on request and civicrm_uf_match
     if ($multiLang) {
-      $languageLimit = array();
+      $languageLimit = [];
       if (is_array($settings->get('languageLimit'))) {
         $languageLimit = $settings->get('languageLimit');
       }
@@ -229,7 +229,7 @@ class CRM_Core_BAO_ConfigSetting {
    * @return string
    * @throws Exception
    */
-  public static function doSiteMove($defaultValues = array()) {
+  public static function doSiteMove($defaultValues = []) {
     $moveStatus = ts('Beginning site move process...') . '<br />';
     $settings = Civi::settings();
 
@@ -238,15 +238,15 @@ class CRM_Core_BAO_ConfigSetting {
       if ($value && $value != $settings->getDefault($key)) {
         if ($settings->getMandatory($key) === NULL) {
           $settings->revert($key);
-          $moveStatus .= ts("WARNING: The setting (%1) has been reverted.", array(
+          $moveStatus .= ts("WARNING: The setting (%1) has been reverted.", [
             1 => $key,
-          ));
+          ]);
           $moveStatus .= '<br />';
         }
         else {
-          $moveStatus .= ts("WARNING: The setting (%1) is overridden and could not be reverted.", array(
+          $moveStatus .= ts("WARNING: The setting (%1) is overridden and could not be reverted.", [
             1 => $key,
-          ));
+          ]);
           $moveStatus .= '<br />';
         }
       }
@@ -333,7 +333,7 @@ class CRM_Core_BAO_ConfigSetting {
 
     // get enabled-components from DB and add to the list
     $enabledComponents = Civi::settings()->get('enable_components');
-    $enabledComponents = array_diff($enabledComponents, array($componentName));
+    $enabledComponents = array_diff($enabledComponents, [$componentName]);
 
     self::setEnabledComponents($enabledComponents);
 
@@ -357,7 +357,7 @@ class CRM_Core_BAO_ConfigSetting {
    * @return array
    */
   public static function skipVars() {
-    return array(
+    return [
       'dsn',
       'templateCompileDir',
       'userFrameworkDSN',
@@ -383,7 +383,7 @@ class CRM_Core_BAO_ConfigSetting {
       'autocompleteContactReference',
       'checksumTimeout',
       'checksum_timeout',
-    );
+    ];
   }
 
   /**
@@ -407,26 +407,26 @@ class CRM_Core_BAO_ConfigSetting {
    * @return array
    */
   private static function getUrlSettings() {
-    return array(
+    return [
       'userFrameworkResourceURL',
       'imageUploadURL',
       'customCSSURL',
       'extensionsURL',
-    );
+    ];
   }
 
   /**
    * @return array
    */
   private static function getPathSettings() {
-    return array(
+    return [
       'uploadDir',
       'imageUploadDir',
       'customFileUploadDir',
       'customTemplateDir',
       'customPHPPathDir',
       'extensionsDir',
-    );
+    ];
   }
 
 }

@@ -28,7 +28,7 @@
 require_once '../civicrm.config.php';
 $config = CRM_Core_Config::singleton();
 
-CRM_Utils_System::loadBootStrap(array(), FALSE);
+CRM_Utils_System::loadBootStrap([], FALSE);
 
 CRM_Cxn_BAO_Cxn::createApiServer()
   ->handle(file_get_contents('php://input'))

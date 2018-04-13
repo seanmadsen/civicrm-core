@@ -50,7 +50,7 @@ class CRM_Member_ActionMapping extends \Civi\ActionSchedule\Mapping {
    * @param \Civi\ActionSchedule\Event\MappingRegisterEvent $registrations
    */
   public static function onRegisterActionMappings(\Civi\ActionSchedule\Event\MappingRegisterEvent $registrations) {
-    $registrations->register(CRM_Member_ActionMapping::create(array(
+    $registrations->register(CRM_Member_ActionMapping::create([
       'id' => CRM_Member_ActionMapping::MEMBERSHIP_TYPE_MAPPING_ID,
       'entity' => 'civicrm_membership',
       'entity_label' => ts('Membership'),
@@ -60,7 +60,7 @@ class CRM_Member_ActionMapping extends \Civi\ActionSchedule\Mapping {
       'entity_status_label' => ts('Auto Renew Options'),
       'entity_date_start' => 'membership_join_date',
       'entity_date_end' => 'membership_end_date',
-    )));
+    ]));
   }
 
   /**
@@ -132,8 +132,8 @@ WHERE     m.owner_membership_id IS NOT NULL AND
           ( rel.is_permission_a_b = 0 OR rel.is_permission_b_a = 0)
 
 ';
-    $excludeIds = array();
-    $dao = \CRM_Core_DAO::executeQuery($query, array());
+    $excludeIds = [];
+    $dao = \CRM_Core_DAO::executeQuery($query, []);
     while ($dao->fetch()) {
       if ($dao->slave_contact == $dao->contact_id_a && $dao->is_permission_a_b == 0) {
         $excludeIds[] = $dao->slave_contact;
@@ -146,9 +146,9 @@ WHERE     m.owner_membership_id IS NOT NULL AND
     if (!empty($excludeIds)) {
       return \CRM_Utils_SQL_Select::fragment()
         ->where("!casContactIdField NOT IN (#excludeMemberIds)")
-        ->param(array(
+        ->param([
           '#excludeMemberIds' => $excludeIds,
-        ));
+        ]);
     }
     return NULL;
   }

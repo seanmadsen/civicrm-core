@@ -65,7 +65,7 @@ class WebTest_Mailing_SpoolTest extends CiviSeleniumTestCase {
     // should really walk through the 'to' array, but this is legal according to the docs
     $this->assertContains($email, implode(';', $msg->to), 'Recipient incorrect.');
 
-    $context = new ezcMailPartWalkContext(array(get_class($this), 'mailWalkCallback'));
+    $context = new ezcMailPartWalkContext([get_class($this), 'mailWalkCallback']);
     $msg->walkParts($context, $msg);
 
     /*

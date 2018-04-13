@@ -44,7 +44,7 @@ class CRM_Group_Form_Search extends CRM_Core_Form {
    * @return array
    */
   public function setDefaultValues() {
-    $defaults = array();
+    $defaults = [];
     $defaults['group_status[1]'] = 1;
     return $defaults;
   }
@@ -71,23 +71,23 @@ class CRM_Group_Form_Search extends CRM_Core_Form {
     );
 
     $this->add('select', 'visibility', ts('Visibility'),
-      array('' => ts('- any visibility -')) + CRM_Core_SelectValues::ufVisibility(TRUE)
+      ['' => ts('- any visibility -')] + CRM_Core_SelectValues::ufVisibility(TRUE)
     );
 
-    $groupStatuses = array(ts('Enabled') => 1, ts('Disabled') => 2);
+    $groupStatuses = [ts('Enabled') => 1, ts('Disabled') => 2];
     $this->addCheckBox('group_status',
       ts('Status'),
       $groupStatuses,
       NULL, NULL, NULL, NULL, '&nbsp;&nbsp;&nbsp;'
     );
 
-    $this->addButtons(array(
-      array(
+    $this->addButtons([
+      [
         'type' => 'refresh',
         'name' => ts('Search'),
         'isDefault' => TRUE,
-      ),
-    ));
+      ],
+    ]);
 
     parent::buildQuickForm();
     $this->assign('suppressForm', TRUE);
@@ -97,7 +97,7 @@ class CRM_Group_Form_Search extends CRM_Core_Form {
     $params = $this->controller->exportValues($this->_name);
     $parent = $this->controller->getParent();
     if (!empty($params)) {
-      $fields = array('title', 'created_by', 'group_type', 'visibility', 'active_status', 'inactive_status');
+      $fields = ['title', 'created_by', 'group_type', 'visibility', 'active_status', 'inactive_status'];
       foreach ($fields as $field) {
         if (isset($params[$field]) &&
           !CRM_Utils_System::isNull($params[$field])

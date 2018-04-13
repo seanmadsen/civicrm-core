@@ -59,7 +59,7 @@ class CRM_Upgrade_Snapshot_V4p2_Price_BAO_FieldValue extends CRM_Upgrade_Snapsho
     }
     if (!empty($params['is_default'])) {
       $query = 'UPDATE civicrm_price_field_value SET is_default = 0 WHERE  price_field_id = %1';
-      $p = array(1 => array($params['price_field_id'], 'Integer'));
+      $p = [1 => [$params['price_field_id'], 'Integer']];
       CRM_Core_DAO::executeQuery($query, $p);
     }
 
@@ -93,7 +93,7 @@ class CRM_Upgrade_Snapshot_V4p2_Price_BAO_FieldValue extends CRM_Upgrade_Snapsho
         $oldWeight = CRM_Core_DAO::getFieldValue('CRM_Upgrade_Snapshot_V4p2_Price_DAO_FieldValue', $id, 'weight', 'id');
       }
 
-      $fieldValues = array('price_field_id' => CRM_Utils_Array::value('price_field_id', $params, 0));
+      $fieldValues = ['price_field_id' => CRM_Utils_Array::value('price_field_id', $params, 0)];
       $params['weight'] = CRM_Utils_Weight::updateOtherWeights('CRM_Upgrade_Snapshot_V4p2_Price_DAO_FieldValue', $oldWeight, $params['weight'], $fieldValues);
     }
     else {

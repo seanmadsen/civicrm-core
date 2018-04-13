@@ -33,8 +33,8 @@
  *
  * Settings metadata file
  */
-return array(
-  'geoAPIKey' => array(
+return [
+  'geoAPIKey' => [
     'add' => '4.7',
     'help_text' => NULL,
     'is_domain' => 1,
@@ -45,15 +45,15 @@ return array(
     'type' => 'String',
     'quick_form_type' => 'Element',
     'html_type' => 'text',
-    'html_attributes' => array(
+    'html_attributes' => [
       'size' => '32',
       'maxlength' => '64',
-    ),
+    ],
     'default' => NULL,
     'title' => 'Geo Provider Key',
     'description' => 'Enter the API key or Application ID associated with your geocoding provider (not required for Yahoo).',
-  ),
-  'geoProvider' => array(
+  ],
+  'geoProvider' => [
     'add' => '4.7',
     'help_text' => NULL,
     'is_domain' => 1,
@@ -64,17 +64,17 @@ return array(
     'type' => 'String',
     'quick_form_type' => 'Select',
     'html_type' => 'Select',
-    'html_attributes' => array(
+    'html_attributes' => [
       'class' => 'crm-select2',
-    ),
-    'pseudoconstant' => array(
+    ],
+    'pseudoconstant' => [
       'callback' => 'CRM_Core_SelectValues::geoProvider',
-    ),
+    ],
     'default' => NULL,
     'title' => 'Geocoding Provider',
     'description' => 'You may choose a different webservice for geocoding. This is required if there is no geo-coding plugin for your selected mapping provider. You can leave the Geocoding fields blank if you are using Google as your mapping provider.',
-  ),
-  'mapAPIKey' => array(
+  ],
+  'mapAPIKey' => [
     'add' => '4.7',
     'help_text' => NULL,
     'is_domain' => 1,
@@ -85,15 +85,15 @@ return array(
     'type' => 'String',
     'quick_form_type' => 'Element',
     'html_type' => 'text',
-    'html_attributes' => array(
+    'html_attributes' => [
       'size' => '32',
       'maxlength' => '64',
-    ),
+    ],
     'default' => NULL,
     'title' => 'Map Provider Key',
     'description' => 'Enter your API Key or Application ID. An API Key is currently optional for Google Maps API, but may be helpful diagnosing any problems and required for higher volumes of requests. Refer to developers.google.com for the latest information.',
-  ),
-  'mapProvider' => array(
+  ],
+  'mapProvider' => [
     'add' => '4.7',
     'help_text' => NULL,
     'is_domain' => 1,
@@ -104,14 +104,14 @@ return array(
     'type' => 'String',
     'quick_form_type' => 'Select',
     'html_type' => 'Select',
-    'html_attributes' => array(
+    'html_attributes' => [
       'class' => 'crm-select2',
-    ),
-    'pseudoconstant' => array(
+    ],
+    'pseudoconstant' => [
       'callback' => 'CRM_Core_SelectValues::mapProvider',
-    ),
+    ],
     'default' => NULL,
     'title' => 'Mapping Provider',
     'description' => 'Choose the mapping provider that has the best coverage for the majority of your contact addresses.',
-  ),
-);
+  ],
+];

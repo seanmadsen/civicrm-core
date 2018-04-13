@@ -148,7 +148,7 @@ class WebTest_Mailing_AddMessageTemplateTest extends CiviSeleniumTestCase {
     $this->assertChecked("xpath=//input[@id='schedule-send-now']");
     $this->waitForTextPresent("Mailing $mailingName Webtest");
     $this->click("xpath=//div[@class='content']//a[text()='~1 recipient']");
-    $this->webtestVerifyTabularData(array("$firstName Mailson" => "mailino$firstName@mailson.co.in"));
+    $this->webtestVerifyTabularData(["$firstName Mailson" => "mailino$firstName@mailson.co.in"]);
     $this->click("xpath=//button[@title='Close']");
     $this->waitForTextPresent("(Include: $groupName)");
 

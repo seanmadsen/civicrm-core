@@ -81,7 +81,7 @@ class CRM_Grant_Form_Search extends CRM_Core_Form_Search {
     $this->_actionButtonName = $this->getButtonName('next', 'action');
 
     $this->_done = FALSE;
-    $this->defaults = array();
+    $this->defaults = [];
 
     /*
      * we allow the controller to set force/reset externally, useful when we are being

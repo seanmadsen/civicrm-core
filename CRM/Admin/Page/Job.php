@@ -61,42 +61,42 @@ class CRM_Admin_Page_Job extends CRM_Core_Page_Basic {
    */
   public function &links() {
     if (!(self::$_links)) {
-      self::$_links = array(
-        CRM_Core_Action::FOLLOWUP => array(
+      self::$_links = [
+        CRM_Core_Action::FOLLOWUP => [
           'name' => ts('View Job Log'),
           'url' => 'civicrm/admin/joblog',
           'qs' => 'jid=%%id%%&reset=1',
           'title' => ts('See log entries for this Scheduled Job'),
-        ),
-        CRM_Core_Action::UPDATE => array(
+        ],
+        CRM_Core_Action::UPDATE => [
           'name' => ts('Edit'),
           'url' => 'civicrm/admin/job',
           'qs' => 'action=update&id=%%id%%&reset=1',
           'title' => ts('Edit Scheduled Job'),
-        ),
-        CRM_Core_Action::EXPORT => array(
+        ],
+        CRM_Core_Action::EXPORT => [
           'name' => ts('Execute Now'),
           'url' => 'civicrm/admin/job',
           'qs' => 'action=export&id=%%id%%&reset=1',
           'title' => ts('Execute Scheduled Job Now'),
-        ),
-        CRM_Core_Action::DISABLE => array(
+        ],
+        CRM_Core_Action::DISABLE => [
           'name' => ts('Disable'),
           'ref' => 'crm-enable-disable',
           'title' => ts('Disable Scheduled Job'),
-        ),
-        CRM_Core_Action::ENABLE => array(
+        ],
+        CRM_Core_Action::ENABLE => [
           'name' => ts('Enable'),
           'ref' => 'crm-enable-disable',
           'title' => ts('Enable Scheduled Job'),
-        ),
-        CRM_Core_Action::DELETE => array(
+        ],
+        CRM_Core_Action::DELETE => [
           'name' => ts('Delete'),
           'url' => 'civicrm/admin/job',
           'qs' => 'action=delete&id=%%id%%',
           'title' => ts('Delete Scheduled Job'),
-        ),
-      );
+        ],
+      ];
     }
     return self::$_links;
   }
@@ -111,14 +111,14 @@ class CRM_Admin_Page_Job extends CRM_Core_Page_Basic {
   public function run() {
     // set title and breadcrumb
     CRM_Utils_System::setTitle(ts('Settings - Scheduled Jobs'));
-    $breadCrumb = array(
-      array(
+    $breadCrumb = [
+      [
         'title' => ts('Scheduled Jobs'),
         'url' => CRM_Utils_System::url('civicrm/admin',
           'reset=1'
         ),
-      ),
-    );
+      ],
+    ];
     CRM_Utils_System::appendBreadCrumb($breadCrumb);
 
     $this->_id = CRM_Utils_Request::retrieve('id', 'String',
@@ -144,7 +144,7 @@ class CRM_Admin_Page_Job extends CRM_Core_Page_Basic {
   public function browse($action = NULL) {
     // check if non-prod mode is enabled.
     if (CRM_Core_Config::environment() != 'Production') {
-      CRM_Core_Session::setStatus(ts('Execution of scheduled jobs has been turned off by default since this is a non-production environment. You can override this for particular jobs by adding runInNonProductionEnvironment=TRUE as a parameter.'), ts("Non-production Environment"), "warning", array('expires' => 0));
+      CRM_Core_Session::setStatus(ts('Execution of scheduled jobs has been turned off by default since this is a non-production environment. You can override this for particular jobs by adding runInNonProductionEnvironment=TRUE as a parameter.'), ts("Non-production Environment"), "warning", ['expires' => 0]);
     }
 
     // using Export action for Execute. Doh.
@@ -156,7 +156,7 @@ class CRM_Admin_Page_Job extends CRM_Core_Page_Basic {
     }
 
     $sj = new CRM_Core_JobManager();
-    $rows = $temp = array();
+    $rows = $temp = [];
     foreach ($sj->jobs as $job) {
       $action = array_sum(array_keys($this->links()));
 
@@ -174,7 +174,7 @@ class CRM_Admin_Page_Job extends CRM_Core_Page_Basic {
       }
 
       $job->action = CRM_Core_Action::formLink(self::links(), $action,
-        array('id' => $job->id),
+        ['id' => $job->id],
         ts('more'),
         FALSE,
         'job.manage.action',

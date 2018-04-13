@@ -110,23 +110,23 @@ class CRM_Extension_Browser {
    */
   public function checkRequirements() {
     if (!$this->isEnabled()) {
-      return array();
+      return [];
     }
 
-    $errors = array();
+    $errors = [];
 
     if (!$this->cacheDir || !is_dir($this->cacheDir) || !is_writable($this->cacheDir)) {
       $civicrmDestination = urlencode(CRM_Utils_System::url('civicrm/admin/extensions', 'reset=1'));
       $url = CRM_Utils_System::url('civicrm/admin/setting/path', "reset=1&civicrmDestination=${civicrmDestination}");
-      $errors[] = array(
+      $errors[] = [
         'title' => ts('Directory Unwritable'),
         'message' => ts('Your extensions cache directory (%1) is not web server writable. Please go to the <a href="%2">path setting page</a> and correct it.<br/>',
-          array(
+          [
             1 => $this->cacheDir,
             2 => $url,
-          )
+          ]
         ),
-      );
+      ];
     }
 
     return $errors;
@@ -140,10 +140,10 @@ class CRM_Extension_Browser {
    */
   public function getExtensions() {
     if (!$this->isEnabled() || count($this->checkRequirements())) {
-      return array();
+      return [];
     }
 
-    $exts = array();
+    $exts = [];
 
     $remote = $this->_discoverRemote();
     if (is_array($remote)) {
@@ -196,7 +196,7 @@ class CRM_Extension_Browser {
       $remotes = json_decode($this->grabCachedJson(), TRUE);
     }
 
-    $this->_remotesDiscovered = array();
+    $this->_remotesDiscovered = [];
     foreach ((array) $remotes as $id => $xml) {
       $ext = CRM_Extension_Info::loadFromString($xml);
       $this->_remotesDiscovered[] = $ext;
@@ -237,7 +237,7 @@ class CRM_Extension_Browser {
   private function grabRemoteJson() {
 
     ini_set('default_socket_timeout', self::CHECK_TIMEOUT);
-    set_error_handler(array('CRM_Extension_Browser', 'downloadError'));
+    set_error_handler(['CRM_Extension_Browser', 'downloadError']);
 
     if (!ini_get('allow_url_fopen')) {
       ini_set('allow_url_fopen', 1);
@@ -246,7 +246,7 @@ class CRM_Extension_Browser {
     if (FALSE === $this->getRepositoryUrl()) {
       // don't check if the user has configured civi not to check an external
       // url for extensions. See CRM-10575.
-      return array();
+      return [];
     }
 
     $filename = $this->cacheDir . DIRECTORY_SEPARATOR . self::CACHE_JSON_FILE . '.' . md5($this->getRepositoryUrl());
@@ -259,7 +259,7 @@ class CRM_Extension_Browser {
     restore_error_handler();
 
     if ($status !== CRM_Utils_HttpClient::STATUS_OK) {
-      throw new CRM_Extension_Exception(ts('The CiviCRM public extensions directory at %1 could not be contacted - please check your webserver can make external HTTP requests or contact CiviCRM team on <a href="http://forum.civicrm.org/">CiviCRM forum</a>.', array(1 => $this->getRepositoryUrl())), 'connection_error');
+      throw new CRM_Extension_Exception(ts('The CiviCRM public extensions directory at %1 could not be contacted - please check your webserver can make external HTTP requests or contact CiviCRM team on <a href="http://forum.civicrm.org/">CiviCRM forum</a>.', [1 => $this->getRepositoryUrl()]), 'connection_error');
     }
 
     // Don't call grabCachedJson here, that would risk infinite recursion

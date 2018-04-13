@@ -43,7 +43,7 @@ class WebTest_Grant_ContactContextAddTest extends CiviSeleniumTestCase {
     $this->enableComponents("CiviGrant");
 
     // let's give full CiviGrant permissions to demo user (registered user).
-    $permission = array('edit-2-access-civigrant', 'edit-2-edit-grants', 'edit-2-delete-in-civigrant');
+    $permission = ['edit-2-access-civigrant', 'edit-2-edit-grants', 'edit-2-delete-in-civigrant'];
     $this->changePermissions($permission);
 
     // Log in as normal user
@@ -120,7 +120,7 @@ class WebTest_Grant_ContactContextAddTest extends CiviSeleniumTestCase {
     $gDate = date('F jS, Y', strtotime('now'));
 
     // verify tabular data for grant view
-    $this->webtestVerifyTabularData(array(
+    $this->webtestVerifyTabularData([
         'Name' => "$firstName $lastName",
         'Grant Status' => 'Submitted',
         'Grant Type' => 'Emergency',
@@ -133,7 +133,7 @@ class WebTest_Grant_ContactContextAddTest extends CiviSeleniumTestCase {
         'Grant Report Received?' => 'Yes',
         'Rationale' => 'Grant Rationale for webtest',
         'Notes' => "Grant Note for $firstName",
-      )
+      ]
     );
   }
 

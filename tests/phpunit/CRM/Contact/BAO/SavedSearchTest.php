@@ -48,12 +48,12 @@ class CRM_Contact_BAO_SavedSearchTest extends CiviUnitTestCase {
    * This method is called after a test is executed.
    */
   protected function tearDown() {
-    $this->quickCleanup(array(
+    $this->quickCleanup([
       'civicrm_mapping_field',
       'civicrm_mapping',
       'civicrm_group',
       'civicrm_saved_search',
-    ));
+    ]);
   }
 
   /**
@@ -62,14 +62,14 @@ class CRM_Contact_BAO_SavedSearchTest extends CiviUnitTestCase {
   public function testDefaultValues() {
     $sg = new CRM_Contact_Form_Search_Advanced();
     $sg->controller = new CRM_Core_Controller();
-    $sg->_formValues = array(
+    $sg->_formValues = [
       'group_search_selected' => 'group',
-      'privacy_options' => array('do_not_email'),
+      'privacy_options' => ['do_not_email'],
       'privacy_operator' => 'OR',
       'privacy_toggle' => 2,
       'operator' => 'AND',
       'component_mode' => 1,
-    );
+    ];
     CRM_Core_DAO::executeQuery(
       "INSERT INTO civicrm_saved_search (form_values) VALUES('" . serialize($sg->_formValues) . "')"
     );
@@ -91,7 +91,7 @@ class CRM_Contact_BAO_SavedSearchTest extends CiviUnitTestCase {
       "INSERT INTO civicrm_saved_search (form_values) VALUES('" . serialize($formValues) . "')"
     );
     $result = CRM_Contact_BAO_SavedSearch::getFormValues(CRM_Core_DAO::singleValueQuery('SELECT LAST_INSERT_ID()'));
-    $this->assertEquals(array('membership_type_id', 'membership_status_id'), array_keys($result));
+    $this->assertEquals(['membership_type_id', 'membership_status_id'], array_keys($result));
     foreach ($result as $key => $value) {
       $this->assertEquals($expectedResult, $value, 'failure on set ' . $searchDescription);
     }
@@ -103,7 +103,7 @@ class CRM_Contact_BAO_SavedSearchTest extends CiviUnitTestCase {
    */
   public function testRelativeDateValues() {
     $savedSearch = new CRM_Contact_BAO_SavedSearch();
-    $formValues = array(
+    $formValues = [
       'operator' => 'AND',
       'event_relative' => 'this.month',
       'participant_relative' => 'today',
@@ -111,19 +111,19 @@ class CRM_Contact_BAO_SavedSearchTest extends CiviUnitTestCase {
       'participant_test' => 0,
       'title' => 'testsmart',
       'radio_ts' => 'ts_all',
-    );
-    $queryParams = array();
+    ];
+    $queryParams = [];
     CRM_Contact_BAO_SavedSearch::saveRelativeDates($queryParams, $formValues);
     CRM_Contact_BAO_SavedSearch::saveSkippedElement($queryParams, $formValues);
     $savedSearch->form_values = serialize($queryParams);
     $savedSearch->save();
 
     $result = CRM_Contact_BAO_SavedSearch::getFormValues(CRM_Core_DAO::singleValueQuery('SELECT LAST_INSERT_ID()'));
-    $expectedResult = array(
+    $expectedResult = [
       'event' => 'this.month',
       'participant' => 'today',
       'contribution' => 'this.week',
-    );
+    ];
     $this->checkArrayEquals($result['relative_dates'], $expectedResult);
   }
 
@@ -134,10 +134,10 @@ class CRM_Contact_BAO_SavedSearchTest extends CiviUnitTestCase {
    * @return array
    */
   public function getSavedSearches() {
-    $return = array();
+    $return = [];
     $searches = $this->getSearches();
     foreach ($searches as $key => $search) {
-      $return[] = array($search['form_values'], $search['expected'], $key);
+      $return[] = [$search['form_values'], $search['expected'], $key];
     }
     return $return;
   }
@@ -150,78 +150,78 @@ class CRM_Contact_BAO_SavedSearchTest extends CiviUnitTestCase {
    * @return array
    */
   public function getSearches() {
-    return array(
-      'checkbox_format_1_first' => array(
-        'form_values' => array(
-          'member_membership_type_id' => array(1 => 1, 2 => 1),
-          'member_status_id' => array(1 => 1, 2 => 1),
-        ),
-        'expected' => array(1, 2),
-      ),
-      'checkbox_format_1_later' => array(
-        'form_values' => array(
-          'member_membership_type_id' => array(2 => 1, 1 => 1),
-          'member_status_id' => array(2 => 1, 1 => 1),
-        ),
-        'expected' => array(2, 1),
-      ),
-      'checkbox_format_single_use_1' => array(
-        'form_values' => array(
-          'member_membership_type_id' => array(1 => 1),
-          'member_status_id' => array(1 => 1),
-        ),
-        'expected' => array(1),
-      ),
-      'checkbox_format_single_not_1' => array(
-        'form_values' => array(
-          'member_membership_type_id' => array(2 => 1),
-          'member_status_id' => array(2 => 1),
-        ),
-        'expected' => array(2),
-      ),
-      'array_format' => array(
-        'form_values' => array(
-          'member_membership_type_id' => array(1, 2),
-          'member_status_id' => array(1, 2),
-        ),
-        'expected' => array(1, 2),
-      ),
-      'array_format_1_later' => array(
-        'form_values' => array(
-          'member_membership_type_id' => array(2, 1),
-          'member_status_id' => array(2, 1),
-        ),
-        'expected' => array(2, 1),
-      ),
-      'array_format_single_use_1' => array(
-        'form_values' => array(
-          'member_membership_type_id' => array(1),
-          'member_status_id' => array(1),
-        ),
-        'expected' => array(1),
-      ),
-      'array_format_single_not_1' => array(
-        'form_values' => array(
-          'member_membership_type_id' => array(2),
-          'member_status_id' => array(2),
-        ),
-        'expected' => array(2),
-      ),
-      'IN_format_single_not_1' => array(
-        'form_values' => array(
-          'membership_type_id' => array('IN' => array(2)),
-          'membership_status_id' => array('IN' => array(2)),
-        ),
-        'expected' => array(2),
-      ),
-      'IN_format_1_later' => array(
-        'form_values' => array(
-          'membership_type_id' => array('IN' => array(2, 1)),
-          'membership_status_id' => array('IN' => array(2, 1)),
-        ),
-        'expected' => array(2, 1),
-      ),
-    );
+    return [
+      'checkbox_format_1_first' => [
+        'form_values' => [
+          'member_membership_type_id' => [1 => 1, 2 => 1],
+          'member_status_id' => [1 => 1, 2 => 1],
+        ],
+        'expected' => [1, 2],
+      ],
+      'checkbox_format_1_later' => [
+        'form_values' => [
+          'member_membership_type_id' => [2 => 1, 1 => 1],
+          'member_status_id' => [2 => 1, 1 => 1],
+        ],
+        'expected' => [2, 1],
+      ],
+      'checkbox_format_single_use_1' => [
+        'form_values' => [
+          'member_membership_type_id' => [1 => 1],
+          'member_status_id' => [1 => 1],
+        ],
+        'expected' => [1],
+      ],
+      'checkbox_format_single_not_1' => [
+        'form_values' => [
+          'member_membership_type_id' => [2 => 1],
+          'member_status_id' => [2 => 1],
+        ],
+        'expected' => [2],
+      ],
+      'array_format' => [
+        'form_values' => [
+          'member_membership_type_id' => [1, 2],
+          'member_status_id' => [1, 2],
+        ],
+        'expected' => [1, 2],
+      ],
+      'array_format_1_later' => [
+        'form_values' => [
+          'member_membership_type_id' => [2, 1],
+          'member_status_id' => [2, 1],
+        ],
+        'expected' => [2, 1],
+      ],
+      'array_format_single_use_1' => [
+        'form_values' => [
+          'member_membership_type_id' => [1],
+          'member_status_id' => [1],
+        ],
+        'expected' => [1],
+      ],
+      'array_format_single_not_1' => [
+        'form_values' => [
+          'member_membership_type_id' => [2],
+          'member_status_id' => [2],
+        ],
+        'expected' => [2],
+      ],
+      'IN_format_single_not_1' => [
+        'form_values' => [
+          'membership_type_id' => ['IN' => [2]],
+          'membership_status_id' => ['IN' => [2]],
+        ],
+        'expected' => [2],
+      ],
+      'IN_format_1_later' => [
+        'form_values' => [
+          'membership_type_id' => ['IN' => [2, 1]],
+          'membership_status_id' => ['IN' => [2, 1]],
+        ],
+        'expected' => [2, 1],
+      ],
+    ];
   }
 
 }

@@ -142,12 +142,12 @@ class WebTest_Member_OnlineMembershipRenewTest extends CiviSeleniumTestCase {
     $this->waitForElementPresent("_qf_MembershipView_cancel-bottom");
 
     //View Membership Record
-    $verifyMembershipData = array(
+    $verifyMembershipData = [
       'Member' => $firstName . ' ' . $lastName,
       'Membership Type' => 'Student',
       'Status' => 'New',
       'Source' => 'Online Contribution: Member Signup and Renewal',
-    );
+    ];
     foreach ($verifyMembershipData as $label => $value) {
       $this->verifyText("xpath=//form[@id='MembershipView']//table/tbody/tr/td[text()='{$label}']/following-sibling::td",
         preg_quote($value)
@@ -198,12 +198,12 @@ class WebTest_Member_OnlineMembershipRenewTest extends CiviSeleniumTestCase {
     $this->waitForElementPresent("_qf_MembershipView_cancel-bottom");
 
     //View Membership Record
-    $verifyMembershipData = array(
+    $verifyMembershipData = [
       'Member' => $firstName . ' ' . $lastName,
       'Membership Type' => 'Student',
       'Status' => 'New',
       'Source' => 'Online Contribution: Member Signup and Renewal',
-    );
+    ];
     foreach ($verifyMembershipData as $label => $value) {
       $this->verifyText("xpath=//form[@id='MembershipView']//table/tbody/tr/td[text()='{$label}']/following-sibling::td",
         preg_quote($value)
@@ -313,12 +313,12 @@ class WebTest_Member_OnlineMembershipRenewTest extends CiviSeleniumTestCase {
     $memberSince = date('F jS, Y');
 
     //View Membership Record
-    $verifyMembershipData = array(
+    $verifyMembershipData = [
       'Member' => $firstName . ' ' . $lastName,
       'Membership Type' => 'General',
       'Status' => 'New',
       'Source' => 'Online Contribution: Member Signup and Renewal',
-    );
+    ];
     foreach ($verifyMembershipData as $label => $value) {
       $this->verifyText("xpath=//form[@id='MembershipView']//table/tbody/tr/td[text()='{$label}']/following-sibling::td",
         preg_quote($value)
@@ -349,13 +349,13 @@ class WebTest_Member_OnlineMembershipRenewTest extends CiviSeleniumTestCase {
     $membershipRenewedId = $this->urlArg('id');
 
     //View Membership Record
-    $verifyMembershipData = array(
+    $verifyMembershipData = [
       'Member' => $firstName . ' ' . $lastName,
       'Membership Type' => 'Student',
       'Status' => 'New',
       'Source' => 'Online Contribution: Member Signup and Renewal',
       'Member Since' => $memberSince,
-    );
+    ];
     foreach ($verifyMembershipData as $label => $value) {
       $this->verifyText("xpath=//form[@id='MembershipView']//table/tbody/tr/td[text()='{$label}']/following-sibling::td",
         preg_quote($value)
@@ -371,7 +371,7 @@ class WebTest_Member_OnlineMembershipRenewTest extends CiviSeleniumTestCase {
     $this->enableComponents('CiviMember');
 
     //check for online contribution and profile listings permissions
-    $permissions = array("edit-1-make-online-contributions", "edit-1-profile-listings-and-forms");
+    $permissions = ["edit-1-make-online-contributions", "edit-1-profile-listings-and-forms"];
     $this->changePermissions($permissions);
 
     // Log in as normal user
@@ -410,7 +410,7 @@ class WebTest_Member_OnlineMembershipRenewTest extends CiviSeleniumTestCase {
 
     $this->waitForElementPresent("xpath=//div[@id='membership_type']/table/tbody//tr/td[1]/div[text()='{$membershipTypeTitle}']/../../td[12]/span/a[3][text()='Delete']/@href");
     $url = $this->getAttribute("xpath=//div[@id='membership_type']/table/tbody//tr/td[1]/div[text()='{$membershipTypeTitle}']/../../td[12]/span/a[3][text()='Delete']/@href");
-    $matches = array();
+    $matches = [];
     preg_match('/id=([0-9]+)/', $url, $matches);
     $membershipTypeId = $matches[1];
 
@@ -438,7 +438,7 @@ class WebTest_Member_OnlineMembershipRenewTest extends CiviSeleniumTestCase {
     $pageId = $this->webtestAddContributionPage($hash,
       $rand,
       $contributionTitle,
-      array($processorName => 'Dummy'),
+      [$processorName => 'Dummy'],
       $amountSection,
       $payLater,
       $onBehalf,
@@ -538,12 +538,12 @@ class WebTest_Member_OnlineMembershipRenewTest extends CiviSeleniumTestCase {
     $this->waitForElementPresent("_qf_MembershipView_cancel-bottom");
 
     //View Membership Record
-    $verifyMembershipData = array(
+    $verifyMembershipData = [
       'Member' => $organisationName,
       'Membership Type' => $membershipTypeTitle,
       'Status' => 'New',
       'End date' => $endDate,
-    );
+    ];
 
     foreach ($verifyMembershipData as $label => $value) {
       $this->verifyText("xpath=//form[@id='MembershipView']//table/tbody/tr/td[text()='{$label}']/following-sibling::td",
@@ -560,12 +560,12 @@ class WebTest_Member_OnlineMembershipRenewTest extends CiviSeleniumTestCase {
     $this->waitForElementPresent("_qf_MembershipView_cancel-bottom");
 
     //View Membership Record
-    $verifyMembershipData = array(
+    $verifyMembershipData = [
       'Member' => $name,
       'Membership Type' => $membershipTypeTitle,
       'Status' => 'New',
       'End date' => $endDate,
-    );
+    ];
 
     foreach ($verifyMembershipData as $label => $value) {
       $this->verifyText("xpath=//form[@id='MembershipView']//table/tbody/tr/td[text()='{$label}']/following-sibling::td",
@@ -630,11 +630,11 @@ class WebTest_Member_OnlineMembershipRenewTest extends CiviSeleniumTestCase {
     $this->waitForElementPresent("_qf_MembershipView_cancel-bottom");
 
     //View Membership Record
-    $verifyMembershipData = array(
+    $verifyMembershipData = [
       'Member' => $organisationName,
       'Membership Type' => $membershipTypeTitle,
       'End date' => $endDate,
-    );
+    ];
 
     foreach ($verifyMembershipData as $label => $value) {
       $this->verifyText("xpath=//form[@id='MembershipView']//table/tbody/tr/td[text()='{$label}']/following-sibling::td",
@@ -651,11 +651,11 @@ class WebTest_Member_OnlineMembershipRenewTest extends CiviSeleniumTestCase {
     $this->waitForElementPresent("_qf_MembershipView_cancel-bottom");
 
     //View Membership Record
-    $verifyMembershipData = array(
+    $verifyMembershipData = [
       'Member' => $name,
       'Membership Type' => $membershipTypeTitle,
       'End date' => $endDate,
-    );
+    ];
 
     foreach ($verifyMembershipData as $label => $value) {
       $this->verifyText("xpath=//form[@id='MembershipView']//table/tbody/tr/td[text()='{$label}']/following-sibling::td",
@@ -701,7 +701,7 @@ class WebTest_Member_OnlineMembershipRenewTest extends CiviSeleniumTestCase {
 
     $this->waitForElementPresent("xpath=//div[@id='membership_type']/table/tbody//tr/td[1]/div[text()='{$membershipTypeTitle}']/../../td[12]/span/a[3][text()='Delete']/@href");
     $url = $this->getAttribute("xpath=//div[@id='membership_type']/table/tbody//tr/td[1]/div[text()='{$membershipTypeTitle}']/../../td[12]/span/a[3][text()='Delete']/@href");
-    $matches = array();
+    $matches = [];
     preg_match('/id=([0-9]+)/', $url, $matches);
     $membershipTypeId = $matches[1];
 
@@ -729,7 +729,7 @@ class WebTest_Member_OnlineMembershipRenewTest extends CiviSeleniumTestCase {
     $pageId = $this->webtestAddContributionPage($hash,
       $rand,
       $contributionTitle,
-      array($processorName => 'Dummy'),
+      [$processorName => 'Dummy'],
       $amountSection,
       $payLater,
       $onBehalf,
@@ -860,16 +860,17 @@ class WebTest_Member_OnlineMembershipRenewTest extends CiviSeleniumTestCase {
     $this->click("_qf_Confirm_next-bottom");
     $this->waitForPageToLoad($this->getTimeoutMsec());
 
-    $expectedParams = array(
-      'Pending' => array(
-        'total_amount' => 100.00),
-      'Completed' => array(
+    $expectedParams = [
+      'Pending' => [
+        'total_amount' => 100.00
+      ],
+      'Completed' => [
         'total_amount' => 20.00,
-      ),
-    );
+      ],
+    ];
 
     //Assert that additional contribution and auto-renewal membrship
-    $membership = $this->webtest_civicrm_api("Membership", "get", array('membership_type_id' => $membershipTypeId));
+    $membership = $this->webtest_civicrm_api("Membership", "get", ['membership_type_id' => $membershipTypeId]);
     $this->assertEquals($membership['count'], 1);
     $membershipId = $membership['id'];
     $this->assertEquals($membership['values'][$membershipId]['membership_name'], $membershipTypeTitle);
@@ -879,22 +880,22 @@ class WebTest_Member_OnlineMembershipRenewTest extends CiviSeleniumTestCase {
 
     //check if the membership created is set to reccuring
     $recurringContributionId = $membership['values'][$membershipId]['contribution_recur_id'];
-    $recurringContribution = $this->webtest_civicrm_api("ContributionRecur", "get", array('id' => $recurringContributionId));
+    $recurringContribution = $this->webtest_civicrm_api("ContributionRecur", "get", ['id' => $recurringContributionId]);
     $this->assertEquals($recurringContribution['count'], 1);
     $this->assertEquals($recurringContribution['values'][$recurringContributionId]['auto_renew'], 1);
     $this->assertEquals($recurringContribution['values'][$recurringContributionId]['frequency_unit'], 'year');
     $this->assertEquals($recurringContribution['values'][$recurringContributionId]['frequency_interval'], 1);
 
-    $results = $this->webtest_civicrm_api("Contribution", "get", array('source' => array('LIKE' => "%$contributionTitle%")));
+    $results = $this->webtest_civicrm_api("Contribution", "get", ['source' => ['LIKE' => "%$contributionTitle%"]]);
     foreach ($results['values'] as $value) {
       $status = $value['contribution_status'];
       $this->assertEquals($value['total_amount'], $expectedParams[$status]['total_amount']);
-      $this->webtest_civicrm_api("Contribution", "delete", array('id' => $value['contribution_id']));
+      $this->webtest_civicrm_api("Contribution", "delete", ['id' => $value['contribution_id']]);
     }
 
     //Cleanup data before trying next combination
-    $this->webtest_civicrm_api("Membership", "delete", array('id' => $membershipId));
-    $this->webtest_civicrm_api("ContributionRecur", "delete", array('id' => $recurringContributionId));
+    $this->webtest_civicrm_api("Membership", "delete", ['id' => $membershipId]);
+    $this->webtest_civicrm_api("ContributionRecur", "delete", ['id' => $recurringContributionId]);
 
     //Scenario 4 - Online Registration on
     // (is_separate_payment=TRUE + recurring Additional contribution + non auto-renewal membership) setting
@@ -925,34 +926,35 @@ class WebTest_Member_OnlineMembershipRenewTest extends CiviSeleniumTestCase {
     $this->click("_qf_Confirm_next-bottom");
     $this->waitForPageToLoad($this->getTimeoutMsec());
 
-    $expectedParams = array(
-      'Pending' => array(
-        'total_amount' => 30.00),
-      'Completed' => array(
+    $expectedParams = [
+      'Pending' => [
+        'total_amount' => 30.00
+      ],
+      'Completed' => [
         'total_amount' => 100.00,
-      ),
-    );
+      ],
+    ];
 
     //Assert that additional contribution and auto-renewal membrship
-    $membership = $this->webtest_civicrm_api("Membership", "get", array('membership_type_id' => $membershipTypeId));
+    $membership = $this->webtest_civicrm_api("Membership", "get", ['membership_type_id' => $membershipTypeId]);
     $this->assertEquals($membership['count'], 1);
     $membershipId = $membership['id'];
     $this->assertEquals($membership['values'][$membershipId]['membership_name'], $membershipTypeTitle);
     $this->assertEquals($membership['values'][$membershipId]['status_id'], 1);
     $this->assertEquals($membership['values'][$membershipId]['source'], "Online Contribution: $contributionTitle");
 
-    $results = $this->webtest_civicrm_api("Contribution", "get", array('source' => array('LIKE' => "%$contributionTitle%")));
+    $results = $this->webtest_civicrm_api("Contribution", "get", ['source' => ['LIKE' => "%$contributionTitle%"]]);
     foreach ($results['values'] as $value) {
       $status = $value['contribution_status'];
       $this->assertEquals($value['total_amount'], $expectedParams[$status]['total_amount']);
       if ($status == 'Pending') {
         $recurringContributionId = $value['contribution_recur_id'];
-        $recurringContribution = $this->webtest_civicrm_api("ContributionRecur", "get", array('id' => $recurringContributionId));
+        $recurringContribution = $this->webtest_civicrm_api("ContributionRecur", "get", ['id' => $recurringContributionId]);
         $this->assertEquals($recurringContribution['count'], 1);
         $this->assertEquals($recurringContribution['values'][$recurringContributionId]['frequency_unit'], 'month');
         $this->assertEquals($recurringContribution['values'][$recurringContributionId]['frequency_interval'], 1);
       }
-      $this->webtest_civicrm_api("Contribution", "delete", array('id' => $value['contribution_id']));
+      $this->webtest_civicrm_api("Contribution", "delete", ['id' => $value['contribution_id']]);
     }
   }
 

@@ -53,7 +53,7 @@ class CRM_Event_ActionMapping extends \Civi\ActionSchedule\Mapping {
    * @param \Civi\ActionSchedule\Event\MappingRegisterEvent $registrations
    */
   public static function onRegisterActionMappings(\Civi\ActionSchedule\Event\MappingRegisterEvent $registrations) {
-    $registrations->register(CRM_Event_ActionMapping::create(array(
+    $registrations->register(CRM_Event_ActionMapping::create([
       'id' => CRM_Event_ActionMapping::EVENT_TYPE_MAPPING_ID,
       'entity' => 'civicrm_participant',
       'entity_label' => ts('Event Type'),
@@ -63,8 +63,8 @@ class CRM_Event_ActionMapping extends \Civi\ActionSchedule\Mapping {
       'entity_status_label' => ts('Participant Status'),
       'entity_date_start' => 'event_start_date',
       'entity_date_end' => 'event_end_date',
-    )));
-    $registrations->register(CRM_Event_ActionMapping::create(array(
+    ]));
+    $registrations->register(CRM_Event_ActionMapping::create([
       'id' => CRM_Event_ActionMapping::EVENT_NAME_MAPPING_ID,
       'entity' => 'civicrm_participant',
       'entity_label' => ts('Event Name'),
@@ -74,8 +74,8 @@ class CRM_Event_ActionMapping extends \Civi\ActionSchedule\Mapping {
       'entity_status_label' => ts('Participant Status'),
       'entity_date_start' => 'event_start_date',
       'entity_date_end' => 'event_end_date',
-    )));
-    $registrations->register(CRM_Event_ActionMapping::create(array(
+    ]));
+    $registrations->register(CRM_Event_ActionMapping::create([
       'id' => CRM_Event_ActionMapping::EVENT_TPL_MAPPING_ID,
       'entity' => 'civicrm_participant',
       'entity_label' => ts('Event Template'),
@@ -85,7 +85,7 @@ class CRM_Event_ActionMapping extends \Civi\ActionSchedule\Mapping {
       'entity_status_label' => ts('Participant Status'),
       'entity_date_start' => 'event_start_date',
       'entity_date_end' => 'event_end_date',
-    )));
+    ]));
   }
 
   /**
@@ -121,7 +121,7 @@ class CRM_Event_ActionMapping extends \Civi\ActionSchedule\Mapping {
         return \CRM_Event_PseudoConstant::participantRole();
 
       default:
-        return array();
+        return [];
     }
   }
 

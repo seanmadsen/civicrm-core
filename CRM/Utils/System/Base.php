@@ -244,7 +244,7 @@ abstract class CRM_Utils_System_Base {
         if ($region = CRM_Core_Region::instance('html-header', FALSE)) {
           CRM_Utils_System::addHTMLHead($region->render(''));
         }
-        print theme('maintenance_page', array('content' => $content));
+        print theme('maintenance_page', ['content' => $content]);
         exit();
       }
       // TODO: Figure out why D7 returns but everyone else prints
@@ -581,7 +581,7 @@ abstract class CRM_Utils_System_Base {
   public function getDefaultSiteSettings($dir) {
     $config = CRM_Core_Config::singleton();
     $url = $config->userFrameworkBaseURL;
-    return array($url, NULL, NULL);
+    return [$url, NULL, NULL];
   }
 
   /**
@@ -618,10 +618,10 @@ abstract class CRM_Utils_System_Base {
       throw new CRM_Core_Exception("Failed to locate default file storage ($config->userFramework)");
     }
 
-    return array(
+    return [
       'url' => $filesURL,
       'path' => CRM_Utils_File::baseFilePath(),
-    );
+    ];
   }
 
   /**
@@ -678,10 +678,10 @@ abstract class CRM_Utils_System_Base {
       $userFrameworkResourceURL = NULL;
     }
 
-    return array(
+    return [
       'url' => CRM_Utils_File::addTrailingSlash($userFrameworkResourceURL),
       'path' => CRM_Utils_File::addTrailingSlash($civicrm_root),
-    );
+    ];
   }
 
   /**
@@ -694,7 +694,7 @@ abstract class CRM_Utils_System_Base {
    *
    * FIXME: Document values accepted/required by $params
    */
-  public function userLoginFinalize($params = array()) {
+  public function userLoginFinalize($params = []) {
   }
 
   /**
@@ -789,14 +789,14 @@ abstract class CRM_Utils_System_Base {
    *   - name (ie the system user name.
    */
   public function getUser($contactID) {
-    $ufMatch = civicrm_api3('UFMatch', 'getsingle', array(
+    $ufMatch = civicrm_api3('UFMatch', 'getsingle', [
       'contact_id' => $contactID,
       'domain_id' => CRM_Core_Config::domainID(),
-    ));
-    return array(
+    ]);
+    return [
       'id' => $ufMatch['uf_id'],
       'name' => $ufMatch['uf_name'],
-    );
+    ];
   }
 
   /**
@@ -869,7 +869,7 @@ abstract class CRM_Utils_System_Base {
    *   [CRM_Core_Module]
    */
   public function getModules() {
-    return array();
+    return [];
   }
 
   /**
@@ -934,7 +934,7 @@ abstract class CRM_Utils_System_Base {
    */
   public function synchronizeUsers() {
     throw new Exception('CMS user creation not supported for this framework');
-    return array();
+    return [];
   }
 
 }

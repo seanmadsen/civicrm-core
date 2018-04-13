@@ -44,32 +44,32 @@ class CRM_Contact_Form_Search_Custom_DateAdded extends CRM_Contact_Form_Search_C
   public function __construct(&$formValues) {
     parent::__construct($formValues);
 
-    $this->_includeGroups = CRM_Utils_Array::value('includeGroups', $formValues, array());
-    $this->_excludeGroups = CRM_Utils_Array::value('excludeGroups', $formValues, array());
+    $this->_includeGroups = CRM_Utils_Array::value('includeGroups', $formValues, []);
+    $this->_excludeGroups = CRM_Utils_Array::value('excludeGroups', $formValues, []);
 
-    $this->_columns = array(
+    $this->_columns = [
       ts('Contact ID') => 'contact_id',
       ts('Contact Type') => 'contact_type',
       ts('Name') => 'sort_name',
       ts('Date Added') => 'date_added',
-    );
+    ];
   }
 
   /**
    * @param CRM_Core_Form $form
    */
   public function buildForm(&$form) {
-    $form->addDate('start_date', ts('Start Date'), FALSE, array('formatType' => 'custom'));
-    $form->addDate('end_date', ts('End Date'), FALSE, array('formatType' => 'custom'));
+    $form->addDate('start_date', ts('Start Date'), FALSE, ['formatType' => 'custom']);
+    $form->addDate('end_date', ts('End Date'), FALSE, ['formatType' => 'custom']);
 
     $groups = CRM_Core_PseudoConstant::nestedGroup();
 
-    $select2style = array(
+    $select2style = [
       'multiple' => TRUE,
       'style' => 'width: 100%; max-width: 60em;',
       'class' => 'crm-select2',
       'placeholder' => ts('- select -'),
-    );
+    ];
 
     $form->add('select', 'includeGroups',
       ts('Include Group(s)'),
@@ -100,7 +100,7 @@ class CRM_Contact_Form_Search_Custom_DateAdded extends CRM_Contact_Form_Search_C
      * if you are using the standard template, this array tells the template what elements
      * are part of the search criteria
      */
-    $form->assign('elements', array('start_date', 'end_date', 'includeGroups', 'excludeGroups'));
+    $form->assign('elements', ['start_date', 'end_date', 'includeGroups', 'excludeGroups']);
   }
 
   /**
@@ -136,9 +136,9 @@ class CRM_Contact_Form_Search_Custom_DateAdded extends CRM_Contact_Form_Search_C
     $includeContactIDs = FALSE, $justIDs = FALSE
   ) {
 
-    $this->_includeGroups = CRM_Utils_Array::value('includeGroups', $this->_formValues, array());
+    $this->_includeGroups = CRM_Utils_Array::value('includeGroups', $this->_formValues, []);
 
-    $this->_excludeGroups = CRM_Utils_Array::value('excludeGroups', $this->_formValues, array());
+    $this->_excludeGroups = CRM_Utils_Array::value('excludeGroups', $this->_formValues, []);
 
     $this->_allSearch = FALSE;
     $this->_groups = FALSE;
@@ -223,7 +223,7 @@ class CRM_Contact_Form_Search_Custom_DateAdded extends CRM_Contact_Form_Search_C
     // CRM-6356
     if ($this->_groups) {
       //block for Group search
-      $smartGroup = array();
+      $smartGroup = [];
       $group = new CRM_Contact_DAO_Group();
       $group->is_active = 1;
       $group->find();

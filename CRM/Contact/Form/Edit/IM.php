@@ -56,14 +56,14 @@ class CRM_Contact_Form_Edit_IM {
     $form->applyFilter('__ALL__', 'trim');
 
     //IM provider select
-    $form->addField("im[$blockId][provider_id]", array('entity' => 'im', 'class' => 'eight', 'placeholder' => NULL));
+    $form->addField("im[$blockId][provider_id]", ['entity' => 'im', 'class' => 'eight', 'placeholder' => NULL]);
     //Block type select
-    $form->addField("im[$blockId][location_type_id]", array('entity' => 'im', 'class' => 'eight', 'placeholder' => NULL, 'option_url' => NULL));
+    $form->addField("im[$blockId][location_type_id]", ['entity' => 'im', 'class' => 'eight', 'placeholder' => NULL, 'option_url' => NULL]);
 
     //IM box
-    $form->addField("im[$blockId][name]", array('entity' => 'im'));
+    $form->addField("im[$blockId][name]", ['entity' => 'im']);
     //is_Primary radio
-    $js = array('id' => 'IM_' . $blockId . '_IsPrimary');
+    $js = ['id' => 'IM_' . $blockId . '_IsPrimary'];
     if (!$blockEdit) {
       $js['onClick'] = 'singleSelect( this.id );';
     }

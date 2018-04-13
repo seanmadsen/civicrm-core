@@ -43,7 +43,7 @@ class WebTest_Contact_TaskActionAddToGroupTest extends CiviSeleniumTestCase {
 
     // Create two new contacts with a common random string in email address
     $emailString = substr(sha1(rand()), 0, 7) . '@example.com';
-    $cids = array();
+    $cids = [];
     for ($i = 0; $i < 2; $i++) {
       // create new contact
       $this->webtestAddContact();

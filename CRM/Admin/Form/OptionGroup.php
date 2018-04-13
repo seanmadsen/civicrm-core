@@ -63,7 +63,7 @@ class CRM_Admin_Form_OptionGroup extends CRM_Admin_Form {
     $this->addRule('name',
       ts('Name already exists in Database.'),
       'objectExists',
-      array('CRM_Core_DAO_OptionGroup', $this->_id)
+      ['CRM_Core_DAO_OptionGroup', $this->_id]
     );
 
     $this->add('text',
@@ -78,15 +78,15 @@ class CRM_Admin_Form_OptionGroup extends CRM_Admin_Form {
       CRM_Core_DAO::getAttribute('CRM_Core_DAO_OptionGroup', 'description')
     );
 
-    $this->addSelect('data_type', array('options' => CRM_Utils_Type::dataTypes()), TRUE);
+    $this->addSelect('data_type', ['options' => CRM_Utils_Type::dataTypes()], TRUE);
 
     $element = $this->add('checkbox', 'is_active', ts('Enabled?'));
     if ($this->_action & CRM_Core_Action::UPDATE) {
-      if (in_array($this->_values['name'], array(
+      if (in_array($this->_values['name'], [
         'encounter_medium',
         'case_type',
         'case_status',
-      ))) {
+      ])) {
         static $caseCount = NULL;
         if (!isset($caseCount)) {
           $caseCount = CRM_Case_BAO_Case::caseCount(NULL, FALSE);
@@ -97,7 +97,7 @@ class CRM_Admin_Form_OptionGroup extends CRM_Admin_Form {
         }
       }
       if (!empty($this->_values['is_reserved'])) {
-        $this->freeze(array('name', 'is_active'));
+        $this->freeze(['name', 'is_active']);
       }
     }
 
@@ -117,7 +117,7 @@ class CRM_Admin_Form_OptionGroup extends CRM_Admin_Form {
     }
     else {
 
-      $params = $ids = array();
+      $params = $ids = [];
       // store the submitted values in an array
       $params = $this->exportValues();
 
@@ -126,7 +126,7 @@ class CRM_Admin_Form_OptionGroup extends CRM_Admin_Form {
       }
 
       $optionGroup = CRM_Core_BAO_OptionGroup::add($params, $ids);
-      CRM_Core_Session::setStatus(ts('The Option Group \'%1\' has been saved.', array(1 => $optionGroup->name)), ts('Saved'), 'success');
+      CRM_Core_Session::setStatus(ts('The Option Group \'%1\' has been saved.', [1 => $optionGroup->name]), ts('Saved'), 'success');
     }
   }
 

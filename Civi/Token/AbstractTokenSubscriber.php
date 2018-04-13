@@ -55,11 +55,11 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 abstract class AbstractTokenSubscriber implements EventSubscriberInterface {
 
   public static function getSubscribedEvents() {
-    return array(
+    return [
       Events::TOKEN_REGISTER => 'registerTokens',
       Events::TOKEN_EVALUATE => 'evaluateTokens',
       \Civi\ActionSchedule\Events::MAILING_QUERY => 'alterActionScheduleQuery',
-    );
+    ];
   }
 
   /**
@@ -79,7 +79,7 @@ abstract class AbstractTokenSubscriber implements EventSubscriberInterface {
    * @param array $tokenNames
    *   Array(string $fieldName => string $label).
    */
-  public function __construct($entity, $tokenNames = array()) {
+  public function __construct($entity, $tokenNames = []) {
     $this->entity = $entity;
     $this->tokenNames = $tokenNames;
   }
@@ -109,11 +109,11 @@ abstract class AbstractTokenSubscriber implements EventSubscriberInterface {
       return;
     }
     foreach ($this->tokenNames as $name => $label) {
-      $e->register(array(
+      $e->register([
         'entity' => $this->entity,
         'field' => $name,
         'label' => $label,
-      ));
+      ]);
     }
   }
 

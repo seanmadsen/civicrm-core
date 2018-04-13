@@ -40,82 +40,82 @@
 class CRM_Admin_Form_Preferences_Mailing extends CRM_Admin_Form_Preferences {
   public function preProcess() {
     CRM_Utils_System::setTitle(ts('CiviMail Component Settings'));
-    $this->_varNames = array(
-      CRM_Core_BAO_Setting::MAILING_PREFERENCES_NAME => array(
-        'profile_double_optin' => array(
+    $this->_varNames = [
+      CRM_Core_BAO_Setting::MAILING_PREFERENCES_NAME => [
+        'profile_double_optin' => [
           'html_type' => 'checkbox',
           'title' => ts('Enable Double Opt-in for Profile Group(s) field'),
           'weight' => 1,
           'description' => ts('When CiviMail is enabled, users who "subscribe" to a group from a profile Group(s) checkbox will receive a confirmation email. They must respond (opt-in) before they are added to the group.'),
-        ),
-        'profile_add_to_group_double_optin' => array(
+        ],
+        'profile_add_to_group_double_optin' => [
           'html_type' => 'checkbox',
           'title' => ts('Enable Double Opt-in for Profiles which use the "Add to Group" setting'),
           'weight' => 2,
           'description' => ts('When CiviMail is enabled and a profile uses the "Add to Group" setting, users who complete the profile form will receive a confirmation email. They must respond (opt-in) before they are added to the group.'),
-        ),
-        'track_civimail_replies' => array(
+        ],
+        'track_civimail_replies' => [
           'html_type' => 'checkbox',
           'title' => ts('Track replies using VERP in Reply-To header'),
           'weight' => 3,
           'description' => ts('If checked, mailings will default to tracking replies using VERP-ed Reply-To.'),
-        ),
-        'civimail_workflow' => array(
+        ],
+        'civimail_workflow' => [
           'html_type' => 'checkbox',
           'title' => ts('Enable workflow support for CiviMail'),
           'weight' => 4,
           'description' => ts('Drupal-only. Rules module must be enabled (beta feature - use with caution).'),
-        ),
-        'civimail_multiple_bulk_emails' => array(
+        ],
+        'civimail_multiple_bulk_emails' => [
           'html_type' => 'checkbox',
           'title' => ts('Enable multiple bulk email address for a contact.'),
           'weight' => 5,
           'description' => ts('CiviMail will deliver a copy of the email to each bulk email listed for the contact.'),
-        ),
-        'civimail_server_wide_lock' => array(
+        ],
+        'civimail_server_wide_lock' => [
           'html_type' => 'checkbox',
           'title' => ts('Enable global server wide lock for CiviMail'),
           'weight' => 6,
           'description' => NULL,
-        ),
-        'include_message_id' => array(
+        ],
+        'include_message_id' => [
           'html_type' => 'checkbox',
           'title' => ts('Enable CiviMail to generate Message-ID header'),
           'weight' => 7,
           'description' => NULL,
-        ),
-        'write_activity_record' => array(
+        ],
+        'write_activity_record' => [
           'html_type' => 'checkbox',
           'title' => ts('Enable CiviMail to create activities on delivery'),
           'weight' => 8,
           'description' => NULL,
-        ),
-        'disable_mandatory_tokens_check' => array(
+        ],
+        'disable_mandatory_tokens_check' => [
           'html_type' => 'checkbox',
           'title' => ts('Disable check for mandatory tokens'),
           'weight' => 9,
           'description' => ts('Don\'t check for presence of mandatory tokens (domain address; unsubscribe/opt-out) before sending mailings. WARNING: Mandatory tokens are a safe-guard which facilitate compliance with the US CAN-SPAM Act. They should only be disabled if your organization adopts other mechanisms for compliance or if your organization is not subject to CAN-SPAM.'),
-        ),
-        'dedupe_email_default' => array(
+        ],
+        'dedupe_email_default' => [
           'html_type' => 'checkbox',
           'title' => ts('CiviMail dedupes e-mail addresses by default'),
           'weight' => 10,
           'description' => NULL,
-        ),
-        'hash_mailing_url' => array(
+        ],
+        'hash_mailing_url' => [
           'html_type' => 'checkbox',
           'title' => ts('Hashed Mailing URL\'s'),
           'weight' => 11,
           'description' => ts('If enabled, a randomized hash key will be used to reference the mailing URL in the mailing.viewUrl token, instead of the mailing ID'),
-        ),
-        'auto_recipient_rebuild' => array(
+        ],
+        'auto_recipient_rebuild' => [
           'html_type' => 'checkbox',
           'title' => ts('Enable automatic CiviMail recipient count display'),
           'weight' => 12,
           'description' => ts('Enable this setting to rebuild recipient list automatically during composing mail. Disable will allow you to rebuild recipient manually.'),
-        ),
-      ),
-    );
+        ],
+      ],
+    ];
 
     parent::preProcess();
   }

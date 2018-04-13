@@ -79,7 +79,7 @@ abstract class CRM_Core_Form_Task extends CRM_Core_Form {
    * Build all the data structures needed to build the form.
    */
   public function preProcess() {
-    $this->_entityIds = array();
+    $this->_entityIds = [];
 
     $values = $this->controller->exportValues($this->get('searchFormName'));
 
@@ -88,7 +88,7 @@ abstract class CRM_Core_Form_Task extends CRM_Core_Form {
     $entityTasks = $className::tasks();
     $this->assign('taskName', $entityTasks[$this->_task]);
 
-    $ids = array();
+    $ids = [];
     if ($values['radio_ts'] == 'ts_sel') {
       foreach ($values as $name => $value) {
         if (substr($name, 0, CRM_Core_Form::CB_PREFIX_LEN) == CRM_Core_Form::CB_PREFIX) {
@@ -163,17 +163,17 @@ abstract class CRM_Core_Form_Task extends CRM_Core_Form {
    * @param bool $submitOnce
    */
   public function addDefaultButtons($title, $nextType = 'next', $backType = 'back', $submitOnce = FALSE) {
-    $this->addButtons(array(
-        array(
+    $this->addButtons([
+        [
           'type' => $nextType,
           'name' => $title,
           'isDefault' => TRUE,
-        ),
-        array(
+        ],
+        [
           'type' => $backType,
           'name' => ts('Cancel'),
-        ),
-      )
+        ],
+      ]
     );
   }
 

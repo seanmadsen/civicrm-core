@@ -39,38 +39,38 @@ class WebTest_Contact_ProfileChecksumTest extends CiviSeleniumTestCase {
     $this->webtestLogin('admin');
 
     // Profile fields.
-    $fields = array(
-      'first_name' => array(
+    $fields = [
+      'first_name' => [
         'type' => 'Individual',
         'label' => 'First Name',
         'default_value' => substr(sha1(rand()), 0, 7),
         'update_value' => substr(sha1(rand()), 0, 7),
         'element_name' => 'first_name',
-      ),
-      'last_name' => array(
+      ],
+      'last_name' => [
         'type' => 'Individual',
         'label' => 'Last Name',
         'default_value' => substr(sha1(rand()), 0, 7),
         'update_value' => substr(sha1(rand()), 0, 7),
         'element_name' => 'last_name',
-      ),
-      'email' => array(
+      ],
+      'email' => [
         'type' => 'Contact',
         'label' => 'Email',
         'location' => 0,
         'default_value' => substr(sha1(rand()), 0, 5) . '@example.com',
         'update_value' => substr(sha1(rand()), 0, 7) . '@example.com',
         'element_name' => 'email-Primary',
-      ),
-      'city' => array(
+      ],
+      'city' => [
         'type' => 'Contact',
         'label' => 'City',
         'location' => 0,
         'default_value' => substr(sha1(rand()), 0, 7),
         'update_value' => substr(sha1(rand()), 0, 7),
         'element_name' => 'city-Primary',
-      ),
-      'country' => array(
+      ],
+      'country' => [
         'type' => 'Contact',
         'label' => 'Country',
         'location' => 0,
@@ -79,8 +79,8 @@ class WebTest_Contact_ProfileChecksumTest extends CiviSeleniumTestCase {
         'update_value_label' => 'UNITED STATES',
         'element_name' => 'country-Primary',
         'html_type' => 'select',
-      ),
-      'state_province' => array(
+      ],
+      'state_province' => [
         'type' => 'Contact',
         'label' => 'State',
         'location' => 0,
@@ -89,8 +89,8 @@ class WebTest_Contact_ProfileChecksumTest extends CiviSeleniumTestCase {
         'update_value_label' => 'NY',
         'element_name' => 'state_province-Primary',
         'html_type' => 'select',
-      ),
-    );
+      ],
+    ];
 
     // Create a contact.
     $this->webtestAddContact($fields['first_name']['default_value'], $fields['last_name']['default_value'], $fields['email']['default_value']);
@@ -103,12 +103,12 @@ class WebTest_Contact_ProfileChecksumTest extends CiviSeleniumTestCase {
     $profileId = $this->_testCreateContactProfile($fields, $profileName);
 
     // Check for profile create/edit permissions.
-    $permission = array(
+    $permission = [
       'edit-1-profile-edit',
       'edit-1-profile-create',
       'edit-1-access-all-custom-data',
       'edit-1-edit-all-contacts',
-    );
+    ];
     $this->changePermissions($permission);
 
     // Get checksum of the newly created contact.
@@ -140,7 +140,7 @@ class WebTest_Contact_ProfileChecksumTest extends CiviSeleniumTestCase {
     $this->waitForTextPresent($profileName);
 
     // Check updated values of all fields.
-    $checkFieldValues = array();
+    $checkFieldValues = [];
     foreach ($fields as $field) {
       $checkFieldValues[] = isset($field['update_value_label']) ? $field['update_value_label'] : $field['update_value'];
     }

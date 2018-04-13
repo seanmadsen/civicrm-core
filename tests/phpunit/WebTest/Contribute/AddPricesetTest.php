@@ -53,14 +53,14 @@ class WebTest_Contribute_AddPricesetTest extends CiviSeleniumTestCase {
     $sid = $this->urlArg('sid');
     $this->assertType('numeric', $sid);
 
-    $validStrings = array();
+    $validStrings = [];
 
-    $fields = array(
+    $fields = [
       'Full Conference' => 'Text',
       'Meal Choice' => 'Select',
       'Pre-conference Meetup?' => 'Radio',
       'Evening Sessions' => 'CheckBox',
-    );
+    ];
     $this->_testAddPriceFields($fields, $validateStrings, $financialType);
     // var_dump($validateStrings);
 
@@ -112,13 +112,13 @@ class WebTest_Contribute_AddPricesetTest extends CiviSeleniumTestCase {
     $sid = $this->urlArg('sid');
     $this->assertType('numeric', $sid);
 
-    $validStrings = array();
-    $fields = array(
+    $validStrings = [];
+    $fields = [
       'Full Conference' => 'Text',
       'Meal Choice' => 'Select',
       'Pre-conference Meetup?' => 'Radio',
       'Evening Sessions' => 'CheckBox',
-    );
+    ];
     $this->_testAddPriceFields($fields, $validateStrings, $financialType);
 
     // load the Price Set Preview and check for expected values
@@ -171,22 +171,22 @@ class WebTest_Contribute_AddPricesetTest extends CiviSeleniumTestCase {
     //click through to the Membership view screen
     $this->click("xpath=//table[@class='selector row-highlight']/tbody/tr[1]/td[8]/span//a[text()='View']");
     $this->waitForElementPresent('_qf_ContributionView_cancel-bottom');
-    $expected = array(
+    $expected = [
       2 => $financialType,
       3 => '590.00',
       9 => 'Completed',
       10 => 'Check',
       11 => 'check #1041',
-    );
+    ];
     foreach ($expected as $label => $value) {
       $this->assertElementContainsText("xpath=id('ContributionView')/div[2]/table[1]/tbody/tr[$label]/td[2]", $value);
     }
 
-    $exp = array(
+    $exp = [
       2 => '$ 525.00',
       3 => '$ 50.00',
       4 => '$ 15.00',
-    );
+    ];
 
     foreach ($exp as $lab => $val) {
       $this->assertElementContainsText("xpath=id('ContributionView')/div[2]/table[1]/tbody/tr[3]/td[2]/table/tbody/tr[$lab]/td[3]", $val);
@@ -209,13 +209,13 @@ class WebTest_Contribute_AddPricesetTest extends CiviSeleniumTestCase {
     $sid = $this->urlArg('sid');
     $this->assertType('numeric', $sid);
 
-    $validStrings = array();
-    $fields = array(
+    $validStrings = [];
+    $fields = [
       'Full Conference' => 'Text',
       'Meal Choice' => 'Select',
       'Pre-conference Meetup?' => 'Radio',
       'Evening Sessions' => 'CheckBox',
-    );
+    ];
 
     $this->_testAddPriceFields($fields, $validateStrings, $financialType);
 
@@ -310,14 +310,14 @@ class WebTest_Contribute_AddPricesetTest extends CiviSeleniumTestCase {
     $this->clickLink("xpath=//table[@class='selector row-highlight']/tbody/tr[1]/td[10]/span//a[text()='View']", "_qf_ContributionView_cancel-bottom", FALSE);
 
     // View Contribution Record and test for expected values
-    $expected = array(
+    $expected = [
       'From' => "{$firstName} {$lastName}",
       'Financial Type' => $financialType,
       // as per changes made in CRM-15407
       'Fee Amount' => '$ 1.50',
       'Net Amount' => '$ 588.50',
       'Contribution Status' => 'Completed',
-    );
+    ];
     $this->webtestVerifyTabularData($expected);
 
   }
@@ -338,13 +338,13 @@ class WebTest_Contribute_AddPricesetTest extends CiviSeleniumTestCase {
     $sid = $this->urlArg('sid');
     $this->assertType('numeric', $sid);
 
-    $validStrings = array();
-    $fields = array(
+    $validStrings = [];
+    $fields = [
       'Full Conference' => 'Text',
       'Meal Choice' => 'Select',
       'Pre-conference Meetup?' => 'Radio',
       'Evening Sessions' => 'CheckBox',
-    );
+    ];
     $this->_testAddPriceFields($fields, $validateStrings, $financialType, TRUE);
 
     // load the Price Set Preview and check for expected values
@@ -432,14 +432,14 @@ class WebTest_Contribute_AddPricesetTest extends CiviSeleniumTestCase {
     $this->clickLink("xpath=//table[@class='selector row-highlight']/tbody/tr[1]/td[10]/span//a[text()='View']", '_qf_ContributionView_cancel-bottom', FALSE);
 
     // View Contribution Record and test for expected values
-    $expected = array(
+    $expected = [
       'From' => "{$firstName} {$lastName}",
       'Financial Type' => $financialType,
       // as per changes made in CRM-15407
       'Fee Amount' => '$ 1.50',
       'Net Amount' => '$ 63.50',
       'Contribution Status' => 'Completed',
-    );
+    ];
     $this->webtestVerifyTabularData($expected);
   }
 
@@ -466,13 +466,13 @@ class WebTest_Contribute_AddPricesetTest extends CiviSeleniumTestCase {
     $sid = $this->urlArg('sid');
     $this->assertType('numeric', $sid);
 
-    $validStrings = array();
-    $fields = array(
+    $validStrings = [];
+    $fields = [
       'Full Conference' => 'Text',
       'Meal Choice' => 'Select',
       'Pre-conference Meetup?' => 'Radio',
       'Evening Sessions' => 'CheckBox',
-    );
+    ];
     $this->_testAddPriceFields($fields, $validateStrings, $financialType);
 
     // load the Price Set Preview and check for expected values
@@ -524,31 +524,31 @@ class WebTest_Contribute_AddPricesetTest extends CiviSeleniumTestCase {
     $this->waitForElementPresent('_qf_ContributionView_cancel-bottom');
 
     // View Contribution Record and test for expected values
-    $expected = array(
+    $expected = [
       'From' => $contact['display_name'],
       'Financial Type' => $financialType,
       'Contribution Amount' => 'Contribution Total: $ 590.00',
       'Payment Method' => 'Check',
       'Check Number' => '1041',
       'Contribution Status' => 'Completed',
-    );
+    ];
     $this->webtestVerifyTabularData($expected);
 
-    $exp = array(
+    $exp = [
       2 => '$ 525.00',
       3 => '$ 50.00',
       4 => '$ 15.00',
-    );
+    ];
 
     foreach ($exp as $lab => $val) {
       $this->assertElementContainsText("xpath=id('ContributionView')/div[2]/table[1]/tbody/tr[3]/td[2]/table/tbody/tr[$lab]/td[3]", $val);
     }
 
     // verify if soft credit was created successfully
-    $softCreditValues = array(
+    $softCreditValues = [
       'Soft Credit To' => "{$firstNameSoft} {$lastNameSoft}",
       'Amount' => '65.00',
-    );
+    ];
 
     foreach ($softCreditValues as $value) {
       $this->assertElementContainsText("css=table.crm-soft-credit-listing", $value);
@@ -574,10 +574,10 @@ class WebTest_Contribute_AddPricesetTest extends CiviSeleniumTestCase {
 
     $this->webtestVerifyTabularData($expected);
 
-    $params = array(
+    $params = [
       'contribution_id' => $id,
       'version' => 3,
-    );
+    ];
 
     // Retrieve contribution from the DB via api and verify DB values against view contribution page
     $fields = $this->webtest_civicrm_api('contribution', 'get', $params);
@@ -586,22 +586,22 @@ class WebTest_Contribute_AddPricesetTest extends CiviSeleniumTestCase {
     $softCreditContact = CRM_Contact_BAO_Contact::retrieve($params, $defaults, TRUE);
 
     // View Contribution Record and test for expected values
-    $expected = array(
+    $expected = [
       'From' => $fields['values'][$fields['id']]['display_name'],
       'Financial Type' => $fields['values'][$fields['id']]['financial_type'],
       'Contribution Amount' => $fields['values'][$fields['id']]['total_amount'],
       'Contribution Status' => $fields['values'][$fields['id']]['contribution_status'],
       'Payment Method' => $fields['values'][$fields['id']]['payment_instrument'],
       'Check Number' => $fields['values'][$fields['id']]['contribution_check_number'],
-    );
+    ];
 
     $this->webtestVerifyTabularData($expected);
 
     // verify if soft credit
-    $softCreditValues = array(
+    $softCreditValues = [
       'Soft Credit To' => $softCreditContact->display_name,
       'Amount' => '65.00',
-    );
+    ];
 
     foreach ($softCreditValues as $value) {
       $this->assertElementContainsText("css=table.crm-soft-credit-listing", $value);

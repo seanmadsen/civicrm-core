@@ -1,4 +1,4 @@
-<?php $langs = array (
+<?php $langs = [
   'af_ZA' => 'Afrikaans',
   'sq_AL' => 'Albanian',
   'ar_EG' => 'Arabic',
@@ -47,4 +47,4 @@
   'tr_TR' => 'Turkish',
   'uk_UA' => 'Ukrainian',
   'vi_VN' => 'Vietnamese',
-);
+];

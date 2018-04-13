@@ -43,12 +43,12 @@ class WebTest_Case_AddCaseTest extends CiviSeleniumTestCase {
     $this->enableComponents("CiviCase");
 
     // let's give full CiviCase permissions to demo user (registered user).
-    $permission = array(
+    $permission = [
       'edit-2-access-all-cases-and-activities',
       'edit-2-access-my-cases-and-activities',
       'edit-2-administer-civicase',
       'edit-2-delete-in-civicase',
-    );
+    ];
     $this->changePermissions($permission);
 
     // Log in as normal user
@@ -78,8 +78,8 @@ class WebTest_Case_AddCaseTest extends CiviSeleniumTestCase {
     // Fill in other form values. We'll use a case type which is included in CiviCase sample data / xml files.
     $caseTypeLabel = "Adult Day Care Referral";
     // activity types we expect for this case type
-    $activityTypes = array("ADC referral", "Follow up", "Medical evaluation", "Mental health evaluation");
-    $caseRoles = array("Senior Services Coordinator", "Health Services Coordinator", "Benefits Specialist", "Client");
+    $activityTypes = ["ADC referral", "Follow up", "Medical evaluation", "Mental health evaluation"];
+    $caseRoles = ["Senior Services Coordinator", "Health Services Coordinator", "Benefits Specialist", "Client"];
     $caseStatusLabel = "Ongoing";
     $subject = "Safe daytime setting - senior female";
     $this->select("medium_id", "value=1");
@@ -103,19 +103,19 @@ class WebTest_Case_AddCaseTest extends CiviSeleniumTestCase {
     // Is status message correct?
     $this->waitForText('crm-notification-container', "Case opened successfully.");
 
-    $summaryStrings = array(
+    $summaryStrings = [
       "Summary",
       $client['display_name'],
       "Type: {$caseTypeLabel}",
       "Open Date: {$today}",
       "Status: {$caseStatusLabel}",
-    );
+    ];
 
     $this->_testVerifyCaseSummary($summaryStrings, $activityTypes);
     $this->_testVerifyCaseRoles($caseRoles, "{$testUserLastName}, {$testUserFirstName}");
     $this->_testVerifyCaseActivities($activityTypes);
 
-    $openCaseData = array(
+    $openCaseData = [
       "Client" => $client['display_name'],
       "Activity Type" => "Open Case",
       "Subject" => $subject,
@@ -127,7 +127,7 @@ class WebTest_Case_AddCaseTest extends CiviSeleniumTestCase {
       "Details" => $details,
       "Status" => "Completed",
       "Priority" => "Normal",
-    );
+    ];
 
     $this->_testVerifyOpenCaseActivity($subject, $openCaseData);
 
@@ -151,23 +151,23 @@ class WebTest_Case_AddCaseTest extends CiviSeleniumTestCase {
     $this->enableComponents("CiviCase");
 
     // let's give full CiviCase permissions to demo user (registered user).
-    $permission = array(
+    $permission = [
       'edit-2-access-all-cases-and-activities',
       'edit-2-access-my-cases-and-activities',
       'edit-2-administer-civicase',
       'edit-2-delete-in-civicase',
-    );
+    ];
     $this->changePermissions($permission);
 
     // Log in as normal user
     $this->webtestLogin();
 
-    $triggerElement = array('name' => 'case_type_id', 'type' => 'select');
-    $customSets = array(
-      array('entity' => 'Case', 'subEntity' => 'Housing Support', 'triggerElement' => $triggerElement),
-    );
+    $triggerElement = ['name' => 'case_type_id', 'type' => 'select'];
+    $customSets = [
+      ['entity' => 'Case', 'subEntity' => 'Housing Support', 'triggerElement' => $triggerElement],
+    ];
 
-    $pageUrl = array('url' => 'case/add', 'args' => "reset=1&action=add&atype=13&context=standalone");
+    $pageUrl = ['url' => 'case/add', 'args' => "reset=1&action=add&atype=13&context=standalone"];
     $this->customFieldSetLoadOnTheFlyCheck($customSets, $pageUrl);
   }
 

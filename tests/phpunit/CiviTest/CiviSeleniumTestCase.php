@@ -55,7 +55,7 @@ class CiviSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase {
    * @param string $dataName
    * @param array $browser
    */
-  public function __construct($name = NULL, array$data = array(), $dataName = '', array$browser = array()) {
+  public function __construct($name = NULL, array$data = [], $dataName = '', array$browser = []) {
     parent::__construct($name, $data, $dataName, $browser);
     $this->loggedInAs = NULL;
 
@@ -92,7 +92,7 @@ class CiviSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase {
     if (property_exists($this->settings, 'rcPort') && $this->settings->rcPort) {
       $this->setPort($this->settings->rcPort);
     }
-    $this->settingCache = array();
+    $this->settingCache = [];
   }
 
   /**
@@ -132,7 +132,7 @@ class CiviSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase {
         $cookie['max_age'] = 7 * 24 * 60 * 60;
       }
       $this->deleteCookie($cookie['name'], $cookie['path']);
-      $optionExprs = array();
+      $optionExprs = [];
       foreach ($cookie as $key => $value) {
         if ($key != 'name' && $key != 'value') {
           $optionExprs[] = "$key=$value";
@@ -320,10 +320,10 @@ class CiviSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase {
    * @param array $params
    * @return mixed
    */
-  public function rest_civicrm_api($entity, $action, $params = array()) {
-    $params += array(
+  public function rest_civicrm_api($entity, $action, $params = []) {
+    $params += [
       'version' => 3,
-    );
+    ];
     static $reqId = 0;
     $reqId++;
 
@@ -334,12 +334,12 @@ class CiviSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase {
         });
       }, 500);
     ';
-    $jsArgs = array(
+    $jsArgs = [
       '@entity' => $entity,
       '@action' => $action,
       '@params' => json_encode($params),
       '@reqId' => $reqId,
-    );
+    ];
     $js = strtr($jsCmd, $jsArgs);
     $this->runScript($js);
     $this->waitForElementPresent("crmajax{$reqId}");
@@ -354,11 +354,11 @@ class CiviSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase {
    * @return array|int
    */
   public function webtestGetFirstValueForOptionGroup($option_group_name) {
-    $result = $this->webtest_civicrm_api("OptionValue", "getvalue", array(
+    $result = $this->webtest_civicrm_api("OptionValue", "getvalue", [
       'option_group_name' => $option_group_name,
       'option.limit' => 1,
       'return' => 'value',
-    ));
+    ]);
     return $result;
   }
 
@@ -381,7 +381,7 @@ class CiviSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase {
   public function webtestGetValidEntityID($entity) {
     // michaelmcandrew: would like to use getvalue but there is a bug
     // for e.g. group where option.limit not working at the moment CRM-9110
-    $result = $this->webtest_civicrm_api($entity, "get", array('option.limit' => 1, 'return' => 'id'));
+    $result = $this->webtest_civicrm_api($entity, "get", ['option.limit' => 1, 'return' => 'id']);
     if (!empty($result['values'])) {
       return current(array_keys($result['values']));
     }
@@ -394,9 +394,9 @@ class CiviSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase {
    */
   public function webtestGetSetting($field) {
     if (!isset($this->settingCache[$field])) {
-      $result = $this->webtest_civicrm_api("Setting", "getsingle", array(
+      $result = $this->webtest_civicrm_api("Setting", "getsingle", [
         'return' => $field,
-      ));
+      ]);
       $this->settingCache[$field] = $result[$field];
     }
     return $this->settingCache[$field];
@@ -715,7 +715,7 @@ class CiviSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase {
     $this->clickAjaxLink("xpath=//li[@class='select2-no-results']//a[contains(text(), 'New $contactType')]", '_qf_Edit_next');
 
     $name = substr(sha1(rand()), 0, rand(6, 8));
-    $params = array();
+    $params = [];
     if ($contactType == 'Individual') {
       $params['first_name'] = "$name $contactType";
       $params['last_name'] = substr(sha1(rand()), 0, rand(5, 9));
@@ -753,7 +753,7 @@ class CiviSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase {
     // 4 - Individual profile
     // 5 - Organization profile
     // 6 - Household profile
-    $profile = array('4' => 'New Individual', '5' => 'New Organization', '6' => 'New Household');
+    $profile = ['4' => 'New Individual', '5' => 'New Organization', '6' => 'New Household'];
     $this->clickAt("xpath=//div[@id='$selectId']/a");
     $this->clickPopupLink("xpath=//li[@class='select2-no-results']//a[contains(text(),' $profile[$type]')]", '_qf_Edit_next');
 
@@ -816,7 +816,7 @@ class CiviSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase {
 
     $elements = parse_url($url);
     if (!empty($elements['query'])) {
-      $elements['queryString'] = array();
+      $elements['queryString'] = [];
       parse_str($elements['query'], $elements['queryString']);
     }
     return $elements;
@@ -865,39 +865,39 @@ class CiviSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase {
     }
 
     if ($processorType == 'Dummy') {
-      $processorSettings = array(
+      $processorSettings = [
         'user_name' => 'dummy',
         'url_site' => 'http://dummy.com',
         'test_user_name' => 'dummytest',
         'test_url_site' => 'http://dummytest.com',
-      );
+      ];
     }
     elseif ($processorType == 'AuthNet') {
       // FIXME: we 'll need to make a new separate account for testing
-      $processorSettings = array(
+      $processorSettings = [
         //dummy live username/password are passed to bypass processor validation on live credential
         'user_name' => '3HcY62mY',
         'password' => '69943NrwaQA92b8J',
         'test_user_name' => '5ULu56ex',
         'password' => '7ARxW575w736eF5p',
         'test_password' => '7ARxW575w736eF5p',
-      );
+      ];
     }
     elseif ($processorType == 'PayPal') {
-      $processorSettings = array(
+      $processorSettings = [
         'test_user_name' => '559999327053114',
         'user_name' => '559999327053114',
         'test_password' => 'R2zv2g60-A7GXKJYl0nR0g',
         'test_signature' => 'R2zv2g60-A7GXKJYl0nR0g',
         'password' => 'R2zv2g60-A7GXKJYl0nR0g',
         'signature' => 'R2zv2g60-A7GXKJYl0nR0g',
-      );
+      ];
     }
     elseif ($processorType == 'PayPal_Standard') {
-      $processorSettings = array(
+      $processorSettings = [
         'user_name' => 'V18ki@9r5Bf.org',
         'test_user_name' => 'V18ki@9r5Bf.org',
-      );
+      ];
     }
     elseif (empty($processorSettings)) {
       $this->fail("webTestAddPaymentProcessor requires $processorSettings array if processorType is not Dummy.");
@@ -962,7 +962,7 @@ class CiviSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase {
     $this->select2('billing_state_province_id-5', 'California');
     $this->type('billing_postal_code-5', '93245');
 
-    return array($firstName, $middleName, $lastName);
+    return [$firstName, $middleName, $lastName];
   }
 
   /**
@@ -1001,7 +1001,7 @@ class CiviSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase {
     $data = '"' . implode('", "', $headers) . '"' . "\r\n";
 
     foreach ($rows as $row) {
-      $temp = array();
+      $temp = [];
       foreach ($headers as $field => $header) {
         $temp[$field] = isset($row[$field]) ? '"' . $row[$field] . '"' : '""';
       }
@@ -1026,18 +1026,18 @@ class CiviSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase {
    * @return array
    *   array of saved params values.
    */
-  public function webtestAddRelationshipType($params = array()) {
+  public function webtestAddRelationshipType($params = []) {
     $this->openCiviPage("admin/reltype", "reset=1&action=add");
 
     //build the params if not passed.
     if (!is_array($params) || empty($params)) {
-      $params = array(
+      $params = [
         'label_a_b' => 'Test Relationship Type A - B -' . rand(),
         'label_b_a' => 'Test Relationship Type B - A -' . rand(),
         'contact_types_a' => 'Individual',
         'contact_types_b' => 'Individual',
         'description' => 'Test Relationship Type Description',
-      );
+      ];
     }
     //make sure we have minimum required params.
     if (!isset($params['label_a_b']) || empty($params['label_a_b'])) {
@@ -1110,7 +1110,7 @@ class CiviSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase {
     $hash = NULL,
     $rand = NULL,
     $pageTitle = NULL,
-    $processor = array('Test Processor' => 'Dummy'),
+    $processor = ['Test Processor' => 'Dummy'],
     $amountSection = TRUE,
     $payLater = TRUE,
     $onBehalf = TRUE,
@@ -1277,7 +1277,7 @@ class CiviSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase {
       }
       else {
         if ($membershipTypes === TRUE) {
-          $membershipTypes = array(array('id' => 2, 'name' => 'Student', 'default' => 1));
+          $membershipTypes = [['id' => 2, 'name' => 'Student', 'default' => 1]];
         }
 
         // FIXME: handle Introductory Message - New Memberships/Renewals
@@ -1441,7 +1441,7 @@ class CiviSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase {
    * @param int $threshold
    *   Rule's threshold value.
    */
-  public function webtestStrictDedupeRuleDefault($contactType = 'Individual', $fields = array(), $threshold = 10) {
+  public function webtestStrictDedupeRuleDefault($contactType = 'Individual', $fields = [], $threshold = 10) {
     // set default strict rule.
     $strictRuleId = 4;
     if ($contactType == 'Organization') {
@@ -1453,18 +1453,18 @@ class CiviSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase {
 
     // Default dedupe fields for each Contact type.
     if (empty($fields)) {
-      $fields = array('civicrm_email.email' => 10);
+      $fields = ['civicrm_email.email' => 10];
       if ($contactType == 'Organization') {
-        $fields = array(
+        $fields = [
           'civicrm_contact.organization_name' => 10,
           'civicrm_email.email' => 10,
-        );
+        ];
       }
       elseif ($contactType == 'Household') {
-        $fields = array(
+        $fields = [
           'civicrm_contact.household_name' => 10,
           'civicrm_email.email' => 10,
-        );
+        ];
       }
     }
 
@@ -1515,12 +1515,12 @@ class CiviSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase {
     $this->webtestAddOrganization($membershipOrg, TRUE);
 
     $title = 'Membership Type ' . substr(sha1(rand()), 0, 7);
-    $memTypeParams = array(
+    $memTypeParams = [
       'membership_type' => $title,
       'member_of_contact' => $membershipOrg,
       'financial_type' => $financialType,
       'period_type' => $period_type,
-    );
+    ];
 
     $this->openCiviPage("admin/member/membershipType/add", "action=add&reset=1", '_qf_MembershipType_cancel-bottom');
 
@@ -2017,16 +2017,16 @@ class CiviSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase {
           break;
 
         case 'Select':
-          $options = array(
-            1 => array(
+          $options = [
+            1 => [
               'label' => 'Chicken',
               'amount' => '30.00',
-            ),
-            2 => array(
+            ],
+            2 => [
               'label' => 'Vegetarian',
               'amount' => '25.00',
-            ),
-          );
+            ],
+          ];
           $this->addMultipleChoiceOptions($options, $validateStrings);
           if ($dateSpecificFields == TRUE) {
             $this->webtestFillDateTime('expire_on', '-1 week');
@@ -2034,16 +2034,16 @@ class CiviSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase {
           break;
 
         case 'Radio':
-          $options = array(
-            1 => array(
+          $options = [
+            1 => [
               'label' => 'Yes',
               'amount' => '50.00',
-            ),
-            2 => array(
+            ],
+            2 => [
               'label' => 'No',
               'amount' => '0',
-            ),
-          );
+            ],
+          ];
           $this->addMultipleChoiceOptions($options, $validateStrings);
           $this->check('is_required');
           if ($dateSpecificFields == TRUE) {
@@ -2052,16 +2052,16 @@ class CiviSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase {
           break;
 
         case 'CheckBox':
-          $options = array(
-            1 => array(
+          $options = [
+            1 => [
               'label' => 'First Night',
               'amount' => '15.00',
-            ),
-            2 => array(
+            ],
+            2 => [
               'label' => 'Second Night',
               'amount' => '15.00',
-            ),
-          );
+            ],
+          ];
           $this->addMultipleChoiceOptions($options, $validateStrings);
           if ($dateSpecificFields == TRUE) {
             $this->webtestFillDateTime('expire_on', '+1 week');
@@ -2359,7 +2359,7 @@ class CiviSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase {
    * @return array
    */
   public function addCustomGroupField($customSets) {
-    $return = array();
+    $return = [];
     foreach ($customSets as $customSet) {
       $this->openCiviPage("admin/custom/group", "action=add&reset=1");
 
@@ -2396,13 +2396,13 @@ class CiviSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase {
       $this->waitForAjaxContent();
 
       $customGroupTitle = preg_replace('/\s/', '_', trim($customGroupTitle));
-      $return[] = array(
-        "{$customSet['entity']}_{$customSet['subEntity']}" => array(
+      $return[] = [
+        "{$customSet['entity']}_{$customSet['subEntity']}" => [
           'cgtitle' => $customGroupTitle,
           'gid' => $gid,
           'triggerElement' => $customSet['triggerElement'],
-        ),
-      );
+        ],
+      ];
 
       // Go home for a sec to give time for caches to clear
       $this->openCiviPage('');
@@ -2520,7 +2520,7 @@ class CiviSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase {
    * Attempt to get information about what went wrong if we encounter an error when loading a page.
    */
   public function checkForErrorsOnPage() {
-    foreach (array('Access denied', 'Page not found') as $err) {
+    foreach (['Access denied', 'Page not found'] as $err) {
       if ($this->isElementPresent("xpath=//h1[contains(., '$err')]")) {
         $this->fail("'$err' encountered at " . $this->getLocation() . "\nwhile logged in as '{$this->loggedInAs}'");
       }
@@ -2539,9 +2539,9 @@ class CiviSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase {
    *   Contact record (per APIv3).
    */
   public function webtestGetLoggedInContact() {
-    $result = $this->rest_civicrm_api('Contact', 'get', array(
+    $result = $this->rest_civicrm_api('Contact', 'get', [
       'id' => 'user_contact_id',
-    ));
+    ]);
     $this->assertAPISuccess($result, 'Load logged-in contact');
     return CRM_Utils_Array::first($result['values']);
   }
@@ -2604,7 +2604,7 @@ class CiviSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase {
     $this->waitForElementPresent('_qf_PledgeView_next-bottom');
     $pledgeDate = date('F jS, Y', strtotime('now'));
 
-    $this->webtestVerifyTabularData(array(
+    $this->webtestVerifyTabularData([
         'Pledge By' => $contact['display_name'],
         'Total Pledge Amount' => '$ 100.00',
         'To be paid in' => '10 installments of $ 10.00 every 1 week(s)',
@@ -2615,7 +2615,7 @@ class CiviSeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCase {
         'Initial Reminder Day' => '4 days prior to schedule date',
         'Maximum Reminders Send' => 2,
         'Send additional reminders' => '4 days after the last one sent',
-      )
+      ]
     );
     $this->clickLink('_qf_PledgeView_next-bottom', "xpath=//div[@class='view-content']//table[@class='selector row-highlight']//tbody/tr[1]/td[1]/a", FALSE);
     $this->waitForAjaxContent();

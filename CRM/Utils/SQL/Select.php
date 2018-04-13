@@ -115,17 +115,17 @@ class CRM_Utils_SQL_Select implements ArrayAccess {
   private $mode = NULL;
   private $insertInto = NULL;
   private $insertVerb = 'INSERT INTO ';
-  private $insertIntoFields = array();
-  private $selects = array();
+  private $insertIntoFields = [];
+  private $selects = [];
   private $from;
-  private $joins = array();
-  private $wheres = array();
-  private $groupBys = array();
-  private $havings = array();
-  private $orderBys = array();
+  private $joins = [];
+  private $wheres = [];
+  private $groupBys = [];
+  private $havings = [];
+  private $orderBys = [];
   private $limit = NULL;
   private $offset = NULL;
-  private $params = array();
+  private $params = [];
   private $distinct = NULL;
 
   // Public to work-around PHP 5.3 limit.
@@ -139,7 +139,7 @@ class CRM_Utils_SQL_Select implements ArrayAccess {
    * @param array $options
    * @return CRM_Utils_SQL_Select
    */
-  public static function from($from, $options = array()) {
+  public static function from($from, $options = []) {
     return new self($from, $options);
   }
 
@@ -149,7 +149,7 @@ class CRM_Utils_SQL_Select implements ArrayAccess {
    * @param array $options
    * @return CRM_Utils_SQL_Select
    */
-  public static function fragment($options = array()) {
+  public static function fragment($options = []) {
     return new self(NULL, $options);
   }
 
@@ -160,7 +160,7 @@ class CRM_Utils_SQL_Select implements ArrayAccess {
    *   Table-name and optional alias.
    * @param array $options
    */
-  public function __construct($from, $options = array()) {
+  public function __construct($from, $options = []) {
     $this->from = $from;
     $this->mode = isset($options['mode']) ? $options['mode'] : self::INTERPOLATE_AUTO;
   }
@@ -198,14 +198,14 @@ class CRM_Utils_SQL_Select implements ArrayAccess {
       throw new RuntimeException("Cannot merge queries that use different interpolation modes ({$this->mode} vs {$other->mode}).");
     }
 
-    $arrayFields = array('insertIntoFields', 'selects', 'joins', 'wheres', 'groupBys', 'havings', 'orderBys', 'params');
+    $arrayFields = ['insertIntoFields', 'selects', 'joins', 'wheres', 'groupBys', 'havings', 'orderBys', 'params'];
     foreach ($arrayFields as $f) {
       if ($parts === NULL || in_array($f, $parts)) {
         $this->{$f} = array_merge($this->{$f}, $other->{$f});
       }
     }
 
-    $flatFields = array('insertInto', 'from', 'limit', 'offset');
+    $flatFields = ['insertInto', 'from', 'limit', 'offset'];
     foreach ($flatFields as $f) {
       if ($parts === NULL || in_array($f, $parts)) {
         if ($other->{$f} !== NULL) {
@@ -332,7 +332,7 @@ class CRM_Utils_SQL_Select implements ArrayAccess {
     $exprs = (array) $exprs;
     foreach ($exprs as $expr) {
       $evaluatedExpr = $this->interpolate($expr, $args);
-      $this->orderBys[$evaluatedExpr] = array('value' => $evaluatedExpr, 'weight' => $weight, 'guid' => $guid++);
+      $this->orderBys[$evaluatedExpr] = ['value' => $evaluatedExpr, 'weight' => $weight, 'guid' => $guid++];
     }
     return $this;
   }
@@ -398,7 +398,7 @@ class CRM_Utils_SQL_Select implements ArrayAccess {
    * @return CRM_Utils_SQL_Select
    * @see insertIntoField
    */
-  public function insertInto($table, $fields = array()) {
+  public function insertInto($table, $fields = []) {
     $this->insertInto = $table;
     $this->insertIntoField($fields);
     return $this;
@@ -413,7 +413,7 @@ class CRM_Utils_SQL_Select implements ArrayAccess {
    *   The fields to fill in the other table (in order).
    * @return CRM_Utils_SQL_Select
    */
-  public function insertIgnoreInto($table, $fields = array()) {
+  public function insertIgnoreInto($table, $fields = []) {
     $this->insertVerb = "INSERT IGNORE INTO ";
     return $this->insertInto($table, $fields);
   }
@@ -426,7 +426,7 @@ class CRM_Utils_SQL_Select implements ArrayAccess {
    * @param array $fields
    *   The fields to fill in the other table (in order).
    */
-  public function replaceInto($table, $fields = array()) {
+  public function replaceInto($table, $fields = []) {
     $this->insertVerb = "REPLACE INTO ";
     return $this->insertInto($table, $fields);
   }
@@ -453,7 +453,7 @@ class CRM_Utils_SQL_Select implements ArrayAccess {
    */
   public function isEmpty($parts = NULL) {
     $empty = TRUE;
-    $fields = array(
+    $fields = [
       'insertInto',
       'insertIntoFields',
       'selects',
@@ -465,7 +465,7 @@ class CRM_Utils_SQL_Select implements ArrayAccess {
       'orderBys',
       'limit',
       'offset',
-    );
+    ];
     if ($parts !== NULL) {
       $fields = array_intersect($fields, $parts);
     }
@@ -534,10 +534,10 @@ class CRM_Utils_SQL_Select implements ArrayAccess {
           // Unrecognized variables are ignored. Mitigate risk of accidents.
           return $m[0];
         }
-        $values = is_array($values) ? $values : array($values);
+        $values = is_array($values) ? $values : [$values];
         switch ($m[1]) {
           case '@':
-            $parts = array_map(array($select, 'escapeString'), $values);
+            $parts = array_map([$select, 'escapeString'], $values);
             return implode(', ', $parts);
 
           // TODO: ensure all uses of this un-escaped literal are safe
@@ -607,7 +607,7 @@ class CRM_Utils_SQL_Select implements ArrayAccess {
     }
     if ($this->orderBys) {
       $orderBys = CRM_Utils_Array::crmArraySortByField($this->orderBys,
-        array('weight', 'guid'));
+        ['weight', 'guid']);
       $orderBys = CRM_Utils_Array::collect('value', $orderBys);
       $sql .= 'ORDER BY ' . implode(', ', $orderBys) . "\n";
     }
@@ -641,7 +641,7 @@ class CRM_Utils_SQL_Select implements ArrayAccess {
    */
   public function execute($daoName = NULL, $i18nRewrite = TRUE) {
     // Don't pass through $params. toSQL() handles interpolation.
-    $params = array();
+    $params = [];
 
     // Don't pass through $abort, $trapException. Just use straight-up exceptions.
     $abort = TRUE;

@@ -44,7 +44,7 @@ class api_v3_MessageTemplateTest extends CiviUnitTestCase {
     parent::setUp();
     $this->useTransaction(TRUE);
     $template = CRM_Core_DAO::createTestObject('CRM_Core_DAO_MessageTemplate')->toArray();
-    $this->params = array(
+    $this->params = [
       'msg_title' => $template['msg_title'],
       'msg_subject' => $template['msg_subject'],
       'msg_text' => $template['msg_text'],
@@ -52,7 +52,7 @@ class api_v3_MessageTemplateTest extends CiviUnitTestCase {
       'workflow_id' => $template['workflow_id'],
       'is_default' => $template['is_default'],
       'is_reserved' => $template['is_reserved'],
-    );
+    ];
   }
 
   /**
@@ -82,10 +82,10 @@ class api_v3_MessageTemplateTest extends CiviUnitTestCase {
    */
   public function testDelete() {
     $entity = $this->createTestEntity();
-    $result = $this->callAPIAndDocument('MessageTemplate', 'delete', array('id' => $entity['id']), __FUNCTION__, __FILE__);
-    $checkDeleted = $this->callAPISuccess($this->entity, 'get', array(
+    $result = $this->callAPIAndDocument('MessageTemplate', 'delete', ['id' => $entity['id']], __FUNCTION__, __FILE__);
+    $checkDeleted = $this->callAPISuccess($this->entity, 'get', [
       'id' => $entity['id'],
-    ));
+    ]);
     $this->assertEquals(0, $checkDeleted['count']);
   }
 

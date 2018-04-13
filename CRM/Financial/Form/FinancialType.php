@@ -75,11 +75,11 @@ class CRM_Financial_Form_FinancialType extends CRM_Contribute_Form {
       $this->assign('aid', $this->_id);
     }
     if ($this->_action == CRM_Core_Action::UPDATE && CRM_Core_DAO::getFieldValue('CRM_Financial_DAO_FinancialType', $this->_id, 'is_reserved', 'vid')) {
-      $this->freeze(array('is_active'));
+      $this->freeze(['is_active']);
     }
 
     $this->addRule('name', ts('A financial type with this name already exists. Please select another name.'), 'objectExists',
-      array('CRM_Financial_DAO_FinancialType', $this->_id)
+      ['CRM_Financial_DAO_FinancialType', $this->_id]
     );
   }
 
@@ -95,7 +95,7 @@ class CRM_Financial_Form_FinancialType extends CRM_Contribute_Form {
       CRM_Core_Session::setStatus(ts('Selected financial type has been deleted.'), ts('Record Deleted'), 'success');
     }
     else {
-      $params = $ids = array();
+      $params = $ids = [];
       // store the submitted values in an array
       $params = $this->exportValues();
 
@@ -106,24 +106,24 @@ class CRM_Financial_Form_FinancialType extends CRM_Contribute_Form {
       $financialType = CRM_Financial_BAO_FinancialType::add($params, $ids);
       if ($this->_action & CRM_Core_Action::UPDATE) {
         $url = CRM_Utils_System::url('civicrm/admin/financial/financialType', 'reset=1&action=browse');
-        CRM_Core_Session::setStatus(ts('The financial type "%1" has been updated.', array(1 => $financialType->name)), ts('Saved'), 'success');
+        CRM_Core_Session::setStatus(ts('The financial type "%1" has been updated.', [1 => $financialType->name]), ts('Saved'), 'success');
       }
       else {
         $url = CRM_Utils_System::url('civicrm/admin/financial/financialType/accounts', 'reset=1&action=browse&aid=' . $financialType->id);
-        $statusArray = array(
+        $statusArray = [
           1 => $financialType->name,
           2 => $financialType->name,
           3 => CRM_Utils_Array::value(0, $financialType->titles),
           4 => CRM_Utils_Array::value(1, $financialType->titles),
           5 => CRM_Utils_Array::value(2, $financialType->titles),
-        );
+        ];
         if (empty($financialType->titles)) {
           $text = ts('Your Financial "%1" Type has been created and assigned to an existing financial account with the same title. You should review the assigned account and determine whether additional account relationships are needed.', $statusArray);
         }
         else {
           $text = ts('Your Financial "%1" Type has been created, along with a corresponding income account "%2". That income account, along with standard financial accounts "%3", "%4" and "%5" have been linked to the financial type. You may edit or replace those relationships here.', $statusArray);
         }
-        CRM_Core_Session::setStatus($text, ts('Saved'), 'success', array('expires' => 0));
+        CRM_Core_Session::setStatus($text, ts('Saved'), 'success', ['expires' => 0]);
       }
 
       $session = CRM_Core_Session::singleton();

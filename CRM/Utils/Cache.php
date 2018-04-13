@@ -100,18 +100,18 @@ class CRM_Utils_Cache {
     switch ($cachePlugin) {
       case 'ArrayCache':
       case 'NoCache':
-        $defaults = array();
+        $defaults = [];
         break;
 
       case 'Redis':
       case 'Memcache':
       case 'Memcached':
-        $defaults = array(
+        $defaults = [
           'host' => 'localhost',
           'port' => 11211,
           'timeout' => 3600,
           'prefix' => '',
-        );
+        ];
 
         // Use old constants if needed to ensure backward compatibility
         if (defined('CIVICRM_MEMCACHE_HOST')) {
@@ -150,7 +150,7 @@ class CRM_Utils_Cache {
         break;
 
       case 'APCcache':
-        $defaults = array();
+        $defaults = [];
         if (defined('CIVICRM_DB_CACHE_TIMEOUT')) {
           $defaults['timeout'] = CIVICRM_DB_CACHE_TIMEOUT;
         }
@@ -177,13 +177,13 @@ class CRM_Utils_Cache {
    * @throws CRM_Core_Exception
    * @see Civi::cache()
    */
-  public static function create($params = array()) {
+  public static function create($params = []) {
     $types = (array) $params['type'];
 
     foreach ($types as $type) {
       switch ($type) {
         case '*memory*':
-          if (defined('CIVICRM_DB_CACHE_CLASS') && in_array(CIVICRM_DB_CACHE_CLASS, array('Memcache', 'Memcached', 'Redis'))) {
+          if (defined('CIVICRM_DB_CACHE_CLASS') && in_array(CIVICRM_DB_CACHE_CLASS, ['Memcache', 'Memcached', 'Redis'])) {
             $dbCacheClass = 'CRM_Utils_Cache_' . CIVICRM_DB_CACHE_CLASS;
             $settings = self::getCacheSettings(CIVICRM_DB_CACHE_CLASS);
             $settings['prefix'] = $settings['prefix'] . '_' . $params['name'];
@@ -193,16 +193,16 @@ class CRM_Utils_Cache {
 
         case 'SqlGroup':
           if (defined('CIVICRM_DSN') && CIVICRM_DSN) {
-            return new CRM_Utils_Cache_SqlGroup(array(
+            return new CRM_Utils_Cache_SqlGroup([
               'group' => $params['name'],
               'prefetch' => CRM_Utils_Array::value('prefetch', $params, FALSE),
-            ));
+            ]);
           }
           break;
 
         case 'Arraycache':
         case 'ArrayCache':
-          return new CRM_Utils_Cache_ArrayCache(array());
+          return new CRM_Utils_Cache_ArrayCache([]);
 
       }
     }

@@ -51,10 +51,10 @@ class CRM_ACL_BAO_ACL extends CRM_ACL_DAO_ACL {
    */
   public static function entityTable() {
     if (!self::$_entityTable) {
-      self::$_entityTable = array(
+      self::$_entityTable = [
         'civicrm_contact' => ts('Contact'),
         'civicrm_acl_role' => ts('ACL Role'),
-      );
+      ];
     }
     return self::$_entityTable;
   }
@@ -64,12 +64,12 @@ class CRM_ACL_BAO_ACL extends CRM_ACL_DAO_ACL {
    */
   public static function objectTable() {
     if (!self::$_objectTable) {
-      self::$_objectTable = array(
+      self::$_objectTable = [
         'civicrm_contact' => ts('Contact'),
         'civicrm_group' => ts('Group'),
         'civicrm_saved_search' => ts('Contact Group'),
         'civicrm_admin' => ts('Import'),
-      );
+      ];
     }
     return self::$_objectTable;
   }
@@ -79,14 +79,14 @@ class CRM_ACL_BAO_ACL extends CRM_ACL_DAO_ACL {
    */
   public static function operation() {
     if (!self::$_operation) {
-      self::$_operation = array(
+      self::$_operation = [
         'View' => ts('View'),
         'Edit' => ts('Edit'),
         'Create' => ts('Create'),
         'Delete' => ts('Delete'),
         'Search' => ts('Search'),
         'All' => ts('All'),
-      );
+      ];
     }
     return self::$_operation;
   }
@@ -117,14 +117,14 @@ class CRM_ACL_BAO_ACL extends CRM_ACL_DAO_ACL {
   ) {
     $dao = new CRM_ACL_DAO_ACL();
 
-    $t = array(
+    $t = [
       'ACL' => self::getTableName(),
       'ACLRole' => 'civicrm_acl_role',
       'ACLEntityRole' => CRM_ACL_DAO_EntityRole::getTableName(),
       'Contact' => CRM_Contact_DAO_Contact::getTableName(),
       'Group' => CRM_Contact_DAO_Group::getTableName(),
       'GroupContact' => CRM_Contact_DAO_GroupContact::getTableName(),
-    );
+    ];
 
     $contact_id = CRM_Core_Session::getLoggedInContactID();
 
@@ -155,7 +155,7 @@ class CRM_ACL_BAO_ACL extends CRM_ACL_DAO_ACL {
       }
     }
 
-    $query = array();
+    $query = [];
 
     /* Query for permissions granted to all contacts in the domain */
 
@@ -258,9 +258,9 @@ class CRM_ACL_BAO_ACL extends CRM_ACL_DAO_ACL {
 
     $dao->query($union);
 
-    $allow = array(0);
-    $deny = array(0);
-    $override = array();
+    $allow = [0];
+    $deny = [0];
+    $override = [];
 
     while ($dao->fetch()) {
       /* Instant bypass for the following cases:
@@ -335,7 +335,7 @@ class CRM_ACL_BAO_ACL extends CRM_ACL_DAO_ACL {
   public static function getClause($table, $id, &$tables) {
     $table = CRM_Utils_Type::escape($table, 'String');
     $id = CRM_Utils_Type::escape($id, 'Integer');
-    $whereTables = array();
+    $whereTables = [];
 
     $ssTable = CRM_Contact_BAO_SavedSearch::getTableName();
 
@@ -364,7 +364,7 @@ class CRM_ACL_BAO_ACL extends CRM_ACL_DAO_ACL {
    *   Assoc. array of the ACL rule's properties
    */
   public function toArray($format = '%s', $hideEmpty = FALSE) {
-    $result = array();
+    $result = [];
 
     if (!self::$_fieldKeys) {
       $fields = CRM_ACL_DAO_ACL::fields();
@@ -394,7 +394,7 @@ class CRM_ACL_BAO_ACL extends CRM_ACL_DAO_ACL {
    *   Array of assoc. arrays of ACL rules
    */
   public static function &getACLs($contact_id = NULL, $group_id = NULL, $aclRoles = FALSE) {
-    $results = array();
+    $results = [];
 
     if (empty($contact_id)) {
       return $results;
@@ -502,7 +502,7 @@ class CRM_ACL_BAO_ACL extends CRM_ACL_DAO_ACL {
       }
     }
 
-    $results = array();
+    $results = [];
 
     $rule->query($query);
 
@@ -532,7 +532,7 @@ class CRM_ACL_BAO_ACL extends CRM_ACL_DAO_ACL {
     $acl = self::getTableName();
     $c2g = CRM_Contact_BAO_GroupContact::getTableName();
     $group = CRM_Contact_BAO_Group::getTableName();
-    $results = array();
+    $results = [];
 
     if ($contact_id) {
       $query = "
@@ -600,7 +600,7 @@ SELECT      $acl.*
                             AND     $c2g.contact_id         = $contact_id
                             AND     $c2g.status             = 'Added'";
 
-    $results = array();
+    $results = [];
 
     $rule->query($query);
 
@@ -641,7 +641,7 @@ SELECT $acl.*
    *   Assoc array of ACL rules
    */
   public static function &getAllByContact($contact_id) {
-    $result = array();
+    $result = [];
 
     /* First, the contact-specific ACLs, including ACL Roles */
     $result += self::getACLs($contact_id, NULL, TRUE);
@@ -715,7 +715,7 @@ SELECT count( a.id )
    AND a.object_table =  %1
    AND a.id           IN ( $aclKeys )
 ";
-    $params = array(1 => array($str, 'String'));
+    $params = [1 => [$str, 'String']];
 
     $count = CRM_Core_DAO::singleValueQuery($query, $params);
     return ($count) ? TRUE : FALSE;
@@ -733,7 +733,7 @@ SELECT count( a.id )
     $acls = CRM_ACL_BAO_Cache::build($contactID);
 
     $whereClause = NULL;
-    $clauses = array();
+    $clauses = [];
 
     if (!empty($acls)) {
       $aclKeys = array_keys($acls);
@@ -752,12 +752,12 @@ ORDER BY a.object_id
       $dao = CRM_Core_DAO::executeQuery($query);
 
       // do an or of all the where clauses u see
-      $ids = array();
+      $ids = [];
       while ($dao->fetch()) {
         // make sure operation matches the type TODO
         if (self::matchType($type, $dao->operation)) {
           if (!$dao->object_id) {
-            $ids = array();
+            $ids = [];
             $whereClause = ' ( 1 ) ';
             break;
           }
@@ -774,13 +774,13 @@ SELECT g.*
  AND   g.is_active = 1
 ";
         $dao = CRM_Core_DAO::executeQuery($query);
-        $staticGroupIDs = array();
-        $cachedGroupIDs = array();
+        $staticGroupIDs = [];
+        $cachedGroupIDs = [];
         while ($dao->fetch()) {
           // currently operation is restrcited to VIEW/EDIT
           if ($dao->where_clause) {
             if ($dao->select_tables) {
-              $tmpTables = array();
+              $tmpTables = [];
               foreach (unserialize($dao->select_tables) as $tmpName => $tmpInfo) {
                 if ($tmpName == '`civicrm_group_contact-' . $dao->id . '`') {
                   $tmpName = '`civicrm_group_contact-ACL`';
@@ -797,7 +797,7 @@ SELECT g.*
               );
             }
             if ($dao->where_tables) {
-              $tmpTables = array();
+              $tmpTables = [];
               foreach (unserialize($dao->where_tables) as $tmpName => $tmpInfo) {
                 if ($tmpName == '`civicrm_group_contact-' . $dao->id . '`') {
                   $tmpName = '`civicrm_group_contact-ACL`';
@@ -864,7 +864,7 @@ SELECT g.*
   ) {
     $userCacheKey = "{$contactID}_{$type}_{$tableName}_" . CRM_Core_Config::domainID() . '_' . md5(implode(',', array_merge((array) $allGroups, (array) $includedGroups)));
     if (empty(Civi::$statics[__CLASS__]['permissioned_groups'])) {
-      Civi::$statics[__CLASS__]['permissioned_groups'] = array();
+      Civi::$statics[__CLASS__]['permissioned_groups'] = [];
     }
     if (!empty(Civi::$statics[__CLASS__]['permissioned_groups'][$userCacheKey])) {
       return Civi::$statics[__CLASS__]['permissioned_groups'][$userCacheKey];
@@ -872,7 +872,7 @@ SELECT g.*
 
     $acls = CRM_ACL_BAO_Cache::build($contactID);
 
-    $ids = array();
+    $ids = [];
     if (!empty($acls)) {
       $aclKeys = array_keys($acls);
       $aclKeys = implode(',', $aclKeys);
@@ -881,7 +881,7 @@ SELECT g.*
       $cache = CRM_Utils_Cache::singleton();
       $ids = $cache->get($cacheKey);
       if (!$ids) {
-        $ids = array();
+        $ids = [];
         $query = "
 SELECT   a.operation, a.object_id
   FROM   civicrm_acl_cache c, civicrm_acl a
@@ -892,7 +892,7 @@ SELECT   a.operation, a.object_id
 GROUP BY a.operation,a.object_id
 ORDER BY a.object_id
 ";
-        $params = array(1 => array($tableName, 'String'));
+        $params = [1 => [$tableName, 'String']];
         $dao = CRM_Core_DAO::executeQuery($query, $params);
         while ($dao->fetch()) {
           if ($dao->object_id) {

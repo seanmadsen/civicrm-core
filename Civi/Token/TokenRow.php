@@ -136,10 +136,10 @@ class TokenRow {
    */
   public function customToken($entity, $customFieldID, $entityID) {
     $customFieldName = "custom_" . $customFieldID;
-    $fieldValue = civicrm_api3($entity, 'getvalue', array(
+    $fieldValue = civicrm_api3($entity, 'getvalue', [
       'return' => $customFieldName,
       'id' => $entityID,
-    ));
+    ]);
 
     // format the raw custom field value into proper display value
     if ($fieldValue) {
@@ -204,10 +204,10 @@ class TokenRow {
     }
 
     if (!isset($this->tokenProcessor->rowValues[$this->tokenRow]['text/html'])) {
-      $this->tokenProcessor->rowValues[$this->tokenRow]['text/html'] = array();
+      $this->tokenProcessor->rowValues[$this->tokenRow]['text/html'] = [];
     }
     if (!isset($this->tokenProcessor->rowValues[$this->tokenRow]['text/plain'])) {
-      $this->tokenProcessor->rowValues[$this->tokenRow]['text/plain'] = array();
+      $this->tokenProcessor->rowValues[$this->tokenRow]['text/plain'] = [];
     }
 
     $htmlTokens = &$this->tokenProcessor->rowValues[$this->tokenRow]['text/html'];

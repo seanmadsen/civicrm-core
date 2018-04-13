@@ -62,7 +62,7 @@ class CRM_Pledge_Form_Payment extends CRM_Core_Form {
    * the default values are retrieved from the database.
    */
   public function setDefaultValues() {
-    $defaults = array();
+    $defaults = [];
     if ($this->_id) {
       $params['id'] = $this->_id;
       CRM_Pledge_BAO_PledgePayment::retrieve($params, $defaults);
@@ -86,35 +86,35 @@ class CRM_Pledge_Form_Payment extends CRM_Core_Form {
 
     $this->addMoney('scheduled_amount',
       ts('Scheduled Amount'), TRUE,
-      array('readonly' => TRUE),
+      ['readonly' => TRUE],
       TRUE,
       'currency',
       NULL,
       TRUE
     );
 
-    $optionTypes = array(
+    $optionTypes = [
       '1' => ts('Adjust Pledge Payment Schedule?'),
       '2' => ts('Adjust Total Pledge Amount?'),
-    );
+    ];
     $element = $this->addRadio('option_type',
       NULL,
       $optionTypes,
-      array(), '<br/>'
+      [], '<br/>'
     );
 
-    $this->addButtons(array(
-        array(
+    $this->addButtons([
+        [
           'type' => 'next',
           'name' => ts('Save'),
           'spacing' => '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
           'isDefault' => TRUE,
-        ),
-        array(
+        ],
+        [
           'type' => 'cancel',
           'name' => ts('Cancel'),
-        ),
-      )
+        ],
+      ]
     );
   }
 
@@ -124,7 +124,7 @@ class CRM_Pledge_Form_Payment extends CRM_Core_Form {
   public function postProcess() {
     // get the submitted form values.
     $formValues = $this->controller->exportValues($this->_name);
-    $params = array();
+    $params = [];
     $formValues['scheduled_date'] = CRM_Utils_Date::processDate($formValues['scheduled_date']);
     $params['scheduled_date'] = CRM_Utils_Date::format($formValues['scheduled_date']);
     $params['currency'] = CRM_Utils_Array::value('currency', $formValues);
@@ -161,7 +161,7 @@ class CRM_Pledge_Form_Payment extends CRM_Core_Form {
     }
     // update pledge status
     CRM_Pledge_BAO_PledgePayment::updatePledgePaymentStatus($pledgeId,
-      array($params['id']),
+      [$params['id']],
       $params['status_id'],
       NULL,
       $formValues['scheduled_amount'],

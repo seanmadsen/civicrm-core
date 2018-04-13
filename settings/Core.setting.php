@@ -36,16 +36,16 @@
 /**
  * Settings metadata file
  */
-return array(
-  'contact_view_options' => array(
+return [
+  'contact_view_options' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'contact_view_options',
     'type' => 'String',
     'html_type' => 'checkboxes',
-    'pseudoconstant' => array(
+    'pseudoconstant' => [
       'optionGroupName' => 'contact_view_options',
-    ),
+    ],
     'default' => '123456789101113',
     'add' => '4.1',
     'title' => 'Viewing Contacts',
@@ -53,16 +53,16 @@ return array(
     'is_contact' => 0,
     'description' => NULL,
     'help_text' => NULL,
-  ),
-  'contact_edit_options' => array(
+  ],
+  'contact_edit_options' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'contact_edit_options',
     'type' => 'String',
     'html_type' => 'checkboxes',
-    'pseudoconstant' => array(
+    'pseudoconstant' => [
       'optionGroupName' => 'contact_edit_options',
-    ),
+    ],
     'default' => '123456789111214151617',
     'add' => '4.1',
     'title' => 'Editing Contacts',
@@ -70,15 +70,15 @@ return array(
     'is_contact' => 0,
     'description' => NULL,
     'help_text' => NULL,
-  ),
-  'advanced_search_options' => array(
+  ],
+  'advanced_search_options' => [
     'group_name' => 'CiviCRM Preferences',
     'name' => 'advanced_search_options',
     'type' => 'String',
     'html_type' => 'checkboxes',
-    'pseudoconstant' => array(
+    'pseudoconstant' => [
       'optionGroupName' => 'advanced_search_options',
-    ),
+    ],
     'default' => '123456789101112131516171819',
     'add' => '4.1',
     'title' => 'Contact Search',
@@ -86,16 +86,16 @@ return array(
     'is_contact' => 0,
     'description' => NULL,
     'help_text' => NULL,
-  ),
-  'user_dashboard_options' => array(
+  ],
+  'user_dashboard_options' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'user_dashboard_options',
     'type' => 'String',
     'html_type' => 'checkboxes',
-    'pseudoconstant' => array(
+    'pseudoconstant' => [
       'optionGroupName' => 'user_dashboard_options',
-    ),
+    ],
     'default' => '1234578',
     'add' => '4.1',
     'title' => 'Contact Dashboard',
@@ -103,16 +103,16 @@ return array(
     'is_contact' => 0,
     'description' => NULL,
     'help_text' => NULL,
-  ),
-  'address_options' => array(
+  ],
+  'address_options' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'address_options',
     'type' => 'String',
     'html_type' => 'Text',
-    'pseudoconstant' => array(
+    'pseudoconstant' => [
       'optionGroupName' => 'address_options',
-    ),
+    ],
     'default' => '123456891011',
     'add' => '4.1',
     'title' => 'Addressing Options',
@@ -120,8 +120,8 @@ return array(
     'is_contact' => 0,
     'description' => NULL,
     'help_text' => NULL,
-  ),
-  'address_format' => array(
+  ],
+  'address_format' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'address_format',
@@ -134,8 +134,8 @@ return array(
     'is_contact' => 0,
     'description' => NULL,
     'help_text' => NULL,
-  ),
-  'mailing_format' => array(
+  ],
+  'mailing_format' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'mailing_format',
@@ -148,8 +148,8 @@ return array(
     'is_contact' => 0,
     'description' => NULL,
     'help_text' => NULL,
-  ),
-  'display_name_format' => array(
+  ],
+  'display_name_format' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'display_name_format',
@@ -162,8 +162,8 @@ return array(
     'is_contact' => 0,
     'description' => NULL,
     'help_text' => NULL,
-  ),
-  'sort_name_format' => array(
+  ],
+  'sort_name_format' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'sort_name_format',
@@ -176,8 +176,8 @@ return array(
     'is_contact' => 0,
     'description' => NULL,
     'help_text' => NULL,
-  ),
-  'remote_profile_submissions' => array(
+  ],
+  'remote_profile_submissions' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'remote_profile_submissions',
@@ -191,8 +191,8 @@ return array(
     'is_contact' => 0,
     'description' => 'If enabled, CiviCRM will permit submissions from external sites to profiles. This is disabled by default to limit abuse.',
     'help_text' => NULL,
-  ),
-  'editor_id' => array(
+  ],
+  'editor_id' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'editor_id',
@@ -205,8 +205,8 @@ return array(
     'is_contact' => 0,
     'description' => NULL,
     'help_text' => NULL,
-  ),
-  'contact_ajax_check_similar' => array(
+  ],
+  'contact_ajax_check_similar' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'contact_ajax_check_similar',
@@ -219,8 +219,8 @@ return array(
     'is_contact' => 0,
     'description' => NULL,
     'help_text' => NULL,
-  ),
-  'ajaxPopupsEnabled' => array(
+  ],
+  'ajaxPopupsEnabled' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'ajaxPopupsEnabled',
@@ -233,8 +233,8 @@ return array(
     'is_contact' => 0,
     'description' => NULL,
     'help_text' => NULL,
-  ),
-  'activity_assignee_notification' => array(
+  ],
+  'activity_assignee_notification' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'activity_assignee_notification',
@@ -247,8 +247,8 @@ return array(
     'is_contact' => 0,
     'description' => NULL,
     'help_text' => NULL,
-  ),
-  'activity_assignee_notification_ics' => array(
+  ],
+  'activity_assignee_notification_ics' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'activity_assignee_notification_ics',
@@ -261,16 +261,16 @@ return array(
     'is_contact' => 0,
     'description' => NULL,
     'help_text' => NULL,
-  ),
-  'contact_autocomplete_options' => array(
+  ],
+  'contact_autocomplete_options' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'contact_autocomplete_options',
     'type' => 'String',
     'quick_form_type' => 'CheckBox',
-    'pseudoconstant' => array(
+    'pseudoconstant' => [
       'callback' => 'CRM_Admin_Form_Setting_Search::getContactAutocompleteOptions',
-    ),
+    ],
     'default' => '12',
     'add' => '4.1',
     'title' => 'Autocomplete Contact Search',
@@ -278,16 +278,16 @@ return array(
     'is_contact' => 0,
     'description' => "Selected fields will be displayed in back-office autocomplete dropdown search results (Quick Search, etc.). Contact Name is always included.",
     'help_text' => NULL,
-  ),
-  'contact_reference_options' => array(
+  ],
+  'contact_reference_options' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'contact_reference_options',
     'type' => 'String',
     'quick_form_type' => 'CheckBox',
-    'pseudoconstant' => array(
+    'pseudoconstant' => [
       'callback' => 'CRM_Admin_Form_Setting_Search::getContactReferenceOptions',
-    ),
+    ],
     'default' => '12',
     'add' => '4.1',
     'title' => 'Contact Reference Options',
@@ -295,8 +295,8 @@ return array(
     'is_contact' => 0,
     'description' => "Selected fields will be displayed in autocomplete dropdown search results for 'Contact Reference' custom fields. Contact Name is always included. NOTE: You must assign 'access contact reference fields' permission to the anonymous role if you want to use custom contact reference fields in profiles on public pages. For most situations, you should use the 'Limit List to Group' setting when configuring a contact reference field which will be used in public forms to prevent exposing your entire contact list.",
     'help_text' => NULL,
-  ),
-  'contact_smart_group_display' => array(
+  ],
+  'contact_smart_group_display' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'contact_smart_group_display',
@@ -309,8 +309,8 @@ return array(
     'is_contact' => 0,
     'description' => NULL,
     'help_text' => NULL,
-  ),
-  'smart_group_cache_refresh_mode' => array(
+  ],
+  'smart_group_cache_refresh_mode' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'smart_group_cache_refresh_mode',
@@ -321,13 +321,13 @@ return array(
     'title' => 'Smart Group Refresh Mode',
     'is_domain' => 1,
     'is_contact' => 0,
-    'pseudoconstant' => array(
+    'pseudoconstant' => [
       'callback' => 'CRM_Contact_BAO_GroupContactCache::getModes',
-    ),
+    ],
     'description' => 'Should the smart groups be by cron jobs or user actions',
     'help_text' => 'In "Opportunistic Flush" mode, caches are flushed in response to user actions; this mode is broadly compatible but may add latency during form-submissions. In "Cron Flush" mode, you should schedule a cron job to flush caches; this can improve latency on form-submissions but requires more setup.',
-  ),
-  'installed' => array(
+  ],
+  'installed' => [
     'bootstrap_comment' => 'This is a boot setting which may be loaded during bootstrap. Defaults are loaded via SettingsBag::getSystemDefaults().',
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
@@ -341,8 +341,8 @@ return array(
     'is_contact' => 0,
     'description' => 'A flag indicating whether this system has run a post-installation routine',
     'help_text' => NULL,
-  ),
-  'max_attachments' => array(
+  ],
+  'max_attachments' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'max_attachments',
@@ -350,10 +350,10 @@ return array(
     'type' => 'Integer',
     'quick_form_type' => 'Element',
     'html_type' => 'text',
-    'html_attributes' => array(
+    'html_attributes' => [
       'size' => 2,
       'maxlength' => 8,
-    ),
+    ],
     'default' => 3,
     'add' => '4.3',
     'title' => 'Maximum Attachments',
@@ -361,18 +361,18 @@ return array(
     'is_contact' => 0,
     'description' => 'Maximum number of files (documents, images, etc.) which can attached to emails or activities.',
     'help_text' => NULL,
-  ),
-  'maxFileSize' => array(
+  ],
+  'maxFileSize' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'maxFileSize',
     'type' => 'Integer',
     'quick_form_type' => 'Element',
     'html_type' => 'text',
-    'html_attributes' => array(
+    'html_attributes' => [
       'size' => 2,
       'maxlength' => 8,
-    ),
+    ],
     'default' => 3,
     'add' => '4.3',
     'title' => 'Maximum File Size (in MB)',
@@ -380,8 +380,8 @@ return array(
     'is_contact' => 0,
     'description' => 'Maximum Size of file (documents, images, etc.) which can attached to emails or activities.<br />Note: php.ini should support this file size.',
     'help_text' => NULL,
-  ),
-  'contact_undelete' => array(
+  ],
+  'contact_undelete' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'contact_undelete',
@@ -394,8 +394,8 @@ return array(
     'is_contact' => 0,
     'description' => 'If enabled, deleted contacts will be moved to trash (instead of being destroyed). Users with the proper permission are able to search for the deleted contacts and restore them (or delete permanently).',
     'help_text' => NULL,
-  ),
-  'allowPermDeleteFinancial' => array(
+  ],
+  'allowPermDeleteFinancial' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'allowPermDeleteFinancial',
@@ -408,8 +408,8 @@ return array(
     'is_contact' => 0,
     'description' => 'Allow Permanent Delete for contacts who are linked to live financial transactions',
     'help_text' => NULL,
-  ),
-  'securityAlert' => array(
+  ],
+  'securityAlert' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'securityAlert',
@@ -422,8 +422,8 @@ return array(
     'is_contact' => 0,
     'description' => "If enabled, CiviCRM will display pop-up notifications (no more than once per day) for security and misconfiguration issues identified in the system check.",
     'help_text' => NULL,
-  ),
-  'doNotAttachPDFReceipt' => array(
+  ],
+  'doNotAttachPDFReceipt' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'doNotAttachPDFReceipt',
@@ -436,17 +436,17 @@ return array(
     'is_contact' => 0,
     'description' => "If enabled, CiviCRM sends PDF receipt as an attachment during event signup or online contribution.",
     'help_text' => NULL,
-  ),
-  'recordGeneratedLetters' => array(
+  ],
+  'recordGeneratedLetters' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'recordGeneratedLetters',
     'type' => 'String',
     'quick_form_type' => 'Select',
     'html_type' => 'Select',
-    'html_attributes' => array(
+    'html_attributes' => [
       'class' => 'crm-select2',
-    ),
+    ],
     'default' => 'multiple',
     'add' => '4.7',
     'title' => 'Record generated letters',
@@ -454,20 +454,20 @@ return array(
     'is_contact' => 0,
     'description' => 'When generating a letter (PDF/Word) via mail-merge, how should the letter be recorded?',
     'help_text' => NULL,
-    'pseudoconstant' => array(
+    'pseudoconstant' => [
       'callback' => 'CRM_Contact_Form_Task_PDFLetterCommon::getLoggingOptions',
-    ),
-  ),
-  'wkhtmltopdfPath' => array(
+    ],
+  ],
+  'wkhtmltopdfPath' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'wkhtmltopdfPath',
     'type' => 'String',
     'quick_form_type' => 'Element',
-    'html_attributes' => array(
+    'html_attributes' => [
       'size' => 64,
       'maxlength' => 256,
-    ),
+    ],
     'html_type' => 'Text',
     'default' => NULL,
     'add' => '4.3',
@@ -476,17 +476,17 @@ return array(
     'is_contact' => 0,
     'description' => NULL,
     'help_text' => NULL,
-  ),
-  'recaptchaOptions' => array(
+  ],
+  'recaptchaOptions' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'recaptchaOptions',
     'type' => 'String',
     'quick_form_type' => 'Element',
-    'html_attributes' => array(
+    'html_attributes' => [
       'size' => 64,
       'maxlength' => 64,
-    ),
+    ],
     'html_type' => 'Text',
     'default' => NULL,
     'add' => '4.3',
@@ -495,17 +495,17 @@ return array(
     'is_contact' => 0,
     'description' => 'You can specify the reCAPTCHA theme options as comma separated data.(eg: theme:\'blackglass\', lang : \'fr\' ). Check the available options at <a href="https://developers.google.com/recaptcha/docs/display#config">Customizing the Look and Feel of reCAPTCHA</a>.',
     'help_text' => NULL,
-  ),
-  'recaptchaPublicKey' => array(
+  ],
+  'recaptchaPublicKey' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'recaptchaPublicKey',
     'type' => 'String',
     'quick_form_type' => 'Element',
-    'html_attributes' => array(
+    'html_attributes' => [
       'size' => 64,
       'maxlength' => 64,
-    ),
+    ],
     'html_type' => 'Text',
     'default' => NULL,
     'add' => '4.3',
@@ -514,17 +514,17 @@ return array(
     'is_contact' => 0,
     'description' => NULL,
     'help_text' => NULL,
-  ),
-  'recaptchaPrivateKey' => array(
+  ],
+  'recaptchaPrivateKey' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'recaptchaPrivateKey',
     'type' => 'String',
     'quick_form_type' => 'Element',
-    'html_attributes' => array(
+    'html_attributes' => [
       'size' => 64,
       'maxlength' => 64,
-    ),
+    ],
     'html_type' => 'Text',
     'default' => NULL,
     'add' => '4.3',
@@ -533,17 +533,17 @@ return array(
     'is_contact' => 0,
     'description' => NULL,
     'help_text' => NULL,
-  ),
-  'checksum_timeout' => array(
+  ],
+  'checksum_timeout' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'checksum_timeout',
     'type' => 'Integer',
     'quick_form_type' => 'Element',
-    'html_attributes' => array(
+    'html_attributes' => [
       'size' => 2,
       'maxlength' => 8,
-    ),
+    ],
     'html_type' => 'Text',
     'default' => 7,
     'add' => '4.3',
@@ -552,17 +552,17 @@ return array(
     'is_contact' => 0,
     'description' => NULL,
     'help_text' => NULL,
-  ),
-  'blogUrl' => array(
+  ],
+  'blogUrl' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'blogUrl',
     'type' => 'String',
     'quick_form_type' => 'Element',
-    'html_attributes' => array(
+    'html_attributes' => [
       'size' => 64,
       'maxlength' => 128,
-    ),
+    ],
     'html_type' => 'Text',
     'default' => '*default*',
     'add' => '4.3',
@@ -571,17 +571,17 @@ return array(
     'is_contact' => 0,
     'description' => 'Blog feed URL used by the blog dashlet',
     'help_text' => 'Use "*default*" for the system default or override with a custom URL',
-  ),
-  'communityMessagesUrl' => array(
+  ],
+  'communityMessagesUrl' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'communityMessagesUrl',
     'type' => 'String',
     'quick_form_type' => 'Element',
-    'html_attributes' => array(
+    'html_attributes' => [
       'size' => 64,
       'maxlength' => 128,
-    ),
+    ],
     'html_type' => 'Text',
     'default' => '*default*',
     'add' => '4.3',
@@ -590,17 +590,17 @@ return array(
     'is_contact' => 0,
     'description' => 'Service providing CiviCRM community messages',
     'help_text' => 'Use "*default*" for the system default or override with a custom URL',
-  ),
-  'gettingStartedUrl' => array(
+  ],
+  'gettingStartedUrl' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'gettingStartedUrl',
     'type' => 'String',
     'quick_form_type' => 'Element',
-    'html_attributes' => array(
+    'html_attributes' => [
       'size' => 64,
       'maxlength' => 128,
-    ),
+    ],
     'html_type' => 'Text',
     'default' => '*default*',
     'add' => '4.3',
@@ -609,8 +609,8 @@ return array(
     'is_contact' => 0,
     'description' => 'Service providing the Getting Started data',
     'help_text' => 'Use "*default*" for the system default or override with a custom URL',
-  ),
-  'resCacheCode' => array(
+  ],
+  'resCacheCode' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'resCacheCode',
@@ -624,8 +624,8 @@ return array(
     'is_contact' => 0,
     'description' => 'Code appended to resource URLs (JS/CSS) to coerce HTTP caching',
     'help_text' => NULL,
-  ),
-  'verifySSL' => array(
+  ],
+  'verifySSL' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'verifySSL',
@@ -638,8 +638,8 @@ return array(
     'is_contact' => 0,
     'description' => 'If disabled, outbound web-service requests will allow unverified, insecure HTTPS connections',
     'help_text' => 'Unless you are absolutely unable to configure your server to check the SSL certificate of the remote server you should leave this set to Yes',
-  ),
-  'enableSSL' => array(
+  ],
+  'enableSSL' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'enableSSL',
@@ -652,8 +652,8 @@ return array(
     'is_contact' => 0,
     'description' => 'If enabled, inbound HTTP requests for sensitive pages will be redirected to HTTPS.',
     'help_text' => 'If enabled, inbound HTTP requests for sensitive pages will be redirected to HTTPS.',
-  ),
-  'wpBasePage' => array(
+  ],
+  'wpBasePage' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'wpBasePage',
@@ -667,8 +667,8 @@ return array(
     'is_contact' => 0,
     'description' => 'If set, CiviCRM will use this setting as the base url.',
     'help_text' => 'By default, CiviCRM will generate front-facing pages using the home page at http://wp/ as its base. If you want to use a different template for CiviCRM pages, set the path here.',
-  ),
-  'secondDegRelPermissions' => array(
+  ],
+  'secondDegRelPermissions' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'secondDegRelPermissions',
@@ -681,8 +681,8 @@ return array(
     'is_contact' => 0,
     'description' => "If enabled, contacts with the permission to edit a related contact will inherit that contact's permission to edit other related contacts",
     'help_text' => NULL,
-  ),
-  'enable_components' => array(
+  ],
+  'enable_components' => [
     'bootstrap_comment' => 'This is a boot setting which may be loaded during bootstrap. Defaults are loaded via SettingsBag::getSystemDefaults().',
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
@@ -690,11 +690,11 @@ return array(
     'type' => 'Array',
     'quick_form_type' => 'Element',
     'html_type' => 'advmultiselect',
-    'html_attributes' => array(
+    'html_attributes' => [
       'size' => 5,
       'style' => 'width:150px',
       'class' => 'advmultiselect',
-    ),
+    ],
     'default' => NULL,
     'add' => '4.4',
     'title' => 'Enable Components',
@@ -702,13 +702,13 @@ return array(
     'is_contact' => 0,
     'description' => NULL,
     'help_text' => NULL,
-    'on_change' => array(
+    'on_change' => [
       'CRM_Case_Info::onToggleComponents',
       'CRM_Core_Component::flushEnabledComponents',
       'call://resources/resetCacheCode',
-    ),
-  ),
-  'disable_core_css' => array(
+    ],
+  ],
+  'disable_core_css' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'disable_core_css',
@@ -721,8 +721,8 @@ return array(
     'is_contact' => 0,
     'description' => 'Prevent the stylesheet "civicrm.css" from being loaded.',
     'help_text' => NULL,
-  ),
-  'empoweredBy' => array(
+  ],
+  'empoweredBy' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'empoweredBy',
@@ -735,8 +735,8 @@ return array(
     'is_contact' => 0,
     'description' => 'When enabled, "empowered by CiviCRM" is displayed at the bottom of public forms.',
     'help_text' => NULL,
-  ),
-  'logging_no_trigger_permission' => array(
+  ],
+  'logging_no_trigger_permission' => [
     'add' => '4.7',
     'is_domain' => 1,
     'is_contact' => 0,
@@ -750,8 +750,8 @@ return array(
     'default' => 0,
     'title' => '(EXPERIMENTAL) MySQL user does not have trigger permissions',
     'description' => 'Set this when you intend to manage trigger creation outside of CiviCRM',
-  ),
-  'logging' => array(
+  ],
+  'logging' => [
     'add' => '4.7',
     'help_text' => NULL,
     'is_domain' => 1,
@@ -766,11 +766,11 @@ return array(
     'title' => 'Logging',
     'description' => 'If enabled, all actions will be logged with a complete record of changes.',
     'validate_callback' => 'CRM_Logging_Schema::checkLoggingSupport',
-    'on_change' => array(
+    'on_change' => [
       'CRM_Logging_Schema::onToggle',
-    ),
-  ),
-  'logging_uniqueid_date' => array(
+    ],
+  ],
+  'logging_uniqueid_date' => [
     'add' => '4.7',
     'help_text' => ts('This is the date when CRM-18193 was implemented'),
     'is_domain' => 1,
@@ -784,8 +784,8 @@ return array(
     'default' => NULL,
     'title' => 'Logging Unique ID not recorded before',
     'description' => 'This is the date when CRM-18193 was implemented',
-  ),
-  'logging_all_tables_uniquid' => array(
+  ],
+  'logging_all_tables_uniquid' => [
     'add' => '4.7',
     'help_text' => ts('This indicates there are no tables holdng pre-uniqid log_conn_id values (CRM-18193)'),
     'is_domain' => 1,
@@ -799,8 +799,8 @@ return array(
     'default' => 0,
     'title' => 'All tables use Unique Connection ID',
     'description' => 'Do some tables pre-date CRM-18193?',
-  ),
-  'userFrameworkUsersTableName' => array(
+  ],
+  'userFrameworkUsersTableName' => [
     'add' => '4.7',
     'help_text' => NULL,
     'is_domain' => 1,
@@ -811,15 +811,15 @@ return array(
     'type' => 'String',
     'quick_form_type' => 'Element',
     'html_type' => 'text',
-    'html_attributes' => array(
+    'html_attributes' => [
       'size' => '32',
       'maxlength' => '64',
-    ),
+    ],
     'default' => NULL,
     'title' => 'Drupal Users Table Name',
     'description' => '',
-  ),
-  'wpLoadPhp' => array(
+  ],
+  'wpLoadPhp' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'wpLoadPhp',
@@ -833,18 +833,18 @@ return array(
     'is_contact' => 0,
     'description' => 'CiviCRM will use this setting as path to bootstrap WP.',
     'help_text' => NULL,
-  ),
-  'secure_cache_timeout_minutes' => array(
+  ],
+  'secure_cache_timeout_minutes' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'secure_cache_timeout_minutes',
     'type' => 'Integer',
     'quick_form_type' => 'Element',
     'html_type' => 'text',
-    'html_attributes' => array(
+    'html_attributes' => [
       'size' => 2,
       'maxlength' => 8,
-    ),
+    ],
     'default' => 20,
     'add' => '4.7',
     'title' => 'Secure Cache Timeout',
@@ -852,8 +852,8 @@ return array(
     'is_contact' => 0,
     'description' => 'Maximum number of minutes that secure form data should linger',
     'help_text' => NULL,
-  ),
-  'site_id' => array(
+  ],
+  'site_id' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'site_id',
@@ -867,8 +867,8 @@ return array(
     'is_contact' => 0,
     'description' => NULL,
     'help_text' => NULL,
-  ),
-  'systemStatusCheckResult' => array(
+  ],
+  'systemStatusCheckResult' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'systemStatusCheckResult',
@@ -882,18 +882,18 @@ return array(
     'is_contact' => 0,
     'description' => NULL,
     'help_text' => NULL,
-  ),
-  'recentItemsMaxCount' => array(
+  ],
+  'recentItemsMaxCount' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'recentItemsMaxCount',
     'type' => 'Integer',
     'quick_form_type' => 'Element',
     'html_type' => 'text',
-    'html_attributes' => array(
+    'html_attributes' => [
       'size' => 2,
       'maxlength' => 3,
-    ),
+    ],
     'default' => 20,
     'add' => '4.7',
     'title' => 'Size of "Recent Items" stack',
@@ -901,18 +901,18 @@ return array(
     'is_contact' => 0,
     'description' => 'How many items should CiviCRM store in it\'s "Recently viewed" list.',
     'help_text' => NULL,
-  ),
-  'recentItemsProviders' => array(
+  ],
+  'recentItemsProviders' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'recentItemsProviders',
     'type' => 'Array',
     'html_type' => 'Select',
     'quick_form_type' => 'Select',
-    'html_attributes' => array(
+    'html_attributes' => [
       'multiple' => 1,
       'class' => 'crm-select2',
-    ),
+    ],
     'default' => '',
     'add' => '4.7',
     'title' => 'Recent Items Providers',
@@ -920,11 +920,11 @@ return array(
     'is_contact' => 0,
     'description' => 'What providers may save views in CiviCRM\'s "Recently viewed" list. If empty, all are in.',
     'help_text' => NULL,
-    'pseudoconstant' => array(
+    'pseudoconstant' => [
       'callback' => 'CRM_Utils_Recent::getProviders',
-    ),
-  ),
-  'dedupe_default_limit' => array(
+    ],
+  ],
+  'dedupe_default_limit' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'dedupe_default_limit',
@@ -938,8 +938,8 @@ return array(
     'is_contact' => 0,
     'description' => ts('Default to only loading matches against this number of contacts'),
     'help_text' => ts('Deduping larger databases can crash the server. By configuring a limit other than 0 here the dedupe query will only search for matches against a limited number of contacts.'),
-  ),
-  'syncCMSEmail' => array(
+  ],
+  'syncCMSEmail' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'syncCMSEmail',
@@ -952,8 +952,8 @@ return array(
     'is_contact' => 0,
     'description' => 'If enabled, then CMS email id will be syncronised with CiviCRM contacts\'s primary email.',
     'help_text' => NULL,
-  ),
-  'preserve_activity_tab_filter' => array(
+  ],
+  'preserve_activity_tab_filter' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'preserve_activity_tab_filter',
@@ -966,25 +966,25 @@ return array(
     'is_contact' => 0,
     'description' => 'When enabled, any filter settings a user selects on the contact\'s Activity tab will be remembered as they visit other contacts',
     'help_text' => NULL,
-  ),
-  'do_not_notify_assignees_for' => array(
+  ],
+  'do_not_notify_assignees_for' => [
     'group_name' => 'CiviCRM Preferences',
     'group' => 'core',
     'name' => 'do_not_notify_assignees_for',
     'type' => 'Array',
     'add' => '4.7',
     'is_domain' => 1,
-    'default' => array(),
+    'default' => [],
     'title' => 'Do not notify assignees for',
     'help_text' => 'These activity types will be excluded from automated email notifications to assignees.',
     'html_type' => 'Select',
-    'html_attributes' => array(
+    'html_attributes' => [
       'multiple' => 1,
       'class' => 'huge crm-select2',
-    ),
-    'pseudoconstant' => array(
+    ],
+    'pseudoconstant' => [
       'optionGroupName' => 'activity_type',
-    ),
+    ],
     'quick_form_type' => 'Select',
-  ),
-);
+  ],
+];
